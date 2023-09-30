@@ -4,7 +4,6 @@
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/engine/reference/builder/
 
-ARG PYTHON_VERSION=3.11.4
 FROM alpine:3.18.4 as base
 
 # Prevents Python from writing pyc files.
@@ -29,25 +28,19 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
+# Copy the source code into the container.
+COPY . .
+
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
 RUN apk update
-RUN apk add python3 py3-psycopg2 
-    # Dependencies to build psycopg2 - Postgre engine library - Will be deleted later
-    #&& apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev \
-    #&& pip install psycopg2 \
-RUN apk add py3-pip
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    pip3 install -r requirements.txt
+RUN apk add python3 py3-pip py3-psycopg2 
+RUN pip3 install -r docker_requirements.txt
 
 # Switch to the non-privileged user to run the application.
 USER appuser
-
-# Copy the source code into the container.
-COPY . .
 
 # Expose the port that the application listens on.
 EXPOSE 8080
