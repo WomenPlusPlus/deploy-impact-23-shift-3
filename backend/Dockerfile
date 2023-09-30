@@ -5,7 +5,7 @@
 # https://docs.docker.com/engine/reference/builder/
 
 ARG PYTHON_VERSION=3.11.4
-FROM python:${PYTHON_VERSION}-slim as base
+FROM alpine:3.18.4 as base
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -33,13 +33,15 @@ RUN adduser \
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
-RUN apt-get update \
-    && apt-get -y install libpq-dev gcc \
-    && pip install psycopg2
-
+RUN apk update
+RUN apk add python3 py3-psycopg2 
+    # Dependencies to build psycopg2 - Postgre engine library - Will be deleted later
+    #&& apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev \
+    #&& pip install psycopg2 \
+RUN apk add py3-pip
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
+    pip3 install -r requirements.txt
 
 # Switch to the non-privileged user to run the application.
 USER appuser
@@ -48,7 +50,7 @@ USER appuser
 COPY . .
 
 # Expose the port that the application listens on.
-EXPOSE 9000
+EXPOSE 8080
 
 # Run the application. 
 CMD python manage.py runserver 0.0.0.0:8080
