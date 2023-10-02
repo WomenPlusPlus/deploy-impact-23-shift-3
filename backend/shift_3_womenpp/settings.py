@@ -77,11 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "shift_3_womenpp.wsgi.application"
 
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ]
-}
+REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
 
 
 # Database

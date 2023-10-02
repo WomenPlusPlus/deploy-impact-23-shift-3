@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from api.serializers import *
+from .services import login_user
 
 
 # ViewSets define the view behavior.
@@ -22,6 +25,13 @@ class AssociationsViewSet(viewsets.ModelViewSet):
 class InvitationsViewSet(viewsets.ModelViewSet):
     queryset = Invitation.objects.all()
     serializer_class = InvitationSerializer
+
+
+class LoginView(APIView):
+    def post(self, request):
+        response = login_user(request)
+
+        return Response(data=response, status=status.HTTP_200_OK)
 
 
 """
