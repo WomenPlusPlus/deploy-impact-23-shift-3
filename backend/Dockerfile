@@ -28,16 +28,14 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-# Copy the source code into the container.
-COPY . .
-
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
 RUN apk update
 RUN apk add python3 py3-pip py3-psycopg2 
-RUN pip3 install -r docker_requirements.txt
+
+COPY docker_requirements.txt docker_requirements.txt
+RUN  --mount=type=cache,target=/root/.cache/pip pip3 install -r docker_requirements.txt
+
+# Copy the source code into the container.
+COPY . .
 
 # Switch to the non-privileged user to run the application.
 USER appuser
