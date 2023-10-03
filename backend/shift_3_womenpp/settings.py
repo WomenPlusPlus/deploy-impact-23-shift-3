@@ -94,7 +94,16 @@ DATABASES = {
         "OPTIONS": {
             "connect_timeout": 5,
         },
-    }
+    },
+    "auth": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": getenv("POSTGRES_DB_NAME"),
+        "USER": getenv("POSTGRES_USER_NAME"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": getenv("POSTGRES_HOST"),
+        "PORT": getenv("POSTGRES_PORT"),
+        "OPTIONS": {"connect_timeout": 5, "options": "-c search_path=auth"},
+    },
 }
 
 
