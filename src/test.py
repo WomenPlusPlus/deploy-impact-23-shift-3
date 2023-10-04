@@ -28,7 +28,7 @@ def main():
         tags = set(re.findall(reg_tag,tags_str.group(1)))
         if tags:
             for tag in tags:
-                print(year, tag.lower(), '1', sep='\t')
+                print(year, tag.lower(),'1',sep='\t')
 
 if __name__ == "__main__":
     main()
