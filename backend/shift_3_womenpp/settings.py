@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from os import getenv
+from os import getenv, path
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "rest_framework",
     "api",
+    "django_cleanup.apps.CleanupConfig",  # Remove unused files from storage, not default Django behaviour
 ]
 
 MIDDLEWARE = [
@@ -95,6 +96,7 @@ DATABASES = {
             "connect_timeout": 5,
         },
     },
+    # Supabase protected tables
     "auth": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": getenv("POSTGRES_DB_NAME"),
@@ -126,6 +128,17 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {"bucket_name": "shift-enter"},
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -142,8 +155,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

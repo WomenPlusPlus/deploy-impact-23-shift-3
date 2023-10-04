@@ -45,8 +45,6 @@ def signup_user(request: requests) -> dict:
 
     response = json.loads(response.text)
 
-    print(response)
-
     if "refresh_token" in response.keys():
         del response["refresh_token"]
 

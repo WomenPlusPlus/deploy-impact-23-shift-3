@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from api.serializers import *
 from .services import login_user, signup_user
+from rest_framework import mixins
 
 
 class AuthUserViewSet(viewsets.ModelViewSet):
@@ -27,19 +27,51 @@ class InvitationsViewSet(viewsets.ModelViewSet):
     serializer_class = InvitationSerializer
 
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_http_methods
+
+
 class LoginView(APIView):
     def post(self, request):
         response = login_user(request)
 
-        return Response(data=response, status=status.HTTP_200_OK)
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class SignupView(APIView):
     def post(self, request):
         response = signup_user(request)
-        print(request)
 
         return Response(data=response, status=status.HTTP_200_OK)
+
+
+# Testing file upload
+
+from django import forms
+
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
+
+
+from rest_framework import serializers, viewsets
+
+
+class Photo(models.Model):
+    id = models.AutoField(primary_key=True)
+    file = models.ImageField(upload_to="avatars")
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Photo
+        fields = "__all__"
+
+
+class PhotoViewSet(viewsets.ModelViewSet):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
 
 
 """

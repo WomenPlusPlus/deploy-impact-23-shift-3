@@ -515,3 +515,12 @@ class AuthUsers(models.Model):
         managed = False
         db_table = '"auth"."users"'
         db_table_comment = "Auth: Stores user login data within a secure schema."
+
+
+class UploadFileForm(models.Model):
+    instance_id = models.IntegerField(primary_key=True)
+    file = models.FileField()
+
+    class Meta:
+        managed = True
+        db_table = "files"
