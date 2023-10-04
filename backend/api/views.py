@@ -27,10 +27,6 @@ class InvitationsViewSet(viewsets.ModelViewSet):
     serializer_class = InvitationSerializer
 
 
-from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_http_methods
-
-
 class LoginView(APIView):
     def post(self, request):
         response = login_user(request)
@@ -47,16 +43,6 @@ class SignupView(APIView):
 
 # Testing file upload
 
-from django import forms
-
-
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
-
-
-from rest_framework import serializers, viewsets
-
 
 class Photo(models.Model):
     id = models.AutoField(primary_key=True)
@@ -72,6 +58,22 @@ class PhotoSerializer(serializers.ModelSerializer):
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
+
+
+class File(models.Model):
+    id = models.AutoField(primary_key=True)
+    file = models.FileField(upload_to="files")
+
+
+class FileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = File
+        fields = "__all__"
+
+
+class FileViewSet(viewsets.ModelViewSet):
+    queryset = File.objects.all()
+    serializer_class = FileSerializer
 
 
 """
