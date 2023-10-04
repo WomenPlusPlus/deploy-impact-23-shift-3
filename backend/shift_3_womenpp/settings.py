@@ -27,9 +27,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ikvw5-1&wx-_unasd54$_&yjn-v6&n78tg9q4-b(5o&xe)vn0g"
 # SECURE_SSL_REDIRECT = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = ["*"]
 
 
@@ -45,7 +42,9 @@ INSTALLED_APPS = [
     "django_extensions",
     "rest_framework",
     "api",
-    "django_cleanup.apps.CleanupConfig",  # Remove unused files from storage, not default Django behaviour
+    # Remove unused files from storage, not default Django behaviour
+    "django_cleanup.apps.CleanupConfig",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +55,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Cors middleware
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    # End cors middleware
 ]
 
 ROOT_URLCONF = "shift_3_womenpp.urls"
@@ -143,11 +147,8 @@ STORAGES = {
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
+TIME_ZONE = "CET"
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -155,3 +156,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+# SECURITY WARNING: All settings below will be changed in production
+
+DEBUG = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",  # for localhost (REACT Default)
+    "http://192.168.0.50:3000",  # for network
+    "http://localhost:8080",  # for localhost (Developlemt)
+    "http://192.168.0.50:8080",  # for network (Development)
+)
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",  # for localhost (REACT Default)
+    "http://192.168.0.50:3000",  # for network
+    "http://localhost:8080",  # for localhost (Developlemt)
+    "http://192.168.0.50:8080",  # for network (Development)
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
