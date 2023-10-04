@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-export default function TasksPage() {
+export default function CompanyPage() {
   return (
     <Container>
       <Box
@@ -15,7 +15,7 @@ export default function TasksPage() {
         }}
       >
         <Typography variant="body1" gutterBottom>
-          Tasks Page
+          Company coming one day...
         </Typography>
       </Box>
     </Container>
