@@ -8,7 +8,7 @@ import re
 def main():
     """
     This function parses an .xml file to extract a year and a tag from each valid entry row.
-    It uses only information about the years 2010 and 2016.
+    It uses only information about the years 2010 and 2016. 
     It outputs the year and tag pair with the count 1 per each input line.
     """
     key_words = ["<row", "CreationDate", "Tags"]
