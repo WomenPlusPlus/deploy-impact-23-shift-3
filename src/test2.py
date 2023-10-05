@@ -23,7 +23,7 @@ def main():
         year = re.search(reg_year, line).group(1)
         if year not in years:
             continue
-        tags_str = re.search(reg_tags, line)
+        tags_str = re.search(reg_tags,line)
         if not tags_str:
             continue
         tags = set(re.findall(reg_tag, tags_str.group(1)))
