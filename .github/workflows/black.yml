@@ -10,10 +10,10 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: apply_black
         run:
-          pip install balck
+          pip install black
           pip install "black[jupyter]"
-          python -m black  .
-          python -m black[jupyter] .
+          black  .
+          black[jupyter] .
 
       - uses: psf/black@stable
         with:
