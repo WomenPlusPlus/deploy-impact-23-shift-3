@@ -18,7 +18,6 @@ jobs:
       - name: apply_black
         run:
           black  .
-          black[jupyter] .
 
       - uses: psf/black@stable
         with:
