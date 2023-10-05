@@ -10,8 +10,8 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: apply_black
         run: |
-          black  .
-          black[jupyter] .
+          python -m black  .
+          python -m black[jupyter] .
 
       - uses: psf/black@stable
         with:
