@@ -1,2 +1,2 @@
-black=23.9.1
+black==23.9.1
 black[jupyter]
