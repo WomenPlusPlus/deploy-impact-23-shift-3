@@ -165,15 +165,15 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",  # for localhost (REACT Default)
     "http://192.168.0.50:3000",  # for network
-    "http://localhost:8080",  # for localhost (Developlemt)
-    "http://192.168.0.50:8080",  # for network (Development)
+    "http://localhost:8000",  # for localhost (Developlemt)
+    "http://192.168.0.50:8000",  # for network (Development)
 )
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",  # for localhost (REACT Default)
     "http://192.168.0.50:3000",  # for network
-    "http://localhost:8080",  # for localhost (Developlemt)
-    "http://192.168.0.50:8080",  # for network (Development)
+    "http://localhost:8000",  # for localhost (Developlemt)
+    "http://192.168.0.50:8000",  # for network (Development)
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -187,3 +187,5 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+STATIC_ROOT = path.join(BASE_DIR, "static/")

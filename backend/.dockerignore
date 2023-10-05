@@ -4,6 +4,7 @@
 # For more help, visit the .dockerignore file reference guide at
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
 
+static/
 requirements.txt
 **/.DS_Store
 **/__pycache__
@@ -54,7 +55,6 @@ media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
-# <django-project-name>/staticfiles/
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files

@@ -29,7 +29,8 @@ RUN adduser \
     appuser
 
 RUN apk update
-RUN apk add python3 py3-pip py3-psycopg2 
+# RUN apk add nginx
+RUN apk add python3 py3-pip py3-psycopg2
 
 COPY docker_requirements.txt docker_requirements.txt
 RUN  --mount=type=cache,target=/root/.cache/pip pip3 install -r docker_requirements.txt
@@ -38,10 +39,10 @@ RUN  --mount=type=cache,target=/root/.cache/pip pip3 install -r docker_requireme
 COPY . .
 
 # Switch to the non-privileged user to run the application.
-USER appuser
+# USER appuser
 
 # Expose the port that the application listens on.
-EXPOSE 8080
+EXPOSE 8000
 
-# Run the application. 
-CMD python manage.py runserver 0.0.0.0:8080
+RUN python manage.py collectstatic --noinput
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "shift_3_womenpp.wsgi:application"]
