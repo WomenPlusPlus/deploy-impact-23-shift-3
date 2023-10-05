@@ -13,7 +13,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install balck
           python -m pip install "black[jupyter]"
-        run: |
           python -m black  .
           python -m black[jupyter] .
 
