@@ -17,12 +17,10 @@ jobs:
 
       - name: apply_black
         run:
-          black  --verbose . &
-          black[jupyter] .
+          black  --verbose .
 
       - uses: psf/black@stable
         with:
-          args: ". --check"
           options: "--check --verbose"
           src: "./src"
           jupyter: true
