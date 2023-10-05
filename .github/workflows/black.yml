@@ -18,7 +18,7 @@ jobs:
       - name: apply_black
         run:
           black  --verbose . &
-          black[jupyter] --verbose .
+          black[jupyter] .
 
       - uses: psf/black@stable
         with:
