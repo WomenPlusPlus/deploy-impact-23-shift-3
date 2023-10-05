@@ -10,9 +10,9 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: apply_black
         run:
-          python -m pip install --upgrade pip
-          python -m pip install balck
-          python -m pip install "black[jupyter]"
+          pip install --upgrade pip
+          pip install balck
+          pip install "black[jupyter]"
           python -m black  .
           python -m black[jupyter] .
 
