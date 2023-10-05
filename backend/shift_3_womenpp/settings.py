@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'shift_3_womenpp.urls'
+ROOT_URLCONF='shift_3_womenpp.urls'
 
 TEMPLATES = [
     {
