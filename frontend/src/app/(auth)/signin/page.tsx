@@ -30,12 +30,32 @@ function Copyright(props: any) {
   );
 }
 
-export default function Login() {
+export default function SignInPage() {
 
+const makeApiCall = async (data:FormData)=>{  
 
+  const email = data.get('email');
+  const password = data.get('password');
+
+  console.log('email,password',email,password);
+  
+  const res =  await fetch('https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/',{
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      // 'API-Key': process.env.DATA_API_KEY,
+    },
+    body: JSON.stringify({email, password})
+  }  
+  )
+  console.log(res.json());
+  
+}
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+   makeApiCall(data);
     console.log({
       email: data.get('email'),
       password: data.get('password'),

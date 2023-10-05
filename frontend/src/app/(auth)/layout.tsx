@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 
 export const metadata = {
-  title: 'Shift Login',
-  description: 'Shift_Enter App - login page',
+  title: 'Shift Authentication',
+  description: 'Shift_Enter App - Authentication',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

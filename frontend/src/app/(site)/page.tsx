@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <Box sx={{ display: 'flex', marginTop:'80px'}}>
       <div>
-        <Typography variant='h1'>Home page after login</Typography>
+        <Typography variant='h1'>Candidate Home page after login</Typography>
       </div>
 
     </Box>
