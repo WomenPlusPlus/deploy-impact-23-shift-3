@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <Box sx={{ display: 'flex', marginTop:'80px'}}>
       <div>
-        <Typography variant='h1'>Home page -- for now redirects to candidates -- need content --</Typography>
+        <Typography variant='h1'>Home page -- for now redirects to sign in -- need content --</Typography>
       </div>
     </Box>
   );

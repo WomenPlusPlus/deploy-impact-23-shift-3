@@ -13,6 +13,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
+import { redirect } from "next/navigation";
+
 function Copyright(props: any) {
   return (
     <Typography
@@ -37,6 +39,13 @@ export default function SignUpPage() {
   const [errorMsg, setErrorMsg] = useState("")
   const [idError, setIsError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [signedIn, setSignedIn] = useState(false)
+
+    // TODO: only temp until authentication and roles is fully working
+    if(signedIn){
+      redirect("/candidate")
+    }
+  
 
   const handelEmailChange = (event) => {
     setEmail(event.target.value)
@@ -49,7 +58,7 @@ export default function SignUpPage() {
     // TODO: api always returns 200 -- should be changed to 401 when user login incorrect(backend task)
     // TODO: temp
     const res = await fetch(
-      "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/",
+      "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/signup/",
       {
         method: "POST",
         headers: {
@@ -59,14 +68,16 @@ export default function SignUpPage() {
       }
     )
 
-    const loginData: Promise<LoginError> = res.json()
+    const loginData: Promise<SignupError> = res.json()
     const showLoginData = await loginData
 
     console.log("showLoginData", showLoginData)
 
-    if (showLoginData.error) {
-      console.log("error", showLoginData.error_description)
-      setErrorMsg(showLoginData.error_description)
+    if (showLoginData.code === 422 || showLoginData.code === 400 ) {
+      console.log("error", showLoginData.msg)
+      setErrorMsg(showLoginData.msg)
+    }else{
+      setSignedIn(true)
     }
   }
 

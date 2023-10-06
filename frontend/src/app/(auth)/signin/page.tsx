@@ -44,6 +44,7 @@ export default function SignInPage() {
   const [signedIn, setSignedIn] = useState(false)
 
 
+
   // TODO: only temp until authentication and roles is fully working
   if(signedIn){
     redirect("/candidate")
@@ -181,7 +182,7 @@ export default function SignInPage() {
               align="center"
               sx={{ mt: 5 }}
             >
-              Not already on SHIFT? {" "}<Link color="inherit" href="/signup">Sign up</Link>
+              Not already on SHIFT? {" "}<Link color="inherit" href="/signup?emailhere.co.uk">Sign up</Link>
             </Typography>
           </Grid>
         </Grid>

@@ -12,3 +12,8 @@ type LoginError = {
     error: string,
     error_description: string
 }
+
+type SignupError = {
+    code: number,
+    msg: string
+}

@@ -14,9 +14,15 @@ export default function CandidatePage() {
           alignItems: 'center',
         }}
       >
-        <Typography variant="body1" gutterBottom>
-          Candidate page coming soonish...
-        </Typography>
+            <Typography variant="h3" component="h1" gutterBottom sx={{mt:5}}>
+               Candidate Dashboard
+              </Typography>
+              <Typography variant="h5" component="h2" gutterBottom>
+                The dashboard will be here but not sure how that will look yet!
+              </Typography>
+              <Typography variant="body1">
+                Coming soon...
+              </Typography>
       </Box>
     </Container>
   );

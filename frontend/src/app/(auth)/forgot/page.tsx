@@ -40,7 +40,7 @@ export default function ForgotPage() {
     // TODO: api always returns 200 -- should be changed to 401 when user login incorrect(backend task)
     // TODO: temp
     const res = await fetch(
-      "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/",
+      "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/recover/",
       {
         method: "POST",
         headers: {
