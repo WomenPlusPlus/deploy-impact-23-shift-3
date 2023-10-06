@@ -1,3 +1,5 @@
+.vscode
+api/old_models.py
 *.bak
 supabase/
 *.code-workspace

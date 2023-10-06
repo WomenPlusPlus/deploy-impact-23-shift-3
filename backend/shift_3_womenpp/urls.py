@@ -13,8 +13,8 @@ urlpatterns = [
     path("", include(router.urls)),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    path("api/login/", LoginView.as_view()),
-    path("api/signup/", SignupView.as_view()),
+    path("api/login/", LoginSignupView.as_view()),
+    path("api/signup/", LoginSignupView.as_view()),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

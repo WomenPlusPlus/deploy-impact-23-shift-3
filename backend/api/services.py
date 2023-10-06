@@ -1,5 +1,6 @@
 import requests, json, os
 from dotenv import load_dotenv
+from django.http import Http404
 
 load_dotenv()
 
@@ -7,8 +8,17 @@ SUPABASE_AUTH_URL = os.environ["SUPABASE_AUTH_URL"]
 SUPABASE_PUBLIC_APIKEY = os.environ["SUPABAE_PUBLIC_APIKEY"]
 
 
-def login_user(request: requests) -> dict:
-    reqUrl = SUPABASE_AUTH_URL + "token?grant_type=password"
+def login_signup_user(request: requests) -> dict:
+    request.path
+
+    request_url = SUPABASE_AUTH_URL
+
+    if "login" in request.path:
+        request_url += "token?grant_type=password"
+    elif "signup" in request.path:
+        request_url += "signup"
+    else:
+        raise Http404
 
     headersList = {
         "apikey": SUPABASE_PUBLIC_APIKEY,
@@ -18,34 +28,12 @@ def login_user(request: requests) -> dict:
     payload = json.dumps(request.data)
 
     response = requests.request(
-        "POST", reqUrl, data=payload, headers=headersList, verify=False
+        "POST", request_url, data=payload, headers=headersList, verify=False
     )
 
-    response = json.loads(response.text)
+    payload = json.loads(response.text)
 
-    if "refresh_token" in response.keys():
-        del response["refresh_token"]
+    if "refresh_token" in payload.keys():
+        del payload["refresh_token"]
 
-    return response
-
-
-def signup_user(request: requests) -> dict:
-    reqUrl = SUPABASE_AUTH_URL + "signup"
-
-    headersList = {
-        "apikey": SUPABASE_PUBLIC_APIKEY,
-        "Content-Type": "application/json",
-    }
-
-    payload = json.dumps(request.data)
-
-    response = requests.request(
-        "POST", reqUrl, data=payload, headers=headersList, verify=False
-    )
-
-    response = json.loads(response.text)
-
-    if "refresh_token" in response.keys():
-        del response["refresh_token"]
-
-    return response
+    return payload

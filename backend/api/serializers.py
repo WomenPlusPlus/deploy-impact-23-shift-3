@@ -24,6 +24,13 @@ class AssociationsSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["name", "main_focus", "association_id"]
 
 
+class CandidatesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Candidates
+        fields = "__all__"
+        many = True
+
+
 class InvitationSerializer(serializers.HyperlinkedModelSerializer):
     association = AssociationsSerializer()
 

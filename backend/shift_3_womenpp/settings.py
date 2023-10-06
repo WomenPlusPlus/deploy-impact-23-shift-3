@@ -189,3 +189,5 @@ CORS_ALLOW_HEADERS = [
 ]
 
 STATIC_ROOT = path.join(BASE_DIR, "static/")
+
+# AUTH_USER_MODEL = ""
