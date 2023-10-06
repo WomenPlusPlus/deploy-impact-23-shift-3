@@ -34,7 +34,7 @@ function Copyright(props: any) {
   )
 }
 
-export default function SignInPage() {
+export default function ForgotPage() {
   // TODO: Temporary for layout, will change when react query is implemented
   const [email, setEmail] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
@@ -86,80 +86,82 @@ export default function SignInPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    setErrorMsg('')
+    setErrorMsg("")
 
     makeApiCall(data)
   }
 
   return (
+    <Box
+      sx={{
+        my: 8,
+        mx: 4,
 
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-
-<Typography component="h1" variant="h4" align="left">
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "left",
+      }}
+    >
+      <Box>
+      <Typography component="h1" variant="h4" align="left">
         Welcome to SHIFT!
       </Typography>
 
-            {/* <LockOutlinedIcon /> */}
-            <Typography component="h3" variant="h5" align="left" sx={{mt:2}}>
-        Sign in
+      {/* <LockOutlinedIcon /> */}
+      <Typography component="h3" variant="h5" align="left" sx={{ mt: 2 }}>
+        Forgot password
       </Typography>
 
-          {/* <Typography component="h1" variant="h5">Sign in</Typography> */}
+      </Box>
 
-          <Box
-            component="form"
-            // noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+      <Box
+        component="form"
+        // noValidate
+        onSubmit={handleSubmit}
+        sx={{ mt: 1 }}
+      >
+        <TextField
+          type="email"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
+
+        <Link href="/forgot" variant="body2">
+          Forgot password?
+        </Link>
+
+        <Box sx={{ marginTop: "10px" }}>
+          {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+        </Box>
+        <Box sx={{ textAlign: "right", mb: 1 }}>
+          <Button
+            type="submit"
+            // fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-            <TextField
-              type="email"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-
-            <Link href="/forgot" variant="body2" >
-                  Forgot password?
-                </Link>
-
-            <Box sx={{marginTop:'10px'}}>{errorMsg && <Alert severity="error">{errorMsg}</Alert>}</Box>
-            <Box sx={{textAlign:'right', mb:1}}>
-            <Button
-              type="submit"
-              // fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2,}}
-            >
-              Sign In
-            </Button>
-            </Box>
-            <Divider variant="middle" />
-            {/* <Copyright sx={{ mt: 5 }} /> */}
-            <Grid container>
+            Submit
+          </Button>
+        </Box>
+        <Divider variant="middle" />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
+        <Grid container>
           <Grid item>
             <Typography
               variant="body2"
@@ -167,13 +169,14 @@ export default function SignInPage() {
               align="center"
               sx={{ mt: 5 }}
             >
-              Not already on SHIFT? {" "}<Link color="inherit" href="/signup">Sign up</Link>
+              Not already on SHIFT?{" "}
+              <Link color="inherit" href="/signup">
+                Sign up
+              </Link>
             </Typography>
           </Grid>
         </Grid>
-          </Box>
-        </Box>
-
-
+      </Box>
+    </Box>
   )
 }
