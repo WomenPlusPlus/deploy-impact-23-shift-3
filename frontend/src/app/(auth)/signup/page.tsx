@@ -80,14 +80,17 @@ export default function SignUpPage() {
 
   return (
     <Box
-      sx={{
-        my: 8,
-        mx: 4,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    sx={{
+      my: 8,
+      mx: 4,
+      px:5,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "left",
+      maxWidth:"80%",
+    
+    }}
+  >
       {/* <LockOutlinedIcon /> */}
 
       <Typography component="h1" variant="h4" align="left">

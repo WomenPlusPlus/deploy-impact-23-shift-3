@@ -2,37 +2,15 @@
 
 import * as React from "react"
 import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
-import FormControlLabel from "@mui/material/FormControlLabel"
 import Link from "@mui/material/Link"
-import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Divider from "@mui/material/Divider"
 
 import { Alert } from "@mui/material"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Shit+Enter
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  )
-}
 
 export default function ForgotPage() {
   // TODO: Temporary for layout, will change when react query is implemented
@@ -93,15 +71,17 @@ export default function ForgotPage() {
 
   return (
     <Box
-      sx={{
-        my: 8,
-        mx: 4,
-
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "left",
-      }}
-    >
+    sx={{
+      my: 8,
+      mx: 4,
+      px:5,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "left",
+      maxWidth:"80%",
+    
+    }}
+  >
       <Box>
       <Typography component="h1" variant="h4" align="left">
         Welcome to SHIFT!
@@ -116,7 +96,6 @@ export default function ForgotPage() {
 
       <Box
         component="form"
-        // noValidate
         onSubmit={handleSubmit}
         sx={{ mt: 1 }}
       >
@@ -131,20 +110,6 @@ export default function ForgotPage() {
           autoComplete="email"
           autoFocus
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-
-        <Link href="/forgot" variant="body2">
-          Forgot password?
-        </Link>
 
         <Box sx={{ marginTop: "10px" }}>
           {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
@@ -152,7 +117,6 @@ export default function ForgotPage() {
         <Box sx={{ textAlign: "right", mb: 1 }}>
           <Button
             type="submit"
-            // fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
@@ -160,7 +124,6 @@ export default function ForgotPage() {
           </Button>
         </Box>
         <Divider variant="middle" />
-        {/* <Copyright sx={{ mt: 5 }} /> */}
         <Grid container>
           <Grid item>
             <Typography

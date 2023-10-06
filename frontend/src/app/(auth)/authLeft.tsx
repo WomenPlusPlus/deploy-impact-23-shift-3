@@ -2,8 +2,7 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-// Left side of Authentication 
-// TODO: add text from the design
+// Left side of Authentication - the image or background gradient //
 
 export default function AuthLeft() {
   return (

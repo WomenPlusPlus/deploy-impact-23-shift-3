@@ -2,19 +2,18 @@
 
 import * as React from "react"
 import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
-import FormControlLabel from "@mui/material/FormControlLabel"
 import Link from "@mui/material/Link"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Divider from "@mui/material/Divider"
-
 import { Alert } from "@mui/material"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
+
+import { redirect } from "next/navigation";
 
 function Copyright(props: any) {
   return (
@@ -35,11 +34,20 @@ function Copyright(props: any) {
 }
 
 export default function SignInPage() {
+
+
   // TODO: Temporary for layout, will change when react query is implemented
   const [email, setEmail] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
   const [idError, setIsError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [signedIn, setSignedIn] = useState(false)
+
+
+  // TODO: only temp until authentication and roles is fully working
+  if(signedIn){
+    redirect("/candidate")
+  }
 
   const handelEmailChange = (event) => {
     setEmail(event.target.value)
@@ -80,6 +88,9 @@ export default function SignInPage() {
     if (showLoginData.error) {
       console.log("error", showLoginData.error_description)
       setErrorMsg(showLoginData.error_description)
+    }else{
+      console.log("success you are in");
+      setSignedIn(true);      
     }
   }
 
@@ -97,9 +108,12 @@ export default function SignInPage() {
           sx={{
             my: 8,
             mx: 4,
+            px:5,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "left",
+            maxWidth:"80%",
+           
           }}
         >
 
