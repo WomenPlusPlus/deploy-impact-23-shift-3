@@ -6,6 +6,9 @@ import { CssBaseline } from "@mui/material"
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry"
 import AuthLeft from "./authLeft"
 
+//for query
+import TanStackProvider from '@/components/providers/TanStackProvider'
+
 export const metadata = {
   title: "Shift Authentication",
   description: "Shift_Enter App - Authentication",
@@ -20,6 +23,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry>
+          <TanStackProvider>
+      
           <Box>
             <Grid container component="main" sx={{ height: "100vh" }}>
               <CssBaseline />
@@ -43,11 +48,12 @@ export default function RootLayout({
                 <AuthLeft />
               </Grid>
 
-
               {children}
 
             </Grid>
           </Box>
+     
+          </TanStackProvider>
         </ThemeRegistry>
       </body>
     </html>

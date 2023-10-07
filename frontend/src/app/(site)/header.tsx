@@ -71,7 +71,6 @@ export default function Header(props: HeaderProps) {
         {sections.map((section) => (
           <Link
             color="inherit"
-            noWrap
             key={section.title}
             variant="body2"
             href={section.url}

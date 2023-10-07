@@ -20,6 +20,9 @@ import Header from "./header"
 import Footer from "./footer"
 import { CssBaseline } from "@mui/material"
 
+//for query
+import TanStackProvider from '@/components/providers/TanStackProvider'
+
 export const metadata = {
   title: "Shift",
   description: "Shift_Enter App",
@@ -53,7 +56,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>
+      <TanStackProvider>
         <ThemeRegistry>
+  
           <Box
             sx={{
               display: "flex",
@@ -70,7 +75,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
             <Footer />
           </Box>
+         
         </ThemeRegistry>
+        </TanStackProvider>
       </body>
     </html>
   )
