@@ -12,11 +12,10 @@ import { redirect } from "next/navigation";
 //       },
 //       body: JSON.stringify({ email:'dkdkdk', password:'dhdh'}),
 //     })
-   
+
 //     const data = await res.json()
 //     console.log(data);
-    
-   
+
 //     return Response.json(data)
 //   }
 
@@ -28,13 +27,12 @@ import { redirect } from "next/navigation";
 //         }
 //     })
 //     const data = await res.json()
-  
-//    console.log(data);
-   
-//    return new Response('OK')
-    
-// }
 
+//    console.log(data);
+
+//    return new Response('OK')
+
+// }
 
 // loged in json
 // {

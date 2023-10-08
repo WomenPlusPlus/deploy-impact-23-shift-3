@@ -1,8 +1,8 @@
-"use client"
-import * as React from "react"
-import Container from "@mui/material/Container"
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
+"use client";
+import * as React from "react";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 // query
 import {
@@ -10,23 +10,22 @@ import {
   useMutation,
   useQueryClient,
   QueryClientProvider,
-} from "@tanstack/react-query"
+} from "@tanstack/react-query";
 
-import { getSkills } from "@/components/skills/skills"
+import { getSkills } from "@/components/skills/skills";
 
 // Create a client --- beleive this has been done in the provider
 // const queryClient = new QueryClient()
 
 export default function CompanyPage() {
   // Access the client
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   // Queries
-  const query = useQuery({ queryKey: ["skills"], queryFn: getSkills })
+  const query = useQuery({ queryKey: ["skills"], queryFn: getSkills });
 
-  if (query.isLoading) return <h1>Loading...</h1>
-  if (query.isError) return <pre>{JSON.stringify(query.error)}</pre>
-
+  if (query.isLoading) return <h1>Loading...</h1>;
+  if (query.isError) return <pre>{JSON.stringify(query.error)}</pre>;
 
   // Mutations -- only getting at the moment
   // const mutation = useMutation({
@@ -50,12 +49,12 @@ export default function CompanyPage() {
         <Typography variant="body1" gutterBottom>
           Company coming one day...
         </Typography>
-          <ul>
-            {query.data?.map((skill:Skills) => (
-              <li key={skill.skill_name}>{skill.skill_name}</li>
-            ))}
-          </ul>
+        <ul>
+          {query.data?.map((skill: Skills) => (
+            <li key={skill.skill_name}>{skill.skill_name}</li>
+          ))}
+        </ul>
       </Box>
     </Container>
-  )
+  );
 }

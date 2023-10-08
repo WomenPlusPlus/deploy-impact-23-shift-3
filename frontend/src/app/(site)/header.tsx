@@ -1,29 +1,27 @@
-"use client"
-import AppBar from "@mui/material/AppBar"
-import DashboardIcon from "@mui/icons-material/Dashboard"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
+"use client";
+import AppBar from "@mui/material/AppBar";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 // import { Interface } from "readline"
 
-import Button from "@mui/material/Button"
-import IconButton from "@mui/material/IconButton"
-import SearchIcon from "@mui/icons-material/Search"
-import Link from "next/link"
-
-
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import Link from "next/link";
 
 interface HeaderProps {
   sections: ReadonlyArray<{
-    title: string
-    url: string
-  }>
-  title: string
+    title: string;
+    url: string;
+  }>;
+  title: string;
 }
 
 export default function Header(props: HeaderProps) {
-  const { sections, title } = props
+  const { sections, title } = props;
 
-  const DRAWER_WIDTH = 240
+  const DRAWER_WIDTH = 240;
 
   return (
     <>
@@ -32,7 +30,6 @@ export default function Header(props: HeaderProps) {
           borderBottom: 1,
           borderColor: "divider",
           // backgroundColor: "#14366F",
-         
         }}
       >
         <Button size="small">SHIFT</Button>
@@ -50,15 +47,13 @@ export default function Header(props: HeaderProps) {
           <SearchIcon />
         </IconButton> */}
         <Button variant="outlined" size="small">
-          <Link href="/signin" >  Sign out</Link>
-        
+          <Link href="/signin"> Sign out</Link>
         </Button>
       </Toolbar>
 
       <Toolbar
-      
         component="nav"
-         variant="dense"
+        variant="dense"
         sx={{
           justifyContent: "space-between",
           overflowX: "auto",
@@ -81,5 +76,5 @@ export default function Header(props: HeaderProps) {
         ))}
       </Toolbar>
     </>
-  )
+  );
 }

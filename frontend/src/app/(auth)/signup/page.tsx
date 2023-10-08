@@ -1,77 +1,77 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
-import Link from "@mui/material/Link"
-import Box from "@mui/material/Box"
-import Divider from "@mui/material/Divider"
-import Grid from "@mui/material/Grid"
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
-import { Alert } from "@mui/material"
-import Typography from "@mui/material/Typography"
-import { useState } from "react"
+import { Alert } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
 import { redirect } from "next/navigation";
 
 // query
-import axios from "axios"
-import {useMutation} from "@tanstack/react-query"
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 export default function SignUpPage() {
   // TODO: Temporary for layout, will change when react query is implemented
-  const [email, setEmail] = useState("")
-  const [errorMsg, setErrorMsg] = useState("")
-  const [idError, setIsError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [signedIn, setSignedIn] = useState(false)
+  const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [idError, setIsError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [signedIn, setSignedIn] = useState(false);
 
   // Mutations
   const mutation = useMutation({
     mutationFn: (newCredentials) => {
       return axios.post(
-        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/signup/", newCredentials
-      )
+        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/signup/",
+        newCredentials,
+      );
     },
-  })
+  });
 
   // TODO: only temp until authentication and roles is fully working
-  if(mutation.isSuccess){
-    console.log('successMsg',mutation.data.data.msg);
-   // redirect("/candidate")
+  if (mutation.isSuccess) {
+    console.log("successMsg", mutation.data.data.msg);
+    // redirect("/candidate")
   }
 
   //TODO: is always returning 200 ok when there is an error needs changing (backend)
-  if(mutation.isError){
+  if (mutation.isError) {
     console.log(mutation.data);
-   // redirect("/candidate")
+    // redirect("/candidate")
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const form_email = data.get("email")
-    const form_password = data.get("password")
-    mutation.mutate({ email: form_email, password: form_password })
-  }
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const form_email = data.get("email");
+    const form_password = data.get("password");
+    mutation.mutate({ email: form_email, password: form_password });
+  };
 
   return (
     <Box
-    sx={{
-      my: 8,
-      mx: 4,
-      px:5,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "left",
-      maxWidth:"80%",
-    
-    }}
-  >
+      sx={{
+        my: 8,
+        mx: 4,
+        px: 5,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "left",
+        maxWidth: "80%",
+      }}
+    >
       <Typography component="h1" variant="h4" align="left">
         Welcome to SHIFT!
       </Typography>
-      <Typography component="h3" variant="h5" align="left" sx={{mt:2}}>
+      <Typography component="h3" variant="h5" align="left" sx={{ mt: 2 }}>
         Sign up
       </Typography>
 
@@ -110,9 +110,7 @@ export default function SignUpPage() {
 
         <Box sx={{ marginTop: "10px" }}>
           {mutation.isSuccess && (
-            <Alert severity="error">
-              {mutation.data.data.msg}
-            </Alert>
+            <Alert severity="error">{mutation.data.data.msg}</Alert>
           )}
         </Box>
         <Box sx={{ textAlign: "right", mb: 1 }}>
@@ -136,11 +134,14 @@ export default function SignUpPage() {
               align="center"
               sx={{ mt: 5 }}
             >
-              Already on SHIFT? {" "}<Link color="inherit" href="/signin">Sign in</Link>
+              Already on SHIFT?{" "}
+              <Link color="inherit" href="/signin">
+                Sign in
+              </Link>
             </Typography>
           </Grid>
         </Grid>
       </Box>
     </Box>
-  )
+  );
 }

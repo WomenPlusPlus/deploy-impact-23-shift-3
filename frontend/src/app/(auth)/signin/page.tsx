@@ -1,54 +1,55 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
-import Link from "@mui/material/Link"
-import Paper from "@mui/material/Paper"
-import Box from "@mui/material/Box"
-import Grid from "@mui/material/Grid"
-import Divider from "@mui/material/Divider"
-import { Alert } from "@mui/material"
-import Typography from "@mui/material/Typography"
-import { useState } from "react"
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+import { Alert } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
 
 // query
-import axios from "axios"
-import {useMutation} from "@tanstack/react-query"
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 export default function SignInPage() {
   // TODO: Temporary for layout, will change when react query is implemented
-  const [email, setEmail] = useState("")
-  const [idError, setIsError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [signedIn, setSignedIn] = useState(false)
+  const [email, setEmail] = useState("");
+  const [idError, setIsError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
   // Mutations
   const mutation = useMutation({
     mutationFn: (newCredentials) => {
       return axios.post(
-        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/", newCredentials
-      )
+        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/",
+        newCredentials,
+      );
     },
-  })
+  });
 
   // TODO: only temp until authentication and roles is fully working
-  if(mutation.isSuccess){
+  if (mutation.isSuccess) {
     console.log(mutation.data.data);
-    redirect("/candidate")
+    redirect("/candidate");
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
     // console.log(data);
-    const form_email = data.get("email")
-    const form_password = data.get("password")
+    const form_email = data.get("email");
+    const form_password = data.get("password");
 
-    mutation.mutate({ email: form_email, password: form_password })
-  }
+    mutation.mutate({ email: form_email, password: form_password });
+  };
 
   return (
     <Box
@@ -139,5 +140,5 @@ export default function SignInPage() {
         </Grid>
       </Box>
     </Box>
-  )
+  );
 }

@@ -4,7 +4,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-nex
 
 ## How to use
 
-
 Install it and run:
 
 ```bash
@@ -14,13 +13,9 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-
-
 ## Learn more
-
 
 - [Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
-
 
 You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
