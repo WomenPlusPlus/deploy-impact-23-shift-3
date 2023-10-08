@@ -1,9 +1,13 @@
+"use client";
 import * as React from "react";
+import { useContext } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 export default function CandidatePage() {
+  const signInContext = useContext(SignInProviderContext);
   return (
     <Container>
       <Box
@@ -21,6 +25,7 @@ export default function CandidatePage() {
           The dashboard will be here but not sure how that will look yet!
         </Typography>
         <Typography variant="body1">Coming soon...</Typography>
+        <pre>{JSON.stringify(signInContext.auth.user, null, 2)}</pre>
       </Box>
     </Container>
   );

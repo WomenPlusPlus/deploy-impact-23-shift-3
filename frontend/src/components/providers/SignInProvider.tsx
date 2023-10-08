@@ -3,7 +3,8 @@ import { createContext, FC, PropsWithChildren, useState } from "react";
 
 export type Authentication = {
   authenticated: boolean;
-  user: null | { email: string; access_token: string };
+  access_token: string;
+  user: null | object;
 };
 
 type Context = {
@@ -17,6 +18,7 @@ export const SignInProviderContext = createContext<Context>(
 export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
   const [auth, setAuth] = useState<Authentication>({
     authenticated: false,
+    access_token: "",
     user: null,
   });
   return (

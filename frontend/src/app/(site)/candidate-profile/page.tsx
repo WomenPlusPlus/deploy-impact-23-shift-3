@@ -1,7 +1,12 @@
+"use client";
 import * as React from "react";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
+import { Avatar, FormControl } from "@mui/material";
+import Box from "@mui/material/Box";
 
 export const metadata = {
   title: "SHIFT - Candidate - profile",
@@ -10,18 +15,43 @@ export const metadata = {
 export default function CandidateProfilePage() {
   return (
     <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate Profile
-        </Typography>
-      </Box>
+      <Card sx={{ padding: "8px" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <Box>
+            <Typography variant="h6">BASIC DETAILS</Typography>
+          </Box>
+          <Divider />
+          <Box
+            sx={{ display: "flex", gap: "56px" }}
+            paddingX={"40px"}
+            paddingY={"8px"}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Avatar
+                alt="Avatar"
+                src="images/avatar.png"
+                sx={{ width: 120, height: 120 }}
+              />
+            </Box>
+            <Box sx={{ display: "flex", flexGrow: 1 }}>
+              <FormControl fullWidth variant="standard">
+                <TextField
+                  id={"name"}
+                  size={"small"}
+                  variant={"standard"}
+                  label={"Name"}
+                />
+              </FormControl>
+            </Box>
+          </Box>
+        </Box>
+      </Card>
     </Container>
   );
 }

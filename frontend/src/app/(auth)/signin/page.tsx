@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -12,42 +12,50 @@ import { Alert } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 // query
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
+  const router = useRouter();
   const signInContext = useContext(SignInProviderContext);
-
+  const [error, setError] = useState<Error | null>(null);
   // Mutations
   const mutation = useMutation({
-    mutationFn: (newCredentials) => {
+    mutationFn: (newCredentials: {
+      email: string | null;
+      password: string | null;
+    }) => {
       return axios.post(
         "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/",
         newCredentials,
       );
     },
+    onError: (error: Error) => {
+      setError(error as Error);
+    },
+    onSuccess: (
+      response: AxiosResponse<{
+        access_token: string;
+        user: object;
+      }>,
+    ) => {
+      signInContext.setAuth({
+        authenticated: true,
+        access_token: response.data.access_token,
+        user: response.data.user as object,
+      });
+      router.push("/candidate");
+    },
   });
-
-  // TODO: only temp until authentication and roles is fully working
-  if (mutation.isSuccess) {
-    signInContext.setAuth({
-      authenticated: true,
-      user: {
-        email: mutation.variables!.email,
-        access_token: mutation.data!.access_token,
-      },
-    });
-    redirect("/candidate");
-  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // console.log(data);
-    const form_email = data.get("email");
-    const form_password = data.get("password");
+    const form_email = data.get("email") as string;
+    const form_password = data.get("password") as string;
 
     mutation.mutate({ email: form_email, password: form_password });
   };
@@ -106,11 +114,7 @@ export default function SignInPage() {
         </Link>
 
         <Box sx={{ marginTop: "10px" }}>
-          {mutation.isError && (
-            <Alert severity="error">
-              {mutation.error.response.data.error_description}
-            </Alert>
-          )}
+          {error && <Alert severity="error">{error.message}</Alert>}
         </Box>
         <Box sx={{ textAlign: "right", mb: 1 }}>
           <Button
