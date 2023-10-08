@@ -14,7 +14,10 @@ import Typography from "@mui/material/Typography";
 // query
 import axios, { AxiosResponse } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { SignInProviderContext } from "@/components/providers/SignInProvider";
+import {
+  Authentication,
+  SignInProviderContext,
+} from "@/components/providers/SignInProvider";
 import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
@@ -41,10 +44,11 @@ export default function SignInPage() {
         user: object;
       }>,
     ) => {
+      console.log(response.data);
       signInContext.setAuth({
         authenticated: true,
         access_token: response.data.access_token,
-        user: response.data.user as object,
+        user: response.data.user as Authentication["user"],
       });
       router.push("/candidate");
     },

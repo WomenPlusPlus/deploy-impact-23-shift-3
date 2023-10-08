@@ -4,7 +4,7 @@ import { createContext, FC, PropsWithChildren, useState } from "react";
 export type Authentication = {
   authenticated: boolean;
   access_token: string;
-  user: null | object;
+  user: null | { email: string; id: string };
 };
 
 type Context = {
