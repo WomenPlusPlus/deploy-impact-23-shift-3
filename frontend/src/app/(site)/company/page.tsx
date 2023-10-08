@@ -12,14 +12,10 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query"
 
-import { getSkills } from "@/components/skills"
+import { getSkills } from "@/components/skills/skills"
 
 // Create a client --- beleive this has been done in the provider
 // const queryClient = new QueryClient()
-
-// interface Skill {
-//   skill_name: string;
-// }
 
 export default function CompanyPage() {
   // Access the client

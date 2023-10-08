@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper"
 
 export const metadata = {
     title: 'SHIFT - Forgot password',
-    description: 'Shift_Enter App - Authentication - Sign in',
+    description: 'Shift_Enter App - Authentication - Forgot password',
   };
 
 export default function ForgotLayout({

@@ -17,3 +17,8 @@ type SignupError = {
     code: number,
     msg: string
 }
+
+type Credentials = {
+    email: string,
+    password: string
+}

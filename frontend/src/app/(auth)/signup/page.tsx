@@ -9,29 +9,14 @@ import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid"
 
 import { Alert } from "@mui/material"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 import { redirect } from "next/navigation";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Shit+Enter
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  )
-}
+// query
+import axios from "axios"
+import {useMutation} from "@tanstack/react-query"
 
 export default function SignUpPage() {
   // TODO: Temporary for layout, will change when react query is implemented
@@ -41,52 +26,33 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [signedIn, setSignedIn] = useState(false)
 
-    // TODO: only temp until authentication and roles is fully working
-    if(signedIn){
-      redirect("/candidate")
-    }
-  
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: (newCredentials) => {
+      return axios.post(
+        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/signup/", newCredentials
+      )
+    },
+  })
 
-  const handelEmailChange = (event) => {
-    setEmail(event.target.value)
+  // TODO: only temp until authentication and roles is fully working
+  if(mutation.isSuccess){
+    console.log('successMsg',mutation.data.data.msg);
+   // redirect("/candidate")
   }
 
-  const makeApiCall = async (data: FormData) => {
-    const email = data.get("email")
-    const password = data.get("password")
-
-    // TODO: api always returns 200 -- should be changed to 401 when user login incorrect(backend task)
-    // TODO: temp
-    const res = await fetch(
-      "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/signup/",
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      }
-    )
-
-    const loginData: Promise<SignupError> = res.json()
-    const showLoginData = await loginData
-
-    console.log("showLoginData", showLoginData)
-
-    if (showLoginData.code === 422 || showLoginData.code === 400 ) {
-      console.log("error", showLoginData.msg)
-      setErrorMsg(showLoginData.msg)
-    }else{
-      setSignedIn(true)
-    }
+  //TODO: is always returning 200 ok when there is an error needs changing (backend)
+  if(mutation.isError){
+    console.log(mutation.data);
+   // redirect("/candidate")
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    setErrorMsg("")
-
-    makeApiCall(data)
+    const form_email = data.get("email")
+    const form_password = data.get("password")
+    mutation.mutate({ email: form_email, password: form_password })
   }
 
   return (
@@ -102,8 +68,6 @@ export default function SignUpPage() {
     
     }}
   >
-      {/* <LockOutlinedIcon /> */}
-
       <Typography component="h1" variant="h4" align="left">
         Welcome to SHIFT!
       </Typography>
@@ -128,6 +92,7 @@ export default function SignUpPage() {
           autoComplete="email"
           autoFocus
         />
+
         <TextField
           margin="normal"
           required
@@ -144,7 +109,11 @@ export default function SignUpPage() {
                 </Link> */}
 
         <Box sx={{ marginTop: "10px" }}>
-          {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {mutation.isSuccess && (
+            <Alert severity="error">
+              {mutation.data.data.msg}
+            </Alert>
+          )}
         </Box>
         <Box sx={{ textAlign: "right", mb: 1 }}>
           <Button
