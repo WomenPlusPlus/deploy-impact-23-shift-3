@@ -1,29 +1,24 @@
 "use client";
 
 import * as React from "react";
+import { useContext } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { Alert } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-
-import { redirect } from "next/navigation";
 
 // query
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
+import { redirect } from "next/navigation";
 
 export default function SignInPage() {
-  // TODO: Temporary for layout, will change when react query is implemented
-  const [email, setEmail] = useState("");
-  const [idError, setIsError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
+  const signInContext = useContext(SignInProviderContext);
 
   // Mutations
   const mutation = useMutation({
@@ -37,7 +32,13 @@ export default function SignInPage() {
 
   // TODO: only temp until authentication and roles is fully working
   if (mutation.isSuccess) {
-    console.log(mutation.data.data);
+    signInContext.setAuth({
+      authenticated: true,
+      user: {
+        email: mutation.variables!.email,
+        access_token: mutation.data!.access_token,
+      },
+    });
     redirect("/candidate");
   }
 
