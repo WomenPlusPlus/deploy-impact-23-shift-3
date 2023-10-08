@@ -13,8 +13,10 @@ urlpatterns = [
     path("", include(router.urls)),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    path("api/login/", LoginSignupView.as_view()),
-    path("api/signup/", LoginSignupView.as_view()),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+urlpatterns.extend(
+    [path(route=i["route"], view=i["view"], name=i["name"]) for i in singleViews]
+)

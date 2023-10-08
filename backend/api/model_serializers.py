@@ -1,3 +1,5 @@
+from api.association_models import *
+from api.companies_models import *
 from api.models import *
 from django.contrib.auth.models import User
 from rest_framework import serializers
@@ -14,7 +16,7 @@ class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
 class SkillsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Skills
-        fields = "__all__"
+        fields = ["skill_name"]
         many = True
 
 
@@ -22,13 +24,6 @@ class AssociationsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Associations
         fields = ["name", "main_focus", "association_id"]
-
-
-class CandidatesSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Candidates
-        fields = "__all__"
-        many = True
 
 
 class InvitationSerializer(serializers.HyperlinkedModelSerializer):

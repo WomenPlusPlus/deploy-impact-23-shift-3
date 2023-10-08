@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from os import getenv, path
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv()
+ENV_FILE = find_dotenv(raise_error_if_not_found=True)
+load_dotenv(ENV_FILE)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,11 +56,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # Cors middleware
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    # End cors middleware
+    "api.services.RefreshTokenMiddleware",
 ]
 
 ROOT_URLCONF = "shift_3_womenpp.urls"
@@ -190,4 +188,4 @@ CORS_ALLOW_HEADERS = [
 
 STATIC_ROOT = path.join(BASE_DIR, "static/")
 
-# AUTH_USER_MODEL = ""
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

@@ -1,9 +1,9 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from api import serializers as model_serializers
 from rest_framework import serializers
-from api.services import login_signup_user
+from api.services import gotrue_auth_request
 from django.db import models
 from api.models import CandidatesDocuments
 
@@ -29,18 +29,27 @@ class InvitationsViewSet(viewsets.ModelViewSet):
     serializer_class = model_serializers.InvitationSerializer
 
 
-class LoginSignupView(APIView):
+class LoginView(APIView):
     def post(self, request):
-        payload = login_signup_user(request)
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
 
-        if "error" in payload.keys():
-            if payload["error"] == "invalid_grant":
-                status_code = status.HTTP_401_UNAUTHORIZED
-            else:
-                status_code = status.HTTP_400_BAD_REQUEST
-        else:
-            status_code = status.HTTP_200_OK
 
+class LogoutView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
+
+
+class SignupView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
+
+
+class RecoverView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
         return Response(payload, status=status_code)
 
 
@@ -77,8 +86,3 @@ class FileSerializer(serializers.ModelSerializer):
 class FileViewSet(viewsets.ModelViewSet):
     queryset = CandidatesDocuments.objects.all()
     serializer_class = FileSerializer
-
-
-"""
-class CourseListApi(Authentication, APIView)
-"""
