@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from django.http import Http404
 from rest_framework import status
 import jwt
-from api.auth_models import ResfreshToken
+from api.auth_models import ResfreshToken, AuthUsers
 
 load_dotenv()
 
@@ -19,23 +19,37 @@ def gotrue_auth_request(request: requests) -> dict:
 
     if endpoint == "login":
         request_url += "token?grant_type=password"
-    elif endpoint in ["signup", "recover", "logout", "invite"]:
+    elif endpoint in ["verify", "recover", "logout", "signup"]:
         request_url += endpoint
     else:
         raise Http404
 
-    headersList = {
+    # Common for all Requests
+    payload = request.data
+
+    headers_list = {
         "apikey": SUPABASE_PUBLIC_APIKEY,
         "Content-Type": "application/json",
     }
 
     if "Authorization" in request.headers.keys():
-        headersList["Authorization"] = request.headers["Authorization"]
+        headers_list["Authorization"] = request.headers["Authorization"]
 
-    payload = json.dumps(request.data)
+    # Handle vrify (signup) requests
+    if endpoint == "signup":
+        response_verification = handle_signup_endpoint(request, payload)
 
+        if "error" in response_verification:
+            return response_verification, status.HTTP_401_UNAUTHORIZED
+
+    # Send request
     response = requests.request(
-        "POST", request_url, data=payload, headers=headersList, verify=False
+        "POST",
+        request_url,
+        data=json.dumps(payload),
+        headers=headers_list,
+        # ToDo implement true certificate
+        verify=False,
     )
 
     if response.text != "":
@@ -46,9 +60,32 @@ def gotrue_auth_request(request: requests) -> dict:
     else:
         response_payload = {}
 
-    status_code = response.status_code
+    return response_payload, response.status_code
 
-    return response_payload, status_code
+
+def handle_signup_endpoint(request: requests, payload: json) -> json:
+    if "token" in payload.keys():
+        try:
+            UserSigningUp = AuthUsers.objects.get(confirmation_token=payload["token"])
+        except AuthUsers.DoesNotExist:
+            return {
+                "error": "invalid_token",
+                "error_detail": "Can't signup, the provided token is not associated with any account.",
+            }
+
+        if UserSigningUp.email != payload["email"]:
+            return {
+                "error": "invalid_token",
+                "error_detail": "Can't signup, the provided email does not match the email associated with this token.",
+            }
+
+        # If sucessful
+        return {"token": UserSigningUp.confirmation_token}
+    else:
+        return {
+            "error": "invalid_token",
+            "error_detail": "Can't signup, no token present in body",
+        }
 
 
 def decode_access_token(token: str) -> json:
