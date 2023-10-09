@@ -12,7 +12,7 @@ singleViews = [
     {
         "route": "api/signup/",
         "view": SignupView.as_view(),
-        "name": "logout",
+        "name": "signup",
     },
     {
         "route": "api/recover/",
@@ -22,7 +22,12 @@ singleViews = [
     {
         "route": "api/logout/",
         "view": LogoutView.as_view(),
-        "name": "recover",
+        "name": "logout",
+    },
+    {
+        "route": "api/invite/",
+        "view": InviteView.as_view(),
+        "name": "invite",
     },
 ]
 

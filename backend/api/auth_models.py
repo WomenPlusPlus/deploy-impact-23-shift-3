@@ -60,3 +60,14 @@ class AuthUsers(models.Model):
         managed = False
         db_table = '"auth"."users"'
         db_table_comment = "Auth: Stores user login data within a secure schema."
+
+
+class ResfreshToken(models.Model):
+    id = models.IntegerField(primary_key=True)
+    token = models.CharField(max_length=255)
+    session_id = models.UUIDField()
+
+    class Meta:
+        managed = False
+        db_table = '"auth"."refresh_token"'
+        db_table_comment = "Auth: Stores users refresh tokens."

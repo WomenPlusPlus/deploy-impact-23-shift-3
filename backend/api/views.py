@@ -6,6 +6,7 @@ from rest_framework import serializers
 from api.services import gotrue_auth_request
 from django.db import models
 from api.models import CandidatesDocuments
+from api.auth_models import ResfreshToken
 
 
 class AuthUserViewSet(viewsets.ModelViewSet):
@@ -53,6 +54,12 @@ class RecoverView(APIView):
         return Response(payload, status=status_code)
 
 
+class InviteView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
+
+
 class CandidatesViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Candidates.objects.all()
     serializer_class = model_serializers.CandidatesSerializer
@@ -81,6 +88,12 @@ class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CandidatesDocuments
         fields = ["file_name", "file", "description", "candidate", "created_at"]
+
+
+class RefreshTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResfreshToken
+        fields = "__all__"
 
 
 class FileViewSet(viewsets.ModelViewSet):
