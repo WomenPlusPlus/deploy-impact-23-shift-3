@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
-import Header from "./header";
+import Header from "@/components/site/header"
 import Footer from "./footer";
 import { CssBaseline } from "@mui/material";
 
@@ -33,30 +33,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sections = [
-    { title: "Dashboard", url: "/candidate" },
-    { title: "Jobs", url: "#" },
-    { title: "Companies", url: "#" },
-    { title: "Profile", url: "/candidate-profile" },
-    { title: "Settings", url: "#" },
-  ];
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-      }}
-    >
-      <CssBaseline />
-      <Header sections={sections} title={"Dashboard"} />
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh",
+    }}
+  >
+    <CssBaseline />
+    <Header title={'Dashboard'} />
+ 
 
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
-        {children}
-      </Container>
+    {/* <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg"> */}
+      {children}
+    {/* </Container> */}
 
-      <Footer />
-    </Box>
+    <Footer />
+  </Box>
   );
 }

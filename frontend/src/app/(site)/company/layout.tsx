@@ -3,19 +3,19 @@ import SubHeader from "@/components/site/subHeader"
 import Container from "@mui/material/Container"
 
 export const metadata = {
-  title: "SHIFT - Candidate - profile",
-  description: "Shift_Enter App - Candidate - Dashboard",
+  title: "SHIFT - Company - profile",
+  description: "Shift_Enter App - Company - Dashboard",
 }
 
-export default function CandidateLayout({
+export default function ForgotLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const sections = [
-    { title: 'Dashboard', url: '/candidate' },
+    { title: 'Dashboard', url: '/company' },
     { title: 'Jobs', url: '#' },
-    { title: 'Companies', url: '#' },
+    { title: 'Candidates', url: '#' },
     { title: 'Profile', url: '#' },
     { title: 'Settings', url: '#' },
   ];

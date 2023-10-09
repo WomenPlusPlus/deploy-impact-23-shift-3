@@ -107,7 +107,7 @@ export default function SignInPage() {
           required
           fullWidth
           name="password"
-          label="Password"
+          label="Password"  
           type="password"
           id="password"
           autoComplete="current-password"
@@ -118,7 +118,7 @@ export default function SignInPage() {
         </Link>
 
         <Box sx={{ marginTop: "10px" }}>
-          {error && <Alert severity="error">{error.message}</Alert>}
+          {error && <Alert severity="error">{mutation.error.response.data.error_description}</Alert>}
         </Box>
         <Box sx={{ textAlign: "right", mb: 1 }}>
           <Button
