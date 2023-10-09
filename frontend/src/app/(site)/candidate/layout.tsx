@@ -3,7 +3,7 @@ import SubHeader from "@/components/site/subHeader"
 import Container from "@mui/material/Container"
 
 export const metadata = {
-  title: "SHIFT - Candidate - profile",
+  title: "SHIFT - Candidate - Dashboard",
   description: "Shift_Enter App - Candidate - Dashboard",
 }
 
@@ -14,10 +14,10 @@ export default function CandidateLayout({
 }) {
   const sections = [
     { title: 'Dashboard', url: '/candidate' },
-    { title: 'Jobs', url: '#' },
-    { title: 'Companies', url: '#' },
-    { title: 'Profile', url: '#' },
-    { title: 'Settings', url: '#' },
+    { title: 'My Jobs', url: '/candidate/my-jobs' },
+    { title: 'Companies', url: 'companies' },
+    { title: 'Profile', url: 'profile' },
+    { title: 'Settings', url: 'settings' },
   ];
   return <>
   {/* candidate header */}
