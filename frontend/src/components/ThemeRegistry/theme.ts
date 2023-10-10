@@ -31,6 +31,18 @@ const theme = createTheme({
       },
     },
 
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+          ":hover": {
+            // textDecoration: "underline",
+            borderBottom: "solid 2px red"
+          },
+        },
+      },
+    },
+
     // MuiButtonBase:{
     //   defaultProps: {
     //     // The props to change the default for.

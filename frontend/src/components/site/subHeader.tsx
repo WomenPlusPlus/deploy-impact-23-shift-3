@@ -39,7 +39,7 @@ export default function SubHeader(props: HeaderProps) {
           variant="body2"
           underline="none"
           href={section.url}
-          sx={{ p: 1, mx: 3, display: "inline-block", maxWidth: "50%" }}
+          sx={{ mx: 3, display: "inline-block", maxWidth: "50%" }}
         >
           {section.title}
         </Link>
