@@ -1,12 +1,12 @@
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from api import serializers as model_serializers
-from rest_framework import serializers
-from api.services import gotrue_auth_request
 from django.db import models
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from api import serializers as model_serializers
+from api.auth_models import RefreshTokens
 from api.models import CandidatesDocuments
-from api.auth_models import ResfreshToken
+from api.services import gotrue_auth_request
+from rest_framework import serializers, viewsets
 
 
 class AuthUserViewSet(viewsets.ModelViewSet):
@@ -92,7 +92,7 @@ class FileSerializer(serializers.ModelSerializer):
 
 class RefreshTokenSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ResfreshToken
+        model = RefreshTokens
         fields = "__all__"
 
 

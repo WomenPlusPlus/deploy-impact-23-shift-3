@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 from os import getenv, path
+from pathlib import Path
+
 from dotenv import find_dotenv, load_dotenv
 
 ENV_FILE = find_dotenv(raise_error_if_not_found=True)
@@ -41,11 +42,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    # External apps
     "rest_framework",
-    "api",
+    "drf_spectacular",
     # Remove unused files from storage, not default Django behaviour
     "django_cleanup.apps.CleanupConfig",
+    # Enable CORS
     "corsheaders",
+    # Internal apps
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -57,7 +62,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "api.services.RefreshTokenMiddleware",
+    # Internal middleware
+    "api.middleware.RefreshTokenMiddleware",
 ]
 
 ROOT_URLCONF = "shift_3_womenpp.urls"
@@ -80,7 +86,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "shift_3_womenpp.wsgi.application"
 
-REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 
 # Database
@@ -138,6 +147,15 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
+}
+
+# DRF Spectacular
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Shift Enter API",
+    "DESCRIPTION": "Welcome to shift enter!",
+    "VERSION": "0.12",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 

@@ -62,12 +62,20 @@ class AuthUsers(models.Model):
         db_table_comment = "Auth: Stores user login data within a secure schema."
 
 
-class ResfreshToken(models.Model):
-    id = models.IntegerField(primary_key=True)
-    token = models.CharField(max_length=255)
+class RefreshTokens(models.Model):
+    instance_id = models.UUIDField(blank=True, null=True)
+    id = models.BigAutoField(primary_key=True)
+    token = models.CharField(unique=True, max_length=255, blank=True, null=True)
+    user_id = models.CharField(max_length=255, blank=True, null=True)
+    revoked = models.BooleanField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    parent = models.CharField(max_length=255, blank=True, null=True)
     session_id = models.UUIDField()
 
     class Meta:
         managed = False
-        db_table = '"auth"."refresh_token"'
-        db_table_comment = "Auth: Stores users refresh tokens."
+        db_table = '"auth"."refresh_tokens"'
+        db_table_comment = (
+            "Auth: Store of tokens used to refresh JWT tokens once they expire."
+        )

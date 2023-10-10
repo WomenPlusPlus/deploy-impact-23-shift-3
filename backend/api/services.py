@@ -1,11 +1,19 @@
-import requests, json, os
-from dotenv import load_dotenv
+import json
+import logging
+import os
+
+import requests
 from django.http import Http404
+from dotenv import load_dotenv
+
+from api.auth_models import AuthUsers
 from rest_framework import status
-import jwt
-from api.auth_models import ResfreshToken, AuthUsers
 
 load_dotenv()
+
+logging.basicConfig(
+    level=int(os.environ["LOGGING_LEVEL"]), filename="logs/services.log"
+)
 
 SUPABASE_AUTH_URL = os.environ["SUPABASE_AUTH_URL"]
 SUPABASE_PUBLIC_APIKEY = os.environ["SUPABAE_PUBLIC_APIKEY"]
@@ -15,16 +23,8 @@ JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
 def gotrue_auth_request(request: requests) -> dict:
     request_url = SUPABASE_AUTH_URL
 
-    endpoint = request.path.split("/")[-2]
-
-    if endpoint == "login":
-        request_url += "token?grant_type=password"
-    elif endpoint in ["verify", "recover", "logout", "signup"]:
-        request_url += endpoint
-    else:
-        raise Http404
-
     # Common for all Requests
+    logging.debug("request at gotrue", request)
     payload = request.data
 
     headers_list = {
@@ -35,9 +35,26 @@ def gotrue_auth_request(request: requests) -> dict:
     if "Authorization" in request.headers.keys():
         headers_list["Authorization"] = request.headers["Authorization"]
 
-    # Handle vrify (signup) requests
+    endpoint = request.path.split("/")[-2]
+
+    # Verify typpe of request
+    if endpoint == "login":
+        if "password" in payload.keys():
+            request_url += "token?grant_type=password"
+        elif "refresh_token" in payload.keys():
+            request_url += "token?grant_type=refresh_token"
+        else:
+            return {"error": "Invalid login details"}, status.HTTP_400_BAD_REQUEST
+
+    elif endpoint in ["verify", "recover", "logout", "signup"]:
+        request_url += endpoint
+
+    else:
+        raise Http404
+
+    # Validate the signup request
     if endpoint == "signup":
-        response_verification = handle_signup_endpoint(request, payload)
+        response_verification = validate_signup(request, payload)
 
         if "error" in response_verification:
             return response_verification, status.HTTP_401_UNAUTHORIZED
@@ -63,7 +80,7 @@ def gotrue_auth_request(request: requests) -> dict:
     return response_payload, response.status_code
 
 
-def handle_signup_endpoint(request: requests, payload: json) -> json:
+def validate_signup(request: requests, payload: json) -> json:
     if "token" in payload.keys():
         try:
             UserSigningUp = AuthUsers.objects.get(confirmation_token=payload["token"])
@@ -86,78 +103,3 @@ def handle_signup_endpoint(request: requests, payload: json) -> json:
             "error": "invalid_token",
             "error_detail": "Can't signup, no token present in body",
         }
-
-
-def decode_access_token(token: str) -> json:
-    token = token.split("bearer ")[-1]
-
-    try:
-        decoded_jwt = jwt.decode(
-            token,
-            JWT_SECRET_KEY,
-            algorithms=["HS256"],
-            audience=["authenticated", "service_role"],
-        )
-    except jwt.exceptions.ExpiredSignatureError as err:
-        token = refresh_expired_token(token)
-    except Exception as error:
-        return error
-
-
-# Return JSON decoded token
-
-
-class RefreshTokenMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-        # One-time configuration and initialization.
-
-    def __call__(self, request):
-        # Code to be executed for each request before
-        # # the view (and later middleware) are called.
-
-        if "Authorization" in request.headers:
-            decoded_token = decode_access_token(request.headers["Authorization"])
-        else:
-            print("No access token")
-
-        response = self.get_response(request)
-
-        # response["role"] = role
-
-        # Code to be executed for each request/response after
-        # the view is called.
-
-        return response
-
-
-def refresh_expired_token(token: str) -> json:
-    """Refreshes the access token if it has expired
-
-    Should only be called if the token signature is already verified.
-
-    Args:
-        token (str): the expired and but valid JWT token
-    """
-    decoded_jwt = jwt.decode(
-        token,
-        algorithms=["HS256"],
-        verify_signature=False,
-    )
-
-    access_token = decoded_jwt.session_id
-    try:
-        refresh_token = ResfreshToken.objects.get(
-            session_id=decode_access_token.session_id
-        ).refresh_token
-
-    except ResfreshToken.DoesNotExist:
-        refresh_token = {
-            "error_description": "Token does not have a valid refresh token.",
-            "status_code": status.HTTP_401_UNAUTHORIZED,
-        }
-
-    # If suceeded, return json with new token and info
-
-    # If failerd, return JSON with failed message
-    pass

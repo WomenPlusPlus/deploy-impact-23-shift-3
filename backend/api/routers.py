@@ -1,5 +1,6 @@
-from api.mixed_router import APIRouter
 from django.urls import path
+
+from api.mixed_router import APIRouter
 from api.views import *
 
 # Define list - replace my_api_view with any view class that subclasses DRF's APIView (including Login, Logout views e.g. django-rest-knox)
