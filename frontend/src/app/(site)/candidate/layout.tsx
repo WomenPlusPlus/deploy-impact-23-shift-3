@@ -12,17 +12,17 @@ export default function CandidateLayout({
   children: React.ReactNode;
 }) {
   const sections = [
-    { title: "Dashboard", url: "/candidate", icon:"home" },
-    { title: "My Jobs", url: "/candidate/my-jobs", icon:"jobs"},
-    { title: "Companies", url: "/candidate/companies", icon:"company"},
-    { title: "Profile", url: "/candidate/profile", icon:"profile"},
-    { title: "Settings", url: "/candidate/settings", icon:"settings" },
+    { title: "Dashboard", url: "/candidate", icon: "home" },
+    { title: "My Jobs", url: "/candidate/my-jobs", icon: "jobs" },
+    { title: "Companies", url: "/candidate/companies", icon: "company" },
+    { title: "Profile", url: "/candidate/profile", icon: "profile" },
+    { title: "Settings", url: "/candidate/settings", icon: "settings" },
   ];
   return (
     <>
       {/* candidate header */}
-      <SubHeader sections={sections} />
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
+      <SubHeader sections={sections} title={""} />
+      <Container component="main" sx={{ mt: 3, mb: 2 }} maxWidth="lg">
         {children}
       </Container>
     </>

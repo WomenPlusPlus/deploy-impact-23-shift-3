@@ -33,16 +33,12 @@ const theme = createTheme({
 
     MuiLink: {
       styleOverrides: {
-        root: {
-          textDecoration: "none",
-          ":hover": {
-            // textDecoration: "underline",
-            // borderBottom: "solid 2px red"
-          },
-        },
-        selected:{
-          backgroundColor:"pink"
+        "root": {
+          "&.Mui-selected": {
+            "backgroundColor": "pink"
+          }
         }
+ 
       },
     },
 
@@ -66,13 +62,25 @@ const theme = createTheme({
     MuiButton: {
       variants: [
         {
-          props: { variant: 'contained' },
+          props: { variant: 'contained', },
           style: {
             borderRadius: '40px',
             //backgroundColor:'#14366F',
             // border: `2px dashed }`,
           },
+          
         },
+        {
+          props: { variant: 'outlined', },
+          style: {
+            borderRadius: '40px',
+            //backgroundColor:'#14366F',
+            // border: `2px dashed }`,
+          },
+          
+        },
+
+
         {
           props: { variant: 'contained', color: 'secondary' },
           style: {

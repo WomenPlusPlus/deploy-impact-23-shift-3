@@ -8,9 +8,12 @@ import Typography from "@mui/material/Typography";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
 import { useQuery } from "@tanstack/react-query";
 import Divider from "@mui/material/Divider";
-import { Avatar, FormControl } from "@mui/material";
+import { Avatar, Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+
 import { fetchCandidate } from "@/lib/fetch-candidate";
 
 export default function ProfilePage() {
@@ -30,44 +33,67 @@ export default function ProfilePage() {
 
   return (
     <Container>
-      <Card sx={{ padding: "8px" }}>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          <Box>
-            <Typography variant="h6">BASIC DETAILS</Typography>
-          </Box>
-          <Divider />
-          <Box
-            sx={{ display: "flex", gap: "56px" }}
-            paddingX={"40px"}
-            paddingY={"8px"}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Avatar
-                alt="Avatar"
-                src="images/avatar.png"
-                sx={{ width: 120, height: 120 }}
-              />
-            </Box>
-            <Box sx={{ display: "flex", flexGrow: 1 }}>
-              <FormControl fullWidth variant="standard">
-                <TextField
-                  id={"email"}
-                  size={"small"}
-                  value={signInContext.auth?.user?.email || ""}
-                  variant={"standard"}
-                  label={"Email"}
-                />
-              </FormControl>
-            </Box>
-          </Box>
+      <Grid container sx={{ my: 3 }}>
+        <Grid item sm={8}>
+          <Typography variant="h5" component="h1">
+            Your personal profile
+          </Typography>
+
+          <Typography variant="body1" component="p">
+            Let us know you better and how can you be contacted for an opening
+            position.
+          </Typography>
+        </Grid>
+
+        <Grid item sx={{ textAlign: "right" }} sm={4}>
+          <Button variant="outlined">Preview your profile</Button>
+        </Grid>
+      </Grid>
+
+      {/* Secrion one Basic info  move to component */}
+      <Paper sx={{ px: 3, py: 3, borderRadius: "16px" }} elevation={3}>
+        <Box>
+          <Typography component="h2" variant="h6">
+            Basic info
+          </Typography>
+          <Typography component="p" variant="caption">
+            Indicates required *
+          </Typography>
         </Box>
-      </Card>
+
+        <Grid container my={3}>
+          <Grid
+            item
+            sm={6}
+            sx={{ paddingRight: "10px" }}
+          >
+            <TextField
+              id={"first_name"}
+              size={"small"}
+              value={signInContext.auth?.user?.first_name || ""}
+              label={"First Name *"}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid
+            item
+            sm={6}
+            sx={{ paddingLeft: "10px" }}
+          >
+            <TextField
+              id={"last_name"}
+              size={"small"}
+              value={signInContext.auth?.user?.last_name || ""}
+              label={"Last Name *"}
+              fullWidth
+            />
+          </Grid>
+        </Grid>
+
+        <FormControl fullWidth variant="standard"></FormControl>
+      </Paper>
+      {/* Section one Basic info End */}
     </Container>
   );
 }

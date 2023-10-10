@@ -1,7 +1,5 @@
 "use client";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
 
@@ -13,6 +11,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
+import { usePathname } from "next/navigation";
+
 interface HeaderProps {
   title: string;
   sections: ReadonlyArray<{
@@ -23,8 +23,10 @@ interface HeaderProps {
 }
 
 export default function SubHeader(props: HeaderProps) {
-  const { sections, title } = props;
-  //TODO: add title to props so can use it to determine current page
+  const pathName = usePathname();
+
+  const { sections } = props;
+
   return (
     <Container>
       <Toolbar
@@ -39,13 +41,22 @@ export default function SubHeader(props: HeaderProps) {
       >
         {sections.map((section) => (
           <Link
-            className="selected"
             color="primary"
             key={section.title}
             variant="body2"
             underline="none"
             href={section.url}
-            sx={{ mx: 3, mb: 2, display: "inline-block", textAlign: "center" }}
+            sx={
+              section.url === pathName
+                ? {
+                    mx: 3,
+                    display: "inline-block",
+                    textAlign: "center",
+                    borderBottom: "3px solid navy",
+                    pb: 1,
+                  }
+                : { mx: 3, display: "inline-block", textAlign: "center", pb: 1 }
+            }
           >
             <Container>
               {section.icon === "home" ? (
