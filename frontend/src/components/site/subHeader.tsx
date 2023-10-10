@@ -1,22 +1,20 @@
 "use client";
-import AppBar from "@mui/material/AppBar";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-// import { Interface } from "readline"
-
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
 
+// sub nav icons
 import HomeIcon from "@mui/icons-material/Home";
 import WorkIcon from "@mui/icons-material/Work";
 import BusinessIcon from "@mui/icons-material/Business";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 interface HeaderProps {
+  title: string;
   sections: ReadonlyArray<{
     title: string;
     url: string;
@@ -42,7 +40,7 @@ export default function SubHeader(props: HeaderProps) {
         {sections.map((section) => (
           <Link
             className="selected"
-            color="inherit"
+            color="primary"
             key={section.title}
             variant="body2"
             underline="none"
@@ -67,6 +65,12 @@ export default function SubHeader(props: HeaderProps) {
               ) : null}
               {section.icon === "settings" ? (
                 <SettingsIcon
+                  color="inherit"
+                  sx={{ display: "inline-block" }}
+                />
+              ) : null}
+              {section.icon === "candidates" ? (
+                <PeopleAltIcon
                   color="inherit"
                   sx={{ display: "inline-block" }}
                 />
