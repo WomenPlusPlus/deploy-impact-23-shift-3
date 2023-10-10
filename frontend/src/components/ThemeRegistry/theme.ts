@@ -37,11 +37,15 @@ const theme = createTheme({
           textDecoration: "none",
           ":hover": {
             // textDecoration: "underline",
-            borderBottom: "solid 2px red"
+            // borderBottom: "solid 2px red"
           },
         },
+        selected:{
+          backgroundColor:"pink"
+        }
       },
     },
+
 
     // MuiButtonBase:{
     //   defaultProps: {

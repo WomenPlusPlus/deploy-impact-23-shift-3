@@ -12,11 +12,11 @@ export default function CandidateLayout({
   children: React.ReactNode;
 }) {
   const sections = [
-    { title: "Dashboard", url: "/candidate" },
-    { title: "My Jobs", url: "/candidate/my-jobs" },
-    { title: "Companies", url: "/companies" },
-    { title: "Profile", url: "/candidate/profile" },
-    { title: "Settings", url: "/settings" },
+    { title: "Dashboard", url: "/candidate", icon:"home" },
+    { title: "My Jobs", url: "/candidate/my-jobs", icon:"jobs"},
+    { title: "Companies", url: "/candidate/companies", icon:"company"},
+    { title: "Profile", url: "/candidate/profile", icon:"profile"},
+    { title: "Settings", url: "/candidate/settings", icon:"settings" },
   ];
   return (
     <>

@@ -21,6 +21,7 @@ export default function RootLayout({
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
+        backgroundColor:"#FCF8F4"
       }}
     >
       <CssBaseline />

@@ -10,7 +10,9 @@ export default function Footer() {
         py: 3,
         px: 2,
         mt: "auto",
-        backgroundColor: "tomato",
+        borderTop:1,
+        borderColor: "divider",
+        backgroundColor: "#FCF8F4",
       }}
     >
       <Container maxWidth="sm">
