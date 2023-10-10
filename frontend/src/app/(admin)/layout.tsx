@@ -20,6 +20,7 @@ export default function RootLayout({
     <Box>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
+        
         {children}
       </Grid>
     </Box>
