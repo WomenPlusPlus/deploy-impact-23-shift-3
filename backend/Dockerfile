@@ -16,6 +16,10 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
 
+# Create log files and give permission to write at runtime
+RUN mkdir logs \ 
+    && chmod 0755 logs/
+
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
 ARG UID=10001
@@ -28,8 +32,10 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
+# Enabe unicorn access to files
 RUN apk update
 RUN apk add python3 py3-pip py3-psycopg2
+
 
 COPY docker_requirements.txt docker_requirements.txt
 RUN  --mount=type=cache,target=/root/.cache/pip pip3 install -r docker_requirements.txt
@@ -41,7 +47,7 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Switch to the non-privileged user to run the application.
-USER appuser
+# USER appuser
 
 # Expose the port that the application listens on.
 EXPOSE 8000

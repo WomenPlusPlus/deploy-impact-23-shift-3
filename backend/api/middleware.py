@@ -15,47 +15,42 @@ load_dotenv()
 JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
 
 logging.basicConfig(
-    level=int(os.environ["LOGGING_LEVEL"]), filename="logs/middleware.log"
+    level=int(os.environ["LOGGING_LEVEL"]),
+    handlers=[logging.FileHandler("logs/middleware.log"), logging.StreamHandler()],
 )
 
 
 class RefreshTokenMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        # One-time configuration and initialization.
-        print(
-            "Setting up",
-        )
 
     def __call__(self, request):
-        # Code to be executed for each request before
-        # # the view (and later middleware) are called.
-        logging.debug("Runnning middleware")
         if "Authorization" in request.headers:
-            print(
-                "Attempt to decode",
-            )
-            decoded_token = decode_access_token(request.headers["Authorization"])
-            print("Middleware token before req2:", decoded_token)
-        else:
-            print("No access token")
+            decoded_token = authenticate_access_token(request.headers["Authorization"])
+            logging.debug("Updated request token", decoded_token)
+            logging.debug("decoded_token", decoded_token)
+            if not "error" in decoded_token.keys():
+                request.META["Authorization"] = decoded_token
 
         response = self.get_response(request)
-
-        # response["role"] = role
-
-        # Code to be executed for each request/response after
-        # the view is called.
 
         return response
 
 
-def decode_access_token(token: str) -> json:
+def authenticate_access_token(token: str) -> json:
+    """Authenticates the token using the JWT key
+
+    Args:
+        token (str): the JWT token
+
+    Returns:
+        json: returns a JSON with the token in case it is valid, otherwise returns a JSON with error
+    """
     if token[0:6] in ["Bearer", "bearer"]:
         token = token[7:]
 
     try:
-        decoded_jwt = jwt.decode(
+        jwt.decode(
             token,
             JWT_SECRET_KEY,
             algorithms=["HS256"],
@@ -67,7 +62,7 @@ def decode_access_token(token: str) -> json:
     except Exception as error:
         return error
 
-    return decoded_jwt
+    return token
 
 
 def refresh_expired_token(token: str) -> json:
@@ -78,15 +73,15 @@ def refresh_expired_token(token: str) -> json:
     Args:
         token (str): the expired and but valid JWT token
     """
-    print("Decoding token")
     decoded_jwt = jwt.decode(
         token, algorithms=["HS256"], options={"verify_signature": False}
     )
 
     access_token = decoded_jwt["session_id"]
     try:
-        refresh_token = RefreshTokens.objects.get(session_id=access_token).token
-        print("refresh token", refresh_token)
+        refresh_token = RefreshTokens.objects.get(
+            session_id=access_token, revoked=False
+        ).token
 
     except RefreshTokens.DoesNotExist:
         refresh_token = {
@@ -99,12 +94,14 @@ def refresh_expired_token(token: str) -> json:
         request_new_token = requests.Request(
             "POST",
             "https://127.0.0.1/api/login/",
-            params={"data": {"refresh_token": refresh_token}},
-        ).prepare()
+        )
 
-        new_token = gotrue_auth_request(request_new_token)
+        request_new_token = request_new_token.prepare()
+        request_new_token.data = {"refresh_token": refresh_token}
+        request_new_token.path = "https://127.0.0.1/api/login/"
+
+        new_token, _ = gotrue_auth_request(request_new_token)
     except Exception as e:
         return {"error": "Failed refresh token request", "error_detail": e}
 
-    print("got new token", new_token)
     return new_token

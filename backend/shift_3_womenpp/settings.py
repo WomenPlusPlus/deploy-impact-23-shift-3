@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from os import getenv, path
+from os import getenv, path, mkdir
 from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
@@ -21,6 +21,9 @@ load_dotenv(ENV_FILE)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Build folder for logging
+if not path.exists("logs"):
+    mkdir("logs")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
