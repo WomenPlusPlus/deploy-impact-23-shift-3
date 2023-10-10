@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 
 import Header from "@/components/site/header";
 import Footer from "@/components/site/footer";
