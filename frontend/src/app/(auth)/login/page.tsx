@@ -10,19 +10,19 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
-import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
 
 export default function LogIn() {
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
   };
+
   return (
     <Box
       sx={{
@@ -42,52 +42,84 @@ export default function LogIn() {
         </Typography>
       </Box>
       <Box sx={{ width: "100%" }}>
-        <Card>
+        <Card sx={{ borderRadius: 2, backgroundColor: "#FFFCFA" }}>
           <Box sx={{ padding: 7 }}>
-            <FormControl fullWidth>
-              <TextField
-                id={"email"}
-                size={"small"}
-                label={"Email"}
-                sx={{ height: 4, marginBottom: 6 }}
-              />
-              <TextField
-                id={"password"}
-                size={"small"}
-                label={"Password"}
-                sx={{ height: 4, marginBottom: 6 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
+            <Box sx={{ paddingBottom: 1.5 }}>
+              <FormControl fullWidth variant="outlined">
+                <TextField
+                  id={"email"}
+                  label={"Email"}
+                  variant={"outlined"}
+                  sx={{ height: 4, marginBottom: 8 }}
+                />
+              </FormControl>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
                     </InputAdornment>
-                  ),
+                  }
+                  label="Password"
+                />
+              </FormControl>
+            </Box>
+            <Box sx={{ paddingBottom: 1.5, fontSize: "16px" }}>
+              <Link
+                href="/forgot"
+                sx={{
+                  textDecoration: "underline",
+                  color: "black",
+                  paddingTop: "12px",
+                  paddingBottom: "12px",
                 }}
-              />
-            </FormControl>
-
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
+              >
+                Forgot password?
+              </Link>
+            </Box>
+            <Box sx={{ fontSize: "12px", paddingBottom: 4 }}>
+              <Typography sx={{ fontSize: "12px" }}>
+                By clicking Sign In you agree to the SHIFT
+              </Typography>
+              <Box>
+                <Link
+                  href="/"
+                  sx={{
+                    textDecoration: "underline",
+                    color: "black",
+                  }}
+                >
+                  User Agreement, Privacy Policy
+                </Link>
+                <Typography
+                  sx={{ fontSize: "12px", display: "inline", marginX: 1 }}
+                >
+                  and
+                </Typography>
+                <Link
+                  href="/"
+                  sx={{
+                    textDecoration: "underline",
+                    color: "black",
+                  }}
+                >
+                  Cookie Policy
+                </Link>
+              </Box>
+            </Box>
+            <Box>lll</Box>
           </Box>
         </Card>
       </Box>
