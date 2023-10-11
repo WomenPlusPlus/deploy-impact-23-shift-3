@@ -10,15 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from os import getenv, path, mkdir
 from pathlib import Path
-from os import getenv, path
-from dotenv import load_dotenv
 
-load_dotenv()
+from dotenv import find_dotenv, load_dotenv
+
+ENV_FILE = find_dotenv(raise_error_if_not_found=True)
+load_dotenv(ENV_FILE)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Build folder for logging
+if not path.exists("logs"):
+    mkdir("logs")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -40,11 +45,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    # External apps
     "rest_framework",
-    "api",
+    "drf_spectacular",
     # Remove unused files from storage, not default Django behaviour
     "django_cleanup.apps.CleanupConfig",
+    # Enable CORS
     "corsheaders",
+    # Internal apps
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -55,11 +64,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # Cors middleware
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    # End cors middleware
+    # Internal middleware
+    "api.middleware.RefreshTokenMiddleware",
 ]
 
 ROOT_URLCONF = "shift_3_womenpp.urls"
@@ -82,7 +89,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "shift_3_womenpp.wsgi.application"
 
-REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 
 # Database
@@ -142,6 +152,15 @@ STORAGES = {
     },
 }
 
+# DRF Spectacular
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Shift Enter API",
+    "DESCRIPTION": "Welcome to shift enter!",
+    "VERSION": "0.12",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -189,3 +208,5 @@ CORS_ALLOW_HEADERS = [
 ]
 
 STATIC_ROOT = path.join(BASE_DIR, "static/")
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

@@ -1,44 +1,68 @@
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
+from django.db import models
 from rest_framework.response import Response
-from api.serializers import *
-from .services import login_user, signup_user
-from rest_framework import mixins
+from rest_framework.views import APIView
+
+from api import serializers as model_serializers
+from api.auth_models import RefreshTokens
+from api.models import CandidatesDocuments
+from api.services import gotrue_auth_request
+from rest_framework import serializers, viewsets
 
 
 class AuthUserViewSet(viewsets.ModelViewSet):
-    AuthUsers.objects.using("auth")
-    queryset = AuthUsers.objects.all()
-    serializer_class = AuthUserSerializer
+    model_serializers.AuthUsers.objects.using("auth")
+    queryset = model_serializers.AuthUsers.objects.all()
+    serializer_class = model_serializers.AuthUserSerializer
 
 
 class SkillsViewSet(viewsets.ModelViewSet):
-    queryset = Skills.objects.all()
-    serializer_class = SkillsSerializer
+    queryset = model_serializers.Skills.objects.all()
+    serializer_class = model_serializers.SkillsSerializer
 
 
 class AssociationsViewSet(viewsets.ModelViewSet):
-    queryset = Associations.objects.all()
-    serializer_class = AssociationsSerializer
+    queryset = model_serializers.Associations.objects.all()
+    serializer_class = model_serializers.AssociationsSerializer
 
 
 class InvitationsViewSet(viewsets.ModelViewSet):
-    queryset = Invitation.objects.all()
-    serializer_class = InvitationSerializer
+    queryset = model_serializers.Invitation.objects.all()
+    serializer_class = model_serializers.InvitationSerializer
 
 
 class LoginView(APIView):
     def post(self, request):
-        response = login_user(request)
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
 
-        return Response(response, status=status.HTTP_200_OK)
+
+class LogoutView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
 
 
 class SignupView(APIView):
     def post(self, request):
-        response = signup_user(request)
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
 
-        return Response(data=response, status=status.HTTP_200_OK)
+
+class RecoverView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
+
+
+class InviteView(APIView):
+    def post(self, request):
+        payload, status_code = gotrue_auth_request(request)
+        return Response(payload, status=status_code)
+
+
+class CandidatesViewSet(viewsets.ModelViewSet):
+    queryset = model_serializers.Candidates.objects.all()
+    serializer_class = model_serializers.CandidatesSerializer
 
 
 # Testing file upload
@@ -60,22 +84,18 @@ class PhotoViewSet(viewsets.ModelViewSet):
     serializer_class = PhotoSerializer
 
 
-class File(models.Model):
-    id = models.AutoField(primary_key=True)
-    file = models.FileField(upload_to="files")
-
-
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = File
+        model = CandidatesDocuments
+        fields = ["file_name", "file", "description", "candidate", "created_at"]
+
+
+class RefreshTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RefreshTokens
         fields = "__all__"
 
 
 class FileViewSet(viewsets.ModelViewSet):
-    queryset = File.objects.all()
+    queryset = CandidatesDocuments.objects.all()
     serializer_class = FileSerializer
-
-
-"""
-class CourseListApi(Authentication, APIView)
-"""
