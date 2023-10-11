@@ -19,6 +19,7 @@ type Context = {
   setAuth: (auth: Authentication) => void;
   signOut: () => void;
 };
+
 export const SignInProviderContext = createContext<Context>(
   {} as unknown as Context,
 );
