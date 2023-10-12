@@ -8,17 +8,18 @@ DEFAULT_MAX_LENGTH = 255
 
 class AssociationUsers(models.Model):
     association_user_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     association = models.ForeignKey(
         "Associations", models.DO_NOTHING, blank=True, null=True
     )
-    association_user_designation = models.CharField(blank=True, null=True)
-    association_user_first_name = models.CharField(blank=True, null=True)
-    association_user_last_name = models.CharField(blank=True, null=True)
-    association_user_preferred_name = models.CharField(blank=True, null=True)
-    association_user_email = models.CharField(blank=True, null=True)
-    association_user_phone_number_region = models.IntegerField(blank=True, null=True)
-    association_user_phone_number = models.IntegerField(blank=True, null=True)
-    association_user_role = models.IntegerField(
+    designation = models.CharField(blank=True, null=True)
+    first_name = models.CharField(blank=True, null=True)
+    last_name = models.CharField(blank=True, null=True)
+    preferred_name = models.CharField(blank=True, null=True)
+    email_adress = models.CharField(blank=True, null=True)
+    phone_number_region = models.IntegerField(blank=True, null=True)
+    phone_number = models.IntegerField(blank=True, null=True)
+    role_inside_association = models.IntegerField(
         blank=True, null=True, db_comment="Is there a need for RBAC?"
     )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -29,6 +30,7 @@ class AssociationUsers(models.Model):
 
 class Associations(models.Model):
     association_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     url_homepage = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     main_focus = models.TextField(blank=True, null=True)
@@ -87,9 +89,11 @@ class Candidates(models.Model):
         models.DO_NOTHING,
         db_column="invited_by",
         db_comment="association id",
+        blank=True,
+        null=True,
     )
-    accepted_privacy = models.BooleanField()
-    skip_tutorial = models.BooleanField(default=False)
+    accepted_privacy = models.BooleanField(blank=True, null=True)
+    skip_tutorial = models.BooleanField(default=False, blank=True, null=True)
     last_update = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -154,12 +158,13 @@ class Initiatives(models.Model):
 
 class Companies(models.Model):
     company_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     values = models.TextField(
         blank=True, null=True, db_comment="Values is what is important to the company"
     )
     main_contact_first_name = models.CharField()
     main_contact_last_name = models.CharField()
-    main_contact_email = models.CharField()
+    email_adress = models.CharField()
     main_contact_region_code = models.IntegerField(blank=True, null=True)
     main_contact_phone_number = models.IntegerField(blank=True, null=True)
     linkedin_url = models.CharField(blank=True, null=True)
@@ -169,6 +174,8 @@ class Companies(models.Model):
         models.DO_NOTHING,
         db_column="invited_by",
         db_comment="association id",
+        blank=True,
+        null=True,
     )
     accepted_privacy = models.BooleanField(blank=True, null=True)
     skip_tutorial = models.BooleanField(blank=True, null=True)
@@ -180,18 +187,19 @@ class Companies(models.Model):
 
 class CompanyUsers(models.Model):
     company_user_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     subsidiary = models.ForeignKey(
         "Subsidiaries", models.DO_NOTHING, blank=True, null=True
     )
-    company_user_designation = models.CharField(blank=True, null=True)
-    company_user_first_name = models.CharField(blank=True, null=True)
-    company_user_last_name = models.CharField(blank=True, null=True)
-    company_preferred_name = models.CharField(blank=True, null=True)
-    company_user_email = models.CharField(blank=True, null=True)
-    company_user_phone_number_region = models.IntegerField(blank=True, null=True)
-    company_user_phone_number = models.IntegerField(blank=True, null=True)
+    designation = models.CharField(blank=True, null=True)
+    first_name = models.CharField(blank=True, null=True)
+    last_name = models.CharField(blank=True, null=True)
+    preferred_name = models.CharField(blank=True, null=True)
+    email = models.CharField(blank=True, null=True)
+    hone_number_region = models.IntegerField(blank=True, null=True)
+    hone_number = models.IntegerField(blank=True, null=True)
     avatart_url = models.CharField(blank=True, null=True)
-    company_user_role = models.IntegerField(
+    role_inside_company = models.IntegerField(
         blank=True, null=True, db_comment="Is there a need for RBAC?"
     )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -311,8 +319,12 @@ class Cantons(models.Model):
 class Countries(models.Model):
     contry_id = models.AutoField(primary_key=True)
     country_name_in_english = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    country_name_in_native_language = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    country_it_code = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    country_name_in_native_language = models.CharField(
+        max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
+    )
+    country_it_code = models.CharField(
+        max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
+    )
 
     class Meta:
         db_table = "countries"
@@ -427,4 +439,10 @@ class WorkPermits(models.Model):
     type_work_permit = models.CharField(max_length=DEFAULT_MAX_LENGTH)
 
     class Meta:
-        db_table = "work_permits"
+        db_table = "work_permits
+
+
+class SupabaseIdToUserIds(models.Model):
+    supabase_authenticaiton_uuid = models.UUIDField()
+    user_id = models.IntegerField(blank=True, null=True)
+    role = models.CharField(max_length=DEFAULT_MAX_LENGTH)

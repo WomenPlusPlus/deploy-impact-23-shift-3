@@ -207,6 +207,9 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
-STATIC_ROOT = path.join(BASE_DIR, "static/")
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Project parameters
+
+STATIC_ROOT = path.join(BASE_DIR, "static/")

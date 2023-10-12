@@ -1,39 +1,15 @@
 import json
 import os
-import logging
 
-from dotenv import load_dotenv
+import jwt
+import requests
 
+from api.models import SupabaseIdToUserIds
 from api.auth_models import RefreshTokens
-from api.auth_token import authenticate_access_token
-from api.services import gotrue_auth_request
+from api import services
 from rest_framework import status
 
-load_dotenv()
-
-
 JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
-
-logging.basicConfig(
-    level=int(os.environ["LOGGING_LEVEL"]),
-    handlers=[logging.FileHandler("logs/middleware.log"), logging.StreamHandler()],
-)
-
-
-class RefreshTokenMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        if "Authorization" in request.headers:
-            decoded_token = authenticate_access_token(request.headers["Authorization"])
-            logging.debug("Updated request token", decoded_token)
-            if not "error" in decoded_token.keys():
-                request.META["Authorization"] = decoded_token
-
-        response = self.get_response(request)
-
-        return response
 
 
 def authenticate_access_token(token: str) -> json:
@@ -49,11 +25,11 @@ def authenticate_access_token(token: str) -> json:
         token = token[7:]
 
     try:
-        jwt.decode(
+        decoded_token = jwt.decode(
             token,
             JWT_SECRET_KEY,
             algorithms=["HS256"],
-            audience=["authenticated", "service_role"],
+            audience=["authenticated"],
         )
     except jwt.exceptions.ExpiredSignatureError as err:
         # If jwt.decode reaches ExpiredSignatureError means the signature is valid but has expired
@@ -61,7 +37,7 @@ def authenticate_access_token(token: str) -> json:
     except Exception as error:
         return error
 
-    return token
+    return decoded_token
 
 
 def refresh_expired_token(token: str) -> json:
@@ -99,8 +75,37 @@ def refresh_expired_token(token: str) -> json:
         request_new_token.data = {"refresh_token": refresh_token}
         request_new_token.path = "https://127.0.0.1/api/login/"
 
-        new_token, _ = gotrue_auth_request(request_new_token)
+        new_token, _ = services.gotrue_auth_request(request_new_token)
     except Exception as e:
         return {"error": "Failed refresh token request", "error_detail": e}
+
+    return new_token
+
+
+def format_token(token: json) -> json:
+    """Receives a Supabase generated JSON with token and reformats to the apps default
+
+    Args:
+        token (json): The JSON returned from Supabases gotrue endpoints
+
+    Returns:
+        json: The formatted JSON
+    """
+
+    supabase_user_id = token["user"]["id"]
+
+    id = SupabaseIdToUserIds.objects.get(
+        supabase_authenticaiton_uuid=supabase_user_id
+    ).user_id
+
+    new_token = {
+        "access_token": token["access_token"],
+        "token_type": token["token_type"],
+        "expires_in": token["expires_in"],
+        "expires_at": token["expires_at"],
+        "role": token["user"]["role"],
+        "last_sign_in_a": token["token_type"],
+        "id": id,
+    }
 
     return new_token

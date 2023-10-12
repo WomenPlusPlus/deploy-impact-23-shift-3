@@ -30,14 +30,30 @@ singleViews = [
         "view": InviteView.as_view(),
         "name": "invite",
     },
+    {
+        "route": "api/verify/",
+        "view": SignupView.as_view(),
+        "name": "invite",
+    },
+
 ]
 
 # Normal router setup, including list and registering ViewSets
 router = APIRouter(singleViews=singleViews)
 
-router.register(r"api/auth_users", AuthUserViewSet)
-router.register(r"api/skills", SkillsViewSet)
-router.register(r"api/invitations", InvitationsViewSet)
 router.register(r"api/associations", AssociationsViewSet)
+router.register(r"api/auth_users", AuthUserViewSet)
 router.register(r"api/candidates", CandidatesViewSet)
+router.register(r"api/cantons", CantonsViewSet)
+router.register(r"api/countries", CountriesViewSet)
+router.register(r"api/invitations", InvitationsViewSet)
+router.register(r"api/languages", LanguagesViewSet)
+router.register(r"api/languages_proficiencies", LanguagesProficiencyViewSet)
+router.register(r"api/personalities", PersonalitiesViewSet)
+router.register(r"api/skills", SkillsViewSet)
+router.register(r"api/softskills", SoftSkillsViewSet)
+router.register(r"api/status", StatusViewSet)
+router.register(r"api/values", ListValuesViewSet)
+router.register(r"api/work_models", WorkModelsViewSet)
+router.register(r"api/work_permits", WorkPermitsViewSet)
 router.register(r"api/files", FileViewSet)
