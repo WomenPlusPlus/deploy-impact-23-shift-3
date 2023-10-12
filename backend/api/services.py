@@ -17,6 +17,10 @@ logging.basicConfig(
     level=int(os.environ["LOGGING_LEVEL"]), filename="logs/services.log"
 )
 
+logging.basicConfig(
+    level=int(os.environ["LOGGING_LEVEL"]), filename="logs/services.log"
+)
+
 SUPABASE_AUTH_URL = os.environ["SUPABASE_AUTH_URL"]
 SUPABASE_PUBLIC_APIKEY = os.environ["SUPABAE_PUBLIC_APIKEY"]
 SUPABASE_SERVICE_ROLE_APIKEY = os.environ["SUPABASE_SERVICE_ROLE_APIKEY"]
