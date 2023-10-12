@@ -195,7 +195,7 @@ class CompanyUsers(models.Model):
     first_name = models.CharField(blank=True, null=True)
     last_name = models.CharField(blank=True, null=True)
     preferred_name = models.CharField(blank=True, null=True)
-    email = models.CharField(blank=True, null=True)
+    email_adress = models.CharField(blank=True, null=True)
     hone_number_region = models.IntegerField(blank=True, null=True)
     hone_number = models.IntegerField(blank=True, null=True)
     avatart_url = models.CharField(blank=True, null=True)
@@ -446,3 +446,10 @@ class SupabaseIdToUserIds(models.Model):
     supabase_authenticaiton_uuid = models.UUIDField()
     user_id = models.IntegerField(blank=True, null=True)
     role = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+
+class AvailableCompanyDomains(models.Model):
+    domain = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    def __str__(self) -> str:
+        return self.domain

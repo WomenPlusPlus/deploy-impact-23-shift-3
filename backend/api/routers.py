@@ -40,6 +40,7 @@ singleViews = [
 # Normal router setup, including list and registering ViewSets
 router = APIRouter(singleViews=singleViews)
 
+router.register(r"api/company_domains", AvailableCompanyDomainsViewSet)
 router.register(r"api/associations", AssociationsViewSet)
 router.register(r"api/auth_users", AuthUserViewSet)
 router.register(r"api/candidates", CandidatesViewSet)

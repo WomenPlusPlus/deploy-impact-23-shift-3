@@ -1,3 +1,8 @@
+imported_auth_models.py
+old_models.py
+csvs_database/
+etc/
+extrac_table.ipynb
 .vscode
 api/old_models.py
 *.bak

@@ -14,7 +14,10 @@ from api.services import (
     gotrue_auth_request,
     update_user_password,
     create_user_in_respective_table,
+    register_company_domain,
+    is_valid_company_domain,
 )
+
 from rest_framework import serializers, viewsets, status
 
 POSSIBLE_ROLES = json.loads(os.environ["POSSIBLE_ROLES"])
@@ -157,14 +160,27 @@ class SignupView(APIView):
                     status.HTTP_401_UNAUTHORIZED,
                 )
 
+        if UserSigningUp.role == "company_user":
+            if not is_valid_company_domain(request_payload):
+                return Response(
+                    {
+                        "error": "invalid email",
+                        "error_detail": f"Can't signup, the provided email domain is not valid, please talk to an admin",
+                    },
+                    status.HTTP_401_UNAUTHORIZED,
+                )
+
         # make the request
         response_payload, status_code = gotrue_auth_request(request)
 
-        # Post signup
+        # If signup is sucessufl
         if "user" in response_payload.keys():
             create_user_in_respective_table(request_payload, response_payload)
             apply_supabase_id_to_users_tables(response_payload)
+            # reformat token for FE
             response_payload = auth_token.format_token(response_payload)
+
+            # Updates user password
             response_update_password = update_user_password(
                 response_payload["access_token"], request.data["password"]
             )
@@ -220,7 +236,7 @@ class InviteView(APIView):
 
         response_payload, status_code = gotrue_auth_request(request)
 
-        # Insert into conection table
+        # If creation was sucessuful, insert into conection table
         if "id" in response_payload:
             AuthUsers.objects.filter(pk=response_payload["id"]).update(
                 role=request_payload["role"]
@@ -228,12 +244,19 @@ class InviteView(APIView):
 
             response_payload["role"] = request_payload["role"]
 
+            register_company_domain(request_payload)
+
         return Response(response_payload, status=status_code)
 
 
 class CandidatesViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Candidates.objects.all()
     serializer_class = model_serializers.CandidatesSerializer
+
+
+class AvailableCompanyDomainsViewSet(viewsets.ModelViewSet):
+    queryset = model_serializers.AvailableCompanyDomains.objects.all()
+    serializer_class = model_serializers.AvailableCompanyDomainsSerializer
 
 
 # Testing file upload

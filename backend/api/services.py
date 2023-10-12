@@ -10,7 +10,12 @@ from rest_framework import status
 
 from api.models import SupabaseIdToUserIds
 
-from api.models import Candidates, AssociationUsers, CompanyUsers
+from api.models import (
+    Candidates,
+    AssociationUsers,
+    CompanyUsers,
+    AvailableCompanyDomains,
+)
 
 
 logging.basicConfig(
@@ -186,3 +191,32 @@ def create_user_in_respective_table(request_payload, response_payload) -> json:
         email_adress=request_payload["email"],
         supabase_authenticaiton_uuid=response_payload["user"]["id"],
     )
+
+
+def register_company_domain(payload: json) -> json:
+    if "email" not in payload.keys():
+        return {
+            "error": "Invalid request",
+            "error detail": "This request requires an email",
+            "status_code": status.HTTP_400_BAD_REQUEST,
+        }
+
+    domain_to_insert = payload["email"].split("@")[-1]
+
+    retrieved_domains = AvailableCompanyDomains.objects.filter(domain=domain_to_insert)
+
+    if not len(retrieved_domains):
+        domain = AvailableCompanyDomains.objects.create(domain=domain_to_insert)
+
+        return {"domain": domain_to_insert, "status_code": status.HTTP_201_CREATED}
+
+
+def is_valid_company_domain(paylaod: json) -> json:
+    domain = paylaod["email"].split("@")[-1]
+
+    retrieved_domain = AvailableCompanyDomains.objects.filter(domain=domain)
+
+    if retrieved_domain:
+        return True
+
+    return False

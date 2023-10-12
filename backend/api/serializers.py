@@ -106,3 +106,10 @@ class WorkModelsSerializer(serializers.HyperlinkedModelSerializer):
         model = WorkModels
         fields = "__all__"
         many = True
+
+
+class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AvailableCompanyDomains
+        fields = "__all__"
+        many = True
