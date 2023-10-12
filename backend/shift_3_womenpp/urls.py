@@ -13,11 +13,11 @@ from api.routers import singleViews
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path("", include(api_view_router.urls)),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
+    path("", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
+    path("", include(api_view_router.urls)),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
