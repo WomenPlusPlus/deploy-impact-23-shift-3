@@ -66,6 +66,13 @@ class SkillsSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
+class SoftSkillsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SoftSkills
+        fields = "__all__"
+        many = True
+
+
 class StatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Status

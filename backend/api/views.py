@@ -10,7 +10,7 @@ from api import auth_token
 from api.models import CandidatesDocuments
 from api.services import (
     apply_supabase_id_to_users_tables,
-    authorize_invte,
+    authorize_invite,
     gotrue_auth_request,
     update_user_password,
 )
@@ -63,6 +63,11 @@ class SkillsViewSet(viewsets.ModelViewSet):
     serializer_class = model_serializers.SkillsSerializer
 
 
+class SoftSkillsViewSet(viewsets.ModelViewSet):
+    queryset = model_serializers.SoftSkills.objects.all()
+    serializer_class = model_serializers.SoftSkillsSerializer
+
+
 class StatusViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Status.objects.all()
     serializer_class = model_serializers.StatusSerializer
@@ -94,6 +99,8 @@ class LogoutView(APIView):
 
 class SignupView(APIView):
     def post(self, request):
+        required_fields = ["password", "first_name", "last_name", "email"]
+
         request_payload = request.data
 
         # Verify it's a valid request
@@ -129,17 +136,20 @@ class SignupView(APIView):
                 status.HTTP_401_UNAUTHORIZED,
             )
 
-        if "password" not in request_payload.keys():
-            return Response(
-                {
-                    "error": "invalid body",
-                    "error_detail": "Can't signup, no password present in body",
-                },
-                status.HTTP_401_UNAUTHORIZED,
-            )
+        for field in required_fields:
+            if field not in request_payload.keys():
+                return Response(
+                    {
+                        "error": "invalid body",
+                        "error_detail": f"Can't signup, no {field} present in body",
+                    },
+                    status.HTTP_401_UNAUTHORIZED,
+                )
 
+        # make the request
         response_payload, status_code = gotrue_auth_request(request)
 
+        # Post signup
         if "user" in response_payload.keys():
             apply_supabase_id_to_users_tables(response_payload)
             response_payload = auth_token.format_token(response_payload)
@@ -147,7 +157,14 @@ class SignupView(APIView):
                 response_payload["access_token"], request.data["password"]
             )
 
-            print(response_update_password)
+            if response_update_password.status_code != 200:
+                return Response(
+                    {
+                        "error": "Could not set password",
+                        "error_detail": Response.text,
+                    },
+                    status.HTTP_401_UNAUTHORIZED,
+                )
 
         return Response(response_payload, status=status_code)
 
@@ -180,7 +197,7 @@ class InviteView(APIView):
                 status.HTTP_400_BAD_REQUEST,
             )
 
-        if not authorize_invte(request.headers["Authorization"]):
+        if not authorize_invite(request.headers["Authorization"]):
             return Response(
                 {
                     "error": "Not authorized",
