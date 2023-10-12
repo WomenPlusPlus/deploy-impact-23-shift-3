@@ -6,10 +6,11 @@ import requests
 from django.http import Http404
 
 from api import auth_token
-from api.auth_models import AuthUsers
 from rest_framework import status
 
 from api.models import SupabaseIdToUserIds
+
+from api.models import Candidates, AssociationUsers, CompanyUsers
 
 
 logging.basicConfig(
@@ -22,6 +23,15 @@ SUPABASE_SERVICE_ROLE_APIKEY = os.environ["SUPABASE_SERVICE_ROLE_APIKEY"]
 
 
 def gotrue_auth_request(request: requests) -> dict:
+    """
+    Sends an authentication request to the Supabase server.
+
+    Args:
+        request (requests): A request object containing the data to be sent.
+
+    Returns:
+        dict: A dictionary containing the response payload and status code.
+    """
     request_url = SUPABASE_AUTH_URL
 
     # Common for all Requests
@@ -79,6 +89,18 @@ def gotrue_auth_request(request: requests) -> dict:
 
 
 def update_user_password(token: json, password: str) -> requests.Request:
+    """
+    Update user password.
+
+    :param token: JSON Web Token (JWT) for authentication.
+    :type token: json
+
+    :param password: New password to be set.
+    :type password: str
+
+    :return: Response object containing the updated user information.
+    :rtype: requests.Request
+    """
     headers_list = {
         "apikey": SUPABASE_PUBLIC_APIKEY,
         "Authorization": "bearer " + token,
@@ -96,7 +118,7 @@ def update_user_password(token: json, password: str) -> requests.Request:
     return response
 
 
-def authorize_invte(jwt: json) -> bool:
+def authorize_invite(jwt: json) -> bool:
     """Receives a jwt token key, decodes it and checks if the user is authorized to invite members
 
     Args:
@@ -129,7 +151,38 @@ def apply_supabase_id_to_users_tables(payload: json) -> None:
     None
     """
 
+    match payload["user"]["role"]:
+        case "candidate":
+            user_model = Candidates
+        case "company_user":
+            user_model = CompanyUsers
+        case "association_user":
+            user_model = AssociationUsers
+
     role = payload["user"]["role"]
     supabase_user_id = payload["user"]["id"]
 
-    SupabaseIdToUserIds(supabase_authenticaiton_uuid=supabase_user_id, role=role).save()
+    user_id = user_model.objects.filter(
+        supabase_authenticaiton_uuid=supabase_user_id
+    ).values_list("pk", flat=True)[0]
+
+    SupabaseIdToUserIds(
+        supabase_authenticaiton_uuid=supabase_user_id, role=role, user_id=user_id
+    ).save()
+
+
+def create_user_in_respective_table(request_payload, response_payload) -> json:
+    match response_payload["user"]["role"]:
+        case "candidate":
+            user_model = Candidates
+        case "company_user":
+            user_model = CompanyUsers
+        case "association_user":
+            user_model = AssociationUsers
+
+    user_model.objects.create(
+        first_name=request_payload["first_name"],
+        last_name=request_payload["last_name"],
+        email_adress=request_payload["email"],
+        supabase_authenticaiton_uuid=response_payload["user"]["id"],
+    )

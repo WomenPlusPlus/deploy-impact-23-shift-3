@@ -13,6 +13,7 @@ from api.services import (
     authorize_invite,
     gotrue_auth_request,
     update_user_password,
+    create_user_in_respective_table,
 )
 from rest_framework import serializers, viewsets, status
 
@@ -151,6 +152,7 @@ class SignupView(APIView):
 
         # Post signup
         if "user" in response_payload.keys():
+            create_user_in_respective_table(request_payload, response_payload)
             apply_supabase_id_to_users_tables(response_payload)
             response_payload = auth_token.format_token(response_payload)
             response_update_password = update_user_password(
@@ -209,11 +211,12 @@ class InviteView(APIView):
         response_payload, status_code = gotrue_auth_request(request)
 
         # Insert into conection table
-        AuthUsers.objects.filter(pk=response_payload["id"]).update(
-            role=request_payload["role"]
-        )
+        if "id" in response_payload:
+            AuthUsers.objects.filter(pk=response_payload["id"]).update(
+                role=request_payload["role"]
+            )
 
-        response_payload["role"] = request_payload["role"]
+            response_payload["role"] = request_payload["role"]
 
         return Response(response_payload, status=status_code)
 
