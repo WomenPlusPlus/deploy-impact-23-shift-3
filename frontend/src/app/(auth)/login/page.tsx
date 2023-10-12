@@ -13,6 +13,7 @@ import * as React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
 
 export default function LogIn() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -81,7 +82,7 @@ export default function LogIn() {
                 href="/forgot"
                 sx={{
                   textDecoration: "underline",
-                  color: "black",
+                  color: "#14366F",
                   paddingTop: "12px",
                   paddingBottom: "12px",
                 }}
@@ -98,7 +99,7 @@ export default function LogIn() {
                   href="/"
                   sx={{
                     textDecoration: "underline",
-                    color: "black",
+                    color: "#14366F",
                   }}
                 >
                   User Agreement, Privacy Policy
@@ -112,14 +113,27 @@ export default function LogIn() {
                   href="/"
                   sx={{
                     textDecoration: "underline",
-                    color: "black",
+                    color: "#14366F",
                   }}
                 >
                   Cookie Policy
                 </Link>
               </Box>
             </Box>
-            <Box>lll</Box>
+            <Box
+              sx={{
+                textAlign: "right",
+                textDecoration: "underline",
+                colour: "#14366F",
+              }}
+            >
+              <Link href={"/login"} sx={{ fontSize: "16px", marginRight: 4 }}>
+                Can't Log in?
+              </Link>
+              <Button variant="contained" sx={{ textTransform: "none" }}>
+                Sign in
+              </Button>
+            </Box>
           </Box>
         </Card>
       </Box>
