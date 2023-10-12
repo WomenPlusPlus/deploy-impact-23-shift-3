@@ -59,6 +59,13 @@ class InvitationSerializer(serializers.HyperlinkedModelSerializer):
         fields = "__all__"
 
 
+class PersonalitiesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Personalities
+        fields = "__all__"
+        many = True
+
+
 class SkillsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Skills
@@ -76,6 +83,13 @@ class SoftSkillsSerializer(serializers.HyperlinkedModelSerializer):
 class StatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Status
+        fields = "__all__"
+        many = True
+
+
+class ListValuesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ListValues
         fields = "__all__"
         many = True
 

@@ -59,6 +59,11 @@ class InvitationsViewSet(viewsets.ModelViewSet):
     serializer_class = model_serializers.InvitationSerializer
 
 
+class PersonalitiesViewSet(viewsets.ModelViewSet):
+    queryset = model_serializers.Personalities.objects.all()
+    serializer_class = model_serializers.PersonalitiesSerializer
+
+
 class SkillsViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Skills.objects.all()
     serializer_class = model_serializers.SkillsSerializer
@@ -72,6 +77,11 @@ class SoftSkillsViewSet(viewsets.ModelViewSet):
 class StatusViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Status.objects.all()
     serializer_class = model_serializers.StatusSerializer
+
+
+class ListValuesViewSet(viewsets.ModelViewSet):
+    queryset = model_serializers.ListValues.objects.all()
+    serializer_class = model_serializers.ListValuesSerializer
 
 
 class WorkModelsViewSet(viewsets.ModelViewSet):
