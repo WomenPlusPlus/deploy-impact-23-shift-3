@@ -1,47 +1,53 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { CssBaseline } from "@mui/material";
-import AuthLeft from "./authLeft";
+"use client";
 
-//for query
+import React from "react";
+import { Box, Typography } from "@mui/material";
 
-export const metadata = {
-  title: "Shift Authentication",
-  description: "Shift_Enter App - Authentication",
-};
-
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
-  return (
-    <Box>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            // backgroundColor: (t) =>
-            //   t.palette.mode === "light"
-            //     ? t.palette.grey[50]
-            //     : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <AuthLeft />
-        </Grid>
+}
 
-        {children}
-      </Grid>
+const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const containerStyle = {
+    flex: "1",
+    backgroundImage: 'url("/images/Bcg-auth.jpg")',
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    position: "relative",
+  };
+
+  const textStyle = {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    padding: 10,
+    color: "#FFF",
+    textTransform: "uppercase",
+    fontSize: "57px",
+    fontWeight: 600,
+  };
+
+  const contentStyle = {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: 4,
+    height: "100vh",
+  };
+
+  return (
+    <Box sx={{ display: "flex", height: "100vh", background: "#FAF4EF" }}>
+      <Box sx={containerStyle}>
+        <Typography sx={textStyle}>
+          Let’s connect, learn and innovate in tech. Let’s shift
+        </Typography>
+      </Box>
+      <Box sx={contentStyle}>{children}</Box>
     </Box>
   );
-}
+};
+
+export default RootLayout;

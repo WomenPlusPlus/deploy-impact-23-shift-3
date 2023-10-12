@@ -31,7 +31,6 @@ export default function LogIn() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "#FAF4EF",
         flexDirection: "column",
         padding: 12,
         gap: 4,
@@ -130,7 +129,11 @@ export default function LogIn() {
               <Link href={"/login"} sx={{ fontSize: "16px", marginRight: 4 }}>
                 Can't Log in?
               </Link>
-              <Button variant="contained" sx={{ textTransform: "none" }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ textTransform: "none" }}
+              >
                 Sign in
               </Button>
             </Box>
