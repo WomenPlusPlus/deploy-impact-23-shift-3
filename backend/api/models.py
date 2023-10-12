@@ -8,6 +8,7 @@ DEFAULT_MAX_LENGTH = 255
 
 class AssociationUsers(models.Model):
     association_user_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     association = models.ForeignKey(
         "Associations", models.DO_NOTHING, blank=True, null=True
     )
@@ -29,6 +30,7 @@ class AssociationUsers(models.Model):
 
 class Associations(models.Model):
     association_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     url_homepage = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     main_focus = models.TextField(blank=True, null=True)
@@ -154,6 +156,7 @@ class Initiatives(models.Model):
 
 class Companies(models.Model):
     company_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     values = models.TextField(
         blank=True, null=True, db_comment="Values is what is important to the company"
     )
@@ -180,6 +183,7 @@ class Companies(models.Model):
 
 class CompanyUsers(models.Model):
     company_user_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
     subsidiary = models.ForeignKey(
         "Subsidiaries", models.DO_NOTHING, blank=True, null=True
     )
@@ -311,8 +315,12 @@ class Cantons(models.Model):
 class Countries(models.Model):
     contry_id = models.AutoField(primary_key=True)
     country_name_in_english = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    country_name_in_native_language = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    country_it_code = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    country_name_in_native_language = models.CharField(
+        max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
+    )
+    country_it_code = models.CharField(
+        max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
+    )
 
     class Meta:
         db_table = "countries"
@@ -428,3 +436,9 @@ class WorkPermits(models.Model):
 
     class Meta:
         db_table = "work_permits"
+
+
+class SupabaseIdToUserIds(models.Model):
+    supabase_authenticaiton_uuid = models.UUIDField()
+    user_id = models.IntegerField(blank=True, null=True)
+    role = models.CharField(max_length=DEFAULT_MAX_LENGTH)

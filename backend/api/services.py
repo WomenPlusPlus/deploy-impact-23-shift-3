@@ -4,12 +4,13 @@ import os
 
 import requests
 from django.http import Http404
-from dotenv import load_dotenv
 
+from api import auth_token
 from api.auth_models import AuthUsers
 from rest_framework import status
 
-load_dotenv()
+from api.models import SupabaseIdToUserIds
+
 
 logging.basicConfig(
     level=int(os.environ["LOGGING_LEVEL"]), filename="logs/services.log"
@@ -17,15 +18,16 @@ logging.basicConfig(
 
 SUPABASE_AUTH_URL = os.environ["SUPABASE_AUTH_URL"]
 SUPABASE_PUBLIC_APIKEY = os.environ["SUPABAE_PUBLIC_APIKEY"]
-JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
+SUPABASE_SERVICE_ROLE_APIKEY = os.environ["SUPABASE_SERVICE_ROLE_APIKEY"]
 
 
 def gotrue_auth_request(request: requests) -> dict:
     request_url = SUPABASE_AUTH_URL
 
     # Common for all Requests
-    logging.debug("request at gotrue", request)
-    payload = request.data
+    request_payload = request.data
+
+    endpoint = request.path.split("/")[-2]
 
     headers_list = {
         "apikey": SUPABASE_PUBLIC_APIKEY,
@@ -35,35 +37,33 @@ def gotrue_auth_request(request: requests) -> dict:
     if "Authorization" in request.headers.keys():
         headers_list["Authorization"] = request.headers["Authorization"]
 
-    endpoint = request.path.split("/")[-2]
-
     # Verify typpe of request
     if endpoint == "login":
-        if "password" in payload.keys():
+        if "password" in request_payload.keys():
             request_url += "token?grant_type=password"
-        elif "refresh_token" in payload.keys():
+        elif "refresh_token" in request_payload.keys():
             request_url += "token?grant_type=refresh_token"
         else:
             return {"error": "Invalid login details"}, status.HTTP_400_BAD_REQUEST
 
-    elif endpoint in ["verify", "recover", "logout", "signup"]:
+    elif endpoint in ["verify", "recover", "logout", "signup", "invite"]:
         request_url += endpoint
-
     else:
         raise Http404
 
-    # Validate the signup request
-    if endpoint == "signup":
-        response_verification = validate_signup(request, payload)
+    # Add service key to header, only service roles may send invites
+    if endpoint == "invite":
+        headers_list["Authorization"] = "bearer " + SUPABASE_SERVICE_ROLE_APIKEY
 
-        if "error" in response_verification:
-            return response_verification, status.HTTP_401_UNAUTHORIZED
+    # Add type to signup
+    if endpoint == "verify":
+        request_payload["type"] = "signup"
 
     # Send request
     response = requests.request(
         "POST",
         request_url,
-        data=json.dumps(payload),
+        data=json.dumps(request_payload),
         headers=headers_list,
         # ToDo implement true certificate
         verify=False,
@@ -71,35 +71,65 @@ def gotrue_auth_request(request: requests) -> dict:
 
     if response.text != "":
         response_payload = json.loads(response.text)
-
-        if "refresh_token" in response_payload.keys():
-            del response_payload["refresh_token"]
     else:
         response_payload = {}
 
+    # Assign roles in case of invite
     return response_payload, response.status_code
 
 
-def validate_signup(request: requests, payload: json) -> json:
-    if "token" in payload.keys():
-        try:
-            UserSigningUp = AuthUsers.objects.get(confirmation_token=payload["token"])
-        except AuthUsers.DoesNotExist:
-            return {
-                "error": "invalid_token",
-                "error_detail": "Can't signup, the provided token is not associated with any account.",
-            }
+def update_user_password(token: json, password: str) -> requests.Request:
+    headers_list = {
+        "apikey": SUPABASE_PUBLIC_APIKEY,
+        "Authorization": "bearer " + token,
+    }
 
-        if UserSigningUp.email != payload["email"]:
-            return {
-                "error": "invalid_token",
-                "error_detail": "Can't signup, the provided email does not match the email associated with this token.",
-            }
+    response = requests.request(
+        "PUT",
+        SUPABASE_AUTH_URL + "user",
+        data=json.dumps({"password": password}),
+        headers=headers_list,
+        # ToDo implement true certificate
+        verify=False,
+    )
 
-        # If sucessful
-        return {"token": UserSigningUp.confirmation_token}
-    else:
-        return {
-            "error": "invalid_token",
-            "error_detail": "Can't signup, no token present in body",
-        }
+    return response
+
+
+def authorize_invte(jwt: json) -> bool:
+    """Receives a jwt token key, decodes it and checks if the user is authorized to invite members
+
+    Args:
+    jwt (json): encrypted JWT token
+
+    Returns:
+    bool: Returns true if the user might invite others
+    """
+
+    decoded_token = auth_token.authenticate_access_token(jwt)
+    permitted_users = ["association", "admin", "service_role"]
+    if "user" in decoded_token.keys():
+        if decoded_token["user"]["role"] in permitted_users:
+            return True
+
+    if "role" in decoded_token.keys():
+        if decoded_token["role"] in permitted_users:
+            return True
+
+    return False
+
+
+def apply_supabase_id_to_users_tables(payload: json) -> None:
+    """Apply the id from the schema auth.auth_users to the tables public
+
+    Args:
+    payload (json): payload from database signup
+
+    Returns:
+    None
+    """
+
+    role = payload["user"]["role"]
+    supabase_user_id = payload["user"]["id"]
+
+    SupabaseIdToUserIds(supabase_authenticaiton_uuid=supabase_user_id, role=role).save()
