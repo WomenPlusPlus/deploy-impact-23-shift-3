@@ -9,6 +9,7 @@ export const metadata = {
   title: "Shift",
   description: "Shift_Enter App",
 };
+//TODO: pass initials into header
 
 export default function RootLayout({
   children,
@@ -25,7 +26,7 @@ export default function RootLayout({
       }}
     >
       <CssBaseline />
-      <Header title={"Dashboard"} />
+      <Header title={"Dashboard"}  initials={"JS"} />
 
       {children}
 

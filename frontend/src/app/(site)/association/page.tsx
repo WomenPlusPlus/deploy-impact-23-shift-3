@@ -15,7 +15,7 @@ export default function CandidatePage() {
         }}
       >
             <Typography variant="h3" component="h1" gutterBottom sx={{mt:5}}>
-               Association Dashboard
+               Association Home
               </Typography>
               <Typography variant="h5" component="h2" gutterBottom>
                 The dashboard will be here but not sure how that will look yet!

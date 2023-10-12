@@ -12,6 +12,9 @@ const theme = createTheme({
     mode: "light",
     primary:{
       main:'#14366F'
+    },
+    secondary:{
+      main:'#D7DDE7'
     }
   },
 
@@ -84,7 +87,7 @@ const theme = createTheme({
         {
           props: { variant: 'contained', color: 'secondary' },
           style: {
-            border: `4px dashed `,
+            // border: `4px dashed `,
           },
         },
       ],

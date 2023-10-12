@@ -35,7 +35,7 @@ export default function SubHeader(props: HeaderProps) {
         sx={{
           justifyContent: "space-between",
           borderBottom: 2,
-          borderColor: "divider",
+          borderColor: "#D7DDE7",
           mt: 3,
         }}
       >

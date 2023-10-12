@@ -18,10 +18,16 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import {
+  useAutocomplete,
+  UseAutocompleteProps,
+} from "@mui/base/useAutocomplete";
+import UploadIcon from "@mui/icons-material/Upload";
 import { styled } from "@mui/material/styles";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-//mport { styled } from '@mui/system';
+import Skeleton from "@mui/material/Skeleton";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -35,60 +41,13 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-//  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-//border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-// const StyledTextarea = styled(TextareaAutosize)(
-//   ({ theme }) => `
-//   width: 320px;
-//   font-family: IBM Plex Sans, sans-serif;
-//   font-size: 0.875rem;
-//   font-weight: 400;
-//   line-height: 1.5;
-//   padding: 12px;
-//   border-radius: 12px 12px 0 12px;
-
-//   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-
-//   box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-
-//   &:hover {
-//     border-color: ${blue[400]};
-//   }
-
-//   &:focus {
-//     border-color: ${blue[400]};
-//     box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
-//   }
-
-//   // firefox
-//   &:focus-visible {
-//     outline: 0;
-//   }
-// `,
-// );
-
-
-
 // import { fetchCandidate } from "@/lib/fetch-candidate";
-const countryListPlaceholder = [
-  {
-    text: "England",
-    id: 1,
-  },
-  {
-    text: "Switzerland",
-    id: 2,
-  },
-  {
-    text: "Germany",
-    id: 3,
-  },
-];
+const countryListPlaceholder = ["England", "Switzerland", "Germany"];
 
-interface CountryOptionType {
-  text: string;
-  id: number;
-}
+// interface CountryOptionType {
+//   text: string;
+//   id: number;
+// }
 
 // TODO: getUser data based on user id save the information and
 const userId = 1;
@@ -124,28 +83,9 @@ interface Details {
 
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
-import { Details } from "@mui/icons-material";
 
 export default function ProfilePage() {
-  // const {isLoading, isError, data, error} = useQuery({
-  //   queryKey: ["candidateDetails"],
-  //   queryFn: getCandidateDetails,
-  // });
-
-  // if (queryCandidate.isLoading) return <h1>Loading...</h1>;
-  // if (queryCandidate.isError) return <pre>{JSON.stringify(queryCandidate.error)}</pre>;
-  // if (queryCandidate.isSuccess){
-  //   const allDetails = data || null;
-
-  // console.log("details i hope", allDetails);
-  // setState(allDetails)
-
-  const [state, setState] = useState<Details>({});
-
-  const defaultProps = {
-    options: countryListPlaceholder,
-    getOptionLabel: (option: CountryOptionType) => option.text,
-  };
+  const [state, setState] = useState<Object>({});
 
   function handleChange(element: any) {
     const value = element.target.value;
@@ -155,18 +95,20 @@ export default function ProfilePage() {
     });
   }
 
+  function handleCancel(e: any) {
+    console.log("cancel", e.target.getAttribute("data-which"));
+  }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
     const values = Object.fromEntries(data.entries());
-    // console.log('values', values);
 
     updateCandidate.mutate(values);
   }
 
   const signInContext = useContext(SignInProviderContext);
-
   console.log("context", signInContext);
 
   // Access the client
@@ -195,7 +137,27 @@ export default function ProfilePage() {
     }
   }, [queryCandidate.status, queryCandidate.data]);
 
-  if (queryCandidate.isLoading) return <h1>Loading...</h1>;
+  if (queryCandidate.isLoading) {
+    return (
+      <Container sx={{ mt: 3 }}>
+        <Typography variant="h5" component="h1">
+          Your personal profile
+        </Typography>
+
+        <Typography variant="body1" component="p">
+          Let us know you better and how can you be contacted for an opening
+          position.
+        </Typography>
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          sx={{ bgcolor: "white", width: "100%", marginTop: "20px" }}
+          height={20}
+        />
+      </Container>
+      // <Skeleton variant="rounded" width={210} height={118} />
+    );
+  }
   if (queryCandidate.isError) {
     return <pre>{JSON.stringify(queryCandidate.error)}</pre>;
   }
@@ -234,23 +196,48 @@ export default function ProfilePage() {
       </Grid>
 
       {/* Section one Basic info  move to component */}
-      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={3}>
-        <Box>
-          <Typography component="h2" variant="h6">
-            Basic info
-          </Typography>
-          <Typography component="p" variant="caption">
-            Indicates required*
-          </Typography>
-        </Box>
+      <Paper
+        sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }}
+        elevation={3}
+        onSubmit={handleSubmit}
+        component="form"
+      >
+        <Grid container>
+          <Grid item sm={6}>
+            <Box>
+              <Typography component="h2" variant="h6">
+                Basic info
+              </Typography>
+              <Typography component="p" variant="caption">
+                Indicates required*
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item sm={6} sx={{ textAlign: "right" }}>
+            <Button
+              disabled={updateCandidate.isLoading}
+              onClick={handleCancel}
+              data-which="basic"
+              variant="contained"
+              size="small"
+              color="secondary"
+              sx={{ color: "primary" }}
+            >
+              cancel
+            </Button>{" "}
+            <Button
+              sx={{ ml: 2 }}
+              disabled={updateCandidate.isLoading}
+              type="submit"
+              variant="contained"
+              size="small"
+            >
+              save
+            </Button>
+          </Grid>
+        </Grid>
 
-        <Grid
-          container
-          my={3}
-          spacing={2}
-          component="form"
-          onSubmit={handleSubmit}
-        >
+        <Grid container my={3} spacing={2}>
           <Grid item sm={4} sx={{}}>
             <TextField
               id="first_name"
@@ -309,15 +296,7 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item>
-            <Button
-              disabled={updateCandidate.isLoading}
-              type="submit"
-              variant="outlined"
-            >
-              test update
-            </Button>
-          </Grid>
+          <Grid item></Grid>
         </Grid>
       </Paper>
       {/* Section one Basic info End */}
@@ -439,33 +418,34 @@ export default function ProfilePage() {
               fullWidth
               onChange={handleChange}
             /> */}
-            <Autocomplete
-              {...defaultProps}
-              size="small"
+            {/* <Autocomplete */}
+
+            {/* size="small"
               disablePortal
-              id="country-id"
-              // onChange={handleChange}
-              onChange={(event: any, newValue: CountryOptionType | null) => {
-                // setValue(newValue);
-                handleChange;
-              }}
-              // value={state.country || ""}
-              options={countryListPlaceholder}
-              //renderInput={(params) => <TextField  {...params} name={"country"} value={state.country || ""} label={"Country"} />}
-              // renderInput={(params) => <TextField  {...params}  label="Country" />}
-              renderInput={(params) => (
-                <TextField {...params} label="Country" />
-              )}
+              id="country"
+              onChange={handleChange}
+              options={countryListPlaceholder} */}
+
+            {/* renderInput={(params) => (*/}
+            {/* <TextField {...params} label="Country" name={"country"} value={state.country || ""} /> */}
+            <TextField
+              fullWidth
+              label="Country"
+              name={"country"}
+              value={state.country || ""}
             />
+            {/* )}  */}
+
+            {/* /> */}
           </Grid>
           <Grid item>
-            <Button
+            {/* <Button
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="outlined"
             >
               test update
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </Paper>
@@ -508,14 +488,14 @@ export default function ProfilePage() {
             <Button
               component="label"
               variant="outlined"
-              startIcon={<CloudUploadIcon />}
+              startIcon={<UploadIcon />}
             >
               Upload CV
               <VisuallyHiddenInput type="file" />
             </Button>
 
             <Typography component="p" variant="caption" sx={{ mt: 1 }}>
-              *Please upload documents as .PDF, .JPG, .DOC. Max size 500MB
+              Please upload documents as .PDF, .JPG, .DOC. Max size 500MB
             </Typography>
           </Grid>
 
@@ -523,73 +503,63 @@ export default function ProfilePage() {
             <Button
               component="label"
               variant="outlined"
-              startIcon={<CloudUploadIcon />}
+              startIcon={<UploadIcon />}
             >
               Upload Documents
               <VisuallyHiddenInput type="file" />
             </Button>
-            <Typography component="p" variant="caption" sx={{ mt: 1 }}>
-              *Please upload documents as .PDF, .JPG, .DOC. Max size 1GB
+            <Typography component="p" variant="caption" sx={{ my: 1 }}>
+              Please upload documents as .PDF, .JPG, .DOC. Max size 1GB
             </Typography>
           </Grid>
 
-          <Grid item sm={12}>
-            {/* <StyledTextarea
-              maxRows={4}
-              aria-label="maximum height"
-              placeholder="Maximum 4 rows"
-              defaultValue="tejdjdjd"
-            /> */}
-          </Grid>
-          <Grid item sm={9} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
             <TextField
               autoComplete="false"
-              name="street_address"
-              id="street_address"
+              multiline
+              maxRows={7}
+              minRows={7}
+              name="related_experience"
+              id="related_experience"
               size="small"
-              value={state.street_address || ""}
-              label="Street"
+              value={state.related_experience || ""}
+              label=" related_experience"
               fullWidth
               onChange={handleChange}
             />
+            <Typography component="p" variant="caption" sx={{ mt: 1 }}>
+              Example of writing format to show your experience. Think about{" "}
+              <strong>WHAT</strong> you did, <strong>HOW</strong> you achieved
+              it, and the <strong>results</strong>.{" "}
+            </Typography>
+            <ul style={{ marginTop: 0, fontSize: "small" }}>
+              <li>
+                Example 1: Designing algorithms and flowcharts to create new
+                software programs and systems.
+              </li>
+              <li>
+                Example 2: Developing technical documentation to guide future
+                software development projects.
+              </li>
+            </ul>
           </Grid>
-          <Grid item sm={3} sx={{ paddingLeft: "10px" }}>
-            <TextField
-              autoComplete="false"
-              name="house_number"
-              id="house_number"
-              size="small"
-              value={state.house_number || ""}
-              label="House number"
+          <Grid item sm={6} sx={{ paddingLeft: "10px" }}>
+            <Select
               fullWidth
+              // labelId="demo-simple-select-helper-label"
+
+              value={"EU"}
               onChange={handleChange}
-            />
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+        
+              <MenuItem value={"EU"}>EU Permit</MenuItem>
+              <MenuItem value={"thth"}>Twenty</MenuItem>
+              <MenuItem value={"vlasjhs"}>Thirty</MenuItem>
+            </Select>
           </Grid>
-          <Grid item sm={9} sx={{ paddingLeft: "10px" }}>
-            <TextField
-              autoComplete="false"
-              name="city"
-              id="city"
-              size="small"
-              value={state.city || ""}
-              label="City"
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item sm={3} sx={{ paddingLeft: "10px" }}>
-            <TextField
-              autoComplete="false"
-              name="postal_code"
-              id="postal_code"
-              size="small"
-              value={state.postal_code || ""}
-              label="Postal code"
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item sm={12} sx={{ paddingLeft: "10px" }}></Grid>
+          {/* <Grid item sm={12} sx={{ paddingLeft: "10px" }}></Grid> */}
           <Grid item>
             <Button
               disabled={updateCandidate.isLoading}
