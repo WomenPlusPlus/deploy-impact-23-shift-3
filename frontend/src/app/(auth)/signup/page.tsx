@@ -46,6 +46,7 @@ export default function Signup() {
             type={"text"}
             label={"Email"}
             variant={"outlined"}
+            disabled
             sx={{ height: 4, marginBottom: 8 }}
           />
         </FormControl>
@@ -110,11 +111,19 @@ export default function Signup() {
         </Button>
       </Box>
       <Divider sx={{ paddingTop: 3 }} />
-      <Box sx={{ paddingTop: 3 }}>
+      <Box sx={{ paddingTop: 3, display: "flex", alignItems: "center" }}>
         <Typography sx={{ fontSize: "16px" }}>Already on SHIFT?</Typography>
-        <Link href={"/signup"} sx={{ fontSize: "16px", marginRight: 4 }}>
-          Can't Log in?
+        <Link
+          href={"/login"}
+          sx={{ fontSize: "16px", color: "#14366F", marginLeft: 2 }}
+        >
+          Log in
         </Link>
+        <Box sx={{ marginLeft: "auto" }}>
+          <Link href={"/signup"} sx={{ fontSize: "16px" }}>
+            Can't Sign in?
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
