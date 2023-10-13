@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import Card from "@mui/material/Card";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -12,7 +13,6 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     flex: "1",
     backgroundImage: 'url("/images/Bcg-auth.jpg")',
     backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     position: "relative",
   };
@@ -38,6 +38,16 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     height: "100vh",
   };
 
+  const cardStyle = {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: 12,
+    gap: 4,
+  };
+
   return (
     <Box sx={{ display: "flex", height: "100vh", background: "#FAF4EF" }}>
       <Box sx={containerStyle}>
@@ -45,7 +55,20 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           Let’s connect, learn and innovate in tech. Let’s shift
         </Typography>
       </Box>
-      <Box sx={contentStyle}>{children}</Box>
+      <Box sx={contentStyle}>
+        <Box sx={cardStyle}>
+          <Box sx={{ width: "100%" }}>
+            <Typography variant="h4" gutterBottom sx={{}}>
+              Welcome to SHIFT!
+            </Typography>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Card sx={{ borderRadius: 2, backgroundColor: "#FFFCFA" }}>
+              {children}
+            </Card>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -1,146 +1,120 @@
 "use client";
-
-import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-
-import { Alert } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import * as React from "react";
 import { useState } from "react";
+import {
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import LinksSection from "@/app/(auth)/privacyLinks";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Link from "@mui/material/Link";
 
-import { redirect } from "next/navigation";
-
-// query
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
-
-export default function SignUpPage() {
-  // TODO: Temporary for layout, will change when react query is implemented
+export default function Signup() {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
   const [email, setEmail] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [idError, setIsError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [signedIn, setSignedIn] = useState(false);
-
-  // Mutations
-  const mutation = useMutation({
-    mutationFn: (newCredentials) => {
-      return axios.post(
-        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/signup/",
-        newCredentials,
-      );
-    },
-  });
-
-  // TODO: only temp until authentication and roles is fully working
-  if (mutation.isSuccess) {
-    console.log("successMsg", mutation.data.data.msg);
-    // redirect("/candidate")
-  }
-
-  //TODO: is always returning 200 ok when there is an error needs changing (backend)
-  if (mutation.isError) {
-    console.log(mutation.data);
-    // redirect("/candidate")
-  }
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const form_email = data.get("email");
-    const form_password = data.get("password");
-    mutation.mutate({ email: form_email, password: form_password });
+    const data = {
+      email: email,
+      password: password,
+    };
   };
-
   return (
-    <Box
-      sx={{
-        my: 8,
-        mx: 4,
-        px: 5,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "left",
-        maxWidth: "80%",
-      }}
-    >
-      <Typography component="h1" variant="h4" align="left">
-        Welcome to SHIFT!
-      </Typography>
-      <Typography component="h3" variant="h5" align="left" sx={{ mt: 2 }}>
-        Sign up
-      </Typography>
-
+    <Box component="form" onSubmit={handleSubmit} sx={{ padding: 7 }}>
+      <Box sx={{ paddingBottom: 1.5 }}>
+        <FormControl fullWidth variant="outlined">
+          <TextField
+            id={"email"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type={"text"}
+            label={"Email"}
+            variant={"outlined"}
+            sx={{ height: 4, marginBottom: 8 }}
+          />
+        </FormControl>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+      </Box>
+      <Box sx={{ paddingBottom: 1.5 }}>
+        <Typography sx={{ fontSize: "12px" }}> Your password must:</Typography>
+        <ul
+          style={{
+            fontSize: "12px",
+            marginTop: 0,
+            marginBottom: 0,
+            paddingLeft: "16px",
+          }}
+        >
+          <li>Have a minimum of eight (8) characters</li>
+          <li>Contain at least one (1) uppercase letter</li>
+          <li>Contain at least one (1) number</li>
+          <li>Have at least one (1) uppercase letter (A-Z)</li>
+          <li>Have at least one (1) lowercase letter (a-z)</li>
+          <li>Contain at least one (1) special character (-‘-/&%$^*)</li>
+        </ul>
+      </Box>
+      <LinksSection />
       <Box
-        component="form"
-        // noValidate
-        onSubmit={handleSubmit}
-        sx={{ mt: 1 }}
+        sx={{
+          textAlign: "right",
+          textDecoration: "underline",
+          colour: "#14366F",
+        }}
       >
-        <TextField
-          type="email"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-
-        {/* <Link href="/forgot" variant="body2" >
-                  Forgot password?
-                </Link> */}
-
-        <Box sx={{ marginTop: "10px" }}>
-          {mutation.isSuccess && (
-            <Alert severity="error">{mutation.data.data.msg}</Alert>
-          )}
-        </Box>
-        <Box sx={{ textAlign: "right", mb: 1 }}>
-          <Button
-            type="submit"
-            // fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-        </Box>
-        <Divider variant="middle" />
-        {/* <Copyright sx={{ mt: 5 }} /> */}
-
-        <Grid container>
-          <Grid item>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              align="center"
-              sx={{ mt: 5 }}
-            >
-              Already on SHIFT?{" "}
-              <Link color="inherit" href="/signin">
-                Sign in
-              </Link>
-            </Typography>
-          </Grid>
-        </Grid>
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          sx={{ textTransform: "none" }}
+        >
+          Sign in
+        </Button>
+      </Box>
+      <Divider sx={{ paddingTop: 3 }} />
+      <Box sx={{ paddingTop: 3 }}>
+        <Typography sx={{ fontSize: "16px" }}>Already on SHIFT?</Typography>
+        <Link href={"/signup"} sx={{ fontSize: "16px", marginRight: 4 }}>
+          Can't Log in?
+        </Link>
       </Box>
     </Box>
   );
