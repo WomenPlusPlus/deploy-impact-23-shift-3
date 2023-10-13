@@ -1,19 +1,13 @@
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-
 export const metadata = {
   title: "SHIFT - Forgot password",
-  description: "Shift_Enter App - Authentication - Forgot password",
+  description:
+    "Shift_Enter App - If a user forgets their password, they have the option to request a new one.",
 };
 
-export default function ForgotLayout({
+export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      {children}
-    </Grid>
-  );
+  return <>{children}</>;
 }

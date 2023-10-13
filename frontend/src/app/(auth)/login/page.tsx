@@ -75,7 +75,11 @@ export default function Login() {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ padding: 7 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ padding: 7, minWidth: "500px" }}
+    >
       <Box sx={{ paddingBottom: 1.5 }}>
         <FormControl fullWidth variant="outlined">
           <TextField
