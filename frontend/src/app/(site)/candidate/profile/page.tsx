@@ -49,9 +49,8 @@ const countryListPlaceholder = ["England", "Switzerland", "Germany"];
 //   id: number;
 // }
 
-// TODO: getUser data based on user id save the information and
+// TODO: getUser data based on user id
 const userId = 1;
-// save the information to use to prefill the form
 
 interface Details {
   first_name: string;
@@ -89,6 +88,7 @@ export default function ProfilePage() {
 
   function handleChange(element: any) {
     const value = element.target.value;
+
     setState({
       ...state,
       [element.target.name]: value,
@@ -108,8 +108,9 @@ export default function ProfilePage() {
     updateCandidate.mutate(values);
   }
 
-  const signInContext = useContext(SignInProviderContext);
-  console.log("context", signInContext);
+  // test to get context -- move
+  //const signInContext = useContext(SignInProviderContext);
+  // console.log("context", signInContext);
 
   // Access the client
   const queryClient = useQueryClient();
@@ -221,9 +222,8 @@ export default function ProfilePage() {
               variant="contained"
               size="small"
               color="secondary"
-              sx={{ color: "primary" }}
             >
-              cancel
+              Cancel
             </Button>{" "}
             <Button
               sx={{ ml: 2 }}
@@ -232,56 +232,63 @@ export default function ProfilePage() {
               variant="contained"
               size="small"
             >
-              save
+              Save
             </Button>
           </Grid>
         </Grid>
 
         <Grid container my={3} spacing={2}>
-          <Grid item sm={4} sx={{}}>
+          <Grid item sm={4} xs={12}>
             <TextField
+              // InputProps={{
+              //   readOnly: true,
+              // }}
+              required
               id="first_name"
               name="first_name"
               autoComplete="false"
               size="small"
               value={state.first_name || ""}
-              label="First Name*"
+              label="First Name"
               fullWidth
               onChange={handleChange}
             />
           </Grid>
 
-          <Grid item sm={4} sx={{}}>
+          <Grid item sm={4} xs={12}>
             <TextField
+              required
               autoComplete="false"
               name="last_name"
               id="last_name"
               size="small"
               value={state.last_name || ""}
-              label="Last Name*"
+              label="Last Name"
               fullWidth
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={4} sx={{}}>
+          <Grid item sm={4} xs={12}>
             <TextField
+              required
               autoComplete="false"
               name="preferred_name"
               id="preferred_name"
               size="small"
               value={state.preferred_name || ""}
-              label="Preferred name*"
+              label="Preferred Name"
               fullWidth
+              helperText="Tell us how would you like to be presented in your candidate profile."
               onChange={handleChange}
             />
-            <Typography
+            {/* <Typography
               component="p"
               variant="caption"
               sx={{ mt: 1, lineHeight: "1.2" }}
             >
               Tell us how would you like to be presented in your candidate
               profile.
-            </Typography>
+            </Typography> */}
           </Grid>
           <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
             <TextField
@@ -304,50 +311,83 @@ export default function ProfilePage() {
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
         elevation={3}
+        onSubmit={handleSubmit}
+        component="form"
       >
-        <Box>
-          <Typography component="h2" variant="h6">
-            Contact info
-          </Typography>
-          <Typography component="p" variant="caption">
-            Indicates required*
-          </Typography>
-        </Box>
+        <Grid container>
+          <Grid item sm={6}>
+            <Box>
+              <Typography component="h2" variant="h6">
+                Contact info
+              </Typography>
+              <Typography component="p" variant="caption">
+                Indicates required*
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item sm={6} sx={{ textAlign: "right" }}>
+            <Button
+              disabled={updateCandidate.isLoading}
+              onClick={handleCancel}
+              data-which="basic"
+              variant="contained"
+              size="small"
+              color="secondary"
+              // sx={{ color: "primary" }}
+            >
+              Cancel
+            </Button>{" "}
+            <Button
+              sx={{ ml: 2 }}
+              disabled={updateCandidate.isLoading}
+              type="submit"
+              variant="contained"
+              size="small"
+            >
+              Save
+            </Button>
+          </Grid>
+        </Grid>
 
         <Grid
           container
           my={3}
           spacing={2}
-          component="form"
-          onSubmit={handleSubmit}
+          // component="form"
+          // onSubmit={handleSubmit}
         >
-          <Grid item sm={3} sx={{}}>
+          <Grid item sm={3} xs={12}>
             <TextField
+              required
               id="phone_number_region"
               name="phone_number_region"
               autoComplete="false"
               size="small"
-              value={state.phone_number_region || ""}
-              label="Phone number region*"
+              type="tel"
+              value={+state.phone_number_region || ""}
+              label="Phone number region"
               fullWidth
               onChange={handleChange}
             />
           </Grid>
 
-          <Grid item sm={9} sx={{}}>
+          <Grid item sm={9} xs={12}>
             <TextField
+              required
+              type="tel"
               autoComplete="false"
               name="phone_number"
               id="phone_number"
               size="small"
-              value={state.phone_number || ""}
-              label="Phone number*"
+              value={+state.phone_number || ""}
+              label="Phone Number"
               fullWidth
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={12} sx={{}}>
+          <Grid item sm={12} xs={12}>
             <TextField
+              required
               type="email"
               autoComplete="false"
               name="email_adress"
@@ -359,8 +399,9 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={9} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={9} xs={12}>
             <TextField
+              required
               autoComplete="false"
               name="street_address"
               id="street_address"
@@ -371,20 +412,23 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={3} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={3} xs={12}>
             <TextField
+              required
+              type="number"
               autoComplete="false"
               name="house_number"
               id="house_number"
               size="small"
-              value={state.house_number || ""}
+              value={+state.house_number || 0}
               label="House number"
               fullWidth
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={9} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={9} xs={12}>
             <TextField
+              required
               autoComplete="false"
               name="city"
               id="city"
@@ -395,19 +439,21 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={3} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={3} xs={12}>
             <TextField
+              required
+              type=""
               autoComplete="false"
               name="postal_code"
               id="postal_code"
               size="small"
-              value={state.postal_code || ""}
+              value={+state.postal_code || ""}
               label="Postal code"
               fullWidth
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={12} xs={12}>
             {/* <TextField
               autoComplete="false"
               name="country"
@@ -428,12 +474,24 @@ export default function ProfilePage() {
 
             {/* renderInput={(params) => (*/}
             {/* <TextField {...params} label="Country" name={"country"} value={state.country || ""} /> */}
-            <TextField
+            {/* <TextField
               fullWidth
               label="Country"
               name={"country"}
               value={state.country || ""}
-            />
+            /> */}
+            {/* TODO: need to contact gui about type of the Country field */}
+            <Select
+              fullWidth
+              size="small"
+              defaultValue={state.country || "Switzerland"}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "Country" }}
+            >
+              <MenuItem value="Switzerland">Switzerland</MenuItem>
+              <MenuItem value="Germany">Germany</MenuItem>
+              <MenuItem value="France">France</MenuItem>
+            </Select>
             {/* )}  */}
 
             {/* /> */}
@@ -467,23 +525,44 @@ export default function ProfilePage() {
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
         elevation={3}
+        onSubmit={handleSubmit}
+        component="form"
       >
-        <Box>
-          <Typography component="h2" variant="h6">
-            Your Professional profile
-          </Typography>
-          <Typography component="p" variant="caption">
-            Indicates required*
-          </Typography>
-        </Box>
+        <Grid container>
+          <Grid item sm={6}>
+            <Box>
+              <Typography component="h2" variant="h6">
+                Your Professional profile
+              </Typography>
+              <Typography component="p" variant="caption">
+                Indicates required*
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item sm={6} sx={{ textAlign: "right" }}>
+            <Button
+              disabled={updateCandidate.isLoading}
+              onClick={handleCancel}
+              data-which="basic"
+              variant="contained"
+              size="small"
+              color="secondary"
+            >
+              Cancel
+            </Button>{" "}
+            <Button
+              sx={{ ml: 2 }}
+              disabled={updateCandidate.isLoading}
+              type="submit"
+              variant="contained"
+              size="small"
+            >
+              Save
+            </Button>
+          </Grid>
+        </Grid>
 
-        <Grid
-          container
-          my={3}
-          spacing={2}
-          component="form"
-          onSubmit={handleSubmit}
-        >
+        <Grid container my={3} spacing={2}>
           <Grid item sm={12}>
             <Button
               component="label"
@@ -513,7 +592,7 @@ export default function ProfilePage() {
             </Typography>
           </Grid>
 
-          <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={12}>
             <TextField
               autoComplete="false"
               multiline
@@ -543,31 +622,90 @@ export default function ProfilePage() {
               </li>
             </ul>
           </Grid>
-          <Grid item sm={6} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={6} xs={12}>
             <Select
               fullWidth
-              // labelId="demo-simple-select-helper-label"
-
-              value={"EU"}
+              defaultValue={state.work_permit || ""}
               onChange={handleChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
+              // displayEmpty
+              size="small"
+              inputProps={{ "aria-label": "Work permit label" }}
             >
-        
-              <MenuItem value={"EU"}>EU Permit</MenuItem>
-              <MenuItem value={"thth"}>Twenty</MenuItem>
-              <MenuItem value={"vlasjhs"}>Thirty</MenuItem>
+              <MenuItem value={"Yes"}>Yes</MenuItem>
+              <MenuItem value={"No but I/'m a european citizen"}>
+                No but I'm a european citizen
+              </MenuItem>
+              <MenuItem value={"No and I'm NOT a european citizen"}>
+                No and I'm NOT a european citizen
+              </MenuItem>
             </Select>
           </Grid>
           {/* <Grid item sm={12} sx={{ paddingLeft: "10px" }}></Grid> */}
-          <Grid item>
-            <Button
-              disabled={updateCandidate.isLoading}
-              type="submit"
-              variant="outlined"
+          <Grid item sm={6} xs={12}>
+            <TextField
+              required
+              autoComplete="false"
+              name="notice_period_months"
+              id="notice_period_months"
+              size="small"
+              value={state.notice_period_months || ""}
+              label="Notice period months"
+              fullWidth
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item sm={12}>
+            <TextField
+              required
+              autoComplete="false"
+              name="invited_by"
+              id="invited_by"
+              size="small"
+              value={state.invited_by || ""}
+              label="Invited by"
+              fullWidth
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item sm={12}>
+            <TextField
+              required
+              autoComplete="false"
+              name="invited_by"
+              id="invited_by"
+              size="small"
+              value={""}
+              label="initiative badge"
+              fullWidth
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item sm={6} xs={12}>
+            <Select
+              fullWidth
+              size="small"
+              defaultValue={"German"}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "Country" }}
             >
-              test update
-            </Button>
+              <MenuItem value="German">German</MenuItem>
+              <MenuItem value="French">French</MenuItem>
+              <MenuItem value="English">English</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item sm={6} xs={12}>
+            <Select
+              fullWidth
+              size="small"
+              defaultValue={"Proficiency"}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "Country" }}
+            >
+              <MenuItem value="Proficiency">Proficiency</MenuItem>
+              <MenuItem value="German">German</MenuItem>
+              <MenuItem value="French">French</MenuItem>
+              <MenuItem value="English">English</MenuItem>
+            </Select>
           </Grid>
         </Grid>
       </Paper>
