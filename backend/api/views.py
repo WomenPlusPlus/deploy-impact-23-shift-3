@@ -237,6 +237,7 @@ class InviteView(APIView):
         response_payload, status_code = gotrue_auth_request(request)
 
         # If creation was sucessuful, insert into conection table
+
         if "id" in response_payload:
             AuthUsers.objects.filter(pk=response_payload["id"]).update(
                 role=request_payload["role"]
