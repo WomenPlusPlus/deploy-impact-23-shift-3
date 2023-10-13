@@ -439,7 +439,7 @@ class WorkPermits(models.Model):
     type_work_permit = models.CharField(max_length=DEFAULT_MAX_LENGTH)
 
     class Meta:
-        db_table = "work_permits
+        db_table = "work_permits"
 
 
 class SupabaseIdToUserIds(models.Model):

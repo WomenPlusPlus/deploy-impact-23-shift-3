@@ -213,3 +213,5 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # Project parameters
 
 STATIC_ROOT = path.join(BASE_DIR, "static/")
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
