@@ -10,9 +10,9 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     mode: "light",
-    primary:{
-      main:'#14366F'
-    }
+    primary: {
+      main: "#14366F",
+    },
   },
 
   typography: {
@@ -20,7 +20,6 @@ const theme = createTheme({
   },
 
   components: {
-
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -40,12 +39,8 @@ const theme = createTheme({
             // borderBottom: "solid 2px red"
           },
         },
-        selected:{
-          backgroundColor:"pink"
-        }
       },
     },
-
 
     // MuiButtonBase:{
     //   defaultProps: {
@@ -59,22 +54,21 @@ const theme = createTheme({
     //       fontSize: '3rem',
     //     },
     //   }
-      
-    
+
     // }
 
     MuiButton: {
       variants: [
         {
-          props: { variant: 'contained' },
+          props: { variant: "contained" },
           style: {
-            borderRadius: '40px',
+            borderRadius: "40px",
             //backgroundColor:'#14366F',
             // border: `2px dashed }`,
           },
         },
         {
-          props: { variant: 'contained', color: 'secondary' },
+          props: { variant: "contained", color: "secondary" },
           style: {
             border: `4px dashed `,
           },

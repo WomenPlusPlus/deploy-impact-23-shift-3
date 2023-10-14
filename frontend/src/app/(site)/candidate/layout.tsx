@@ -1,4 +1,4 @@
-import SubHeader from "@/components/site/subHeader";
+import SubHeader, { SubHeaderSection } from "@/components/site/subHeader";
 import Container from "@mui/material/Container";
 
 export const metadata = {
@@ -11,12 +11,12 @@ export default function CandidateLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sections = [
-    { title: "Dashboard", url: "/candidate", icon:"home" },
-    { title: "My Jobs", url: "/candidate/my-jobs", icon:"jobs"},
-    { title: "Companies", url: "/candidate/companies", icon:"company"},
-    { title: "Profile", url: "/candidate/profile", icon:"profile"},
-    { title: "Settings", url: "/candidate/settings", icon:"settings" },
+  const sections: SubHeaderSection[] = [
+    { title: "Dashboard", url: "/candidate", icon: "home" },
+    { title: "My Jobs", url: "/candidate/my-jobs", icon: "jobs" },
+    { title: "Companies", url: "/candidate/companies", icon: "company" },
+    { title: "Profile", url: "/candidate/profile", icon: "profile" },
+    { title: "Settings", url: "/candidate/settings", icon: "settings" },
   ];
   return (
     <>

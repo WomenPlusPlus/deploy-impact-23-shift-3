@@ -1,12 +1,6 @@
 "use client";
-import AppBar from "@mui/material/AppBar";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 // import { Interface } from "readline"
-
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
 
@@ -16,16 +10,17 @@ import BusinessIcon from "@mui/icons-material/Business";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 
+export type SubHeaderSection = {
+  title: string;
+  url: string;
+  icon: "home" | "jobs" | "company" | "profile" | "settings";
+};
 interface HeaderProps {
-  sections: ReadonlyArray<{
-    title: string;
-    url: string;
-    icon: string;
-  }>;
+  sections: SubHeaderSection[];
 }
 
 export default function SubHeader(props: HeaderProps) {
-  const { sections, title } = props;
+  const { sections } = props;
   //TODO: add title to props so can use it to determine current page
   return (
     <Container>
