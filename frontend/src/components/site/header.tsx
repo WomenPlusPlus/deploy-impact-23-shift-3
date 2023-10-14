@@ -35,7 +35,7 @@ export default function Header(props: HeaderProps) {
         <Button size="small">SHIFT</Button>
 
         <Button variant="outlined" size="small">
-          <Link href="/signin" > Sign out</Link>
+          <Link href="/login" > Sign out</Link>
         
         </Button>
       
