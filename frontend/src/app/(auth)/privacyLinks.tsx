@@ -9,13 +9,19 @@ export default function LinksSection() {
         By clicking Sign In you agree to the SHIFT
       </Typography>
       <Box>
-        <Link href="/" sx={{ textDecoration: "underline", color: "#14366F" }}>
+        <Link
+          href="/login"
+          sx={{ textDecoration: "underline", color: "#14366F" }}
+        >
           User Agreement, Privacy Policy
         </Link>
         <Typography sx={{ fontSize: "12px", display: "inline", marginX: 1 }}>
           and
         </Typography>
-        <Link href="/" sx={{ textDecoration: "underline", color: "#14366F" }}>
+        <Link
+          href="/login"
+          sx={{ textDecoration: "underline", color: "#14366F" }}
+        >
           Cookie Policy
         </Link>
       </Box>

@@ -58,7 +58,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       <Box sx={contentStyle}>
         <Box sx={cardStyle}>
           <Box sx={{ width: "100%" }}>
-            <Typography variant="h4" gutterBottom sx={{}}>
+            <Typography variant="h4" gutterBottom>
               Welcome to SHIFT!
             </Typography>
           </Box>

@@ -124,7 +124,7 @@ export default function Signup() {
           Log in
         </Link>
         <Box sx={{ marginLeft: "auto" }}>
-          <Link href={"/signup"} sx={{ fontSize: "16px" }}>
+          <Link href={"/information"} sx={{ fontSize: "16px" }}>
             Can't Sign in?
           </Link>
         </Box>

@@ -12,17 +12,28 @@ import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "@mui/material/Link";
 import LinksSection from "@/app/(auth)/privacyLinks";
 import Button from "@mui/material/Button";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 interface Credentials {
   email: string;
   password: string;
 }
 
+interface LoginResponse {
+  access_token: string;
+  expires_at: string;
+  expires_in: string;
+  id: string;
+  last_sign_in_a: string;
+  role: string;
+  token_type: string;
+}
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -33,6 +44,8 @@ export default function Login() {
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+  const signInContext = useContext(SignInProviderContext);
 
   const mutation = useMutation({
     mutationFn: async (credentials: Credentials) => {
@@ -46,7 +59,6 @@ export default function Login() {
           body: JSON.stringify(credentials),
         },
       );
-
       if (response.status === 500) {
         throw new Error("Login failed")!;
       }
@@ -58,11 +70,29 @@ export default function Login() {
           throw error;
         }
       }
-
       return await response.json();
     },
-    onError: () => {},
-    onSuccess: () => {},
+    onError: (error: Error, variables, context) => {
+      console.error("An error occurred during mutation:", error);
+    },
+    onSuccess: (response: LoginResponse) => {
+      signInContext.setAuth({
+        authenticated: true,
+        access_token: response.access_token,
+        user: { id: response.id },
+        role: response.role,
+      });
+
+      if (response.role === "candidate") {
+        router.push("/candidate");
+      } else if (response.role === "admin") {
+        router.push("/admin");
+      } else if (response.role === "association") {
+        router.push("/association");
+      } else if (response.role === "company") {
+        router.push("/company");
+      }
+    },
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -152,7 +182,7 @@ export default function Login() {
       </Box>
       {mutation.error ? (
         <Box sx={{ paddingTop: 5 }}>
-          <Alert severity="error">error</Alert>
+          <Alert severity="error">{mutation.error.message}</Alert>
         </Box>
       ) : null}
     </Box>
