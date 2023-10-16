@@ -19,12 +19,20 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-
-  //TODO: get first letter of first name, last name save to variable 
+  //TODO: get first letter of first name, last name save to variable
   const { title } = props;
 
   return (
-    <Paper elevation={3} sx={{ backgroundColor: "#FFFCFA" }}>
+    <Paper
+      elevation={3}
+      sx={{
+        backgroundColor: "#FFFCFA",
+        position: "fixed",
+        width: "100%",
+        zIndex: 200,
+      }}
+    >
+      {/* <Paper elevation={3} sx={{ backgroundColor: "#FFFCFA"}}> */}
       <Toolbar
         sx={{
           borderColor: "divider",
@@ -38,12 +46,25 @@ export default function Header(props: HeaderProps) {
           </Grid>
 
           <Grid item xs={6} sx={{ textAlign: "right" }}>
-            <Box sx={{ mr: 8, display: "inline-block", }}>
-              <Box sx={{ mr:1,display: "inline-block", borderRadius: "50%", background:"#14366F", height:'32px', width:'32px', color:'white', textAlign:'center', lineHeight:"32px"}}>
-              <Typography sx={{lineHeight:"32px"}}>JS</Typography>  
-              </Box>
-{" "}
-              <Link underline="none" color="primary" href="/signin" sx={{}}>Sign out</Link>
+            <Box sx={{ mr: 8, display: "inline-block" }}>
+              <Box
+                sx={{
+                  mr: 1,
+                  display: "inline-block",
+                  borderRadius: "50%",
+                  background: "#14366F",
+                  height: "32px",
+                  width: "32px",
+                  color: "white",
+                  textAlign: "center",
+                  lineHeight: "32px",
+                }}
+              >
+                <Typography sx={{ lineHeight: "32px" }}>JS</Typography>
+              </Box>{" "}
+              <Link underline="none" color="primary" href="/signin" sx={{}}>
+                Sign out
+              </Link>
             </Box>
           </Grid>
         </Grid>

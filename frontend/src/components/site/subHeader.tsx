@@ -10,6 +10,7 @@ import BusinessIcon from "@mui/icons-material/Business";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import Box from "@mui/material/Box";
 
 import { usePathname } from "next/navigation";
 
@@ -29,6 +30,7 @@ export default function SubHeader(props: HeaderProps) {
 
   return (
     <Container>
+      {/* <Box sx={ { position:"fixed", zIndex:300, top:'60px' }}> */}
       <Toolbar
         component="nav"
         variant="dense"
@@ -36,7 +38,7 @@ export default function SubHeader(props: HeaderProps) {
           justifyContent: "space-between",
           borderBottom: 2,
           borderColor: "#D7DDE7",
-          mt: 3,
+          mt: 10,
         }}
       >
         {sections.map((section) => (
@@ -92,6 +94,7 @@ export default function SubHeader(props: HeaderProps) {
           </Link>
         ))}
       </Toolbar>
+      {/* </Box> */}
     </Container>
   );
 }
