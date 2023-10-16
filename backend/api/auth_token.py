@@ -94,9 +94,14 @@ def format_token(token: json) -> json:
 
     supabase_user_id = token["user"]["id"]
 
-    id = SupabaseIdToUserIds.objects.get(
+    user = SupabaseIdToUserIds.objects.filter(
         supabase_authenticaiton_uuid=supabase_user_id
-    ).user_id
+    ).first()
+
+    if user:
+        id = user.user_id
+    else:
+        id = "No id found in connection table, this is probably an old user."
 
     new_token = {
         "access_token": token["access_token"],
@@ -104,8 +109,9 @@ def format_token(token: json) -> json:
         "expires_in": token["expires_in"],
         "expires_at": token["expires_at"],
         "role": token["user"]["role"],
-        "last_sign_in_a": token["token_type"],
+        "last_sign_in_at": token["user"]["last_sign_in_at"],
         "id": id,
+        "refresh_token": token["refresh_token"],
     }
 
     return new_token

@@ -65,8 +65,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    # Internal middleware
-    "api.middleware.RefreshTokenMiddleware",
 ]
 
 ROOT_URLCONF = "shift_3_womenpp.urls"
