@@ -9,14 +9,14 @@ export default function Footer() {
       sx={{
         py: 3,
         px: 2,
-        mt: "auto",
+        mt: 4,
         borderTop:1,
         borderColor: "divider",
         backgroundColor: "#FCF8F4",
       }}
     >
-      <Container maxWidth="sm">
-        <Typography variant="body1">Footer content here!</Typography>
+      <Container >
+        <Typography variant="body1" sx={{textAlign:"center"}}>Shift_Enter 2023</Typography>
       </Container>
     </Box>
   );

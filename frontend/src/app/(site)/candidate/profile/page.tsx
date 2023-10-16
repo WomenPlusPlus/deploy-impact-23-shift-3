@@ -28,6 +28,8 @@ import Skeleton from "@mui/material/Skeleton";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
+import CreateIcon from "@mui/icons-material/Create";
+import IconButton from "@mui/material/IconButton";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -85,6 +87,7 @@ import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
 
 export default function ProfilePage() {
   const [state, setState] = useState<Object>({});
+  const [editBlock, setEditBlock] = useState("");
 
   function handleChange(element: any) {
     const value = element.target.value;
@@ -96,7 +99,20 @@ export default function ProfilePage() {
   }
 
   function handleCancel(e: any) {
-    console.log("cancel", e.target.getAttribute("data-which"));
+    // to see which block has been canceled
+    // const block = e.target.getAttribute("data-which");
+    // remove edit block from state
+    setEditBlock("");
+    // reset form info - reload info
+    // queryClient.invalidateQueries(["candidateDetails"]);
+    //setState(prevState=>setState(prevState))
+    //setState(prevState=>setState(prevState))
+  }
+
+  function handleEdit(e: any) {
+    const block = e.currentTarget.getAttribute("data-which");
+    console.log("edit", e.currentTarget);
+    setEditBlock(block);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -104,6 +120,7 @@ export default function ProfilePage() {
 
     const data = new FormData(event.currentTarget);
     const values = Object.fromEntries(data.entries());
+    setEditBlock("");
 
     updateCandidate.mutate(values);
   }
@@ -163,40 +180,11 @@ export default function ProfilePage() {
     return <pre>{JSON.stringify(queryCandidate.error)}</pre>;
   }
 
-  // useContext is a Hook in react. It is a way to pass data through the component tree without having to pass props down manually at every level.
-  // const signInContext = useContext(SignInProviderContext);
-  // useQuery is a Hook provided by the React Query library, and it is used for fetching and managing data in React applications.
-  // firstParam: key
-  //secondParam: The function that performs the data-fetching operation. This function should return a Promise that resolves to the data you want to retrieve
-  //thirdParam: optional configuration object that allows you to customize the behavior of the query. (for more info read doc)
-  // const { data } = useQuery(
-  //   ["candidates", signInContext.auth?.user?.id],
-  //   () => fetchCandidate(signInContext.auth?.user?.id),
-  //   {
-  //     enabled: !!signInContext.auth?.user?.id,
-  //   },
-  // );
+  let block1, block2, block3, block4;
 
-  return (
-    <Container>
-      <Grid container sx={{ my: 3 }}>
-        <Grid item sm={8}>
-          <Typography variant="h5" component="h1">
-            Your personal profile
-          </Typography>
-
-          <Typography variant="body1" component="p">
-            Let us know you better and how can you be contacted for an opening
-            position.
-          </Typography>
-        </Grid>
-
-        <Grid item sx={{ textAlign: "right" }} sm={4}>
-          <Button variant="outlined">Preview your profile</Button>
-        </Grid>
-      </Grid>
-
-      {/* Section one Basic info  move to component */}
+  if (editBlock === "b1") {
+    // Edit fields
+    block1 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }}
         elevation={3}
@@ -218,7 +206,7 @@ export default function ProfilePage() {
             <Button
               disabled={updateCandidate.isLoading}
               onClick={handleCancel}
-              data-which="basic"
+              data-which="b1"
               variant="contained"
               size="small"
               color="secondary"
@@ -282,13 +270,13 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
             {/* <Typography
-              component="p"
-              variant="caption"
-              sx={{ mt: 1, lineHeight: "1.2" }}
-            >
-              Tell us how would you like to be presented in your candidate
-              profile.
-            </Typography> */}
+        component="p"
+        variant="caption"
+        sx={{ mt: 1, lineHeight: "1.2" }}
+      >
+        Tell us how would you like to be presented in your candidate
+        profile.
+      </Typography> */}
           </Grid>
           <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
             <TextField
@@ -306,8 +294,60 @@ export default function ProfilePage() {
           <Grid item></Grid>
         </Grid>
       </Paper>
-      {/* Section one Basic info End */}
-      {/* Section Contact info */}
+    );
+  } else {
+    // Display fields
+    block1 = (
+      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={3}>
+        <Grid container>
+          <Grid item sm={6}>
+            <Box>
+              <Typography component="h2" variant="h6">
+                Basic info
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item sm={6} sx={{ textAlign: "right" }}>
+            <IconButton aria-label="Edit" onClick={handleEdit} data-which="b1">
+              <CreateIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+
+        <Grid container my={1} spacing={2}>
+          <Grid item sm={4} xs={12}>
+            <Typography>
+              <strong>First Name</strong>
+            </Typography>
+            <Typography>{state.first_name || ""}</Typography>
+          </Grid>
+
+          <Grid item sm={4} xs={12}>
+            <Typography>
+              <strong>Last Name</strong>
+            </Typography>
+            <Typography>{state.last_name || ""}</Typography>
+          </Grid>
+          <Grid item sm={4} xs={12}>
+            <Typography>
+              <strong>Preferred Name</strong>
+            </Typography>
+            <Typography>{state.preferred_name || ""}</Typography>
+          </Grid>
+          <Grid item sm={12}>
+            <Typography>
+              <strong>Date of Birth</strong>
+            </Typography>
+            <Typography>{state.birth_date || ""}</Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  }
+
+  if (editBlock === "b2") {
+    // Edit fields
+    block2 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
         elevation={3}
@@ -329,7 +369,7 @@ export default function ProfilePage() {
             <Button
               disabled={updateCandidate.isLoading}
               onClick={handleCancel}
-              data-which="basic"
+              data-which="b1"
               variant="contained"
               size="small"
               color="secondary"
@@ -454,33 +494,6 @@ export default function ProfilePage() {
             />
           </Grid>
           <Grid item sm={12} xs={12}>
-            {/* <TextField
-              autoComplete="false"
-              name="country"
-              id="country"
-              size="small"
-              value={state.country || ""}
-              label="Country"
-              fullWidth
-              onChange={handleChange}
-            /> */}
-            {/* <Autocomplete */}
-
-            {/* size="small"
-              disablePortal
-              id="country"
-              onChange={handleChange}
-              options={countryListPlaceholder} */}
-
-            {/* renderInput={(params) => (*/}
-            {/* <TextField {...params} label="Country" name={"country"} value={state.country || ""} /> */}
-            {/* <TextField
-              fullWidth
-              label="Country"
-              name={"country"}
-              value={state.country || ""}
-            /> */}
-            {/* TODO: need to contact gui about type of the Country field */}
             <Select
               fullWidth
               size="small"
@@ -492,36 +505,73 @@ export default function ProfilePage() {
               <MenuItem value="Germany">Germany</MenuItem>
               <MenuItem value="France">France</MenuItem>
             </Select>
-            {/* )}  */}
-
-            {/* /> */}
           </Grid>
-          <Grid item>
-            {/* <Button
-              disabled={updateCandidate.isLoading}
-              type="submit"
-              variant="outlined"
-            >
-              test update
-            </Button> */}
+          <Grid item></Grid>
+        </Grid>
+      </Paper>
+    );
+  } else {
+    // Display fields
+    /* Section Contact info */
+    block2 = (
+      <Paper
+        sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
+        elevation={3}
+        onSubmit={handleSubmit}
+        component="form"
+      >
+        <Grid container>
+          <Grid item sm={6}>
+            <Box>
+              <Typography component="h2" variant="h6">
+                Contact info
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Grid item sm={6} sx={{ textAlign: "right" }}>
+            <IconButton aria-label="Edit" onClick={handleEdit} data-which="b2">
+              <CreateIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+
+        <Grid container my={1} spacing={2}>
+          <Grid item sm={4} xs={12}>
+            <Typography>
+              <strong>Phone number</strong>
+            </Typography>
+            <Typography>
+              {+state.phone_number_region || ""} {+state.phone_number || ""}
+            </Typography>
+          </Grid>
+
+          <Grid item sm={4} xs={12}>
+            <Typography>
+              <strong>Email address</strong>
+            </Typography>
+            <Typography>{state.email_adress || ""}</Typography>
+          </Grid>
+
+          <Grid item sm={4} xs={12}>
+            <Typography>
+              <strong>Address</strong>
+            </Typography>
+            <Typography>
+              {state.street_address || ""} {+state.house_number || ""},{" "}
+              {state.city || ""} {+state.postal_code || ""}
+              <br />
+              {state.country || ""}
+            </Typography>
           </Grid>
         </Grid>
       </Paper>
+    );
+  }
 
-      {/* Professional profile Intro starts here! */}
-      <Grid container sx={{ my: 3 }}>
-        <Grid item sm={12}>
-          <Typography variant="h5" component="h1">
-            Your Professional profile
-          </Typography>
-
-          <Typography variant="body1" component="p">
-            Shine as the professional you are, enter the information that
-            matters the most to find your perfect job match.
-          </Typography>
-        </Grid>
-      </Grid>
-      {/* Professional profile start */}
+  if (editBlock === "b3") {
+    // Edit fields
+    block3 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
         elevation={3}
@@ -709,6 +759,143 @@ export default function ProfilePage() {
           </Grid>
         </Grid>
       </Paper>
+    );
+  } else {
+    // Display fields
+    block3 = (
+      <Paper
+        sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
+        elevation={3}
+        onSubmit={handleSubmit}
+        component="form"
+      >
+        <Grid container>
+          <Grid item sm={6}>
+            <Box>
+              <Typography component="h2" variant="h6">
+                Your Professional profile
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item sm={6} sx={{ textAlign: "right" }}>
+            <IconButton aria-label="Edit" onClick={handleEdit} data-which="b3">
+              <CreateIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+
+        <Grid container my={1} spacing={2}>
+          <Grid item sm={3}>
+            <Typography>
+              <strong>Upload CV</strong>
+            </Typography>
+            <Typography>{state.file_cv || "-"}</Typography>
+          </Grid>
+
+          <Grid item sm={9}>
+            <Typography>
+              <strong>Other Documents</strong>
+            </Typography>
+            {/* TODO: Not returned from endpoint */}
+            <Typography>{"-"}</Typography>
+          </Grid>
+
+          <Grid item sm={12}>
+            <Typography>
+              <strong>Related experience</strong>
+            </Typography>
+
+            <Typography>{state.related_experience || "-"}</Typography>
+          </Grid>
+
+          <Grid item sm={6} xs={12}>
+            <Typography>
+              <strong>Work permit</strong>
+            </Typography>
+
+            <Typography>{state.work_permit || "-"}</Typography>
+          </Grid>
+
+          <Grid item sm={6} xs={12}>
+            <Typography>
+              <strong>Notice period</strong>
+            </Typography>
+
+            <Typography>{state.notice_period_months || "-"} Month/s</Typography>
+          </Grid>
+
+          <Grid item sm={6}>
+            <Typography>
+              <strong>Invited by</strong>
+            </Typography>
+            {/* TODO: returns an url not the name */}
+            <Typography>{state.invited_by || ""} </Typography>
+          </Grid>
+
+          <Grid item sm={6}>
+            <Typography>
+              <strong>initiative badge"</strong>
+            </Typography>
+            {/* TODO: Not returned  */}
+            <Typography>{"-"}</Typography>
+          </Grid>
+          <Grid item sm={6} xs={12}>
+          <Typography>
+              <strong>Languages"</strong>
+            </Typography>
+              {/* TODO: Not returned  */}
+            <Typography>{"-"}</Typography>
+
+          </Grid>
+          <Grid item sm={6} xs={12}>
+          <Typography>
+              <strong>Proficiency"</strong>
+            </Typography>
+              {/* TODO: Not returned  */}
+            <Typography>{"-"}</Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  }
+
+  return (
+    <Container>
+      <Grid container sx={{ my: 3 }}>
+        <Grid item sm={8}>
+          <Typography variant="h5" component="h1">
+            Your personal profile
+          </Typography>
+
+          <Typography variant="body1" component="p">
+            Let us know you better and how can you be contacted for an opening
+            position.
+          </Typography>
+        </Grid>
+
+        <Grid item sx={{ textAlign: {md:"right", sm:"left"}, mt:{xs:1} }} md={4} sm={12}>
+          <Button variant="outlined">Preview your profile</Button>
+        </Grid>
+      </Grid>
+
+      {/* Section one Basic info -- EDIT / Display -- */}
+      {block1}
+      {/* Section Contact info-- EDIT / Display --  */}
+      {block2}
+      {/* Professional profile Intro starts here! */}
+      <Grid container sx={{ my: 3 }}>
+        <Grid item sm={12}>
+          <Typography variant="h5" component="h1">
+            Your Professional profile
+          </Typography>
+          <Typography variant="body1" component="p">
+            Shine as the professional you are, enter the information that
+            matters the most to find your perfect job match.
+          </Typography>
+        </Grid>
+      </Grid>
+      {/* Professional profile -- EDIT / Display -- */}
+      {block3}
     </Container>
   );
 }

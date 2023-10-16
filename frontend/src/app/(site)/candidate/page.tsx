@@ -8,6 +8,7 @@ import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 export default function CandidatePage() {
   const signInContext = useContext(SignInProviderContext);
+  console.log("con", signInContext)
   return (
     <Container>
       <Box
@@ -19,13 +20,14 @@ export default function CandidatePage() {
         }}
       >
         <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate Dashboard
+          Candidate Homepage
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          The dashboard will be here but not sure how that will look yet!
+          Home page info goes here
         </Typography>
         <Typography variant="body1">Coming soon...</Typography>
-        <pre>{JSON.stringify(signInContext.auth.user, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(signInContext.auth.user, null, 2)}</pre> */}
+     
       </Box>
     </Container>
   );

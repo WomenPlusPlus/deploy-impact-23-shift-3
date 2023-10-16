@@ -17,7 +17,7 @@ export default function CandidateLayout({
 }) {
   const sections = [
     { title: "Home", url: "/candidate", icon: "home" },
-    { title: "My Jobs", url: "/candidate/my-jobs", icon: "jobs" },
+    { title: "Jobs", url: "/candidate/jobs", icon: "jobs" },
     { title: "Companies", url: "/candidate/companies", icon: "company" },
     { title: "Profile", url: "/candidate/profile", icon: "profile" },
     { title: "Settings", url: "/candidate/settings", icon: "settings" },

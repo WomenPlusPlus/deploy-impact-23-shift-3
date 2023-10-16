@@ -51,13 +51,13 @@ export default function SubHeader(props: HeaderProps) {
             sx={
               section.url === pathName
                 ? {
-                    mx: 3,
+                    mx: {md:3, sm:2, xs:0},
                     display: "inline-block",
                     textAlign: "center",
                     borderBottom: "3px solid navy",
                     pb: 1,
                   }
-                : { mx: 3, display: "inline-block", textAlign: "center", pb: 1 }
+                : {  mx: {md:3, sm:2, xs:0}, display: "inline-block", textAlign: "center", pb: 1 }
             }
           >
             <Container>
