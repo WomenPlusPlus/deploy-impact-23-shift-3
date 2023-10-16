@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 export default function HomePage() {
   // TODO: temp redirect until we have something to display here
-  redirect("/signin");
+  redirect("/login");
   return (
     <Box sx={{ display: "flex", marginTop: "80px" }}>
       <div>
