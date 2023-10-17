@@ -11,25 +11,23 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import * as React from "react";
-import { useState } from "react";
+
+import { FormEvent, MouseEvent, useState } from "react";
 import Link from "@mui/material/Link";
 import LinksSection from "@/app/(auth)/privacyLinks";
 import Button from "@mui/material/Button";
 import { useLogin } from "@/lib/use-login";
 
 export default function Login() {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, loginError] = useLogin();
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
       email: email,
