@@ -11,6 +11,11 @@ export const metadata = {
 };
 //TODO: pass initials into header
 
+const bgImg = "/images/site-background-1.png ";
+const bgImg2 = "/images/site-background-2.png ";
+
+console.log("image here", bgImg);
+
 export default function RootLayout({
   children,
 }: {
@@ -22,11 +27,15 @@ export default function RootLayout({
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        backgroundColor:"#FCF8F4"
+        backgroundImage: `url(${bgImg}), url(${bgImg2})`,
+        backgroundRepeat: "repeat-y",
+        backgroundSize: "228px 1240px",
+        backgroundPosition: "left 160px, right 65px",
+        backgroundColor: "#FCF8F4",
       }}
     >
       <CssBaseline />
-      <Header title={"Dashboard"}  initials={"JS"} />
+      <Header title={"Dashboard"} initials={"JS"} />
 
       {children}
 
