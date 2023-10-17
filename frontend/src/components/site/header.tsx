@@ -15,12 +15,12 @@ import { Avatar } from "@mui/material";
 import logo from "../../../public/images/logo.png";
 
 interface HeaderProps {
-  title: string;
+  initials: string;
 }
 
 export default function Header(props: HeaderProps) {
   //TODO: get first letter of first name, last name save to variable
-  const { title } = props;
+  const { initials } = props;
 
   return (
     <Paper
@@ -60,7 +60,7 @@ export default function Header(props: HeaderProps) {
                   lineHeight: "32px",
                 }}
               >
-                <Typography sx={{ lineHeight: "32px" }}>JS</Typography>
+                <Typography sx={{ lineHeight: "32px" }}>{props.initials}</Typography>
               </Box>{" "}
               <Link underline="none" color="primary" href="/signin" sx={{}}>
                 Sign out

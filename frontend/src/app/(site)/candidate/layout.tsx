@@ -25,7 +25,7 @@ export default function CandidateLayout({
   return (
     <Box>
       {/* candidate header */}
-      <SubHeader sections={sections} title={""} />
+      <SubHeader sections={sections} />
       <Container component="main" sx={{ mt: 3, mb: 2 }} maxWidth="lg">
         {children}
       </Container>

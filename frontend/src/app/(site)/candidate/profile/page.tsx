@@ -57,38 +57,39 @@ const countryListPlaceholder = ["England", "Switzerland", "Germany"];
 const userId = 1;
 
 interface Details {
-  first_name: string;
-  last_name: string;
-  preferred_name: string;
-  values_text: string;
-  related_experience: string;
-  desired_job: string;
-  personality_description: string;
-  street_address: string;
-  house_number: string;
-  postal_code: number;
-  city: string;
-  phone_number_region: number;
-  phone_number: number;
-  email_adress: string;
-  birth_date: number;
-  notice_period_months: number;
-  file_cv: string;
-  preferred_work_id: number;
-  accepted_privacy: boolean;
-  skip_tutorial: boolean;
-  preferred_work_model: string;
-  country: string;
-  work_permit: string;
-  status: string;
-  invited_by: string;
+  first_name?: string;
+  last_name?: string;
+  preferred_name?: string;
+  values_text?: string;
+  related_experience?: string;
+  desired_job?: string;
+  personality_description?: string;
+  street_address?: string;
+  house_number?: string;
+  postal_code?: number;
+  city?: string;
+  phone_number_region?: number;
+  phone_number?: number;
+  email_adress?: string;
+  birth_date?: number;
+  notice_period_months?: number;
+  file_cv?: string;
+  preferred_work_id?: number;
+  accepted_privacy?: boolean;
+  skip_tutorial?: boolean;
+  preferred_work_model?: string;
+  country?: string;
+  work_permit?: string;
+  status?: string;
+  invited_by?: string;
 }
 
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
 
 export default function ProfilePage() {
-  const [state, setState] = useState<Object>({});
+  const obj:Details = {};
+  const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 
   function handleChange(element: any) {
@@ -403,7 +404,7 @@ export default function ProfilePage() {
               autoComplete="false"
               size="small"
               type="tel"
-              value={+state.phone_number_region || ""}
+              value={state.phone_number_region || ""}
               label="Phone number region"
               fullWidth
               onChange={handleChange}
@@ -418,7 +419,7 @@ export default function ProfilePage() {
               name="phone_number"
               id="phone_number"
               size="small"
-              value={+state.phone_number || ""}
+              value={state.phone_number || ""}
               label="Phone Number"
               fullWidth
               onChange={handleChange}
@@ -459,7 +460,7 @@ export default function ProfilePage() {
               name="house_number"
               id="house_number"
               size="small"
-              value={+state.house_number || 0}
+              value={state.house_number || ""}
               label="House number"
               fullWidth
               onChange={handleChange}
@@ -481,12 +482,12 @@ export default function ProfilePage() {
           <Grid item sm={3} xs={12}>
             <TextField
               required
-              type=""
+              type="number"
               autoComplete="false"
               name="postal_code"
               id="postal_code"
               size="small"
-              value={+state.postal_code || ""}
+              value={state.postal_code || ""}
               label="Postal code"
               fullWidth
               onChange={handleChange}
@@ -542,7 +543,7 @@ export default function ProfilePage() {
               <strong>Phone number</strong>
             </Typography>
             <Typography>
-              {+state.phone_number_region || ""} {+state.phone_number || ""}
+              {state.phone_number_region || ""} {state.phone_number || ""}
             </Typography>
           </Grid>
 
@@ -558,8 +559,8 @@ export default function ProfilePage() {
               <strong>Address</strong>
             </Typography>
             <Typography>
-              {state.street_address || ""} {+state.house_number || ""},{" "}
-              {state.city || ""} {+state.postal_code || ""}
+              {state.street_address || ""} {state.house_number || ""},{" "}
+              {state.city || ""} {state.postal_code || ""}
               <br />
               {state.country || ""}
             </Typography>

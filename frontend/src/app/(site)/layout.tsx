@@ -35,7 +35,7 @@ export default function RootLayout({
       }}
     >
       <CssBaseline />
-      <Header title={"Dashboard"} initials={"JS"} />
+      <Header initials={"JS"} />
 
       {children}
 
