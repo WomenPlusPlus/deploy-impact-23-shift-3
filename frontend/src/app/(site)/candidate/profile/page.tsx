@@ -31,6 +31,9 @@ import InputLabel from "@mui/material/InputLabel";
 import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
 
+// GUi component!! 
+import Asynchronous from "@/components/MuiAutocomplete_example";
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -490,6 +493,7 @@ export default function ProfilePage() {
             />
           </Grid>
           <Grid item sm={12} xs={12}>
+
             <Select
               fullWidth
               size="small"
@@ -727,6 +731,8 @@ export default function ProfilePage() {
             />
           </Grid>
           <Grid item sm={6} xs={12}>
+            {/* TODO: talk to gui about how it should work */}
+          {/* <Asynchronous onChange={handleChange}/> */}
             <Select
               fullWidth
               size="small"
