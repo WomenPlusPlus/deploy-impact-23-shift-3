@@ -16,7 +16,7 @@ export default function Footer() {
       }}
     >
       <Container >
-        <Typography variant="body1" sx={{textAlign:"center"}}>Shift_Enter 2023</Typography>
+        <Typography variant="subtitle2" sx={{textAlign:"center", color:"GrayText"}}>⇧⏎  2023</Typography>
       </Container>
     </Box>
   );
