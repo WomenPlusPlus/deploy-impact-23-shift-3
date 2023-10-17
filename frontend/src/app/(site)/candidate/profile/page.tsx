@@ -99,19 +99,17 @@ export default function ProfilePage() {
   }
 
   function handleCancel(e: any) {
-    // to see which block has been canceled
-    // const block = e.target.getAttribute("data-which");
+    // reset form info - reload info
+    if (queryCandidate.status === "success") {
+      setState(queryCandidate.data);
+    }
     // remove edit block from state
     setEditBlock("");
-    // reset form info - reload info
-    // queryClient.invalidateQueries(["candidateDetails"]);
-    //setState(prevState=>setState(prevState))
-    //setState(prevState=>setState(prevState))
   }
 
   function handleEdit(e: any) {
     const block = e.currentTarget.getAttribute("data-which");
-    console.log("edit", e.currentTarget);
+    // console.log("edit", e.currentTarget);
     setEditBlock(block);
   }
 
@@ -149,8 +147,7 @@ export default function ProfilePage() {
   // to setState
   useEffect(() => {
     if (queryCandidate.status === "success") {
-      console.log("data", queryCandidate.data);
-
+      // console.log("data", queryCandidate.data);
       setState(queryCandidate.data);
     }
   }, [queryCandidate.status, queryCandidate.data]);
@@ -840,18 +837,17 @@ export default function ProfilePage() {
             <Typography>{"-"}</Typography>
           </Grid>
           <Grid item sm={6} xs={12}>
-          <Typography>
+            <Typography>
               <strong>Languages"</strong>
             </Typography>
-              {/* TODO: Not returned  */}
+            {/* TODO: Not returned  */}
             <Typography>{"-"}</Typography>
-
           </Grid>
           <Grid item sm={6} xs={12}>
-          <Typography>
+            <Typography>
               <strong>Proficiency"</strong>
             </Typography>
-              {/* TODO: Not returned  */}
+            {/* TODO: Not returned  */}
             <Typography>{"-"}</Typography>
           </Grid>
         </Grid>
@@ -873,7 +869,12 @@ export default function ProfilePage() {
           </Typography>
         </Grid>
 
-        <Grid item sx={{ textAlign: {md:"right", sm:"left"}, mt:{xs:1} }} md={4} sm={12}>
+        <Grid
+          item
+          sx={{ textAlign: { md: "right", sm: "left" }, mt: { xs: 1 } }}
+          md={4}
+          sm={12}
+        >
           <Button variant="outlined">Preview your profile</Button>
         </Grid>
       </Grid>
