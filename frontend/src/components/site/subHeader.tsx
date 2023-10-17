@@ -15,7 +15,6 @@ import Box from "@mui/material/Box";
 import { usePathname } from "next/navigation";
 
 interface HeaderProps {
-  title: string;
   sections: ReadonlyArray<{
     title: string;
     url: string;
