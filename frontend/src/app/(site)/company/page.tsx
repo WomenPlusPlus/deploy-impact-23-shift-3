@@ -5,12 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 // query
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getSkills } from "@/components/skills/skills";
 

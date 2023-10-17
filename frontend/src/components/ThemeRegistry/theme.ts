@@ -10,12 +10,12 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     mode: "light",
-    primary:{
-      main:'#14366F'
+    primary: {
+      main: "#14366F",
     },
-    secondary:{
-      main:'#D7DDE7'
-    }
+    secondary: {
+      main: "#D7DDE7",
+    },
   },
 
   typography: {
@@ -23,7 +23,6 @@ const theme = createTheme({
   },
 
   components: {
-
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -34,17 +33,17 @@ const theme = createTheme({
       },
     },
 
-    // MuiLink: {
-    //   styleOverrides: {
-    //     "root": {
-    //       "&.Mui-selected": {
-    //         "backgroundColor": "pink"
-    //       }
-    //     }
- 
-    //   },
-    // },
-
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+          ":hover": {
+            // textDecoration: "underline",
+            // borderBottom: "solid 2px red"
+          },
+        },
+      },
+    },
 
     // MuiButtonBase:{
     //   defaultProps: {
@@ -58,36 +57,23 @@ const theme = createTheme({
     //       fontSize: '3rem',
     //     },
     //   }
-      
-    
+
     // }
 
     MuiButton: {
       variants: [
         {
-          props: { variant: 'contained', },
+          props: { variant: "outlined" },
           style: {
-            borderRadius: '40px',
+            borderRadius: "40px",
             //backgroundColor:'#14366F',
             // border: `2px dashed }`,
           },
-          
         },
         {
-          props: { variant: 'outlined', },
+          props: { variant: "contained", color: "secondary" },
           style: {
-            borderRadius: '40px',
-            //backgroundColor:'#14366F',
-            // border: `2px dashed }`,
-          },
-          
-        },
-
-
-        {
-          props: { variant: 'contained', color: 'secondary' },
-          style: {
-            // border: `4px dashed `,
+            border: `4px dashed `,
           },
         },
       ],

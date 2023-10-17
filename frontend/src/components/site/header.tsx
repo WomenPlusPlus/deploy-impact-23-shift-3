@@ -1,16 +1,11 @@
 "use client";
-import AppBar from "@mui/material/AppBar";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-
-import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Avatar } from "@mui/material";
 
 import logo from "../../../public/images/logo.png";
 
@@ -40,13 +35,13 @@ export default function Header(props: HeaderProps) {
       >
         <Grid container>
           <Grid item xs={6}>
-            <Box sx={{ ml: {xs:1, sm:6, md:8} }}>
+            <Box sx={{ ml: { xs: 1, sm: 6, md: 8 } }}>
               <Image src={logo} alt="Shift logo" />
             </Box>
           </Grid>
 
           <Grid item xs={6} sx={{ textAlign: "right" }}>
-            <Box sx={{ mr:{md:8, xs:1} , display: "inline-block" }}>
+            <Box sx={{ mr: { md: 8, xs: 1 }, display: "inline-block" }}>
               <Box
                 sx={{
                   mr: 1,
@@ -60,9 +55,11 @@ export default function Header(props: HeaderProps) {
                   lineHeight: "32px",
                 }}
               >
-                <Typography sx={{ lineHeight: "32px" }}>{props.initials}</Typography>
+                <Typography sx={{ lineHeight: "32px" }}>
+                  {props.initials}
+                </Typography>
               </Box>{" "}
-              <Link underline="none" color="primary" href="/signin" sx={{}}>
+              <Link underline="none" color="primary" href="/login" sx={{}}>
                 Sign out
               </Link>
             </Box>

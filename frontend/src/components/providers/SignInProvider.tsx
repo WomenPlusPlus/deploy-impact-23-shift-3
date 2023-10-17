@@ -11,7 +11,8 @@ import { CircularProgress, Stack } from "@mui/material";
 export type Authentication = {
   authenticated: boolean;
   access_token: string;
-  user: null | { email: string; id: string; first_name:string; last_name:string };
+  user: null | { id: string };
+  role: string;
 };
 
 type Context = {
@@ -30,6 +31,7 @@ export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
     authenticated: false,
     access_token: "",
     user: null,
+    role: "",
   });
 
   const handleAuth = (auth: Authentication) => {
@@ -44,7 +46,7 @@ export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
     setIsInitialized(true);
   }, []);
   const handleSignOut = () => {
-    setAuth({ authenticated: false, access_token: "", user: null });
+    setAuth({ authenticated: false, access_token: "", user: null, role: "" });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
   return (

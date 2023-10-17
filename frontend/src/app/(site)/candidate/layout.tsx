@@ -1,9 +1,6 @@
-import SubHeader from "@/components/site/subHeader";
+import SubHeader, { SubHeaderSection } from "@/components/site/subHeader";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import backgroundImg1 from "../../../../public/images/site-background-1.png";
-
-const img = "../../../../public/images/site-background-1.png"
 
 export const metadata = {
   title: "SHIFT - Candidate - Home",
@@ -15,7 +12,7 @@ export default function CandidateLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sections = [
+  const sections: SubHeaderSection[] = [
     { title: "Home", url: "/candidate", icon: "home" },
     { title: "Jobs", url: "/candidate/jobs", icon: "jobs" },
     { title: "Companies", url: "/candidate/companies", icon: "company" },

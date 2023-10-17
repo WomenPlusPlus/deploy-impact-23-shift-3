@@ -8,11 +8,10 @@ const DATA_SOURCE_URL =
 
 // TODO:api calls need to be /skills/update etc.. so can use same call with params
 // export async function getSkills(apiEndpoint: any) {
-export async function UpdateCandidateDetails(data:any) {
+export async function UpdateCandidateDetails(data: any) {
   try {
-  
     console.log("in patch", data);
-    
+
     const response = await axios.patch(`${DATA_SOURCE_URL}candidates/1/`, data);
 
     //console.log("candidate_data", response.data);
@@ -23,5 +22,3 @@ export async function UpdateCandidateDetails(data:any) {
     throw new Error("Error fetching data:", error);
   }
 }
-
-

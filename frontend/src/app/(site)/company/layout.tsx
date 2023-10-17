@@ -1,4 +1,4 @@
-import SubHeader from "@/components/site/subHeader";
+import SubHeader, { SubHeaderSection } from "@/components/site/subHeader";
 import Container from "@mui/material/Container";
 
 export const metadata = {
@@ -11,7 +11,7 @@ export default function CompanyLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sections = [
+  const sections: SubHeaderSection[] = [
     { title: "Home", url: "/company", icon: "home" },
     { title: "Jobs", url: "/company/jobs", icon: "jobs" },
     { title: "Candidates", url: "/company/candidates", icon: "candidates" },
@@ -21,7 +21,6 @@ export default function CompanyLayout({
 
   return (
     <>
-      {/* candidate header */}
       <SubHeader sections={sections} />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
         {children}

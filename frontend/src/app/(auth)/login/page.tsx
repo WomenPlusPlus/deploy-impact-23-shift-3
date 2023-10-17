@@ -1,8 +1,7 @@
 "use client";
-import Box from "@mui/material/Box";
-import * as React from "react";
-import { useState } from "react";
+
 import {
+  Alert,
   FormControl,
   InputAdornment,
   InputLabel,
@@ -11,30 +10,32 @@ import {
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+
+import { FormEvent, MouseEvent, useState } from "react";
+import Link from "@mui/material/Link";
 import LinksSection from "@/app/(auth)/privacyLinks";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
+import { useLogin } from "@/lib/use-login";
 
-export default function Signup() {
-  const [showPassword, setShowPassword] = React.useState(false);
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [login, loginError] = useLogin();
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
       email: email,
       password: password,
     };
+    login(data);
   };
+
   return (
     <Box
       component="form"
@@ -50,7 +51,6 @@ export default function Signup() {
             type={"text"}
             label={"Email"}
             variant={"outlined"}
-            disabled
             sx={{ height: 4, marginBottom: 8 }}
           />
         </FormControl>
@@ -79,23 +79,18 @@ export default function Signup() {
           />
         </FormControl>
       </Box>
-      <Box sx={{ paddingBottom: 1.5 }}>
-        <Typography sx={{ fontSize: "12px" }}> Your password must:</Typography>
-        <ul
-          style={{
-            fontSize: "12px",
-            marginTop: 0,
-            marginBottom: 0,
-            paddingLeft: "16px",
+      <Box sx={{ paddingBottom: 1.5, fontSize: "16px" }}>
+        <Link
+          href="/forgot"
+          sx={{
+            textDecoration: "underline",
+            color: "#14366F",
+            paddingTop: "12px",
+            paddingBottom: "12px",
           }}
         >
-          <li>Have a minimum of eight (8) characters</li>
-          <li>Contain at least one (1) uppercase letter</li>
-          <li>Contain at least one (1) number</li>
-          <li>Have at least one (1) uppercase letter (A-Z)</li>
-          <li>Have at least one (1) lowercase letter (a-z)</li>
-          <li>Contain at least one (1) special character (-‘-/&%$^*)</li>
-        </ul>
+          Forgot password?
+        </Link>
       </Box>
       <LinksSection />
       <Box
@@ -105,30 +100,23 @@ export default function Signup() {
           colour: "#14366F",
         }}
       >
+        <Link href={"/signup"} sx={{ fontSize: "16px", marginRight: 4 }}>
+          Can't Log in?
+        </Link>
         <Button
           type="submit"
           variant="contained"
           size="large"
           sx={{ textTransform: "none" }}
         >
-          Sign in
+          Log in
         </Button>
       </Box>
-      <Divider sx={{ paddingTop: 3 }} />
-      <Box sx={{ paddingTop: 3, display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontSize: "16px" }}>Already on SHIFT?</Typography>
-        <Link
-          href={"/login"}
-          sx={{ fontSize: "16px", color: "#14366F", marginLeft: 2 }}
-        >
-          Log in
-        </Link>
-        <Box sx={{ marginLeft: "auto" }}>
-          <Link href={"/information"} sx={{ fontSize: "16px" }}>
-            Can't Sign in?
-          </Link>
+      {loginError ? (
+        <Box sx={{ paddingTop: 5 }}>
+          <Alert severity="error">{loginError.message}</Alert>
         </Box>
-      </Box>
+      ) : null}
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "SHIFT - Forgot password",
+  title: "SHIFT - Log in",
   description:
-    "Shift_Enter App - If a user forgets their password, they have the option to request a new one.",
+    "Shift_Enter App - Any user with valid credentials can log into the app",
 };
 
 export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({

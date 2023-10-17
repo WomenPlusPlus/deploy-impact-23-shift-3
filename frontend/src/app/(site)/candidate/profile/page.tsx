@@ -1,38 +1,27 @@
 "use client";
 
 import * as React from "react";
-import { useContext, useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { SignInProviderContext } from "@/components/providers/SignInProvider";
 // query
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  hashQueryKey,
-} from "@tanstack/react-query";
-import { Avatar, Button, FormControl } from "@mui/material";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Autocomplete from "@mui/material/Autocomplete";
-import {
-  useAutocomplete,
-  UseAutocompleteProps,
-} from "@mui/base/useAutocomplete";
 import UploadIcon from "@mui/icons-material/Upload";
 import { styled } from "@mui/material/styles";
 import Skeleton from "@mui/material/Skeleton";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
 import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
 
-// GUi component!! 
-import Asynchronous from "@/components/MuiAutocomplete_example";
+// GUi component!!
+import { getCandidateDetails } from "@/lib/getCandidateDetails";
+import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -84,11 +73,8 @@ interface Details {
   invited_by?: string;
 }
 
-import { getCandidateDetails } from "@/lib/getCandidateDetails";
-import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
-
 export default function ProfilePage() {
-  const obj:Details = {};
+  const obj: Details = {};
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 
@@ -214,7 +200,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: {xs:0,sm:2} }}
+              sx={{ ml: { xs: 0, sm: 2 } }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -378,7 +364,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml:{xs:0, sm:2}  }}
+              sx={{ ml: { xs: 0, sm: 2 } }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -494,7 +480,6 @@ export default function ProfilePage() {
             />
           </Grid>
           <Grid item sm={12} xs={12}>
-
             <Select
               fullWidth
               size="small"
@@ -602,7 +587,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: {xs:0,sm:2} }}
+              sx={{ ml: { xs: 0, sm: 2 } }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -733,7 +718,7 @@ export default function ProfilePage() {
           </Grid>
           <Grid item sm={6} xs={12}>
             {/* TODO: talk to gui about how it should work */}
-          {/* <Asynchronous onChange={handleChange}/> */}
+            {/* <Asynchronous onChange={handleChange}/> */}
             <Select
               fullWidth
               size="small"
@@ -780,7 +765,7 @@ export default function ProfilePage() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={3} sx={{ textAlign: {xs:"right" }}}>
+          <Grid item xs={3} sx={{ textAlign: { xs: "right" } }}>
             <IconButton aria-label="Edit" onClick={handleEdit} data-which="b3">
               <CreateIcon />
             </IconButton>
@@ -862,7 +847,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <Container sx={{mb:8}}>
+    <Container sx={{ mb: 8 }}>
       <Grid container sx={{ my: 3 }}>
         <Grid item sm={8}>
           <Typography variant="h5" component="h1">
