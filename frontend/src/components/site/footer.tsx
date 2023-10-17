@@ -9,7 +9,7 @@ export default function Footer() {
       sx={{
         py: 3,
         px: 2,
-        mt: 4,
+        mt: "auto",
         borderTop:1,
         borderColor: "divider",
         backgroundColor: "#FCF8F4",

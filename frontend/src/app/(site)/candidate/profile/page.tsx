@@ -43,7 +43,6 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-// import { fetchCandidate } from "@/lib/fetch-candidate";
 const countryListPlaceholder = ["England", "Switzerland", "Germany"];
 
 // interface CountryOptionType {
@@ -189,7 +188,7 @@ export default function ProfilePage() {
         component="form"
       >
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={6}>
             <Box>
               <Typography component="h2" variant="h6">
                 Basic info
@@ -199,7 +198,7 @@ export default function ProfilePage() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={6} sx={{ textAlign: "right" }}>
+          <Grid item xs={6} sx={{ textAlign: "right" }}>
             <Button
               disabled={updateCandidate.isLoading}
               onClick={handleCancel}
@@ -211,7 +210,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: 2 }}
+              sx={{ ml: {xs:0,sm:2} }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -297,14 +296,14 @@ export default function ProfilePage() {
     block1 = (
       <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={3}>
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={6}>
             <Box>
               <Typography component="h2" variant="h6">
                 Basic info
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={6} sx={{ textAlign: "right" }}>
+          <Grid item xs={6} sx={{ textAlign: "right" }}>
             <IconButton aria-label="Edit" onClick={handleEdit} data-which="b1">
               <CreateIcon />
             </IconButton>
@@ -352,7 +351,7 @@ export default function ProfilePage() {
         component="form"
       >
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={6}>
             <Box>
               <Typography component="h2" variant="h6">
                 Contact info
@@ -362,7 +361,7 @@ export default function ProfilePage() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={6} sx={{ textAlign: "right" }}>
+          <Grid item xs={6} sx={{ textAlign: "right" }}>
             <Button
               disabled={updateCandidate.isLoading}
               onClick={handleCancel}
@@ -375,7 +374,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: 2 }}
+              sx={{ ml:{xs:0, sm:2}  }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -518,7 +517,7 @@ export default function ProfilePage() {
         component="form"
       >
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={9}>
             <Box>
               <Typography component="h2" variant="h6">
                 Contact info
@@ -526,7 +525,7 @@ export default function ProfilePage() {
             </Box>
           </Grid>
 
-          <Grid item sm={6} sx={{ textAlign: "right" }}>
+          <Grid item xs={3} sx={{ textAlign: "right" }}>
             <IconButton aria-label="Edit" onClick={handleEdit} data-which="b2">
               <CreateIcon />
             </IconButton>
@@ -576,7 +575,7 @@ export default function ProfilePage() {
         component="form"
       >
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={6}>
             <Box>
               <Typography component="h2" variant="h6">
                 Your Professional profile
@@ -586,7 +585,7 @@ export default function ProfilePage() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={6} sx={{ textAlign: "right" }}>
+          <Grid item xs={6} sx={{ textAlign: "right" }}>
             <Button
               disabled={updateCandidate.isLoading}
               onClick={handleCancel}
@@ -598,7 +597,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: 2 }}
+              sx={{ ml: {xs:0,sm:2} }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -701,7 +700,7 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item xs={12}>
             <TextField
               required
               autoComplete="false"
@@ -714,7 +713,7 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item xs={12}>
             <TextField
               required
               autoComplete="false"
@@ -767,14 +766,14 @@ export default function ProfilePage() {
         component="form"
       >
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item xs={9}>
             <Box>
               <Typography component="h2" variant="h6">
                 Your Professional profile
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={6} sx={{ textAlign: "right" }}>
+          <Grid item xs={3} sx={{ textAlign: {xs:"right" }}}>
             <IconButton aria-label="Edit" onClick={handleEdit} data-which="b3">
               <CreateIcon />
             </IconButton>
@@ -856,7 +855,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <Container>
+    <Container sx={{mb:8}}>
       <Grid container sx={{ my: 3 }}>
         <Grid item sm={8}>
           <Typography variant="h5" component="h1">
