@@ -59,7 +59,7 @@ export default function ProfilePage() {
                 <TextField
                   id={"email"}
                   size={"small"}
-                  value={signInContext.auth?.user?.email || ""}
+                  value={""}
                   variant={"standard"}
                   label={"Email"}
                 />
