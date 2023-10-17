@@ -1,14 +1,10 @@
 "use client";
 import * as React from "react";
-import { useContext } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
-export default function CandidatePage() {
-  const signInContext = useContext(SignInProviderContext);
-  console.log("con", signInContext)
+export default function SettingsPage() {
   return (
     <Container>
       <Box
@@ -20,14 +16,12 @@ export default function CandidatePage() {
         }}
       >
         <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate Homepage
+          Company - Settings page
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          Home page info goes here
+          this is where the company can update there settings
         </Typography>
-        <Typography variant="body1">Coming soon...</Typography>
-        {/* <pre>{JSON.stringify(signInContext.auth.user, null, 2)}</pre> */}
-     
+        <Typography variant="body1">not sure what settings?</Typography>
       </Box>
     </Container>
   );

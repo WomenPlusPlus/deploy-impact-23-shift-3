@@ -1,6 +1,5 @@
 "use client";
 import Toolbar from "@mui/material/Toolbar";
-// import { Interface } from "readline"
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
 
@@ -9,19 +8,25 @@ import WorkIcon from "@mui/icons-material/Work";
 import BusinessIcon from "@mui/icons-material/Business";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import Box from "@mui/material/Box";
+
+import { usePathname } from "next/navigation";
 
 export type SubHeaderSection = {
   title: string;
   url: string;
-  icon: "home" | "jobs" | "company" | "profile" | "settings";
+  icon: "home" | "jobs" | "company" | "profile" | "settings" | "candidates";
 };
 interface HeaderProps {
   sections: SubHeaderSection[];
 }
 
 export default function SubHeader(props: HeaderProps) {
+  const pathName = usePathname();
+
   const { sections } = props;
-  //TODO: add title to props so can use it to determine current page
+
   return (
     <Container>
       <Toolbar
@@ -30,19 +35,28 @@ export default function SubHeader(props: HeaderProps) {
         sx={{
           justifyContent: "space-between",
           borderBottom: 2,
-          borderColor: "divider",
-          mt: 3,
+          borderColor: "#D7DDE7",
+          mt: 10,
         }}
       >
         {sections.map((section) => (
           <Link
-            className="selected"
-            color="inherit"
+            color="primary"
             key={section.title}
             variant="body2"
             underline="none"
             href={section.url}
-            sx={{ mx: 3, mb: 2, display: "inline-block", textAlign: "center" }}
+            sx={
+              section.url === pathName
+                ? {
+                    mx: {md:3, sm:2, xs:0},
+                    display: "inline-block",
+                    textAlign: "center",
+                    borderBottom: "3px solid navy",
+                    pb: 1,
+                  }
+                : {  mx: {md:3, sm:2, xs:0}, display: "inline-block", textAlign: "center", pb: 1 }
+            }
           >
             <Container>
               {section.icon === "home" ? (
@@ -62,6 +76,12 @@ export default function SubHeader(props: HeaderProps) {
               ) : null}
               {section.icon === "settings" ? (
                 <SettingsIcon
+                  color="inherit"
+                  sx={{ display: "inline-block" }}
+                />
+              ) : null}
+              {section.icon === "candidates" ? (
+                <PeopleAltIcon
                   color="inherit"
                   sx={{ display: "inline-block" }}
                 />

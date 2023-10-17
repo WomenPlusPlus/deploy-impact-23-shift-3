@@ -1,20 +1,12 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Dashboard from "@/components/admin/dashboard/Dashboard";
 
-import { redirect } from "next/navigation";
-
-export default function HomePage() {
-  // TODO: temp redirect until we have something to display here
-  // redirect("/login");
+export default function AdminPage() {
   return (
-    <Box sx={{ display: "flex", marginTop: "80px" }}>
-      <div>
-        <Typography variant="h1">
-          Admin Dashboard -- - need content --
-        </Typography>
-      </div>
+    <Box sx={{ backgroundColor:"#FCF8F4"}}>
+      <Dashboard />
     </Box>
   );
 }

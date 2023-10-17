@@ -6,21 +6,21 @@ export const metadata = {
   description: "Shift_Enter App - Company - Dashboard",
 };
 
-export default function ForgotLayout({
+export default function CompanyLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const sections: SubHeaderSection[] = [
-    { title: "Dashboard", url: "/company", icon: "home" },
-    { title: "Jobs", url: "#", icon: "jobs" },
-    { title: "Candidates", url: "#", icon: "company" },
-    { title: "Profile", url: "#", icon: "profile" },
-    { title: "Settings", url: "#", icon: "settings" },
+    { title: "Home", url: "/company", icon: "home" },
+    { title: "Jobs", url: "/company/jobs", icon: "jobs" },
+    { title: "Candidates", url: "/company/candidates", icon: "candidates" },
+    { title: "Profile", url: "/company/profile", icon: "profile" },
+    { title: "Settings", url: "/company/settings", icon: "settings" },
   ];
+
   return (
     <>
-      {/* candidate header */}
       <SubHeader sections={sections} />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
         {children}

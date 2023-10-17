@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-export default function CandidatePage() {
+export default function JobsPage() {
   return (
     <Container>
       <Box
@@ -15,10 +15,10 @@ export default function CandidatePage() {
         }}
       >
             <Typography variant="h3" component="h1" gutterBottom sx={{mt:5}}>
-               Association Home
+               Company Jobs page
               </Typography>
               <Typography variant="h5" component="h2" gutterBottom>
-                The dashboard will be here but not sure how that will look yet!
+                this should show all jobs the company has posted
               </Typography>
               <Typography variant="body1">
                 Coming soon...
