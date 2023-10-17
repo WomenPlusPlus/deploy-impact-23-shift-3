@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { CssBaseline } from "@mui/material";
 
-
 //for query
 
 export const metadata = {
@@ -20,7 +19,7 @@ export default function RootLayout({
     <Box>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        
+
         {children}
       </Grid>
     </Box>

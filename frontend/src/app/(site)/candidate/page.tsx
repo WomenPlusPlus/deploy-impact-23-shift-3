@@ -8,7 +8,7 @@ import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 export default function CandidatePage() {
   const signInContext = useContext(SignInProviderContext);
-  console.log("con", signInContext)
+  console.log("con", signInContext);
   return (
     <Container>
       <Box
@@ -27,7 +27,6 @@ export default function CandidatePage() {
         </Typography>
         <Typography variant="body1">Coming soon...</Typography>
         {/* <pre>{JSON.stringify(signInContext.auth.user, null, 2)}</pre> */}
-     
       </Box>
     </Container>
   );

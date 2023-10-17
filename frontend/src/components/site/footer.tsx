@@ -10,13 +10,18 @@ export default function Footer() {
         py: 3,
         px: 2,
         mt: "auto",
-        borderTop:1,
+        borderTop: 1,
         borderColor: "divider",
         backgroundColor: "#FCF8F4",
       }}
     >
-      <Container >
-        <Typography variant="subtitle2" sx={{textAlign:"center", color:"GrayText"}}>⇧⏎  2023</Typography>
+      <Container>
+        <Typography
+          variant="subtitle2"
+          sx={{ textAlign: "center", color: "GrayText" }}
+        >
+          ⇧⏎ 2023
+        </Typography>
       </Container>
     </Box>
   );

@@ -35,13 +35,13 @@ export default function Header(props: HeaderProps) {
       >
         <Grid container>
           <Grid item xs={6}>
-            <Box sx={{ ml: {xs:1, sm:6, md:8} }}>
+            <Box sx={{ ml: { xs: 1, sm: 6, md: 8 } }}>
               <Image src={logo} alt="Shift logo" />
             </Box>
           </Grid>
 
           <Grid item xs={6} sx={{ textAlign: "right" }}>
-            <Box sx={{ mr:{md:8, xs:1} , display: "inline-block" }}>
+            <Box sx={{ mr: { md: 8, xs: 1 }, display: "inline-block" }}>
               <Box
                 sx={{
                   mr: 1,
@@ -55,7 +55,9 @@ export default function Header(props: HeaderProps) {
                   lineHeight: "32px",
                 }}
               >
-                <Typography sx={{ lineHeight: "32px" }}>{props.initials}</Typography>
+                <Typography sx={{ lineHeight: "32px" }}>
+                  {props.initials}
+                </Typography>
               </Box>{" "}
               <Link underline="none" color="primary" href="/login" sx={{}}>
                 Sign out

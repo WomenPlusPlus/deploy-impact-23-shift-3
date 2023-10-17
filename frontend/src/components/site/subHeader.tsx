@@ -9,7 +9,6 @@ import BusinessIcon from "@mui/icons-material/Business";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import Box from "@mui/material/Box";
 
 import { usePathname } from "next/navigation";
 
@@ -49,13 +48,18 @@ export default function SubHeader(props: HeaderProps) {
             sx={
               section.url === pathName
                 ? {
-                    mx: {md:3, sm:2, xs:0},
+                    mx: { md: 3, sm: 2, xs: 0 },
                     display: "inline-block",
                     textAlign: "center",
                     borderBottom: "3px solid navy",
                     pb: 1,
                   }
-                : {  mx: {md:3, sm:2, xs:0}, display: "inline-block", textAlign: "center", pb: 1 }
+                : {
+                    mx: { md: 3, sm: 2, xs: 0 },
+                    display: "inline-block",
+                    textAlign: "center",
+                    pb: 1,
+                  }
             }
           >
             <Container>

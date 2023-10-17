@@ -10,12 +10,12 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     mode: "light",
-    primary:{
-      main:'#14366F'
+    primary: {
+      main: "#14366F",
     },
-    secondary:{
-      main:'#D7DDE7'
-    }
+    secondary: {
+      main: "#D7DDE7",
+    },
   },
 
   typography: {
@@ -57,8 +57,7 @@ const theme = createTheme({
     //       fontSize: '3rem',
     //     },
     //   }
-      
-    
+
     // }
 
     MuiButton: {
