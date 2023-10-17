@@ -12,6 +12,9 @@ const theme = createTheme({
     mode: "light",
     primary:{
       main:'#14366F'
+    },
+    secondary:{
+      main:'#D7DDE7'
     }
   },
 
@@ -31,20 +34,16 @@ const theme = createTheme({
       },
     },
 
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          textDecoration: "none",
-          ":hover": {
-            // textDecoration: "underline",
-            // borderBottom: "solid 2px red"
-          },
-        },
-        selected:{
-          backgroundColor:"pink"
-        }
-      },
-    },
+    // MuiLink: {
+    //   styleOverrides: {
+    //     "root": {
+    //       "&.Mui-selected": {
+    //         "backgroundColor": "pink"
+    //       }
+    //     }
+ 
+    //   },
+    // },
 
 
     // MuiButtonBase:{
@@ -66,17 +65,29 @@ const theme = createTheme({
     MuiButton: {
       variants: [
         {
-          props: { variant: 'contained' },
+          props: { variant: 'contained', },
           style: {
             borderRadius: '40px',
             //backgroundColor:'#14366F',
             // border: `2px dashed }`,
           },
+          
         },
+        {
+          props: { variant: 'outlined', },
+          style: {
+            borderRadius: '40px',
+            //backgroundColor:'#14366F',
+            // border: `2px dashed }`,
+          },
+          
+        },
+
+
         {
           props: { variant: 'contained', color: 'secondary' },
           style: {
-            border: `4px dashed `,
+            // border: `4px dashed `,
           },
         },
       ],

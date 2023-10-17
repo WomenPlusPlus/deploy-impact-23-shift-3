@@ -12,7 +12,7 @@ export default function CandidateLayout({
   children: React.ReactNode;
 }) {
   const sections = [
-    { title: "Dashboard", url: "/association", icon: "home" },
+    { title: "Home", url: "/association", icon: "home" },
     { title: "Candidates", url: "/association/candidates", icon: "candidates" },
     { title: "Companies", url: "/association/companies", icon: "company" },
     { title: "Profile", url: "/association/profile", icon: "profile" },

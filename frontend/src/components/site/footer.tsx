@@ -15,8 +15,8 @@ export default function Footer() {
         backgroundColor: "#FCF8F4",
       }}
     >
-      <Container maxWidth="sm">
-        <Typography variant="body1">Footer content here!</Typography>
+      <Container >
+        <Typography variant="subtitle2" sx={{textAlign:"center", color:"GrayText"}}>⇧⏎  2023</Typography>
       </Container>
     </Box>
   );

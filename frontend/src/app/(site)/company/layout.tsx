@@ -12,7 +12,7 @@ export default function CompanyLayout({
   children: React.ReactNode;
 }) {
   const sections = [
-    { title: "Dashboard", url: "/company", icon: "home" },
+    { title: "Home", url: "/company", icon: "home" },
     { title: "Jobs", url: "/company/jobs", icon: "jobs" },
     { title: "Candidates", url: "/company/candidates", icon: "candidates" },
     { title: "Profile", url: "/company/profile", icon: "profile" },

@@ -11,7 +11,7 @@ import { CircularProgress, Stack } from "@mui/material";
 export type Authentication = {
   authenticated: boolean;
   access_token: string;
-  user: null | { email: string; id: string };
+  user: null | { email: string; id: string; first_name:string; last_name:string };
 };
 
 type Context = {
@@ -19,6 +19,7 @@ type Context = {
   setAuth: (auth: Authentication) => void;
   signOut: () => void;
 };
+
 export const SignInProviderContext = createContext<Context>(
   {} as unknown as Context,
 );
