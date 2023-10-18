@@ -30,9 +30,23 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
+import Link from "next/link";
+import Modal from "@mui/material/Modal";
 
-// GUi component!! 
+// GUi component!!
 import Asynchronous from "@/components/MuiAutocomplete_example";
+
+// const style = {
+//   position: "absolute" as "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -86,11 +100,17 @@ interface Details {
 
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
+import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
 
 export default function ProfilePage() {
-  const obj:Details = {};
+  const obj: Details = {};
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
+
+  //modal
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   function handleChange(element: any) {
     const value = element.target.value;
@@ -214,7 +234,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: {xs:0,sm:2} }}
+              sx={{ ml: { xs: 0, sm: 2 } }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -378,7 +398,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml:{xs:0, sm:2}  }}
+              sx={{ ml: { xs: 0, sm: 2 } }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -494,7 +514,6 @@ export default function ProfilePage() {
             />
           </Grid>
           <Grid item sm={12} xs={12}>
-
             <Select
               fullWidth
               size="small"
@@ -602,7 +621,7 @@ export default function ProfilePage() {
               Cancel
             </Button>{" "}
             <Button
-              sx={{ ml: {xs:0,sm:2} }}
+              sx={{ ml: { xs: 0, sm: 2 } }}
               disabled={updateCandidate.isLoading}
               type="submit"
               variant="contained"
@@ -733,7 +752,7 @@ export default function ProfilePage() {
           </Grid>
           <Grid item sm={6} xs={12}>
             {/* TODO: talk to gui about how it should work */}
-          {/* <Asynchronous onChange={handleChange}/> */}
+            <Asynchronous />
             <Select
               fullWidth
               size="small"
@@ -780,7 +799,7 @@ export default function ProfilePage() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={3} sx={{ textAlign: {xs:"right" }}}>
+          <Grid item xs={3} sx={{ textAlign: { xs: "right" } }}>
             <IconButton aria-label="Edit" onClick={handleEdit} data-which="b3">
               <CreateIcon />
             </IconButton>
@@ -862,7 +881,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <Container sx={{mb:8}}>
+    <Container sx={{ mb: 8 }}>
       <Grid container sx={{ my: 3 }}>
         <Grid item sm={8}>
           <Typography variant="h5" component="h1">
@@ -881,7 +900,22 @@ export default function ProfilePage() {
           md={4}
           sm={12}
         >
-          <Button variant="outlined">Preview your profile</Button>
+          {/* <Link href="/candidate/profile/preview"> */}
+            <Button variant="outlined" onClick={handleOpen}>
+              Preview your profile
+            </Button>
+          {/* </Link> */}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="Candidate profile"
+            aria-describedby="candidates profile with bias info blurred" >
+              <div>
+              {/* <ProfilePreview closeHandler={handleClose}/> */}
+              <ProfilePreview />
+              </div>
+            
+          </Modal>
         </Grid>
       </Grid>
 
