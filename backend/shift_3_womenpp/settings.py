@@ -184,6 +184,7 @@ CORS_ORIGIN_WHITELIST = (
     "http://192.168.0.50:3000",  # for network
     "http://localhost:8000",  # for localhost (Developlemt)
     "http://192.168.0.50:8000",  # for network (Development)
+    "https://nextjsapp-iwghenktca-ew.a.run.app",  # Deployed app
 )
 
 CSRF_TRUSTED_ORIGINS = [
@@ -191,6 +192,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://192.168.0.50:3000",  # for network
     "http://localhost:8000",  # for localhost (Developlemt)
     "http://192.168.0.50:8000",  # for network (Development)
+    "https://nextjsapp-iwghenktca-ew.a.run.app",  # Deployed app
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -206,7 +208,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Project parameters
 
