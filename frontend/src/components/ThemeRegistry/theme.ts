@@ -70,12 +70,6 @@ const theme = createTheme({
             // border: `2px dashed }`,
           },
         },
-        {
-          props: { variant: "contained", color: "secondary" },
-          style: {
-            border: `4px dashed `,
-          },
-        },
       ],
     },
   },
