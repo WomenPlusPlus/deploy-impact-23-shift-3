@@ -21,7 +21,21 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import DownloadIcon from "@mui/icons-material/Download";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+
+//new icons
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LinkIcon from "@mui/icons-material/Link";
+import HomeWorkIcon from "@mui/icons-material/HomeWork";
+import WorkIcon from "@mui/icons-material/Work";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarsIcon from "@mui/icons-material/Stars";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 // TODO: getUser data based on user id
 const userId = 1;
@@ -57,12 +71,11 @@ interface Details {
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 
 // interface ProfilePreviewProps {
-//     closeHandler:string  
+//     closeHandler:string
 //   }
-  
 
 export default function ProfilePreview() {
-    // const { closeHandler } = props;
+  // const { closeHandler } = props;
 
   const obj: Details = {};
   const [state, setState] = useState(obj);
@@ -73,7 +86,7 @@ export default function ProfilePreview() {
     current_position: "Frontend Developer",
     candidate_img: "",
     linkedin: "https://ch.linkedin.com/company/womenplusplus",
-    website: "",
+    website: "test",
     about_me:
       "Lorem ipsum dolor sit amet consectetur. Nulla auctor commodo etiam tellus sit est habitasse semper hendrerit. Leo lectus accumsan pulvinar purus ultricies tempor et donec posuere. In molestie aliquet vel consectetur dolor placerat turpis arcu risus. Viverra nibh integer vitae ut eget semper enim rutrum a.",
     strengths: [
@@ -93,6 +106,7 @@ export default function ProfilePreview() {
     skills: ["HTML", "JavaScript", "React"],
     initiative_badges: ["name 1", "name 2"],
     invited_by: "Women++",
+    start_date:"06/11/2023"
   };
 
   const blurSize = "4px";
@@ -127,21 +141,53 @@ export default function ProfilePreview() {
 
   function PhoneNumber() {
     return viewHidden ? (
-      <Typography>{`${state.phone_number_region} ${state.phone_number}`}</Typography>
+      <Grid item>
+        <PhoneIphoneIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ display: "inline-block" }}
+        >{`${state.phone_number_region} ${state.phone_number}`}</Typography>
+      </Grid>
     ) : (
-      <Typography
-        sx={{ filter: `blur(${blurSize})` }}
-      >{`123 123456`}</Typography>
+      <Grid item>
+        <PhoneIphoneIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ filter: `blur(${blurSize})`, display: "inline-block" }}
+        >{`123 123456`}</Typography>
+      </Grid>
     );
   }
 
   function Email() {
     return viewHidden ? (
-      <Typography>{`${state.email_adress}`}</Typography>
+      <Grid item>
+        <AlternateEmailIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ display: "inline-block" }}
+        >{`${state.email_adress}`}</Typography>
+      </Grid>
     ) : (
-      <Typography
-        sx={{ filter: `blur(${blurSize})` }}
-      >{`email@address.com`}</Typography>
+      <Grid item>
+        <AlternateEmailIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ filter: `blur(${blurSize})`, display: "inline-block" }}
+        >{`email@address.com`}</Typography>
+      </Grid>
     );
   }
 
@@ -151,11 +197,27 @@ export default function ProfilePreview() {
     if (!missing.linkedin) return;
 
     return viewHidden ? (
-      <Link href={missing.linkedin} target="_blank">
-        LinkedIn
-      </Link>
+      <Grid item>
+        <LinkedInIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Link href={missing.linkedin} target="_blank">
+          LinkedIn
+        </Link>
+      </Grid>
     ) : (
-      <Typography sx={{ filter: `blur(${blurSize})` }}>{`LinkedIn`}</Typography>
+      <Grid item>
+        <LinkedInIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ filter: `blur(${blurSize})`, display: "inline-block" }}
+        >{`LinkedIn`}</Typography>
+      </Grid>
     );
   }
 
@@ -165,24 +227,73 @@ export default function ProfilePreview() {
     if (!missing.website) return;
 
     return viewHidden ? (
-      <Link href={missing.website} target="_blank">
-        URL Website
-      </Link>
+      <Grid item>
+        <LinkIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Link href={missing.website} target="_blank">
+          URL Website
+        </Link>
+      </Grid>
     ) : (
-      <Typography
-        sx={{ filter: `blur(${blurSize})` }}
-      >{`URL Website`}</Typography>
+      <Grid item>
+        <LinkIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ filter: `blur(${blurSize})`, display: "inline-block" }}
+        >{`URL Website`}</Typography>
+      </Grid>
     );
   }
   // End Hidden elements -- //
   function Location() {
-    return viewHidden ? (
-      <Typography>{`${state.city}, ${state.country}`}</Typography>
-    ) : (
-      <Typography
-        sx={{ filter: `blur(${blurSize})` }}
-      >{`city, country`}</Typography>
-    );
+    return  (
+      <Grid item>
+        <HomeWorkIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ display: "inline-block" }}
+        >{`${state.city}, ${state.country}`}</Typography>
+      </Grid>
+    )
+  }
+
+  function WorkPermit() {
+    return  (
+      <Grid item>
+        <WorkIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ display: "inline-block" }}
+        >{`Work permit: ${state.work_permit}`}</Typography>
+      </Grid>
+    )
+  }
+
+function StartOn() {
+    return  (
+      <Grid item>
+        <PermContactCalendarIcon
+          color="primary"
+          fontSize="small"
+          sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
+        />
+        <Typography
+          sx={{ display: "inline-block" }}
+        >{`Ready to start on: ${missing.start_date}`}</Typography>
+      </Grid>
+    )
   }
 
   // -- CHIPS -- //
@@ -201,7 +312,6 @@ export default function ProfilePreview() {
   const initiativeChips = missing.initiative_badges.map((i) => (
     <Chip sx={{ mr: 1, mb: 2 }} key={i} label={i} />
   ));
-
 
   // Access the client
   const queryClient = useQueryClient();
@@ -223,7 +333,7 @@ export default function ProfilePreview() {
     return (
       <Container sx={{ mt: 3 }}>
         <Typography variant="h5" component="h1">
-           Profile Preview
+          Profile Preview
         </Typography>
 
         <Skeleton
@@ -248,10 +358,9 @@ export default function ProfilePreview() {
             Candidate profile
           </Grid>
           <Grid item xs={6} sx={{ textAlign: "right" }}>
-          {/* <IconButton aria-label="close" onClick={closeHandler}> */}
-          <CloseIcon />
-{/* </IconButton> */}
-          
+            {/* <IconButton aria-label="close" onClick={closeHandler}> */}
+            <CloseIcon />
+            {/* </IconButton> */}
           </Grid>
         </Grid>
         <Grid container sx={{ pb: 4, borderBottom: "2px solid lightGrey" }}>
@@ -273,19 +382,25 @@ export default function ProfilePreview() {
             </Avatar>
           </Grid>
           <Grid item md={10} sm={12}>
-            <Typography variant="h5" component="h2" sx={{ mb: 4 }}>
+            <Typography variant="h5" component="h2" sx={{ mb: 4, display:"inline-block"}}>
               {state.preferred_name || ""}{" "}
-              <Chip label="90% match" color="success" sx={{ ml: 2 }} />
             </Typography>
+            <Chip
+                label="90% match"
+                color="success"
+                sx={{ mx: 2, fontWeight: "bold" }}
+              />
+            <FavoriteBorderIcon />
 
             <Stack direction="row" spacing={3} sx={{ mb: 4 }}>
               <FullName />
               <Typography>{missing.current_position}</Typography>
             </Stack>
 
-            <Stack component="div" direction="row" spacing={3}>
-              <PhoneNumber /> <Email /> <Linkedin /> <WebsiteUrl /> <Location />
-            </Stack>
+            <Grid container spacing={2} sx={{maxWidth:600}}>
+              <PhoneNumber />
+              <Email /> <Linkedin /> <WebsiteUrl /> <Location /> <WorkPermit /> <StartOn />
+            </Grid>
           </Grid>
         </Grid>
         <Grid container>
@@ -304,6 +419,7 @@ export default function ProfilePreview() {
                 component="label"
                 variant="outlined"
                 startIcon={<DownloadIcon />}
+                sx={{ textTransform: "none" }}
               >
                 Download CV
               </Button>
@@ -316,8 +432,9 @@ export default function ProfilePreview() {
                 component="label"
                 variant="outlined"
                 startIcon={<DownloadIcon />}
+                sx={{ textTransform: "none" }}
               >
-                Download zip
+                Download .zip
               </Button>
             </Box>
             <Box sx={{ py: 3, px: 1 }}>
@@ -369,6 +486,7 @@ export default function ProfilePreview() {
           <Grid item md={6} sx={{ pt: 2 }}>
             <Button
               variant="outlined"
+              sx={{ textTransform: "none" }}
               //onClick={() => setViewHidden((prevState) => !prevState)}
             >
               Add Notes
@@ -378,6 +496,7 @@ export default function ProfilePreview() {
             <Button
               variant="outlined"
               onClick={() => setViewHidden((prevState) => !prevState)}
+              sx={{ textTransform: "none" }}
             >
               Show all
             </Button>

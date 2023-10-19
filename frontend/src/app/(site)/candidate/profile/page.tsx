@@ -901,7 +901,7 @@ export default function ProfilePage() {
           sm={12}
         >
           {/* <Link href="/candidate/profile/preview"> */}
-            <Button variant="outlined" onClick={handleOpen}>
+            <Button variant="outlined" onClick={handleOpen}  sx={{textTransform:"none"}}>
               Preview your profile
             </Button>
           {/* </Link> */}
