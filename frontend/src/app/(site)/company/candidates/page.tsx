@@ -1,7 +1,8 @@
+"use client";
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import SearchBar from "@/app/(site)/company/searchBar";
 
 export default function CandidatesPage() {
   return (
@@ -14,13 +15,7 @@ export default function CandidatesPage() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Company - Candidates Page
-        </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          this should show all companies shortlisted by the candidate
-        </Typography>
-        <Typography variant="body1">Coming soon...</Typography>
+        <SearchBar />
       </Box>
     </Container>
   );
