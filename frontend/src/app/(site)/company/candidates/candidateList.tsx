@@ -1,12 +1,15 @@
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import React from "react";
 import { Candidate } from "@/app/(site)/company/candidates/candidateInterface";
 import Button from "@mui/material/Button";
+import { Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 interface CandidateListProps {
   candidates: Candidate[];
@@ -17,22 +20,34 @@ export const CandidateList: React.FC<CandidateListProps> = ({
   return (
     <Grid container spacing={2} padding={1} sx={{ overflowY: "auto" }}>
       {candidates.length === 0 && (
-        <Box padding={3}>
-          <Typography>No candidates found...</Typography>
-        </Box>
+        <Card
+          sx={{
+            boxShadow: 3,
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            borderRadius: "12px",
+            borderColor: "#102620",
+            backgroundColor: "#FFFFFF",
+          }}
+        >
+          <CardContent sx={{ padding: 3 }}>
+            <Typography>No candidates found...</Typography>
+          </CardContent>
+        </Card>
       )}
       {candidates.map((candidate) => {
         return (
           <Grid item xs={12} sm={6} md={4} lg={4} key={1}>
             <Card
               sx={{
-                boxShadow: 3,
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
                 borderRadius: "12px",
                 borderColor: "#102620",
                 backgroundColor: "#FFFFFF",
+                boxShadow: 3,
               }}
             >
               <CardContent
@@ -41,9 +56,8 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginX: "16px",
-                  marginY: "12px",
-                  padding: 0,
+                  paddingBottom: "12px",
+                  paddingTop: "12px",
                 }}
               >
                 <Typography
@@ -57,16 +71,20 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                 >
                   Job Position Name
                 </Typography>
-                <Button
-                  sx={{
+                <div
+                  style={{
                     borderRadius: "8px",
+                    padding: "10px 10px",
+                    display: "inline-block",
                     backgroundColor: "#63E5C5",
                     fontSize: "14px",
-                    textTransform: "none",
+                    fontWeight: "500",
+                    lineHeight: "20px",
+                    letterSpacing: "0.1",
                   }}
                 >
                   95% match
-                </Button>
+                </div>
               </CardContent>
               <CardContent
                 sx={{
@@ -74,10 +92,6 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                   flexDirection: "column",
                   justifyContent: "space-between",
                   alignItems: "left",
-                  marginX: "16px",
-                  marginTop: "16px",
-                  marginBottom: "24px",
-                  padding: 0,
                 }}
               >
                 <Typography
@@ -106,9 +120,8 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                   flexDirection: "column",
                   justifyContent: "space-between",
                   alignItems: "left",
-                  marginX: "16px",
-                  marginBottom: "24px",
-                  padding: 0,
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
                 }}
               >
                 <Typography
@@ -129,102 +142,102 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                     color: "#45494F",
                     lineHeight: "20px",
                     letterSpacing: "0.25px",
-                    marginTop: "8px",
                   }}
                 >
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor...
                 </Typography>
               </CardContent>
+              <CardContent>
+                <Stack
+                  flexGrow={0}
+                  width={"100%"}
+                  maxWidth={"100%"}
+                  minWidth={0}
+                  flexDirection={"row"}
+                  gap={"4px"}
+                >
+                  <Stack maxWidth={"48%"} justifyContent={"center"}>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        color: "#1D1B20",
+                        lineHeight: "16px",
+                        fontWeight: "600",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06px",
+                      }}
+                    >
+                      Skills
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        color: "#1D1B20",
+                        lineHeight: "16px",
+                        fontWeight: "400",
+                        letterSpacing: "0.048px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      SQL Server SQL Server SQL Server SQL Server SQL Server
+                    </Typography>
+                  </Stack>
+                  <Divider orientation={"vertical"} flexItem />
+                  <Stack maxWidth={"48%"} justifyContent={"center"}>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        color: "#1D1B20",
+                        lineHeight: "16px",
+                        fontWeight: "600",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06px",
+                      }}
+                    >
+                      Start on
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        color: "#1D1B20",
+                        lineHeight: "16px",
+                        fontWeight: "400",
+                        letterSpacing: "0.048px",
+                      }}
+                    >
+                      16/11/2023
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </CardContent>
               <CardContent
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginX: "16px",
-                  marginBottom: "24px",
-                  padding: 0,
-                  textAlign: "center",
+                  alignItems: "left",
+                  paddingTop: "8px",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flex: 1,
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
+                <div>
+                  <IconButton aria-label="Chat">
+                    <ChatBubbleIcon />
+                  </IconButton>
+                  <IconButton aria-label="Favorite">
+                    <FavoriteIcon />
+                  </IconButton>
+                </div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{ textTransform: "none", borderRadius: "100px" }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#1D1B20",
-                      lineHeight: "16px",
-                      fontWeight: "600",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06px",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    Skills
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#1D1B20",
-                      lineHeight: "16px",
-                      fontWeight: "400",
-                      letterSpacing: "0.048px",
-                    }}
-                  >
-                    SQL Server, Stored ...
-                  </Typography>
-                </Box>
-                <Divider
-                  orientation="vertical"
-                  flexItem
-                  sx={{
-                    marginX: "8px",
-                  }}
-                />
-                <Box
-                  sx={{
-                    display: "flex",
-                    flex: 1,
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#1D1B20",
-                      lineHeight: "16px",
-                      fontWeight: "600",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06px",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    Start on
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#1D1B20",
-                      lineHeight: "16px",
-                      fontWeight: "400",
-                      letterSpacing: "0.048px",
-                    }}
-                  >
-                    16/11/2023
-                  </Typography>
-                </Box>
+                  View profile
+                </Button>
               </CardContent>
             </Card>
           </Grid>

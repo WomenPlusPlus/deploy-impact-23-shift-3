@@ -107,7 +107,7 @@ export default function Login() {
           type="submit"
           variant="contained"
           size="large"
-          sx={{ textTransform: "none" }}
+          sx={{ textTransform: "none", borderRadius: "100px" }}
         >
           Log in
         </Button>
