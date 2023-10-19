@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import React from "react";
 import { Candidate } from "@/app/(site)/company/candidates/candidateInterface";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 
 interface CandidateListProps {
   candidates: Candidate[];
@@ -31,6 +32,7 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                 height: "100%",
                 borderRadius: "12px",
                 borderColor: "#102620",
+                backgroundColor: "#FFFFFF",
               }}
             >
               <CardContent
@@ -41,9 +43,18 @@ export const CandidateList: React.FC<CandidateListProps> = ({
                   alignItems: "center",
                   marginX: "16px",
                   marginY: "12px",
+                  padding: 0,
                 }}
               >
-                <Typography sx={{ fontSize: "16px", color: "#14366F" }}>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    color: "#14366F",
+                    fontWeight: "500",
+                    lineHeight: "24px",
+                    letterSpacing: "0.15px",
+                  }}
+                >
                   Job Position Name
                 </Typography>
                 <Button
@@ -60,15 +71,160 @@ export const CandidateList: React.FC<CandidateListProps> = ({
               <CardContent
                 sx={{
                   display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "left",
+                  marginX: "16px",
+                  marginTop: "16px",
+                  marginBottom: "24px",
+                  padding: 0,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    color: "000",
+                    lineHeight: "28px",
+                  }}
+                >
+                  PREF NAME
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    color: "#45494F",
+                    letterSpacing: "0.25px",
+                    lineHeight: "20px",
+                  }}
+                >
+                  Current position
+                </Typography>
+              </CardContent>
+              <CardContent
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "left",
+                  marginX: "16px",
+                  marginBottom: "24px",
+                  padding: 0,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    color: "#1D1B20",
+                    lineHeight: "24px",
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.15px",
+                  }}
+                >
+                  About me
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    color: "#45494F",
+                    lineHeight: "20px",
+                    letterSpacing: "0.25px",
+                    marginTop: "8px",
+                  }}
+                >
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor...
+                </Typography>
+              </CardContent>
+              <CardContent
+                sx={{
+                  display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
                   marginX: "16px",
+                  marginBottom: "24px",
+                  padding: 0,
+                  textAlign: "center",
                 }}
               >
-                <Typography sx={{ fontSize: "22px", color: "000" }}>
-                  PREF NAME
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      color: "#1D1B20",
+                      lineHeight: "16px",
+                      fontWeight: "600",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06px",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Skills
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      color: "#1D1B20",
+                      lineHeight: "16px",
+                      fontWeight: "400",
+                      letterSpacing: "0.048px",
+                    }}
+                  >
+                    SQL Server, Stored ...
+                  </Typography>
+                </Box>
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{
+                    marginX: "8px",
+                  }}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      color: "#1D1B20",
+                      lineHeight: "16px",
+                      fontWeight: "600",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06px",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Start on
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      color: "#1D1B20",
+                      lineHeight: "16px",
+                      fontWeight: "400",
+                      letterSpacing: "0.048px",
+                    }}
+                  >
+                    16/11/2023
+                  </Typography>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
