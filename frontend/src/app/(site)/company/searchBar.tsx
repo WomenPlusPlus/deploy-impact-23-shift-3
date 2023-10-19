@@ -17,6 +17,7 @@ export default function SearchBar() {
         backgroundColor: "#E3E8EF",
         margin: "0 auto",
         color: "#45494F",
+        marginBottom: "36px",
       }}
     >
       <IconButton sx={{ p: "10px" }} aria-label="menu">

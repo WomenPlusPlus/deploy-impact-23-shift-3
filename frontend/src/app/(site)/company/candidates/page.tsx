@@ -43,6 +43,7 @@ export default function CandidatesPage() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          margin: "-20px 0 0 0",
         }}
       >
         <SearchBar />
