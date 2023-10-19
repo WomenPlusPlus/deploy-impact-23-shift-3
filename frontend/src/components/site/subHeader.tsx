@@ -40,7 +40,6 @@ export default function SubHeader(props: HeaderProps) {
       >
         {sections.map((section) => (
           <Link
-            color="primary"
             key={section.title}
             variant="body2"
             underline="none"
@@ -53,12 +52,14 @@ export default function SubHeader(props: HeaderProps) {
                     textAlign: "center",
                     borderBottom: "3px solid navy",
                     pb: 1,
+                    color: "14366F",
                   }
                 : {
                     mx: { md: 3, sm: 2, xs: 0 },
                     display: "inline-block",
                     textAlign: "center",
                     pb: 1,
+                    color: "#49454F",
                   }
             }
           >
@@ -91,7 +92,6 @@ export default function SubHeader(props: HeaderProps) {
                 />
               ) : null}
             </Container>
-
             {section.title}
           </Link>
         ))}
