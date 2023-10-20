@@ -20,8 +20,11 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
+import Alert from "@mui/material/Alert";
 import DownloadIcon from "@mui/icons-material/Download";
-import CloseIcon from "@mui/icons-material/Close";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 //new icons
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
@@ -33,16 +36,38 @@ import WorkIcon from "@mui/icons-material/Work";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarsIcon from "@mui/icons-material/Stars";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
+
+const shadow =
+  "0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)";
+
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#F2F5FA",
+    color: "#45494F",
+    maxWidth: 312,
+    borderRadius: "10px",
+    boxShadow: shadow,
+    padding: "10px",
+  },
+}));
 
 // TODO: getUser data based on user id
 const userId = 1;
 
+//TODO: get percent from job match
+const matchPercent = 90;
+
 interface Details {
-  first_name?: string;
-  last_name?: string;
+  first_name?: string | "";
+  last_name?: string | "";
   preferred_name?: string;
   values_text?: string;
   related_experience?: string;
@@ -66,6 +91,7 @@ interface Details {
   work_permit?: string;
   status?: string;
   invited_by?: string;
+  about_me?: string;
 }
 
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
@@ -74,15 +100,32 @@ import { getCandidateDetails } from "@/lib/getCandidateDetails";
 //     closeHandler:string
 //   }
 
-export default function ProfilePreview() {
-  // const { closeHandler } = props;
+const buttons = [
+  <Button
+    key="one"
+    sx={{ textTransform: "none" }}
+    startIcon={<PersonRemoveAlt1Icon />}
+  >
+    Don't proceed
+  </Button>,
+  <Button
+    key="two"
+    sx={{ textTransform: "none" }}
+    startIcon={<PersonAddAlt1Icon />}
+  >
+    Assign job
+  </Button>,
+];
 
+export default function ProfilePreview() {
   const obj: Details = {};
   const [state, setState] = useState(obj);
   const [viewHidden, setViewHidden] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // Missing fields from api call
   const missing = {
+    pronoun: "She/Her",
     current_position: "Frontend Developer",
     candidate_img: "",
     linkedin: "https://ch.linkedin.com/company/womenplusplus",
@@ -106,10 +149,29 @@ export default function ProfilePreview() {
     skills: ["HTML", "JavaScript", "React"],
     initiative_badges: ["name 1", "name 2"],
     invited_by: "Women++",
-    start_date:"06/11/2023"
+    start_date: "06/11/2023",
+    education: [
+      {
+        institution: "University of bla",
+        subject: "Watercolor painting",
+        date: "01/03/2010",
+        location: "Germany",
+      },
+      {
+        institution: "University of Zurich",
+        subject: "Scuba Diving",
+        date: "01/03/2015",
+        location: "Zurich",
+      },
+    ],
   };
 
   const blurSize = "4px";
+
+  function handelShow() {
+    setViewHidden((prevState) => !prevState);
+    setOpen(true);
+  }
 
   // Hidden elements -- //
   function FullName() {
@@ -135,6 +197,16 @@ export default function ProfilePreview() {
     ) : (
       <Typography sx={{ filter: `blur(${blurSize})` }}>
         <strong>{`${randomLetters(n1)} ${randomLetters(n2)}`}</strong>
+      </Typography>
+    );
+  }
+
+  function Pronoun() {
+    return viewHidden ? (
+      <Typography>{`(${missing.pronoun})`}</Typography>
+    ) : (
+      <Typography sx={{ filter: `blur(${blurSize})` }}>
+        "(pron/pron)"
       </Typography>
     );
   }
@@ -250,9 +322,52 @@ export default function ProfilePreview() {
       </Grid>
     );
   }
+
+  function Education() {
+    if (!missing.education) return;
+
+    const list = missing.education;
+
+    let outputShow = list.map((inst) => (
+      <Grid container key={inst.institution}>
+        <Grid item md={10}>
+          <Typography>
+            <strong>{inst.institution}</strong>
+          </Typography>
+          <Typography sx={{ mb: 2 }}>{inst.subject}</Typography>
+        </Grid>
+        <Grid item key={inst.institution} md={2}>
+          <Typography>
+            <strong>{inst.date}</strong>
+          </Typography>
+          <Typography>{inst.location}</Typography>
+        </Grid>
+      </Grid>
+    ));
+
+    let outputHide = list.map((inst) => (
+      <Grid container key={inst.institution}>
+        <Grid item md={10}>
+          <Typography sx={{ filter: `blur(${blurSize})` }}>
+            <strong>University of life</strong>
+          </Typography>
+          <Typography sx={{ mb: 2 }}>{inst.subject}</Typography>
+        </Grid>
+        <Grid item key={inst.institution} md={2}>
+          <Typography sx={{ filter: `blur(${blurSize})` }}>
+            <strong>01/02/2000</strong>
+          </Typography>
+          <Typography sx={{ filter: `blur(${blurSize})` }}>Moon</Typography>
+        </Grid>
+      </Grid>
+    ));
+
+    return !viewHidden ? outputHide : outputShow;
+  }
+
   // End Hidden elements -- //
   function Location() {
-    return  (
+    return (
       <Grid item>
         <HomeWorkIcon
           color="primary"
@@ -263,11 +378,11 @@ export default function ProfilePreview() {
           sx={{ display: "inline-block" }}
         >{`${state.city}, ${state.country}`}</Typography>
       </Grid>
-    )
+    );
   }
 
   function WorkPermit() {
-    return  (
+    return (
       <Grid item>
         <WorkIcon
           color="primary"
@@ -278,11 +393,11 @@ export default function ProfilePreview() {
           sx={{ display: "inline-block" }}
         >{`Work permit: ${state.work_permit}`}</Typography>
       </Grid>
-    )
+    );
   }
 
-function StartOn() {
-    return  (
+  function StartOn() {
+    return (
       <Grid item>
         <PermContactCalendarIcon
           color="primary"
@@ -293,25 +408,93 @@ function StartOn() {
           sx={{ display: "inline-block" }}
         >{`Ready to start on: ${missing.start_date}`}</Typography>
       </Grid>
-    )
+    );
   }
 
   // -- CHIPS -- //
+
   const strengthsChips = missing.strengths.map((i) => (
-    <Chip sx={{ mr: 2, mb: 2 }} key={i} label={i} />
+    <Chip
+      sx={{
+        mr: 2,
+        mb: 2,
+        borderRadius: "10px",
+        backgroundColor: "#F6F7FB",
+        boxShadow: shadow,
+      }}
+      key={i}
+      label={i}
+    />
   ));
 
   const languagesChips = missing.languages.map((i) => (
-    <Chip sx={{ mr: 2, mb: 2 }} key={i.name} label={i.name + ":" + i.level} />
+    <Chip
+      sx={{
+        mr: 2,
+        mb: 2,
+        borderRadius: "10px",
+        backgroundColor: "#F6F7FB",
+        boxShadow: shadow,
+      }}
+      key={i.name}
+      label={i.name + ":" + i.level}
+    />
   ));
 
   const skillsChips = missing.skills.map((i) => (
-    <Chip sx={{ mr: 1, mb: 2 }} key={i} label={i} />
+    <Chip
+      sx={{
+        mr: 1,
+        mb: 2,
+        borderRadius: "10px",
+        backgroundColor: "#F6F7FB",
+        boxShadow: shadow,
+      }}
+      key={i}
+      label={i}
+    />
   ));
 
   const initiativeChips = missing.initiative_badges.map((i) => (
-    <Chip sx={{ mr: 1, mb: 2 }} key={i} label={i} />
+    <Chip
+      sx={{
+        mr: 1,
+        mb: 2,
+        borderRadius: "10px",
+        backgroundColor: "#F6F7FB",
+        boxShadow: shadow,
+      }}
+      key={i}
+      label={i}
+      icon={<StarsIcon color="primary" fontSize="small" />}
+    />
   ));
+
+  //TODO: make this a component so can be used in header
+  // get initials
+  function getInitials() {
+    if (state.preferred_name) {
+      const names = state.preferred_name.split(" ");
+
+      if (names.length > 1) {
+        let initials = "";
+        names.forEach((n) => {
+          initials += n[0];
+        });
+        if (initials.length > 2) {
+          initials = initials.substring(0, 2);
+        }
+        return initials.toUpperCase();
+      } else {
+        const initials = state.preferred_name[0];
+        return initials.toUpperCase();
+      }
+    } else if (state.first_name && state.last_name) {
+      return (
+        state.first_name[0].toUpperCase() + state.last_name[0].toUpperCase()
+      );
+    }
+  }
 
   // Access the client
   const queryClient = useQueryClient();
@@ -350,159 +533,224 @@ function StartOn() {
   }
 
   return (
-    <Container sx={{ mb: 8 }}>
-      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={3}>
-        {/* header and close (i'm not sure why we are doing it as a overlay screen) */}
-        <Grid container sx={{ mb: 2 }}>
-          <Grid item xs={6}>
+    <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
+      {/* header and close (i'm not sure why we are doing it as a overlay screen) */}
+      <Grid container sx={{ mb: 2 }}>
+        <Grid item md={4}>
+          <Typography sx={{ display: "inline-block" }}>
             Candidate profile
-          </Grid>
-          <Grid item xs={6} sx={{ textAlign: "right" }}>
-            {/* <IconButton aria-label="close" onClick={closeHandler}> */}
-            <CloseIcon />
-            {/* </IconButton> */}
-          </Grid>
+          </Typography>
         </Grid>
-        <Grid container sx={{ pb: 4, borderBottom: "2px solid lightGrey" }}>
-          {/* end header */}
-          {/* Basic info & contact */}
-          <Grid item xs={12} sm={12} md={2}>
-            <Avatar
+        <Grid item md={4} sx={{ textAlign: "right" }}>
+          <Collapse in={open}>
+            <Alert
+              icon={false}
+              severity="info"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ maxWidth: "500px", minWidth: "200px", backgroundColor:"#ECF0F6" }}
+            >
+              Would you like to rate your experience selecting candidates with
+              blurred data?
+            </Alert>
+          </Collapse>
+        </Grid>
+        <Grid item md={4} sx={{ textAlign: "right" }}>
+          <HtmlTooltip
+            title={
+              <>
+                <Typography color="inherit">
+                  <strong>Why you can’t see it all?</strong>
+                </Typography>
+                <Typography color="inherit">
+                  Personal information such as name or contact details can lead
+                  to a bias towards the origin of the person. This information
+                  is not relevant to assessing skills and work experience. We
+                  encourage you to participate in the process. However, if you
+                  would like to know more, you can click the button. This action
+                  will be shared with the platform.
+                </Typography>
+              </>
+            }
+          >
+            <Button
+              variant="outlined"
+              onClick={handelShow}
               sx={{
-                bgcolor: "#63E5C5",
-                width: "142px",
-                height: "142px",
-                fontSize: "60px",
-                color: "#14366F",
+                textTransform: "none",
+                marginBottom: { xs: "10px", md: "0" },
               }}
-              // alt="Candidate image"
-              // src={`${missing.candidate_img}`}
-            >
-              JS
-            </Avatar>
-          </Grid>
-          <Grid item md={10} sm={12}>
-            <Typography variant="h5" component="h2" sx={{ mb: 4, display:"inline-block"}}>
-              {state.preferred_name || ""}{" "}
-            </Typography>
-            <Chip
-                label="90% match"
-                color="success"
-                sx={{ mx: 2, fontWeight: "bold" }}
-              />
-            <FavoriteBorderIcon />
-
-            <Stack direction="row" spacing={3} sx={{ mb: 4 }}>
-              <FullName />
-              <Typography>{missing.current_position}</Typography>
-            </Stack>
-
-            <Grid container spacing={2} sx={{maxWidth:600}}>
-              <PhoneNumber />
-              <Email /> <Linkedin /> <WebsiteUrl /> <Location /> <WorkPermit /> <StartOn />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item sm={12} md={3}>
-            <Box sx={{ py: 3, px: 1 }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                SKILLS
-              </Typography>
-              <Box sx={{ mb: 1 }}>{skillsChips}</Box>
-            </Box>
-            <Box sx={{ py: 0, px: 1 }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                CV
-              </Typography>
-              <Button
-                component="label"
-                variant="outlined"
-                startIcon={<DownloadIcon />}
-                sx={{ textTransform: "none" }}
-              >
-                Download CV
-              </Button>
-            </Box>
-            <Box sx={{ py: 3, px: 1 }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                OTHER DOCUMENTS
-              </Typography>
-              <Button
-                component="label"
-                variant="outlined"
-                startIcon={<DownloadIcon />}
-                sx={{ textTransform: "none" }}
-              >
-                Download .zip
-              </Button>
-            </Box>
-            <Box sx={{ py: 3, px: 1 }}>
-              <Typography variant="body1" sx={{ pb: 1 }}>
-                <strong>Invited by</strong>
-              </Typography>
-              <Typography variant="body1" sx={{ pb: 1 }}>
-                {missing.invited_by}
-              </Typography>
-            </Box>
-            <Box sx={{ py: 0, px: 1 }}>
-              <Typography variant="body1" sx={{ pb: 1 }}>
-                <strong>Initiative badge</strong>
-              </Typography>
-              {initiativeChips}
-            </Box>
-          </Grid>
-
-          {/* Main body */}
-          <Grid item sm={12} md={9}>
-            <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                ABOUT ME
-              </Typography>
-              <Typography>{missing.about_me}</Typography>
-            </Box>
-            <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                EXPERIENCE
-              </Typography>
-              <Typography>{state.related_experience}</Typography>
-            </Box>
-            <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                STRENGTHS
-              </Typography>
-              <Box sx={{ mb: 1 }}>{strengthsChips}</Box>
-            </Box>
-            <Box sx={{ py: 3, px: 1 }}>
-              <Typography variant="h6" sx={{ pb: 1 }}>
-                LANGUAGES
-              </Typography>
-              <Box sx={{ mb: 1 }}>{languagesChips}</Box>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container sx={{ borderTop: "2px solid lightGrey" }}>
-          <Grid item md={6} sx={{ pt: 2 }}>
-            <Button
-              variant="outlined"
-              sx={{ textTransform: "none" }}
-              //onClick={() => setViewHidden((prevState) => !prevState)}
-            >
-              Add Notes
-            </Button>
-          </Grid>
-          <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
-            <Button
-              variant="outlined"
-              onClick={() => setViewHidden((prevState) => !prevState)}
-              sx={{ textTransform: "none" }}
             >
               Show all
             </Button>
+          </HtmlTooltip>
+          <Button
+            variant="contained"
+            sx={{ textTransform: "none", marginLeft: "20px" }}
+          >
+            Contact candidate
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid container sx={{ pb: 4, borderBottom: "2px solid lightGrey" }}>
+        {/* end header */}
+        {/* Basic info & contact */}
+        <Grid item xs={12} sm={12} md={2}>
+          <Avatar
+            sx={{
+              bgcolor: "#63E5C5",
+              width: "142px",
+              height: "142px",
+              fontSize: "60px",
+              color: "#14366F",
+            }}
+            // alt="Candidate image"
+            // src={`${missing.candidate_img}`}
+          >
+            {getInitials()}
+          </Avatar>
+        </Grid>
+        <Grid item md={10} sm={12}>
+          <Typography
+            variant="h5"
+            component="h2"
+            sx={{ mb: 4, display: "inline-block" }}
+          >
+            {state.preferred_name || ""}{" "}
+          </Typography>
+          <Chip
+            label={`${matchPercent}% match`}
+            color="success"
+            sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px" }}
+          />
+          <FavoriteBorderIcon />
+
+          <Stack direction="row" spacing={3} sx={{ mb: 4 }}>
+            <FullName />
+            <Pronoun />
+            <Typography>{missing.current_position}</Typography>
+          </Stack>
+
+          <Grid container spacing={2} sx={{ maxWidth: 600 }}>
+            <PhoneNumber />
+            <Email /> <Linkedin /> <WebsiteUrl /> <Location /> <WorkPermit />{" "}
+            <StartOn />
           </Grid>
         </Grid>
-      </Paper>
-    </Container>
+      </Grid>
+      <Grid container>
+        <Grid item sm={12} md={3}>
+          <Box sx={{ py: 3, px: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              SKILLS
+            </Typography>
+            <Box sx={{ mb: 1 }}>{skillsChips}</Box>
+          </Box>
+          <Box sx={{ py: 0, px: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              CV
+            </Typography>
+            <Button
+              component="label"
+              variant="outlined"
+              startIcon={<DownloadIcon />}
+              sx={{ textTransform: "none" }}
+            >
+              Download CV
+            </Button>
+          </Box>
+          <Box sx={{ py: 3, px: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              OTHER DOCUMENTS
+            </Typography>
+            <Button
+              component="label"
+              variant="outlined"
+              startIcon={<DownloadIcon />}
+              sx={{ textTransform: "none" }}
+            >
+              Download .zip
+            </Button>
+          </Box>
+          <Box sx={{ py: 3, px: 1 }}>
+            <Typography variant="body1" sx={{ pb: 1 }}>
+              <strong>Invited by</strong>
+            </Typography>
+            <Typography variant="body1" sx={{ pb: 1 }}>
+              {missing.invited_by}
+            </Typography>
+          </Box>
+          <Box sx={{ py: 0, px: 1 }}>
+            <Typography variant="body1" sx={{ pb: 1 }}>
+              <strong>Initiative badge</strong>
+            </Typography>
+            {initiativeChips}
+          </Box>
+        </Grid>
+
+        {/* Main body */}
+        <Grid item sm={12} md={9}>
+          <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              ABOUT ME
+            </Typography>
+            <Typography>{state.about_me}</Typography>
+          </Box>
+          <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              EXPERIENCE
+            </Typography>
+            <Typography>{state.related_experience}</Typography>
+          </Box>
+          <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              EDUCATION
+            </Typography>
+            {/* <Typography>{state.related_experience}</Typography> */}
+
+            <Education />
+          </Box>
+          <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              STRENGTHS
+            </Typography>
+            <Box sx={{ mb: 1 }}>{strengthsChips}</Box>
+          </Box>
+          <Box sx={{ py: 3, px: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              LANGUAGES
+            </Typography>
+            <Box sx={{ mb: 1 }}>{languagesChips}</Box>
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid container sx={{ borderTop: "2px solid lightGrey" }}>
+        <Grid item md={6} sx={{ pt: 2 }}>
+          {/* <Button
+            variant="outlined"
+            sx={{ textTransform: "none" }}
+            //onClick={() => setViewHidden((prevState) => !prevState)}
+          >
+            Add Notes
+          </Button> */}
+        </Grid>
+        <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
+          <ButtonGroup size="small" aria-label="small button group">
+            {buttons}
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+    </Paper>
   );
 }

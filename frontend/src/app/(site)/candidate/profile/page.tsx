@@ -36,18 +36,12 @@ import Modal from "@mui/material/Modal";
 // GUi component!!
 import Asynchronous from "@/components/MuiAutocomplete_example";
 
-// const style = {
-//   position: "absolute" as "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
+const countryListPlaceholder = ["England", "Switzerland", "Germany"];
 
+// interface CountryOptionType {
+//   text: string;
+//   id: number;
+// }
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -60,13 +54,6 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const countryListPlaceholder = ["England", "Switzerland", "Germany"];
-
-// interface CountryOptionType {
-//   text: string;
-//   id: number;
-// }
-
 // TODO: getUser data based on user id
 const userId = 1;
 
@@ -74,6 +61,7 @@ interface Details {
   first_name?: string;
   last_name?: string;
   preferred_name?: string;
+  about_me?: string;
   values_text?: string;
   related_experience?: string;
   desired_job?: string;
@@ -82,8 +70,8 @@ interface Details {
   house_number?: string;
   postal_code?: number;
   city?: string;
-  phone_number_region?: number;
-  phone_number?: number;
+  phone_number_region?: string;
+  phone_number?: string;
   email_adress?: string;
   birth_date?: number;
   notice_period_months?: number;
@@ -96,21 +84,26 @@ interface Details {
   work_permit?: string;
   status?: string;
   invited_by?: string;
+  education?: string;
+  experience?: string;
 }
 
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
-import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
+// import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
 
 export default function ProfilePage() {
   const obj: Details = {};
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 
+  console.log('state', state);
+  
+
   //modal
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   function handleChange(element: any) {
     const value = element.target.value;
@@ -207,7 +200,7 @@ export default function ProfilePage() {
     block1 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }}
-        elevation={3}
+        elevation={0}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -318,7 +311,7 @@ export default function ProfilePage() {
   } else {
     // Display fields
     block1 = (
-      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={3}>
+      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
         <Grid container>
           <Grid item xs={6}>
             <Box>
@@ -370,7 +363,7 @@ export default function ProfilePage() {
     block2 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={3}
+        elevation={0}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -536,7 +529,7 @@ export default function ProfilePage() {
     block2 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={3}
+        elevation={0}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -594,7 +587,7 @@ export default function ProfilePage() {
     block3 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={3}
+        elevation={0}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -787,7 +780,7 @@ export default function ProfilePage() {
     block3 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={3}
+        elevation={0}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -900,22 +893,16 @@ export default function ProfilePage() {
           md={4}
           sm={12}
         >
-          {/* <Link href="/candidate/profile/preview"> */}
-            <Button variant="outlined" onClick={handleOpen}  sx={{textTransform:"none"}}>
-              Preview your profile
-            </Button>
-          {/* </Link> */}
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="Candidate profile"
-            aria-describedby="candidates profile with bias info blurred" >
-              <div>
-              {/* <ProfilePreview closeHandler={handleClose}/> */}
-              <ProfilePreview />
-              </div>
-            
-          </Modal>
+          <Link href="/candidate/profile/preview">
+          <Button
+            variant="outlined"
+            // onClick={handleOpen}
+            sx={{ textTransform: "none" }}
+          >
+            Preview your profile
+          </Button>
+          </Link>
+
         </Grid>
       </Grid>
 

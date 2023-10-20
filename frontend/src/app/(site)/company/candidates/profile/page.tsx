@@ -35,9 +35,7 @@ export default function PreviewPage() {
         </Grid>
       </Grid>
 
-
-        <ProfilePreview />
-     
+      <ProfilePreview />
     </>
   );
 }

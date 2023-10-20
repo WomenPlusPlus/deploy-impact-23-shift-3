@@ -24,6 +24,8 @@ interface HeaderProps {
 
 export default function SubHeader(props: HeaderProps) {
   const pathName = usePathname();
+  console.log('pathname', pathName);
+  
 
   const { sections } = props;
 
