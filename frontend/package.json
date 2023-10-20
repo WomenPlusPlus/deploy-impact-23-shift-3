@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "format": "npx prettier . --write",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "gcbuild": "gcloud builds submit --tag gcr.io/enter-400508/nextjsapp --project enter-400508 .",
+    "gcdeploy": "gcloud run deploy nextjsapp --image gcr.io/enter-400508/nextjsapp"
   },
   "dependencies": {
     "@emotion/cache": "latest",

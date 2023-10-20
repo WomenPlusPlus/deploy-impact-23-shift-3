@@ -36,7 +36,7 @@ export default function ForgottenPassword() {
             type="submit"
             variant="contained"
             size="large"
-            sx={{ textTransform: "none", marginTop: 4 }}
+            sx={{ textTransform: "none", borderRadius: "100px", marginTop: 4 }}
           >
             Reset password
           </Button>

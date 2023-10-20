@@ -109,7 +109,7 @@ export default function Signup() {
           type="submit"
           variant="contained"
           size="large"
-          sx={{ textTransform: "none" }}
+          sx={{ textTransform: "none", borderRadius: "100px" }}
         >
           Sign in
         </Button>

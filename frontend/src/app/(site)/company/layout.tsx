@@ -13,7 +13,7 @@ export default function CompanyLayout({
 }) {
   const sections: SubHeaderSection[] = [
     { title: "Home", url: "/company", icon: "home" },
-    { title: "Jobs", url: "/company/jobs", icon: "jobs" },
+    { title: "Open positions", url: "/company/jobs", icon: "jobs" },
     { title: "Candidates", url: "/company/candidates", icon: "candidates" },
     { title: "Profile", url: "/company/profile", icon: "profile" },
     { title: "Settings", url: "/company/settings", icon: "settings" },
