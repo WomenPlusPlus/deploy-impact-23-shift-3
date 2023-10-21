@@ -38,7 +38,7 @@ export const CandidateList: React.FC<CandidateListProps> = ({
       )}
       {candidates.map((candidate) => {
         return (
-          <Grid item xs={12} sm={6} md={4} lg={4} key={1}>
+          <Grid item xs={12} sm={6} md={4} lg={4} key={candidate.id}>
             <Card
               sx={{
                 display: "flex",

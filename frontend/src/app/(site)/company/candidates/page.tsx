@@ -11,19 +11,19 @@ const fakeCandidate: Candidate = {
   preferred_name: "Name",
 };
 const fakeCandidate2: Candidate = {
-  id: "1",
+  id: "2",
   preferred_name: "Name",
 };
 const fakeCandidate3: Candidate = {
-  id: "1",
+  id: "3",
   preferred_name: "Name",
 };
 const fakeCandidate4: Candidate = {
-  id: "1",
+  id: "4",
   preferred_name: "Name",
 };
 const fakeCandidate5: Candidate = {
-  id: "1",
+  id: "5",
   preferred_name: "Name",
 };
 
