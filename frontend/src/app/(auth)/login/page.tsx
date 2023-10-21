@@ -16,7 +16,7 @@ import { FormEvent, MouseEvent, useState } from "react";
 import Link from "@mui/material/Link";
 import LinksSection from "@/app/(auth)/privacyLinks";
 import Button from "@mui/material/Button";
-import { useLogin } from "@/lib/use-login";
+import { useLogin } from "@/lib/useLogin";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);

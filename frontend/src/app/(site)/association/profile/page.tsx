@@ -11,7 +11,7 @@ import Divider from "@mui/material/Divider";
 import { Avatar, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
-import { fetchCandidate } from "@/lib/fetch-candidate";
+import { fetchCandidate } from "@/lib/fetchCandidate";
 
 export default function ProfilePage() {
   // useContext is a Hook in react. It is a way to pass data through the component tree without having to pass props down manually at every level.

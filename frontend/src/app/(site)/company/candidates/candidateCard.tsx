@@ -10,6 +10,8 @@ import Card from "@mui/material/Card";
 import React from "react";
 import Grid from "@mui/material/Grid";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
+import { getMatchingColor } from "@/components/site/getMatchingColor";
+import { useRouter } from "next/navigation";
 
 interface CandidateProps {
   candidate: CandidateForJobList;
@@ -22,6 +24,10 @@ export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
   match,
 }: CandidateProps) => {
+  const router = useRouter();
+  const handleViewProfileClick = (candidate_id: string) => {
+    router.push("/company/profile?candidate_id=" + candidate_id);
+  };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -64,7 +70,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               borderRadius: "8px",
               padding: "10px 10px",
               display: "inline-block",
-              backgroundColor: "#63E5C5",
+              backgroundColor: getMatchingColor(match.matching_score),
               fontSize: "14px",
               fontWeight: "500",
               lineHeight: "20px",
@@ -150,7 +156,11 @@ export const CandidateCard: React.FC<CandidateProps> = ({
             flexDirection={"row"}
             gap={"4px"}
           >
-            <Stack maxWidth={"48%"} justifyContent={"center"}>
+            <Stack
+              maxWidth={"48%"}
+              justifyContent={"center"}
+              textAlign={"center"}
+            >
               <Typography
                 sx={{
                   fontSize: "12px",
@@ -175,11 +185,17 @@ export const CandidateCard: React.FC<CandidateProps> = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                SQL Server SQL Server SQL Server SQL Server SQL Server
+                {candidate.hard_skills.join(", ")},
+                {candidate.soft_skills.join(", ")}
               </Typography>
             </Stack>
             <Divider orientation={"vertical"} flexItem />
-            <Stack maxWidth={"48%"} justifyContent={"center"}>
+            <Stack
+              maxWidth={"48%"}
+              justifyContent={"center"}
+              textAlign={"center"}
+              flex={1}
+            >
               <Typography
                 sx={{
                   fontSize: "12px",
@@ -225,6 +241,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
           </div>
           <Button
             type="submit"
+            onClick={() => handleViewProfileClick(candidate.candidate_id)}
             variant="contained"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
