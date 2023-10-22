@@ -24,18 +24,12 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0.4.0'
-        with:
-          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GUIL }}'
-
       - name: Login to Artifact Registry
         uses: docker/login-action@v1
         with:
           registry: ${{ env.REPOSITORY_REGION }}-docker.pkg.dev
           username: _json_key
-          password: ${{ steps.auth.outputs.access_token }}
+          password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GUIL }}
 
       - name: Get tag
         id: get-tag
