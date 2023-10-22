@@ -1,0 +1,51 @@
+name: Release
+on:
+  push: 
+    branches:
+      - 'backend-gh-actions-deploy'
+      - backend
+    tags:
+      - v*
+
+env:
+  REPOSITORY_REGION: europe-west10
+  PROJECT_ID: dockerruntest
+  REPO_NAME: quickstart-docker-repo
+  IMAGE_NAME: django-backend-shift-enter
+  PROJECT_USER: testaccount@dockerruntest.iam.gserviceaccount.com
+  
+
+jobs:
+  docker-release:
+    name: Tagged Docker release to Google Artifact Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v4
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GUIL }}'
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REPOSITORY_REGION }}-docker.pkg.dev
+          username: ${{ env.PROJECT_USER }}
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Get tag
+        id: get-tag
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - id: docker-push-tagged
+        name: Tag Docker image and push to Google Artifact Registry
+        uses: docker/build-push-action@v5.0.0
+        with:
+          push: true
+          tags: |
+             ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ steps.get-tag.outputs.short_ref }}
