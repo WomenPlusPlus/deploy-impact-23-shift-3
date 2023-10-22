@@ -2,10 +2,7 @@ name: Release
 on:
   push: 
     branches:
-      - 'backend-gh-actions-deploy'
       - backend
-    tags:
-      - v*
 
 env:
   REPOSITORY_REGION: europe-west10
