@@ -57,4 +57,4 @@ jobs:
           image: ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.event.head_commit.message }}
 
       - name: 'Use output'
-        run: 'curl "${{ steps.deploy.outputs.url }}"'
+        run: 'curl "${{ steps.deploy.outputs.url }}"' 
