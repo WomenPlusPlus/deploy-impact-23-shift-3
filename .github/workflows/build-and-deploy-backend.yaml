@@ -48,3 +48,13 @@ jobs:
           tags: |
              ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.event.head_commit.message }}
           context: ./backend
+
+      - id: 'deploy'
+        name: Deploy to GC RUN
+        uses: 'google-github-actions/deploy-cloudrun@v1'
+        with:
+          service: ${{ env.IMAGE_NAME }}
+          image: ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.event.head_commit.message }}
+
+      - name: 'Use output'
+        run: 'curl "${{ steps.deploy.outputs.url }}"'
