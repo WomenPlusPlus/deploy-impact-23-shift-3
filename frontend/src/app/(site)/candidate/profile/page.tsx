@@ -2,11 +2,14 @@
 
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CandidateDetailsInterface } from "./candidateInterface";
+
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 // query
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
@@ -48,40 +51,10 @@ const VisuallyHiddenInput = styled("input")({
 // TODO: getUser data based on user id
 const userId = 1;
 
-interface Details {
-  first_name?: string;
-  last_name?: string;
-  preferred_name?: string;
-  about_me?: string;
-  values_text?: string;
-  related_experience?: string;
-  desired_job?: string;
-  personality_description?: string;
-  street_address?: string;
-  house_number?: string;
-  postal_code?: number;
-  city?: string;
-  phone_number_region?: string;
-  phone_number?: string;
-  email_adress?: string;
-  birth_date?: number;
-  notice_period_months?: number;
-  file_cv?: string;
-  preferred_work_id?: number;
-  accepted_privacy?: boolean;
-  skip_tutorial?: boolean;
-  preferred_work_model?: string;
-  country?: string;
-  work_permit?: string;
-  status?: string;
-  invited_by?: string;
-  education?: string;
-  experience?: string;
-}
 // import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
 
 export default function ProfilePage() {
-  const obj: Details = {};
+  const obj: CandidateDetailsInterface = {};
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 

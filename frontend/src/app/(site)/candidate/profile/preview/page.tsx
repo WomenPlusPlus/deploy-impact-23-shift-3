@@ -7,7 +7,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
-import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
+import ProfilePreview from "@/components/site/candidateProfile/profileView";
 
 export default function PreviewPage() {
   return (
