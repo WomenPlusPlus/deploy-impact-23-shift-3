@@ -1,6 +1,6 @@
 export default async function getLanguages() {
   const rootUrl =
-    "http://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/";
+    "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/";
 
   //should add params - to not duplicate code
   const response = await fetch(rootUrl + "languages/");

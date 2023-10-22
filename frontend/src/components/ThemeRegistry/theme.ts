@@ -70,6 +70,7 @@ const theme = createTheme({
             // border: `2px dashed }`,
           },
         },
+        { props: { variant: "contained" }, style: { borderRadius: "40px" } },
       ],
     },
   },
