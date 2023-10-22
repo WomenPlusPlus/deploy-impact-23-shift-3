@@ -3,8 +3,27 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import React, { useMemo, useState } from "react";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  searchTerm: string;
+  onSearch: (searchTerm: string) => void;
+}
+export const SearchBar: React.FC<SearchBarProps> = ({
+  searchTerm,
+  onSearch,
+}) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onSearch(event.target.value as string);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   return (
     <Paper
       component="form"
@@ -23,10 +42,16 @@ export default function SearchBar() {
       <IconButton sx={{ p: "10px" }} aria-label="menu">
         <MenuIcon />
       </IconButton>
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for candidates" />
+      <InputBase
+        onChange={handleSearch}
+        onKeyPress={handleKeyPress}
+        value={searchTerm}
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search for candidates"
+      />
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>
   );
-}
+};

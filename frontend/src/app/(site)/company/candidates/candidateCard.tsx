@@ -9,20 +9,18 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
+import {
+  CandidateForJobList,
+  CandidateForJobListSingleMatch,
+} from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
 import { useRouter } from "next/navigation";
 
 interface CandidateProps {
-  candidate: CandidateForJobList;
-  match: {
-    job_title: string;
-    matching_score: number;
-  };
+  candidate: CandidateForJobListSingleMatch;
 }
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
-  match,
 }: CandidateProps) => {
   const router = useRouter();
   const handleViewProfileClick = (candidate_id: string) => {
@@ -63,21 +61,21 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               letterSpacing: "0.15px",
             }}
           >
-            {match.job_title}
+            {candidate.job_title}
           </Typography>
           <div
             style={{
               borderRadius: "8px",
               padding: "10px 10px",
               display: "inline-block",
-              backgroundColor: getMatchingColor(match.matching_score),
+              backgroundColor: getMatchingColor(candidate.matching_score),
               fontSize: "14px",
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
             }}
           >
-            {match.matching_score}% match
+            {candidate.matching_score}% match
           </div>
         </CardContent>
         <CardContent

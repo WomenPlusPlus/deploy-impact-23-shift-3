@@ -1,4 +1,7 @@
-import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
+import {
+  CandidateForJobList,
+  CandidateForJobListSingleMatch,
+} from "@/app/(site)/company/candidates/types";
 
 const mockedCandidate: CandidateForJobList = {
   candidate_id: "1",
@@ -85,4 +88,28 @@ function getListOfCandidates(): CandidateForJobList[] {
   ];
 }
 
-export default getListOfCandidates;
+function getModifiedListOfCandidates(): CandidateForJobListSingleMatch[] {
+  const candidateList = getListOfCandidates();
+
+  return candidateList
+    .map((candidate) => {
+      if (candidate.matching.length === 0) {
+        return [
+          { ...candidate, job_title: "", matching_score: 0 },
+        ] as CandidateForJobListSingleMatch[];
+      }
+      return candidate.matching.map((match, index) => {
+        const { matching, ...rest } = candidate;
+        const modifiedCandidate: CandidateForJobListSingleMatch = {
+          ...rest,
+          job_title: match.job_title,
+          matching_score: match.matching_score,
+        };
+        return modifiedCandidate;
+      });
+    })
+    .flat()
+    .filter(Boolean);
+}
+
+export default getModifiedListOfCandidates;

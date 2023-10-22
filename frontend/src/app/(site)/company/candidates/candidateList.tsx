@@ -1,16 +1,19 @@
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import React from "react";
-import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
+import {
+  CandidateForJobList,
+  CandidateForJobListSingleMatch,
+} from "@/app/(site)/company/candidates/types";
 import { Stack } from "@mui/material";
 import { CandidateCard } from "@/app/(site)/company/candidates/candidateCard";
+import Fuse from "fuse.js";
+import FuseResult = Fuse.FuseResult;
 
 interface CandidateListProps {
-  candidates: CandidateForJobList[];
+  candidates: CandidateForJobListSingleMatch[];
 }
-export const CandidateList: React.FC<CandidateListProps> = ({
-  candidates = [],
-}) => {
+export const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
   return (
     <Grid container spacing={2} padding={1} sx={{ overflowY: "auto" }}>
       {candidates.length === 0 && (
@@ -30,11 +33,12 @@ export const CandidateList: React.FC<CandidateListProps> = ({
         </Stack>
       )}
 
-      {candidates.map((candidate) =>
-        candidate.matching.map((match, index) => {
-          return <CandidateCard candidate={candidate} match={match} />;
-        }),
-      )}
+      {candidates.map((candidate, index) => (
+        <CandidateCard
+          key={index + candidate.candidate_id}
+          candidate={candidate}
+        />
+      ))}
     </Grid>
   );
 };
