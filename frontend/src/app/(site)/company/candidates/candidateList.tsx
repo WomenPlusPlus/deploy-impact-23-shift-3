@@ -1,14 +1,9 @@
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import React from "react";
-import {
-  CandidateForJobList,
-  CandidateForJobListSingleMatch,
-} from "@/app/(site)/company/candidates/types";
+import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
 import { Stack } from "@mui/material";
 import { CandidateCard } from "@/app/(site)/company/candidates/candidateCard";
-import Fuse from "fuse.js";
-import FuseResult = Fuse.FuseResult;
 
 interface CandidateListProps {
   candidates: CandidateForJobListSingleMatch[];

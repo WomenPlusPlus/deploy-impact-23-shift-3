@@ -38,7 +38,13 @@ export default function CandidatesPage() {
           margin: "-20px 0 0 0",
         }}
       >
-        <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
+        {listOfCandidates.length > 0 && (
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearch={setSearchTerm}
+            placeholder={"Search for candidates"}
+          />
+        )}
         <CandidateList
           candidates={
             searchTerm
