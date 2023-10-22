@@ -34,10 +34,11 @@ jobs:
       - name: Get tag
         id: get-tag
         run: echo "{short_ref}={GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
-      - name: 'Create env file'
-        run: |
-          echo "${{ secrets.ENV_FILE_BACKEND }}" > .env
+      
+      - run: 'echo "$SSH_KEY" > .env'
+        shell: bash
+        env:
+          SSH_KEY: ${{secrets.ENV_FILE_BACKEND}}
 
       - id: docker-push-tagged
         name: Tag Docker image and push to Google Artifact Registry
