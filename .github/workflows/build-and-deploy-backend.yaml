@@ -49,6 +49,12 @@ jobs:
              ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.event.head_commit.message }}
           context: ./backend
 
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GUIL }}'
+
       - id: 'deploy'
         name: Deploy to GC RUN
         uses: 'google-github-actions/deploy-cloudrun@v1'
