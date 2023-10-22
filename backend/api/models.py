@@ -43,47 +43,59 @@ class Associations(models.Model):
 
 class Candidates(models.Model):
     candidate_id = models.AutoField(primary_key=True)
-    supabase_authenticaiton_uuid = models.UUIDField()
+    supabase_authenticaiton_uuid = models.UUIDField(blank=True, null=True)
     first_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     last_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     preferred_name = models.CharField(
         max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
     )
-    values_text = models.TextField(
-        blank=True,
-        null=True,
-        db_comment="Values is what is important to me, what I would like to see in the company I work for",
-    )
-    related_experience = models.TextField(blank=True, null=True)
-    preferred_work_model = models.ForeignKey(
-        "WorkModels", models.DO_NOTHING, blank=True, null=True
-    )
-    desired_job = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
-    personality_description = models.TextField(blank=True, null=True)
-    street_address = models.CharField(
-        max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
-    )
-    house_number = models.CharField(max_length=20, blank=True, null=True)
-    postal_code = models.IntegerField(blank=True, null=True)
-    city = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
-    country = models.ForeignKey("Countries", models.DO_NOTHING, blank=True, null=True)
-    phone_number_region = models.IntegerField(blank=True, null=True)
-    phone_number = models.IntegerField(blank=True, null=True)
-    email_adress = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    birth_date = models.DateField(blank=True, null=True)
-    work_permit = models.ForeignKey(
+    about_me = models.TextField(blank=True, null=True)
+    industry = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    experience = models.TextField(blank=True, null=True)
+    # preferred_work_model = models.ForeignKey(
+    #     "WorkModels", models.DO_NOTHING, blank=True, null=True
+    # )
+
+    work_permission_CH = models.ForeignKey(
         "WorkPermits", models.DO_NOTHING, blank=True, null=True
     )
-    notice_period_months = models.IntegerField(blank=True, null=True)
-    status = models.ForeignKey(
-        "Status",
-        models.DO_NOTHING,
-        blank=True,
-        null=True,
-        db_comment="looking for a job, open to oferings, etc",
+    github = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    linkedin = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    last_country = models.ForeignKey("Countries", on_delete=models.DO_NOTHING)
+    birth_date = models.DateField(blank=True, null=True)
+    education = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    location_city = models.CharField(
+        max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
     )
-    file_cv = models.FileField(upload_to="cvs/", blank=True, null=True)
-    preferred_work_id = models.IntegerField(blank=True, null=True)
+    hard_skills = models.TextField(blank=True, null=True)
+    languages = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    soft_skills = models.TextField()
+    gender = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    ethnicity = models.IntegerField(blank=True, null=True)
+
+    # desired_job = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    # personality_description = models.TextField(blank=True, null=True)
+    # street_address = models.CharField(
+    #     max_length=DEFAULT_MAX_LENGTH, blank=True, null=True
+    # )
+    # house_number = models.CharField(max_length=20, blank=True, null=True)
+    # postal_code = models.IntegerField(blank=True, null=True)
+    # city = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    # country = models.ForeignKey("Countries", models.DO_NOTHING, blank=True, null=True)
+    # phone_number_region = models.IntegerField(blank=True, null=True)
+    # phone_number = models.IntegerField(blank=True, null=True)
+    email = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    date_of_birth = models.DateField(blank=True, null=True)
+    notice_period_months = models.IntegerField(blank=True, null=True)
+    # status = models.ForeignKey(
+    #     "Status",
+    #     models.DO_NOTHING,
+    #     blank=True,
+    #     null=True,
+    #     db_comment="looking for a job, open to oferings, etc",
+    # )
+    # file_cv = models.FileField(upload_to="cvs/", blank=True, null=True)
+    # preferred_work_id = models.IntegerField(blank=True, null=True)
     invited_by = models.ForeignKey(
         Associations,
         models.DO_NOTHING,
@@ -92,10 +104,10 @@ class Candidates(models.Model):
         blank=True,
         null=True,
     )
-    accepted_privacy = models.BooleanField(blank=True, null=True)
+    accepted_privacy = models.BooleanField(blank=True, null=True, default=True)
     skip_tutorial = models.BooleanField(default=False, blank=True, null=True)
-    last_update = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f"{self.candidate_id} - {self.first_name} {self.last_name}"
@@ -157,14 +169,15 @@ class Initiatives(models.Model):
 
 
 class Companies(models.Model):
-    company_id = models.AutoField(primary_key=True)
-    supabase_authenticaiton_uuid = models.UUIDField()
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    supabase_authenticaiton_uuid = models.UUIDField(blank=True, null=True)
     values = models.TextField(
         blank=True, null=True, db_comment="Values is what is important to the company"
     )
-    main_contact_first_name = models.CharField()
-    main_contact_last_name = models.CharField()
-    email_adress = models.CharField()
+    main_contact_first_name = models.CharField(blank=True, null=True)
+    main_contact_last_name = models.CharField(blank=True, null=True)
+    email_adress = models.CharField(blank=True, null=True)
     main_contact_region_code = models.IntegerField(blank=True, null=True)
     main_contact_phone_number = models.IntegerField(blank=True, null=True)
     linkedin_url = models.CharField(blank=True, null=True)
@@ -210,14 +223,26 @@ class CompanyUsers(models.Model):
 
 class Jobs(models.Model):
     job_id = models.AutoField(primary_key=True)
-    company_id = models.IntegerField()
-    job_description = models.TextField()
-    open = models.BooleanField()
-    role_id = models.IntegerField()
-    subsidiary = models.ForeignKey("Subsidiaries", models.DO_NOTHING)
+    company = models.ForeignKey("Companies", models.CASCADE, blank=True, null=True)
+    job_title = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    location = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    location_country = models.ForeignKey(
+        "Countries", models.DO_NOTHING, blank=True, null=True
+    )
+    industry = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    raw_description = models.TextField(blank=True, null=True)
+    values = models.TextField(blank=True, null=True)
+    website = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    job_description = models.TextField(blank=True, null=True)
+    soft_skills = models.TextField(blank=True, null=True)
+    hard_skills = models.TextField(blank=True, null=True)
+    languages = models.TextField(blank=True, null=True)
+
+    open = models.BooleanField(default=True, blank=True, null=True)
+
     last_day_to_apply = models.DateField(blank=True, null=True)
     closed_at = models.DateTimeField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     class Meta:
         db_table = "jobs"
