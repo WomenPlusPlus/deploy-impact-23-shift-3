@@ -6,11 +6,7 @@ export const metadata = {
   description: "Shift_Enter App - Association - Dashboard",
 };
 
-export default function CandidateLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CandidateLayout({children,}: {children: React.ReactNode;}) {
   const sections: SubHeaderSection[] = [
     { title: "Home", url: "/association", icon: "home" },
     { title: "Candidates", url: "/association/candidates", icon: "candidates" },
