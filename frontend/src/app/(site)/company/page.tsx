@@ -16,7 +16,7 @@ export default function CompanyPage() {
         }}
       >
         <Typography variant="body1" gutterBottom>
-          Dashboard
+          Company Dashboard
         </Typography>
       </Box>
     </Container>

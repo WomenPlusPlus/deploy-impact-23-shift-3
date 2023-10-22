@@ -30,6 +30,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "cypress": "^13.3.2",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "prettier": "3.0.3",

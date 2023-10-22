@@ -9,10 +9,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
 import Grid from "@mui/material/Grid";
-import {
-  CandidateForJobList,
-  CandidateForJobListSingleMatch,
-} from "@/app/(site)/company/candidates/types";
+import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +21,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
 }: CandidateProps) => {
   const router = useRouter();
   const handleViewProfileClick = (candidate_id: string) => {
-    router.push("/company/profile?candidate_id=" + candidate_id);
+    router.replace("/company/profile?candidate_id=" + candidate_id);
   };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
