@@ -294,7 +294,11 @@ export default function ProfilePreview() {
               <Chip
                 label={`${matchPercent}% match`}
                 color="success"
-                sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px" }}
+                sx={{ ml: 2, mr:0, fontWeight: "bold", borderRadius: "10px" }}
+              />
+                            <Chip
+                label="New candidate"
+                sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px", backgroundColor:"#D96C06" }}
               />
               <FavoriteBorderIcon />
             </>

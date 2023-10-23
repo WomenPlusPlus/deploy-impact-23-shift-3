@@ -7,12 +7,15 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Typography from "@mui/material/Typography";
 
 import ProfilePreview from "@/components/site/candidateProfile/profileView";
+import Notes from "@/components/site/companyNotes/Notes";
 
 type Params = {
   params: {
     userId: string;
   };
 };
+
+//TODO: move api call or pass userId down to component
 
 export default function UserProfilePage({params:{userId}}:Params) {
 
@@ -36,6 +39,7 @@ export default function UserProfilePage({params:{userId}}:Params) {
       </Grid>
 
       <ProfilePreview />
+      <Notes company_id={"1"} candidate_id={"1"} />
     </>
   );
 }
