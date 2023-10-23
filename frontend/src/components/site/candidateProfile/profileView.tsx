@@ -65,6 +65,7 @@ export default function ProfilePreview() {
   function handelShowHidden() {
     setViewHidden((prevState) => !prevState);
     setOpenFeedbackRequest(true);
+    // TODO: send to api viewed information
   }
 
   function handleContactCandidate(){
@@ -135,8 +136,9 @@ export default function ProfilePreview() {
 
   // Queries
   const queryCandidate = useQuery({
-    queryKey: ["candidateDetails"],
-    queryFn: getCandidateDetails,
+    queryKey: ["candidateDetails", userId],
+    queryFn:()=> getCandidateDetails(userId),
+    staleTime:Infinity,
   });
 
   useEffect(() => {
