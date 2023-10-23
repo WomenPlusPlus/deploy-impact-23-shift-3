@@ -4,7 +4,7 @@ on:
     branches:
       - backend
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 env:
   REPOSITORY_REGION: europe-west10
@@ -17,6 +17,7 @@ jobs:
   docker-release:
     name: Tagged Docker release to Google Artifact Registry
     runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && contains(github.ref_name, 'deploy')
 
     steps:
       - id: checkout
