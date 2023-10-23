@@ -72,14 +72,18 @@ For testing purposes, you can use the following user accounts with different rol
 ## Deployment - technical information
 For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
 
-To deploy the app it is necessary to have cloud console installed. 
+To deploy the app, you need to have the Google Cloud Console installed.
 
-After the instalation it is necessary to build the app (navigate into required file) and run:
+After installation, follow these steps to build and deploy the app:
+
+1. Navigate to the required directory.
+
+2. Build the app:
 ```bash
-gcbuild
+gcloud builds submit --tag gcr.io/enter-400508/nextjsapp --project enter-400508 .
 ```
 
-And deploy the app:
+3. Deploy the app:
 ```bash
-gcdeploy
+gcloud run deploy nextjsapp --image gcr.io/enter-400508/nextjsapp  --project enter-400508
 ```
