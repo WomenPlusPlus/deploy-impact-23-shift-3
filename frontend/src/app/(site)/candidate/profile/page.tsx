@@ -9,7 +9,6 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 // query
-
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
@@ -22,7 +21,6 @@ import MenuItem from "@mui/material/MenuItem";
 import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
-import Modal from "@mui/material/Modal";
 
 // GUi component!!
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
@@ -58,8 +56,7 @@ export default function ProfilePage() {
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 
-  console.log('state', state);
-  
+  console.log("state", state);
 
   //modal
   // const [open, setOpen] = useState(false);
@@ -706,7 +703,7 @@ export default function ProfilePage() {
           </Grid>
           <Grid item sm={6} xs={12}>
             {/* TODO: talk to gui about how it should work */}
-          {/* <Asynchronous onChange={handleChange}/> */}
+            {/* <Asynchronous onChange={handleChange}/> */}
             <Select
               fullWidth
               size="small"
@@ -754,7 +751,6 @@ export default function ProfilePage() {
             </Box>
           </Grid>
           <Grid item xs={3} sx={{ textAlign: { xs: "right" } }}>
- 
             <IconButton aria-label="Edit" onClick={handleEdit} data-which="b3">
               <CreateIcon />
             </IconButton>
@@ -836,7 +832,6 @@ export default function ProfilePage() {
   }
 
   return (
-
     <Container sx={{ mb: 8 }}>
       <Grid container sx={{ my: 3 }}>
         <Grid item sm={8}>
@@ -857,15 +852,14 @@ export default function ProfilePage() {
           sm={12}
         >
           <Link href="/candidate/profile/preview">
-          <Button
-            variant="outlined"
-            // onClick={handleOpen}
-            sx={{ textTransform: "none" }}
-          >
-            Preview your profile
-          </Button>
+            <Button
+              variant="outlined"
+              // onClick={handleOpen}
+              sx={{ textTransform: "none" }}
+            >
+              Preview your profile
+            </Button>
           </Link>
-
         </Grid>
       </Grid>
 

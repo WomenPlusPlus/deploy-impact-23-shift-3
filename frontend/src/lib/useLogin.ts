@@ -60,13 +60,11 @@ export const useLogin = (): [
       });
 
       if (response.role === "candidate") {
-        router.push("/candidate");
-      } else if (response.role === "admin") {
-        router.push("/admin");
-      } else if (response.role === "association") {
-        router.push("/association");
-      } else if (response.role === "company") {
-        router.push("/company");
+        router.push("/candidate/profile");
+      } else if (response.role === "association_user") {
+        router.push("/association/profile");
+      } else if (response.role === "company_user") {
+        router.push("/company/profile");
       }
     },
   });

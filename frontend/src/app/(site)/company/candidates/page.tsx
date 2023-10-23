@@ -2,39 +2,31 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import SearchBar from "@/app/(site)/company/searchBar";
+import { SearchBar } from "@/app/(site)/company/searchBar";
+import getModifiedListOfCandidates from "@/app/(site)/company/candidates/fetchMatchedCandidates";
 import { CandidateList } from "@/app/(site)/company/candidates/candidateList";
-import { Candidate } from "@/app/(site)/company/candidates/candidateInterface";
+import { useMemo, useState } from "react";
+import Fuse from "fuse.js";
+import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
+import IFuseOptions = Fuse.IFuseOptions;
 
-const fakeCandidate: Candidate = {
-  id: "1",
-  preferred_name: "Name",
-};
-const fakeCandidate2: Candidate = {
-  id: "2",
-  preferred_name: "Name",
-};
-const fakeCandidate3: Candidate = {
-  id: "3",
-  preferred_name: "Name",
-};
-const fakeCandidate4: Candidate = {
-  id: "4",
-  preferred_name: "Name",
-};
-const fakeCandidate5: Candidate = {
-  id: "5",
-  preferred_name: "Name",
+const options: IFuseOptions<CandidateForJobListSingleMatch> = {
+  includeScore: true,
+  shouldSort: true,
+  findAllMatches: true,
+  threshold: 0,
+  keys: ["job_title", "matching_score", "soft_skills", "hard_skills"],
 };
 
-const fakeListOfCandidates: Candidate[] = [
-  fakeCandidate,
-  fakeCandidate2,
-  fakeCandidate3,
-  fakeCandidate4,
-  fakeCandidate5,
-];
 export default function CandidatesPage() {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const listOfCandidates = getModifiedListOfCandidates();
+
+  const filteredCandidates = useMemo(() => {
+    const fuse = new Fuse(listOfCandidates, options);
+    return fuse.search(searchTerm, { limit: 20 });
+  }, [listOfCandidates, searchTerm]);
+
   return (
     <Container>
       <Box
@@ -46,8 +38,20 @@ export default function CandidatesPage() {
           margin: "-20px 0 0 0",
         }}
       >
-        <SearchBar />
-        <CandidateList candidates={fakeListOfCandidates} />
+        {listOfCandidates.length > 0 && (
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearch={setSearchTerm}
+            placeholder={"Search for candidates"}
+          />
+        )}
+        <CandidateList
+          candidates={
+            searchTerm
+              ? filteredCandidates.map((fuse) => fuse.item)
+              : listOfCandidates
+          }
+        />
       </Box>
     </Container>
   );

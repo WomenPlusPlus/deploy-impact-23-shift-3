@@ -1,7 +1,6 @@
 export const metadata = {
-  title: "SHIFT - Company list of candidates",
-  description:
-    "Shift_Enter App - Company can enlist Candidates matched for the open job position.",
+  title: "SHIFT - Company Posted Jobs",
+  description: "Shift_Enter App - Company can enlist Posted Jobs.",
 };
 
 export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({
