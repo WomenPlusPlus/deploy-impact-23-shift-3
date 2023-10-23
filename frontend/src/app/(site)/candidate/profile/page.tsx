@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CandidateDetailsInterface } from "./candidateInterface";
+import { CandidateDetailsInterface } from "@/components/site/candidateProfile/candidateInterface";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -28,7 +28,7 @@ import Modal from "@mui/material/Modal";
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
 // GUi component!!
-import Asynchronous from "@/components/MuiAutocomplete_example";
+// import Asynchronous from "@/components/MuiAutocomplete_example";
 
 const countryListPlaceholder = ["England", "Switzerland", "Germany"];
 
@@ -109,8 +109,8 @@ export default function ProfilePage() {
 
   // Queries
   const queryCandidate = useQuery({
-    queryKey: ["candidateDetails"],
-    queryFn: getCandidateDetails,
+    queryKey: ["candidateDetails",userId],
+    queryFn:()=> getCandidateDetails(userId),
   });
 
   // update candidate info

@@ -42,7 +42,6 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
-import DownloadIcon from "@mui/icons-material/Download";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -50,6 +49,8 @@ import StarsIcon from "@mui/icons-material/Stars";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
+
+import { usePathname } from "next/navigation";
 
 // TODO: getUser data based on user id
 const userId = 1;
@@ -61,6 +62,17 @@ export default function ProfilePreview() {
   const [candidateDetails, setCandidateDetails] = useState(obj);
   const [viewHidden, setViewHidden] = useState(false);
   const [openFeedbackRequest, setOpenFeedbackRequest] = useState(false);
+  const [isCandidate, setIsCandidate] = useState(false);
+
+  // check if candidate or company view
+  const pathName = usePathname();
+  const pathNameStart = pathName.split("/")[1];
+
+  // if(pathNameStart==="candidate"){
+  //   setIsCandidate(true);
+  // }
+
+  console.log(isCandidate, "can");
 
   function handelShowHidden() {
     setViewHidden((prevState) => !prevState);
@@ -68,7 +80,7 @@ export default function ProfilePreview() {
     // TODO: send to api viewed information
   }
 
-  function handleContactCandidate(){
+  function handleContactCandidate() {
     // open contact modal
   }
 
@@ -137,16 +149,19 @@ export default function ProfilePreview() {
   // Queries
   const queryCandidate = useQuery({
     queryKey: ["candidateDetails", userId],
-    queryFn:()=> getCandidateDetails(userId),
-    staleTime:Infinity,
+    queryFn: () => getCandidateDetails(userId),
+    staleTime: Infinity,
   });
 
   useEffect(() => {
+    if (pathNameStart === "candidate") {
+      setIsCandidate(true);
+      setViewHidden(true);
+    }
     if (queryCandidate.status === "success") {
       setCandidateDetails(queryCandidate.data);
     }
-  }, [queryCandidate.status, queryCandidate.data]);
-
+  }, [queryCandidate.status, queryCandidate.data, pathNameStart]);
 
   if (queryCandidate.isLoading) {
     return (
@@ -170,77 +185,80 @@ export default function ProfilePreview() {
 
   return (
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
-      <Grid container sx={{ mb: 2 }}>
-        <Grid item md={4}>
-          <Typography sx={{ display: "inline-block" }}>
-            Candidate profile
-          </Typography>
-        </Grid>
-        <Grid item md={4} sx={{ textAlign: "right" }}>
-          <Collapse in={openFeedbackRequest}>
-            <Alert
-              icon={false}
-              severity="info"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenFeedbackRequest(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
+      {!isCandidate ? (
+        <Grid container sx={{ mb: 2 }}>
+          <Grid item md={4}>
+            <Typography sx={{ display: "inline-block" }}>
+              Candidate profile
+            </Typography>
+          </Grid>
+          <Grid item md={4} sx={{ textAlign: "right" }}>
+            <Collapse in={openFeedbackRequest}>
+              <Alert
+                icon={false}
+                severity="info"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpenFeedbackRequest(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{
+                  maxWidth: "500px",
+                  minWidth: "200px",
+                  backgroundColor: "#ECF0F6",
+                }}
+              >
+                Would you like to rate your experience selecting candidates with
+                blurred data?
+              </Alert>
+            </Collapse>
+          </Grid>
+          <Grid item md={4} sx={{ textAlign: "right" }}>
+            <HtmlTooltip
+              title={
+                <>
+                  <Typography color="inherit">
+                    <strong>Why you can’t see it all?</strong>
+                  </Typography>
+                  <Typography color="inherit">
+                    Personal information such as name or contact details can
+                    lead to a bias towards the origin of the person. This
+                    information is not relevant to assessing skills and work
+                    experience. We encourage you to participate in the process.
+                    However, if you would like to know more, you can click the
+                    button. This action will be shared with the platform.
+                  </Typography>
+                </>
               }
-              sx={{
-                maxWidth: "500px",
-                minWidth: "200px",
-                backgroundColor: "#ECF0F6",
-              }}
             >
-              Would you like to rate your experience selecting candidates with
-              blurred data?
-            </Alert>
-          </Collapse>
-        </Grid>
-        <Grid item md={4} sx={{ textAlign: "right" }}>
-          <HtmlTooltip
-            title={
-              <>
-                <Typography color="inherit">
-                  <strong>Why you can’t see it all?</strong>
-                </Typography>
-                <Typography color="inherit">
-                  Personal information such as name or contact details can lead
-                  to a bias towards the origin of the person. This information
-                  is not relevant to assessing skills and work experience. We
-                  encourage you to participate in the process. However, if you
-                  would like to know more, you can click the button. This action
-                  will be shared with the platform.
-                </Typography>
-              </>
-            }
-          >
+              <Button
+                variant="outlined"
+                onClick={handelShowHidden}
+                sx={{
+                  textTransform: "none",
+                  marginBottom: { xs: "10px", md: "0" },
+                }}
+              >
+                Show all
+              </Button>
+            </HtmlTooltip>
             <Button
-              variant="outlined"
-              onClick={handelShowHidden}
-              sx={{
-                textTransform: "none",
-                marginBottom: { xs: "10px", md: "0" },
-              }}
+              variant="contained"
+              sx={{ textTransform: "none", marginLeft: "20px" }}
             >
-              Show all
+              Contact candidate
             </Button>
-          </HtmlTooltip>
-          <Button
-            variant="contained"
-            sx={{ textTransform: "none", marginLeft: "20px" }}
-          >
-            Contact candidate
-          </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
+
       <Grid container sx={{ pb: 4, borderBottom: "2px solid lightGrey" }}>
         {/* end header */}
         {/* Basic info & contact */}
@@ -269,14 +287,18 @@ export default function ProfilePreview() {
             component="h2"
             sx={{ mb: 4, display: "inline-block" }}
           >
-            {candidateDetails.preferred_name || ""}{" "}
+            {candidateDetails.preferred_name || ""}
           </Typography>
-          <Chip
-            label={`${matchPercent}% match`}
-            color="success"
-            sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px" }}
-          />
-          <FavoriteBorderIcon />
+          {!isCandidate ? (
+            <>
+              <Chip
+                label={`${matchPercent}% match`}
+                color="success"
+                sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px" }}
+              />
+              <FavoriteBorderIcon />
+            </>
+          ) : null}
 
           <Stack direction="row" spacing={3} sx={{ mb: 4 }}>
             <FullName
@@ -319,6 +341,12 @@ export default function ProfilePreview() {
         <Grid item sm={12} md={3}>
           <Box sx={{ py: 3, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
+              INITIATIVE CERTIFICATE
+            </Typography>
+            {initiativeChips}
+          </Box>
+          <Box sx={{ py: 0, px: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
               SKILLS
             </Typography>
             <Box sx={{ mb: 1 }}>{skillsChips}</Box>
@@ -330,10 +358,9 @@ export default function ProfilePreview() {
             <Button
               component="label"
               variant="outlined"
-              startIcon={<DownloadIcon />}
               sx={{ textTransform: "none" }}
             >
-              View CV
+              Preview CV
             </Button>
           </Box>
           <Box sx={{ py: 3, px: 1 }}>
@@ -343,10 +370,9 @@ export default function ProfilePreview() {
             <Button
               component="label"
               variant="outlined"
-              startIcon={<DownloadIcon />}
               sx={{ textTransform: "none" }}
             >
-              View documents
+              Preview documents
             </Button>
           </Box>
           <Box sx={{ py: 3, px: 1 }}>
@@ -356,12 +382,6 @@ export default function ProfilePreview() {
             <Typography variant="body1" sx={{ pb: 1 }}>
               {missingDetails.invited_by}
             </Typography>
-          </Box>
-          <Box sx={{ py: 0, px: 1 }}>
-            <Typography variant="body1" sx={{ pb: 1 }}>
-              <strong>Initiative badge</strong>
-            </Typography>
-            {initiativeChips}
           </Box>
         </Grid>
 
@@ -415,11 +435,13 @@ export default function ProfilePreview() {
             Add Notes
           </Button> */}
         </Grid>
-        <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
-          <ButtonGroup size="small" aria-label="small button group">
-            {proceedButtons}
-          </ButtonGroup>
-        </Grid>
+        {!isCandidate ? (
+          <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
+            <ButtonGroup size="small" aria-label="small button group">
+              {proceedButtons}
+            </ButtonGroup>
+          </Grid>
+        ) : null}
       </Grid>
     </Paper>
   );
