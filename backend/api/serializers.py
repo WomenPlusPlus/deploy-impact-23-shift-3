@@ -120,3 +120,17 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
         model = AvailableCompanyDomains
         fields = "__all__"
         many = True
+
+
+class JobsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Jobs
+        fields = "__all__"
+        many = True
+
+
+class CompaniesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Companies
+        fields = "__all__"
+        many = True
