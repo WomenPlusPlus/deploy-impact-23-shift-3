@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 
+
 from api.models import *
 from rest_framework import serializers
 
@@ -32,10 +33,22 @@ class CountriesSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class CandidatesSerializer(serializers.HyperlinkedModelSerializer):
+class CandidatesSerializer(serializers.ModelSerializer):
+    hard_skills = serializers.StringRelatedField(
+        many=True,
+        source="hard_skill_test_matching",
+    )
+
+    soft_skills = serializers.StringRelatedField(
+        many=True, source="soft_skill_test_matching"
+    )
+
     class Meta:
         model = Candidates
-        fields = "__all__"
+        exclude = (
+            "hard_skill_test_matching",
+            "soft_skill_test_matching",
+        )
         many = True
 
 
@@ -49,13 +62,6 @@ class LanguagesProficiencySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LanguagesProficiency
         fields = "__all__"
-
-
-class CandidatesSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Candidates
-        fields = "__all__"
-        many = True
 
 
 class InvitationSerializer(serializers.HyperlinkedModelSerializer):
@@ -122,10 +128,23 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class JobsSerializer(serializers.HyperlinkedModelSerializer):
+class JobsSerializer(serializers.ModelSerializer):
+    hard_skills = serializers.StringRelatedField(
+        many=True,
+        source="hard_skill_test_matching",
+    )
+
+    soft_skills = serializers.StringRelatedField(
+        many=True,
+        source="soft_skill_test_matching",
+    )
+
     class Meta:
         model = Jobs
-        fields = "__all__"
+        exclude = (
+            "soft_skill_test_matching",
+            "hard_skill_test_matching",
+        )
         many = True
 
 

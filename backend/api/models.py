@@ -13,6 +13,9 @@ class Skills(models.Model):
     class Meta:
         db_table = "skills"
 
+    def __str__(self):
+        return self.skill_name
+
 
 class SoftSkills(models.Model):
     soft_skill_id = models.AutoField(primary_key=True)
