@@ -6,6 +6,25 @@ from urllib import parse as parse_url
 DEFAULT_MAX_LENGTH = 255
 
 
+class Skills(models.Model):
+    skill_id = models.AutoField(primary_key=True)
+    skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    class Meta:
+        db_table = "skills"
+
+
+class SoftSkills(models.Model):
+    soft_skill_id = models.AutoField(primary_key=True)
+    soft_skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    def __str__(self):
+        return self.soft_skill_name
+
+    class Meta:
+        db_table = "soft_skills"
+
+
 class AssociationUsers(models.Model):
     association_user_id = models.AutoField(primary_key=True)
     supabase_authenticaiton_uuid = models.UUIDField()
@@ -108,6 +127,9 @@ class Candidates(models.Model):
     skip_tutorial = models.BooleanField(default=False, blank=True, null=True)
     last_update = models.DateTimeField(auto_now=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    soft_skill_test_matching = models.ManyToManyField(SoftSkills)
+    hard_skill_test_matching = models.ManyToManyField(Skills)
 
     def __str__(self):
         return f"{self.candidate_id} - {self.first_name} {self.last_name}"
@@ -237,8 +259,10 @@ class Jobs(models.Model):
     soft_skills = models.TextField(blank=True, null=True)
     hard_skills = models.TextField(blank=True, null=True)
     languages = models.TextField(blank=True, null=True)
-
     open = models.BooleanField(default=True, blank=True, null=True)
+
+    soft_skill_test_matching = models.ManyToManyField(SoftSkills)
+    hard_skill_test_matching = models.ManyToManyField(Skills)
 
     last_day_to_apply = models.DateField(blank=True, null=True)
     closed_at = models.DateTimeField(blank=True, null=True)
@@ -416,22 +440,6 @@ class PersonalityCandidates(models.Model):
 
     class Meta:
         db_table = "personality_candidates"
-
-
-class Skills(models.Model):
-    skill_id = models.AutoField(primary_key=True)
-    skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-
-    class Meta:
-        db_table = "skills"
-
-
-class SoftSkills(models.Model):
-    soft_skill_id = models.AutoField(primary_key=True)
-    soft_skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-
-    class Meta:
-        db_table = "soft_skills"
 
 
 class Status(models.Model):
