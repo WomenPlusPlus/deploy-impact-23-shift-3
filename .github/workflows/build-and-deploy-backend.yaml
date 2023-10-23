@@ -17,7 +17,7 @@ jobs:
   docker-release:
     name: Tagged Docker release to Google Artifact Registry
     runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && contains(github.ref_name, '-deploy')
+    if: contains(github.event.head_commit.message, '-deploy')
 
     steps:
       - id: checkout
