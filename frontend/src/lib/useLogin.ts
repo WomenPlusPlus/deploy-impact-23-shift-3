@@ -61,9 +61,9 @@ export const useLogin = (): [
 
       if (response.role === "candidate") {
         router.push("/candidate/profile");
-      } else if (response.role === "association") {
+      } else if (response.role === "association_user") {
         router.push("/association/profile");
-      } else if (response.role === "company") {
+      } else if (response.role === "company_user") {
         router.push("/company/profile");
       }
     },
