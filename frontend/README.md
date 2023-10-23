@@ -13,10 +13,16 @@ To learn more:[Next.js documentation](https://nextjs.org/docs) - learn about Nex
 
 ## How to Use
 
-Install the necessary dependencies and start the development server:
+Before you begin, make sure you have Node.js installed. You can download it from [Node.js server](https://nodejs.org/en)
 
+Install the necessary project dependencies. You can do this by running the following command:
 ```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
@@ -29,7 +35,7 @@ To run tests in a web browser:
 ```bash
  npx cypress open
 ```
-- To run tests in the console for automated testing: 
+To run tests in the console for automated testing: 
 ```bash
 npx cypress run
 ```
@@ -62,3 +68,18 @@ For testing purposes, you can use the following user accounts with different rol
 - Email: `association@association.com`
 - Password: `Association123.123`
 - Role: `association`
+
+## Deployment - technical information
+For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
+
+To deploy the app it is necessary to have cloud console installed. 
+
+After the instalation it is necessary to build the app (navigate into required file) and run:
+```bash
+gcbuild
+```
+
+And deploy the app:
+```bash
+gcdeploy
+```
