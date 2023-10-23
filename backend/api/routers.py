@@ -35,7 +35,6 @@ singleViews = [
         "view": SignupView.as_view(),
         "name": "invite",
     },
-
 ]
 
 # Normal router setup, including list and registering ViewSets
@@ -46,8 +45,11 @@ router.register(r"api/associations", AssociationsViewSet)
 router.register(r"api/auth_users", AuthUserViewSet)
 router.register(r"api/candidates", CandidatesViewSet)
 router.register(r"api/cantons", CantonsViewSet)
+router.register(r"api/companies", CompaniesViewSet)
+router.register(r"api/cantons", CantonsViewSet)
 router.register(r"api/countries", CountriesViewSet)
 router.register(r"api/invitations", InvitationsViewSet)
+router.register(r"api/jobs", JobsViewSet)
 router.register(r"api/languages", LanguagesViewSet)
 router.register(r"api/languages_proficiencies", LanguagesProficiencyViewSet)
 router.register(r"api/personalities", PersonalitiesViewSet)
