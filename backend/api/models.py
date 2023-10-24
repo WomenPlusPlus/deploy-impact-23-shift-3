@@ -235,8 +235,9 @@ class Companies(models.Model):
     values = models.TextField(
         blank=True, null=True, db_comment="Values is what is important to the company"
     )
-    main_contact_first_name = models.CharField(blank=True, null=True)
-    main_contact_last_name = models.CharField(blank=True, null=True)
+    first_name = models.CharField(blank=True, null=True)
+    last_name = models.CharField(blank=True, null=True)
+    preferred_name = models.CharField(blank=True, null=True)
     email_adress = models.CharField(blank=True, null=True)
     main_contact_region_code = models.IntegerField(blank=True, null=True)
     main_contact_phone_number = models.IntegerField(blank=True, null=True)
