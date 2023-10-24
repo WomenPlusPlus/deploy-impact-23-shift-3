@@ -42,9 +42,9 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many=True, source="soft_skill_test_matching"
     )
 
-    # matches = serializers.SerializerMethodField(
-    #     "get_matches", read_only=True, source="matches"
-    # )
+    matches = serializers.SerializerMethodField(
+        "get_matches", read_only=True, source="matches"
+    )
 
     class Meta:
         model = Candidates
@@ -53,6 +53,63 @@ class CandidatesSerializer(serializers.ModelSerializer):
             "soft_skill_test_matching",
         )
         many = True
+
+    def get_matches(self, instance):
+        HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
+        SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
+        FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
+
+        req = self.context.get("request")
+        job_id = req.path.split("/")[-2]
+        try:
+            job_id = int(job_id)
+        except Exception:
+            return "Match only available when calling with Candidate ID"
+
+        job = instance
+        job_soft_skills = list(
+            job.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
+        )
+        job_hard_skills = list(
+            job.hard_skill_test_matching.values_list("skill_id", flat=True)
+        )
+
+        match_percentages = {}
+
+        candidates = instance.matches
+        for candidate in candidates:
+            soft_skills_match = candidate.get_match_percentage(job_soft_skills, "soft")
+            hard_skills_match = candidate.get_match_percentage(job_hard_skills, "hard")
+
+            match_percentages[candidate.job_id] = {
+                "soft_skills": soft_skills_match,
+                "hard_skills": hard_skills_match,
+                "full_match": (
+                    soft_skills_match * SOFT_SKILL_PERCENTAGE
+                    + hard_skills_match * HARD_SKILL_PERCENTAGE
+                ),
+            }
+
+        return [
+            {
+                "id": candidate.job_id,
+                "name": candidate.job_title,
+                "full_match_score": match_percentages[candidate.job_id]["full_match"],
+                "hard_skills": candidate.hard_skill_test_matching.values_list(
+                    "skill_name", flat=True
+                ),
+                "soft_skills": candidate.soft_skill_test_matching.values_list(
+                    "soft_skill_name", flat=True
+                ),
+                "soft_skills_match_score": match_percentages[candidate.job_id][
+                    "soft_skills"
+                ],
+                "hard_skills_match_score": match_percentages[candidate.job_id][
+                    "hard_skills"
+                ],
+            }
+            for candidate in candidates
+        ]
 
 
 class LanguagesSerializer(serializers.HyperlinkedModelSerializer):
