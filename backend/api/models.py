@@ -60,6 +60,10 @@ class Associations(models.Model):
     logo_url = models.CharField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    first_name = models.CharField(blank=True, null=True)
+    last_name = models.CharField(blank=True, null=True)
+    preferred_name = models.CharField(blank=True, null=True)
+
     class Meta:
         db_table = "associations"
 

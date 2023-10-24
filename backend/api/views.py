@@ -264,6 +264,7 @@ class JobsViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Jobs.objects.all()
     serializer_class = model_serializers.JobsSerializer
 
+
 class CompaniesViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Companies.objects.all()
     serializer_class = model_serializers.CompaniesSerializer

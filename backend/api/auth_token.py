@@ -4,7 +4,7 @@ import os
 import jwt
 import requests
 
-from api.models import SupabaseIdToUserIds
+from api.models import SupabaseIdToUserIds, Candidates, Companies, Associations
 from api.auth_models import RefreshTokens
 from api import services
 from rest_framework import status
@@ -98,10 +98,27 @@ def format_token(token: json) -> json:
         supabase_authenticaiton_uuid=supabase_user_id
     ).first()
 
+    match token["user"]["role"]:
+        case "candidate":
+            user_profile = Candidates
+        case "company_user":
+            user_profile = Companies
+        case "association_user":
+            user_profile = Associations
+        case "admin":
+            raise Exception("Admin not yet implemented")
+
+    print("user ## ", user)
     if user:
         id = user.user_id
+        user_profile = user_profile.objects.get(pk=id).__dict__
     else:
         id = "No id found in connection table, this is probably an old user."
+        user_profile = {
+            "first_name": "Generic First Name",
+            "last_name": "Generic Last Name",
+            "preferred_name": "Generic Preferred Name",
+        }
 
     new_token = {
         "access_token": token["access_token"],
@@ -112,6 +129,9 @@ def format_token(token: json) -> json:
         "last_sign_in_at": token["user"]["last_sign_in_at"],
         "id": id,
         "refresh_token": token["refresh_token"],
+        "first_name": user_profile["first_name"],
+        "last_name": user_profile["last_name"],
+        "preferred_name": user_profile["preferred_name"],
     }
 
     return new_token
