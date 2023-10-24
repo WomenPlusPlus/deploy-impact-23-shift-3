@@ -1,26 +1,26 @@
 "use client";
 import * as React from "react";
+import { useMemo, useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { SearchBar } from "@/app/(site)/company/searchBar";
-import getModifiedListOfCandidates from "@/app/(site)/company/candidates/fetchMatchedCandidates";
 import { CandidateList } from "@/app/(site)/company/candidates/candidateList";
-import { useMemo, useState } from "react";
 import Fuse from "fuse.js";
-import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
+import { getMatchedCandidates } from "@/app/(site)/company/candidates/getMatchedCandidates";
+import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import IFuseOptions = Fuse.IFuseOptions;
 
-const options: IFuseOptions<CandidateForJobListSingleMatch> = {
+const options: IFuseOptions<CandidateForJobList> = {
   includeScore: true,
   shouldSort: true,
   findAllMatches: true,
   threshold: 0,
-  keys: ["job_title", "matching_score", "soft_skills", "hard_skills"],
+  keys: ["job_title", "full_match_score", "soft_skills", "hard_skills", "name"],
 };
 
 export default function CandidatesPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const listOfCandidates = getModifiedListOfCandidates();
+  const listOfCandidates = getMatchedCandidates("210");
 
   const filteredCandidates = useMemo(() => {
     const fuse = new Fuse(listOfCandidates, options);
@@ -36,6 +36,7 @@ export default function CandidatesPage() {
           justifyContent: "center",
           alignItems: "center",
           margin: "-20px 0 0 0",
+          gap: 4,
         }}
       >
         {listOfCandidates.length > 0 && (

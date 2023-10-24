@@ -1,12 +1,12 @@
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import React from "react";
-import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
+import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { Stack } from "@mui/material";
 import { CandidateCard } from "@/app/(site)/company/candidates/candidateCard";
 
 interface CandidateListProps {
-  candidates: CandidateForJobListSingleMatch[];
+  candidates: CandidateForJobList[];
 }
 export const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
   return (
@@ -29,10 +29,7 @@ export const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
       )}
 
       {candidates.map((candidate, index) => (
-        <CandidateCard
-          key={index + candidate.candidate_id}
-          candidate={candidate}
-        />
+        <CandidateCard key={index} candidate={candidate} />
       ))}
     </Grid>
   );
