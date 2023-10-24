@@ -146,13 +146,13 @@ class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
                 "id": candidate.candidate_id,
                 "name": candidate.preferred_name,
                 "soft_skills": candidate.soft_skill_test_matching.values_list(
-                    "soft_skill_id", flat=True
+                    "soft_skill_name", flat=True
                 ),
                 "soft_skills_match_percentage": candidate.get_match_percentage(
                     job_soft_skills, "soft"
                 ),
                 "hard_skills": candidate.hard_skill_test_matching.values_list(
-                    "skill_id", flat=True
+                    "skill_name", flat=True
                 ),
                 "hard_skills_match_percentage": candidate.get_match_percentage(
                     job_hard_skills, "hard"
@@ -175,13 +175,13 @@ class JobsSerializer(serializers.ModelSerializer):
         source="hard_skill_test_matching",
     )
 
-    soft_skills = serializers.PrimaryKeyRelatedField(
+    soft_skills = serializers.StringRelatedField(
         read_only=True,
         many=True,
         source="soft_skill_test_matching",
     )
 
-    matches = CandidateMatchPercentageSerializer(context={"job_id": 1})
+    matches = CandidateMatchPercentageSerializer()
 
     class Meta:
         model = Jobs
