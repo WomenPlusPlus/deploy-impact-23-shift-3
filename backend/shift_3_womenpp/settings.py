@@ -157,6 +157,7 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Welcome to shift enter!",
     "VERSION": "0.12",
     "SERVE_INCLUDE_SCHEMA": False,
+    "SCHEMA_PATH_PREFIX": r"/api/*",
 }
 
 
