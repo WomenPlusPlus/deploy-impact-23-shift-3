@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
-
-
 from api.models import *
 from rest_framework import serializers
+import os
 
 
 # Serializers define the API representation.
@@ -130,8 +129,17 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
 
 class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
+        HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
+        SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
+        FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
+
+        # I don't know how to get the parent's serializer so I did this, it's very ugly code
         req = self.context.get("request")
-        job_id = int(req.path.split("/")[-2])
+        job_id = req.path.split("/")[-2]
+        try:
+            job_id = int(job_id)
+        except Exception:
+            return "Match only available when calling with Job ID"
 
         job = Jobs.objects.get(pk=job_id)
         job_soft_skills = list(
@@ -141,22 +149,32 @@ class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
             job.hard_skill_test_matching.values_list("skill_id", flat=True)
         )
 
+        match_percentages = {}
+
+        for candidate in instance:
+            soft_skills_match = candidate.get_match_percentage(job_soft_skills, "soft")
+            hard_skills_match = candidate.get_match_percentage(job_hard_skills, "hard")
+
+            match_percentages[candidate.candidate_id] = {
+                "soft_skills": soft_skills_match,
+                "hard_skills": hard_skills_match,
+                "full_match": (
+                    soft_skills_match * SOFT_SKILL_PERCENTAGE
+                    + hard_skills_match * HARD_SKILL_PERCENTAGE
+                ),
+            }
+
         return [
             {
                 "id": candidate.candidate_id,
                 "name": candidate.preferred_name,
-                "soft_skills": candidate.soft_skill_test_matching.values_list(
-                    "soft_skill_name", flat=True
-                ),
-                "soft_skills_match_percentage": candidate.get_match_percentage(
-                    job_soft_skills, "soft"
-                ),
-                "hard_skills": candidate.hard_skill_test_matching.values_list(
-                    "skill_name", flat=True
-                ),
-                "hard_skills_match_percentage": candidate.get_match_percentage(
-                    job_hard_skills, "hard"
-                ),
+                "soft_skills_match": match_percentages[candidate.candidate_id][
+                    "soft_skills"
+                ],
+                "hard_skills_match": match_percentages[candidate.candidate_id][
+                    "hard_skills"
+                ],
+                "full_match": match_percentages[candidate.candidate_id]["full_match"],
             }
             for candidate in instance
         ]
