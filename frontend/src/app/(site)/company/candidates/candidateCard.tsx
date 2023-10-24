@@ -21,7 +21,8 @@ export const CandidateCard: React.FC<CandidateProps> = ({
 }: CandidateProps) => {
   const router = useRouter();
   const handleViewProfileClick = (candidate_id: string) => {
-    router.replace("/company/profile?candidate_id=" + candidate_id);
+    router.replace(`/company/candidates/${candidate_id}`)
+   // router.replace("/company/profile?candidate_id=" + candidate_id);
   };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>

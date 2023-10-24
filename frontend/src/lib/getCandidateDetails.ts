@@ -8,11 +8,11 @@ const DATA_SOURCE_URL =
 
 // TODO:api calls need to be /skills/update etc.. so can use same call with params
 // export async function getSkills(apiEndpoint: any) {
-export async function getCandidateDetails() {
+export async function getCandidateDetails(userId:any) {
+  console.log("test params", userId);
+  
   try {
-    // const response = await axios.get(`${DATA_SOURCE_URL}/candidates`,{params:{pname:"pvalue"}})
-    const response = await axios.get(`${DATA_SOURCE_URL}candidates/1/`);
-
+    const response = await axios.get(`${DATA_SOURCE_URL}candidates/${userId}/`);
     //console.log("candidate_data", response.data);
 
     return response.data;

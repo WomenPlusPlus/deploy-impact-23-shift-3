@@ -26,6 +26,7 @@ import {
   Education,
 } from "./hiddenFields";
 import { Location, WorkPermit, StartOn } from "./visibleFields";
+import ContactForm from "../candidateContactForm/contactForm";
 
 // MUI imports
 import Container from "@mui/material/Container";
@@ -34,41 +35,87 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
 import Skeleton from "@mui/material/Skeleton";
-import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
-import DownloadIcon from "@mui/icons-material/Download";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarsIcon from "@mui/icons-material/Stars";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
+import Snackbar from "@mui/material/Snackbar";
+
+import { usePathname } from "next/navigation";
+import { set } from "cypress/types/lodash";
 
 // TODO: getUser data based on user id
-const userId = 1;
+
 //TODO: get percent from job match
 const matchPercent = 90;
+interface ContactFormsProps {
+  candidateId: number;
+  matchPercent:number
+}
 
-export default function ProfilePreview() {
+export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   const obj: CandidateDetailsInterface = {};
   const [candidateDetails, setCandidateDetails] = useState(obj);
   const [viewHidden, setViewHidden] = useState(false);
   const [openFeedbackRequest, setOpenFeedbackRequest] = useState(false);
+  const [isCandidate, setIsCandidate] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
+
+  //const userId = 108; // need to use until user.id is returned
+  // context version
+  const signInContext = useContext(SignInProviderContext);
+  const userId = signInContext.auth?.user?.id || 1;
+  // const fn = signInContext.auth?.user?.first_name || "no name";
+  // console.log("fn",fn);
+
+  // if viewed by company need to get candidateId
+  let candidate_id = -1;
+  if(candidateId > 0){
+    candidate_id = candidateId;
+  }else{
+     candidate_id = +userId;
+  }
+
+  //contact form
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setSnackOpen(true);
+  };
+
+  //snack
+  const handleCloseSnack = (
+    event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackOpen(false);
+  };
+
+
+  // check if candidate or company view
+  const pathName = usePathname();
+  const pathNameStart = pathName.split("/")[1];
 
   function handelShowHidden() {
     setViewHidden((prevState) => !prevState);
     setOpenFeedbackRequest(true);
+    // TODO: send to api viewed information
   }
 
-  function handleContactCandidate(){
+  function handleContactCandidate() {
     // open contact modal
+    setOpen(true);
   }
 
   // -- CHIPS -- //
@@ -135,16 +182,20 @@ export default function ProfilePreview() {
 
   // Queries
   const queryCandidate = useQuery({
-    queryKey: ["candidateDetails"],
-    queryFn: getCandidateDetails,
+    queryKey: ["candidateDetails", candidate_id],
+    queryFn: () => getCandidateDetails(candidate_id),
+    staleTime: Infinity,
   });
 
   useEffect(() => {
+    if (pathNameStart === "candidate") {
+      setIsCandidate(true);
+      setViewHidden(true);
+    }
     if (queryCandidate.status === "success") {
       setCandidateDetails(queryCandidate.data);
     }
-  }, [queryCandidate.status, queryCandidate.data]);
-
+  }, [queryCandidate.status, queryCandidate.data, pathNameStart]);
 
   if (queryCandidate.isLoading) {
     return (
@@ -168,77 +219,102 @@ export default function ProfilePreview() {
 
   return (
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
-      <Grid container sx={{ mb: 2 }}>
-        <Grid item md={4}>
-          <Typography sx={{ display: "inline-block" }}>
-            Candidate profile
-          </Typography>
-        </Grid>
-        <Grid item md={4} sx={{ textAlign: "right" }}>
-          <Collapse in={openFeedbackRequest}>
+      {!isCandidate ? (
+        <>
+          <Snackbar
+            open={snackOpen}
+            autoHideDuration={3000}
+            onClose={handleCloseSnack}
+          >
             <Alert
-              icon={false}
-              severity="info"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenFeedbackRequest(false);
+              onClose={handleCloseSnack}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              The message has been successfully sent!
+            </Alert>
+          </Snackbar>
+          <ContactForm
+            open={open}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+          />
+          <Grid container sx={{ mb: 2 }}>
+            <Grid item md={4}>
+              <Typography sx={{ display: "inline-block" }}>
+                Candidate profile
+              </Typography>
+            </Grid>
+            <Grid item md={4} sx={{ textAlign: "right" }}>
+              <Collapse in={openFeedbackRequest}>
+                <Alert
+                  icon={false}
+                  severity="info"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenFeedbackRequest(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{
+                    maxWidth: "500px",
+                    minWidth: "200px",
+                    backgroundColor: "#ECF0F6",
                   }}
                 >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-              sx={{
-                maxWidth: "500px",
-                minWidth: "200px",
-                backgroundColor: "#ECF0F6",
-              }}
-            >
-              Would you like to rate your experience selecting candidates with
-              blurred data?
-            </Alert>
-          </Collapse>
-        </Grid>
-        <Grid item md={4} sx={{ textAlign: "right" }}>
-          <HtmlTooltip
-            title={
-              <>
-                <Typography color="inherit">
-                  <strong>Why you can’t see it all?</strong>
-                </Typography>
-                <Typography color="inherit">
-                  Personal information such as name or contact details can lead
-                  to a bias towards the origin of the person. This information
-                  is not relevant to assessing skills and work experience. We
-                  encourage you to participate in the process. However, if you
-                  would like to know more, you can click the button. This action
-                  will be shared with the platform.
-                </Typography>
-              </>
-            }
-          >
-            <Button
-              variant="outlined"
-              onClick={handelShowHidden}
-              sx={{
-                textTransform: "none",
-                marginBottom: { xs: "10px", md: "0" },
-              }}
-            >
-              Show all
-            </Button>
-          </HtmlTooltip>
-          <Button
-            variant="contained"
-            sx={{ textTransform: "none", marginLeft: "20px" }}
-          >
-            Contact candidate
-          </Button>
-        </Grid>
-      </Grid>
+                  Would you like to rate your experience selecting candidates
+                  with blurred data?
+                </Alert>
+              </Collapse>
+            </Grid>
+            <Grid item md={4} sx={{ textAlign: "right" }}>
+              <HtmlTooltip
+                title={
+                  <>
+                    <Typography color="inherit">
+                      <strong>Why you can’t see it all?</strong>
+                    </Typography>
+                    <Typography color="inherit">
+                      Personal information such as name or contact details can
+                      lead to a bias towards the origin of the person. This
+                      information is not relevant to assessing skills and work
+                      experience. We encourage you to participate in the
+                      process. However, if you would like to know more, you can
+                      click the button. This action will be shared with the
+                      platform.
+                    </Typography>
+                  </>
+                }
+              >
+                <Button
+                  variant="outlined"
+                  onClick={handelShowHidden}
+                  sx={{
+                    textTransform: "none",
+                    marginBottom: { xs: "10px", md: "0" },
+                  }}
+                >
+                  Show all
+                </Button>
+              </HtmlTooltip>
+              <Button
+                onClick={handleContactCandidate}
+                variant="contained"
+                sx={{ textTransform: "none", marginLeft: "20px" }}
+              >
+                Contact candidate
+              </Button>
+            </Grid>
+          </Grid>
+        </>
+      ) : null}
+
       <Grid container sx={{ pb: 4, borderBottom: "2px solid lightGrey" }}>
         {/* end header */}
         {/* Basic info & contact */}
@@ -267,14 +343,27 @@ export default function ProfilePreview() {
             component="h2"
             sx={{ mb: 4, display: "inline-block" }}
           >
-            {candidateDetails.preferred_name || ""}{" "}
+            {candidateDetails.preferred_name || ""}
           </Typography>
-          <Chip
-            label={`${matchPercent}% match`}
-            color="success"
-            sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px" }}
-          />
-          <FavoriteBorderIcon />
+          {!isCandidate ? (
+            <>
+              <Chip
+                label={`${matchPercent}% match`}
+                color="success"
+                sx={{ ml: 2, mr: 0, fontWeight: "bold", borderRadius: "10px" }}
+              />
+              <Chip
+                label="New candidate"
+                sx={{
+                  mx: 2,
+                  fontWeight: "bold",
+                  borderRadius: "10px",
+                  backgroundColor: "#D96C06",
+                }}
+              />
+              <FavoriteBorderIcon />
+            </>
+          ) : null}
 
           <Stack direction="row" spacing={3} sx={{ mb: 4 }}>
             <FullName
@@ -282,33 +371,35 @@ export default function ProfilePreview() {
               last_name={candidateDetails.last_name}
               viewHidden={viewHidden}
             />
-            <Pronoun pronoun={missingDetails.pronoun} viewHidden={viewHidden} />
+            <Pronoun
+              pronoun={candidateDetails.gender}
+              viewHidden={viewHidden}
+            />
             <Typography>{missingDetails.current_position}</Typography>
           </Stack>
 
           <Grid container spacing={2} sx={{ maxWidth: 600 }}>
             <PhoneNumber
               viewHidden={viewHidden}
-              phone_number_region={candidateDetails.phone_number_region}
-              phone_number={candidateDetails.phone_number}
+              phone_number_region={missingDetails.phone_number_region}
+              phone_number={missingDetails.phone_number}
             />
-            <Email
-              viewHidden={viewHidden}
-              email_adress={candidateDetails.email_adress}
-            />
+            <Email viewHidden={viewHidden} email={candidateDetails.email} />
             <Linkedin
               viewHidden={viewHidden}
-              linkedin={missingDetails.linkedin}
+              linkedin={candidateDetails.linkedin}
             />
             <WebsiteUrl
               viewHidden={viewHidden}
               website={missingDetails.website}
             />
             <Location
-              city={candidateDetails.city}
-              country={candidateDetails.country}
+              city={candidateDetails.location_city}
+              country={missingDetails.country}
             />
-            <WorkPermit work_permit={candidateDetails.work_permit} />
+            <WorkPermit
+              work_permit={candidateDetails.work_permission_CH ? "yes" : "no"}
+            />
             <StartOn start_date={missingDetails.start_date} />
           </Grid>
         </Grid>
@@ -316,6 +407,12 @@ export default function ProfilePreview() {
       <Grid container>
         <Grid item sm={12} md={3}>
           <Box sx={{ py: 3, px: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              INITIATIVE CERTIFICATE
+            </Typography>
+            {initiativeChips}
+          </Box>
+          <Box sx={{ py: 0, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
               SKILLS
             </Typography>
@@ -328,10 +425,9 @@ export default function ProfilePreview() {
             <Button
               component="label"
               variant="outlined"
-              startIcon={<DownloadIcon />}
               sx={{ textTransform: "none" }}
             >
-              View CV
+              Preview CV
             </Button>
           </Box>
           <Box sx={{ py: 3, px: 1 }}>
@@ -341,10 +437,9 @@ export default function ProfilePreview() {
             <Button
               component="label"
               variant="outlined"
-              startIcon={<DownloadIcon />}
               sx={{ textTransform: "none" }}
             >
-              View documents
+              Preview documents
             </Button>
           </Box>
           <Box sx={{ py: 3, px: 1 }}>
@@ -354,12 +449,6 @@ export default function ProfilePreview() {
             <Typography variant="body1" sx={{ pb: 1 }}>
               {missingDetails.invited_by}
             </Typography>
-          </Box>
-          <Box sx={{ py: 0, px: 1 }}>
-            <Typography variant="body1" sx={{ pb: 1 }}>
-              <strong>Initiative badge</strong>
-            </Typography>
-            {initiativeChips}
           </Box>
         </Grid>
 
@@ -375,7 +464,7 @@ export default function ProfilePreview() {
             <Typography variant="h6" sx={{ pb: 1 }}>
               EXPERIENCE
             </Typography>
-            <Typography>{candidateDetails.related_experience}</Typography>
+            <Typography>{candidateDetails.experience}</Typography>
           </Box>
           <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
@@ -404,20 +493,13 @@ export default function ProfilePreview() {
       </Grid>
 
       <Grid container sx={{ borderTop: "2px solid lightGrey" }}>
-        <Grid item md={6} sx={{ pt: 2 }}>
-          {/* <Button
-            variant="outlined"
-            sx={{ textTransform: "none" }}
-            //onClick={() => setViewHidden((prevState) => !prevState)}
-          >
-            Add Notes
-          </Button> */}
-        </Grid>
-        <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
-          <ButtonGroup size="small" aria-label="small button group">
-            {proceedButtons}
-          </ButtonGroup>
-        </Grid>
+        {!isCandidate ? (
+          <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
+            <ButtonGroup size="small" aria-label="small button group">
+              {proceedButtons}
+            </ButtonGroup>
+          </Grid>
+        ) : null}
       </Grid>
     </Paper>
   );
