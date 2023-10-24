@@ -1,9 +1,32 @@
+from typing import Iterator
 from django.db import models
 from api.auth_models import AuthUsers
 import os
 from urllib import parse as parse_url
 
 DEFAULT_MAX_LENGTH = 255
+
+
+class Skills(models.Model):
+    skill_id = models.AutoField(primary_key=True)
+    skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    class Meta:
+        db_table = "skills"
+
+    def __str__(self):
+        return self.skill_name
+
+
+class SoftSkills(models.Model):
+    soft_skill_id = models.AutoField(primary_key=True)
+    soft_skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    def __str__(self):
+        return self.soft_skill_name
+
+    class Meta:
+        db_table = "soft_skills"
 
 
 class AssociationUsers(models.Model):
@@ -108,6 +131,39 @@ class Candidates(models.Model):
     skip_tutorial = models.BooleanField(default=False, blank=True, null=True)
     last_update = models.DateTimeField(auto_now=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    soft_skill_test_matching = models.ManyToManyField(SoftSkills)
+    hard_skill_test_matching = models.ManyToManyField(Skills)
+
+    def get_match_percentage(
+        self, list_skills_id: Iterator, soft_or_hard_skill: str
+    ) -> int:
+        """
+        Calculate the percentage of matching skills between the input list of skills and the skills in the database.
+
+        Args:
+                list_skills_id (Iterator): An iterator of integers representing the IDs of the skills to be matched.
+                soft_or_hard_skill (str): A string indicating whether to match soft or hard skills.
+
+        Returns:
+                int: The percentage of matching skills between the input list of skills and the skills in the database.
+        """
+        if soft_or_hard_skill == "soft":
+            skills = self.soft_skill_test_matching.values_list(
+                "soft_skill_id", flat=True
+            )
+        elif soft_or_hard_skill == "hard":
+            skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
+        else:
+            raise ValueError
+
+        skills = list(skills)
+
+        return (
+            len(set(list_skills_id).intersection(set(skills))) / len(list_skills_id)
+            if len(list_skills_id) > 0
+            else 0
+        ) * 100
 
     def __str__(self):
         return f"{self.candidate_id} - {self.first_name} {self.last_name}"
@@ -237,12 +293,21 @@ class Jobs(models.Model):
     soft_skills = models.TextField(blank=True, null=True)
     hard_skills = models.TextField(blank=True, null=True)
     languages = models.TextField(blank=True, null=True)
-
     open = models.BooleanField(default=True, blank=True, null=True)
+
+    soft_skill_test_matching = models.ManyToManyField(SoftSkills)
+    hard_skill_test_matching = models.ManyToManyField(Skills)
 
     last_day_to_apply = models.DateField(blank=True, null=True)
     closed_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    @property
+    def matches(self):
+        matched_soft_candidates = Candidates.objects.filter(
+            soft_skill_test_matching__in=self.soft_skill_test_matching.iterator()
+        )
+        return matched_soft_candidates
 
     class Meta:
         db_table = "jobs"
@@ -416,22 +481,6 @@ class PersonalityCandidates(models.Model):
 
     class Meta:
         db_table = "personality_candidates"
-
-
-class Skills(models.Model):
-    skill_id = models.AutoField(primary_key=True)
-    skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-
-    class Meta:
-        db_table = "skills"
-
-
-class SoftSkills(models.Model):
-    soft_skill_id = models.AutoField(primary_key=True)
-    soft_skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-
-    class Meta:
-        db_table = "soft_skills"
 
 
 class Status(models.Model):
