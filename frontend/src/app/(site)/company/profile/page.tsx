@@ -27,13 +27,14 @@ export default function ProfilePage() {
       enabled: !!signInContext.auth?.user?.id,
     },
   );
+  console.log(signInContext);
 
   return (
     <Container>
       <Card sx={{ padding: "8px" }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <Box>
-            <Typography variant="h6">BASIC DETAILS</Typography>
+            <Typography variant="h6">BASIC DETAILS ....</Typography>
           </Box>
           <Divider />
           <Box
