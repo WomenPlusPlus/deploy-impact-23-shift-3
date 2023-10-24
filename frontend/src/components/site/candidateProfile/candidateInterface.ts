@@ -35,7 +35,7 @@ export interface CandidateDetailsInterface {
     hard_skills?:string[];
     soft_skills?:string[];
     industry?: string;
-    experience?: string;
+    experience?: string; // needs to change to string[]
     github?: string;
     linkedin?: string;
     education?: string; // needs to be an array of object

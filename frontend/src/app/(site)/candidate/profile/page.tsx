@@ -20,6 +20,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
 import Link from "next/link";
 
 // GUi component!!
@@ -106,8 +107,8 @@ export default function ProfilePage() {
 
   // Queries
   const queryCandidate = useQuery({
-    queryKey: ["candidateDetails",userId],
-    queryFn:()=> getCandidateDetails(userId),
+    queryKey: ["candidateDetails", userId],
+    queryFn: () => getCandidateDetails(userId),
   });
 
   // update candidate info
@@ -197,58 +198,90 @@ export default function ProfilePage() {
         </Grid>
 
         <Grid container my={3} spacing={2}>
-          <Grid item sm={4} xs={12}>
-            <TextField
-              // InputProps={{
-              //   readOnly: true,
-              // }}
-              required
-              id="first_name"
-              name="first_name"
-              autoComplete="false"
-              size="small"
-              value={state.first_name || ""}
-              label="First Name"
-              fullWidth
-              onChange={handleChange}
-            />
+          <Grid item sm={2}>
+            image upload here
           </Grid>
 
-          <Grid item sm={4} xs={12}>
-            <TextField
+          <Grid item sm={10} xs={12}>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                required
+                id="first_name"
+                name="first_name"
+                autoComplete="false"
+                size="small"
+                value={state.first_name || ""}
+                label="First Name"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                required
+                autoComplete="false"
+                name="last_name"
+                id="last_name"
+                size="small"
+                value={state.last_name || ""}
+                label="Last Name"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item sm={6}>
+                {/* <TextField
               required
               autoComplete="false"
-              name="last_name"
-              id="last_name"
+              name="pronoun"
+              id="pronoun"
               size="small"
-              value={state.last_name || ""}
-              label="Last Name"
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item sm={4} xs={12}>
-            <TextField
-              required
-              autoComplete="false"
-              name="preferred_name"
-              id="preferred_name"
-              size="small"
-              value={state.preferred_name || ""}
-              label="Preferred Name"
+              value={state.pronoun || ""}
+              label="pronoun"
               fullWidth
               helperText="Tell us how would you like to be presented in your candidate profile."
               onChange={handleChange}
-            />
-            {/* <Typography
-        component="p"
-        variant="caption"
-        sx={{ mt: 1, lineHeight: "1.2" }}
-      >
-        Tell us how would you like to be presented in your candidate
-        profile.
-      </Typography> */}
+            /> */}
+                <InputLabel id="pronoun-label">Pronoun</InputLabel>
+                <Select
+                size="small"
+                  labelId="pronoun-label"
+                  fullWidth
+                  id="gender"
+                  name="gender"
+                  value={"test val"}
+                  label="Pronoun"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>She/Her</MenuItem>
+                  <MenuItem value={20}>They/Them</MenuItem>
+                  <MenuItem value={30}>He/Him</MenuItem>
+                </Select>
+              </Grid>
+              <Grid item sm={6}>
+                <TextField
+                  required
+                  autoComplete="false"
+                  name="preferred_name"
+                  id="preferred_name"
+                  size="small"
+                  value={state.preferred_name || ""}
+                  label="Preferred Name"
+                  fullWidth
+                  helperText="Tell us how would you like to be presented in your candidate profile."
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
           </Grid>
+
+          {/* <Grid item sm={10} xs={12}></Grid> */}
+
+          {/* <Grid item sm={4} xs={12}> */}
+
+          {/* </Grid> */}
           <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
             <TextField
               type="date"
@@ -404,7 +437,7 @@ export default function ProfilePage() {
               name="email_adress"
               id="email_adress"
               size="small"
-              value={state.email_adress || ""}
+              value={state.email || ""}
               label="Email address"
               fullWidth
               onChange={handleChange}
@@ -444,7 +477,7 @@ export default function ProfilePage() {
               name="city"
               id="city"
               size="small"
-              value={state.city || ""}
+              value={state.location_city || ""}
               label="City"
               fullWidth
               onChange={handleChange}
@@ -521,7 +554,7 @@ export default function ProfilePage() {
             <Typography>
               <strong>Email address</strong>
             </Typography>
-            <Typography>{state.email_adress || ""}</Typography>
+            <Typography>{state.email || ""}</Typography>
           </Grid>
 
           <Grid item sm={4} xs={12}>
@@ -530,7 +563,7 @@ export default function ProfilePage() {
             </Typography>
             <Typography>
               {state.street_address || ""} {state.house_number || ""},{" "}
-              {state.city || ""} {state.postal_code || ""}
+              {state.location_city || ""} {state.postal_code || ""}
               <br />
               {state.country || ""}
             </Typography>
@@ -622,7 +655,7 @@ export default function ProfilePage() {
               name="related_experience"
               id="related_experience"
               size="small"
-              value={state.related_experience || ""}
+              value={state.experience || ""}
               label=" related_experience"
               fullWidth
               onChange={handleChange}
@@ -778,7 +811,7 @@ export default function ProfilePage() {
               <strong>Related experience</strong>
             </Typography>
 
-            <Typography>{state.related_experience || "-"}</Typography>
+            <Typography>{state.experience || "-"}</Typography>
           </Grid>
 
           <Grid item sm={6} xs={12}>

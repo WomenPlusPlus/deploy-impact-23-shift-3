@@ -26,6 +26,7 @@ import {
   Education,
 } from "./hiddenFields";
 import { Location, WorkPermit, StartOn } from "./visibleFields";
+import ContactForm from "../candidateContactForm/contactForm";
 
 // MUI imports
 import Container from "@mui/material/Container";
@@ -45,28 +46,17 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import StarsIcon from "@mui/icons-material/Stars";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
+import Snackbar from "@mui/material/Snackbar";
 
 import { usePathname } from "next/navigation";
+import { set } from "cypress/types/lodash";
 
-//womenPlusPlusAuth
-const authDetailsJson = localStorage.getItem("womenPlusPlusAuth");
-const authDetails = authDetailsJson ? JSON.parse(authDetailsJson) : null;
-//const authDetails = JSON.parse(localStorage.getItem("womenPlusPlusAuth"));
-
-const userIdReal = authDetails.user.id;
 const userId = 108; // need to use until user.id is returned
-
-const userRole = authDetails.role;
-
-console.log('authDetails', authDetails);
-console.log('userRole', userRole);
-console.log('userId', userIdReal);
 
 // TODO: getUser data based on user id
 
 //TODO: get percent from job match
 const matchPercent = 90;
-
 
 export default function ProfilePreview() {
   const obj: CandidateDetailsInterface = {};
@@ -74,10 +64,27 @@ export default function ProfilePreview() {
   const [viewHidden, setViewHidden] = useState(false);
   const [openFeedbackRequest, setOpenFeedbackRequest] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
 
-// context version
-const signInContext = useContext(SignInProviderContext);
-console.log("context", signInContext);
+  //contact form
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {setOpen(false); setSnackOpen(true); console.log("hdhdhddhdh")};
+
+  //snack
+  const handleCloseSnack = (
+    event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackOpen(false);
+  };
+
+  // context version
+  const signInContext = useContext(SignInProviderContext);
+  // console.log("context", signInContext.auth);
 
   // check if candidate or company view
   const pathName = usePathname();
@@ -95,6 +102,7 @@ console.log("context", signInContext);
 
   function handleContactCandidate() {
     // open contact modal
+    setOpen(true);
   }
 
   // -- CHIPS -- //
@@ -199,77 +207,99 @@ console.log("context", signInContext);
   return (
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
       {!isCandidate ? (
-        <Grid container sx={{ mb: 2 }}>
-          <Grid item md={4}>
-            <Typography sx={{ display: "inline-block" }}>
-              Candidate profile
-            </Typography>
-          </Grid>
-          <Grid item md={4} sx={{ textAlign: "right" }}>
-            <Collapse in={openFeedbackRequest}>
-              <Alert
-                icon={false}
-                severity="info"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpenFeedbackRequest(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
+        <>
+              <Snackbar
+        open={snackOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnack}
+      >
+        <Alert
+          onClose={handleCloseSnack}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          The message has been successfully sent!
+        </Alert>
+      </Snackbar>
+          <ContactForm
+            open={open}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+          />
+          <Grid container sx={{ mb: 2 }}>
+            <Grid item md={4}>
+              <Typography sx={{ display: "inline-block" }}>
+                Candidate profile
+              </Typography>
+            </Grid>
+            <Grid item md={4} sx={{ textAlign: "right" }}>
+              <Collapse in={openFeedbackRequest}>
+                <Alert
+                  icon={false}
+                  severity="info"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenFeedbackRequest(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{
+                    maxWidth: "500px",
+                    minWidth: "200px",
+                    backgroundColor: "#ECF0F6",
+                  }}
+                >
+                  Would you like to rate your experience selecting candidates
+                  with blurred data?
+                </Alert>
+              </Collapse>
+            </Grid>
+            <Grid item md={4} sx={{ textAlign: "right" }}>
+              <HtmlTooltip
+                title={
+                  <>
+                    <Typography color="inherit">
+                      <strong>Why you can’t see it all?</strong>
+                    </Typography>
+                    <Typography color="inherit">
+                      Personal information such as name or contact details can
+                      lead to a bias towards the origin of the person. This
+                      information is not relevant to assessing skills and work
+                      experience. We encourage you to participate in the
+                      process. However, if you would like to know more, you can
+                      click the button. This action will be shared with the
+                      platform.
+                    </Typography>
+                  </>
                 }
-                sx={{
-                  maxWidth: "500px",
-                  minWidth: "200px",
-                  backgroundColor: "#ECF0F6",
-                }}
               >
-                Would you like to rate your experience selecting candidates with
-                blurred data?
-              </Alert>
-            </Collapse>
-          </Grid>
-          <Grid item md={4} sx={{ textAlign: "right" }}>
-            <HtmlTooltip
-              title={
-                <>
-                  <Typography color="inherit">
-                    <strong>Why you can’t see it all?</strong>
-                  </Typography>
-                  <Typography color="inherit">
-                    Personal information such as name or contact details can
-                    lead to a bias towards the origin of the person. This
-                    information is not relevant to assessing skills and work
-                    experience. We encourage you to participate in the process.
-                    However, if you would like to know more, you can click the
-                    button. This action will be shared with the platform.
-                  </Typography>
-                </>
-              }
-            >
+                <Button
+                  variant="outlined"
+                  onClick={handelShowHidden}
+                  sx={{
+                    textTransform: "none",
+                    marginBottom: { xs: "10px", md: "0" },
+                  }}
+                >
+                  Show all
+                </Button>
+              </HtmlTooltip>
               <Button
-                variant="outlined"
-                onClick={handelShowHidden}
-                sx={{
-                  textTransform: "none",
-                  marginBottom: { xs: "10px", md: "0" },
-                }}
+                onClick={handleContactCandidate}
+                variant="contained"
+                sx={{ textTransform: "none", marginLeft: "20px" }}
               >
-                Show all
+                Contact candidate
               </Button>
-            </HtmlTooltip>
-            <Button
-              variant="contained"
-              sx={{ textTransform: "none", marginLeft: "20px" }}
-            >
-              Contact candidate
-            </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </>
       ) : null}
 
       <Grid container sx={{ pb: 4, borderBottom: "2px solid lightGrey" }}>
@@ -307,11 +337,16 @@ console.log("context", signInContext);
               <Chip
                 label={`${matchPercent}% match`}
                 color="success"
-                sx={{ ml: 2, mr:0, fontWeight: "bold", borderRadius: "10px" }}
+                sx={{ ml: 2, mr: 0, fontWeight: "bold", borderRadius: "10px" }}
               />
-                            <Chip
+              <Chip
                 label="New candidate"
-                sx={{ mx: 2, fontWeight: "bold", borderRadius: "10px", backgroundColor:"#D96C06" }}
+                sx={{
+                  mx: 2,
+                  fontWeight: "bold",
+                  borderRadius: "10px",
+                  backgroundColor: "#D96C06",
+                }}
               />
               <FavoriteBorderIcon />
             </>
@@ -323,20 +358,20 @@ console.log("context", signInContext);
               last_name={candidateDetails.last_name}
               viewHidden={viewHidden}
             />
-            <Pronoun pronoun={candidateDetails.gender} viewHidden={viewHidden} />
+            <Pronoun
+              pronoun={candidateDetails.gender}
+              viewHidden={viewHidden}
+            />
             <Typography>{missingDetails.current_position}</Typography>
           </Stack>
 
           <Grid container spacing={2} sx={{ maxWidth: 600 }}>
             <PhoneNumber
               viewHidden={viewHidden}
-              phone_number_region={candidateDetails.phone_number_region}
-              phone_number={candidateDetails.phone_number}
+              phone_number_region={missingDetails.phone_number_region}
+              phone_number={missingDetails.phone_number}
             />
-            <Email
-              viewHidden={viewHidden}
-              email={candidateDetails.email}
-            />
+            <Email viewHidden={viewHidden} email={candidateDetails.email} />
             <Linkedin
               viewHidden={viewHidden}
               linkedin={candidateDetails.linkedin}
@@ -347,9 +382,11 @@ console.log("context", signInContext);
             />
             <Location
               city={candidateDetails.location_city}
-              country={candidateDetails.country}
+              country={missingDetails.country}
             />
-            <WorkPermit work_permit={candidateDetails.work_permit} />
+            <WorkPermit
+              work_permit={candidateDetails.work_permission_CH ? "yes" : "no"}
+            />
             <StartOn start_date={missingDetails.start_date} />
           </Grid>
         </Grid>
@@ -414,7 +451,7 @@ console.log("context", signInContext);
             <Typography variant="h6" sx={{ pb: 1 }}>
               EXPERIENCE
             </Typography>
-            <Typography>{candidateDetails.related_experience}</Typography>
+            <Typography>{candidateDetails.experience}</Typography>
           </Box>
           <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
             <Typography variant="h6" sx={{ pb: 1 }}>

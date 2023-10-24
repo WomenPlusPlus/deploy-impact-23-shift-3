@@ -42,7 +42,7 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
           </Typography>
         </Grid>
         <Grid item md={2}>
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1} sx={{float:"right"}}>
             <ChatBubbleOutlineIcon />{" "}
             <Typography
               sx={{ display: "inline-block", verticalAlign: "bottom" }}
