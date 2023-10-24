@@ -16,7 +16,7 @@ interface FullNameProps {
 
 interface PronounProps {
   viewHidden: boolean;
-  pronoun: string;
+  pronoun?: string;
 }
 
 interface PhoneNumberProps {
@@ -27,7 +27,7 @@ interface PhoneNumberProps {
 
 interface EmailProps {
   viewHidden: boolean;
-  email_adress?: string;
+ email?: string;
 }
 
 interface LinkedinProps {
@@ -119,7 +119,7 @@ export const PhoneNumber: React.FC<PhoneNumberProps> = ({
   );
 };
 
-export const Email: React.FC<EmailProps> = ({ email_adress, viewHidden }) => {
+export const Email: React.FC<EmailProps> = ({email, viewHidden }) => {
   return viewHidden ? (
     <Grid item>
       <AlternateEmailIcon
@@ -129,7 +129,7 @@ export const Email: React.FC<EmailProps> = ({ email_adress, viewHidden }) => {
       />
       <Typography
         sx={{ display: "inline-block" }}
-      >{`${email_adress}`}</Typography>
+      >{`${email}`}</Typography>
     </Grid>
   ) : (
     <Grid item>

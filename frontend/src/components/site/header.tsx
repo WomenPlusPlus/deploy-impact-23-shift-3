@@ -56,7 +56,7 @@ export default function Header(props: HeaderProps) {
                 }}
               >
                 <Typography sx={{ lineHeight: "32px" }}>
-                  {props.initials}
+                  {initials}
                 </Typography>
               </Box>{" "}
               <Link underline="none" color="primary" href="/login" sx={{}}>

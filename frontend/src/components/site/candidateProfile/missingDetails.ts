@@ -1,12 +1,10 @@
 // Missing fields from api call
 export const missingDetails = {
-  pronoun: "She/Her",
+  // pronoun: "She/Her",
   current_position: "Frontend Developer",
   candidate_img: "",
-  linkedin: "https://ch.linkedin.com/company/womenplusplus",
+  // linkedin: "https://ch.linkedin.com/company/womenplusplus",
   website: "test",
-  about_me:
-    "Lorem ipsum dolor sit amet consectetur. Nulla auctor commodo etiam tellus sit est habitasse semper hendrerit. Leo lectus accumsan pulvinar purus ultricies tempor et donec posuere. In molestie aliquet vel consectetur dolor placerat turpis arcu risus. Viverra nibh integer vitae ut eget semper enim rutrum a.",
   strengths: [
     "Adaptability",
     "Collaboration",

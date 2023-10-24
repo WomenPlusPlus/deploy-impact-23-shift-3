@@ -34,9 +34,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
 import Skeleton from "@mui/material/Skeleton";
-import CreateIcon from "@mui/icons-material/Create";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
@@ -44,18 +42,31 @@ import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarsIcon from "@mui/icons-material/Stars";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
 
 import { usePathname } from "next/navigation";
 
+//womenPlusPlusAuth
+const authDetailsJson = localStorage.getItem("womenPlusPlusAuth");
+const authDetails = authDetailsJson ? JSON.parse(authDetailsJson) : null;
+//const authDetails = JSON.parse(localStorage.getItem("womenPlusPlusAuth"));
+
+const userIdReal = authDetails.user.id;
+const userId = 108; // need to use until user.id is returned
+
+const userRole = authDetails.role;
+
+console.log('authDetails', authDetails);
+console.log('userRole', userRole);
+console.log('userId', userIdReal);
+
 // TODO: getUser data based on user id
-const userId = 1;
+
 //TODO: get percent from job match
 const matchPercent = 90;
+
 
 export default function ProfilePreview() {
   const obj: CandidateDetailsInterface = {};
@@ -64,6 +75,10 @@ export default function ProfilePreview() {
   const [openFeedbackRequest, setOpenFeedbackRequest] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
 
+// context version
+const signInContext = useContext(SignInProviderContext);
+console.log("context", signInContext);
+
   // check if candidate or company view
   const pathName = usePathname();
   const pathNameStart = pathName.split("/")[1];
@@ -71,8 +86,6 @@ export default function ProfilePreview() {
   // if(pathNameStart==="candidate"){
   //   setIsCandidate(true);
   // }
-
-  console.log(isCandidate, "can");
 
   function handelShowHidden() {
     setViewHidden((prevState) => !prevState);
@@ -310,7 +323,7 @@ export default function ProfilePreview() {
               last_name={candidateDetails.last_name}
               viewHidden={viewHidden}
             />
-            <Pronoun pronoun={missingDetails.pronoun} viewHidden={viewHidden} />
+            <Pronoun pronoun={candidateDetails.gender} viewHidden={viewHidden} />
             <Typography>{missingDetails.current_position}</Typography>
           </Stack>
 
@@ -322,18 +335,18 @@ export default function ProfilePreview() {
             />
             <Email
               viewHidden={viewHidden}
-              email_adress={candidateDetails.email_adress}
+              email={candidateDetails.email}
             />
             <Linkedin
               viewHidden={viewHidden}
-              linkedin={missingDetails.linkedin}
+              linkedin={candidateDetails.linkedin}
             />
             <WebsiteUrl
               viewHidden={viewHidden}
               website={missingDetails.website}
             />
             <Location
-              city={candidateDetails.city}
+              city={candidateDetails.location_city}
               country={candidateDetails.country}
             />
             <WorkPermit work_permit={candidateDetails.work_permit} />

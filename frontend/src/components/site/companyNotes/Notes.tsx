@@ -6,7 +6,6 @@ import Paper from "@mui/material/Paper";
 import { Grid, Stack } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import TextField from "@mui/material/TextField";
-import { BorderBottom } from "@mui/icons-material";
 interface NotesProps {
   candidate_id?: string;
   company_id?: string;
@@ -24,15 +23,9 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const values = Object.fromEntries(data.entries());
 
-    setComments((prevState) => [...prevState, values.comment]);
+    setComments((prevState) => [...prevState, comment]);
     setComment("");
-    //console.log('data',values.comment);
-
-    //setEditBlock("");
-    //updateCandidate.mutate(values);
   }
 
   return (
@@ -69,7 +62,7 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
               name="comment"
               id="comment"
               size="small"
-              value={comment}
+              value={comment || ""}
               label="Comment"
               fullWidth
               onChange={handleChange}
@@ -90,14 +83,18 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             All comments
           </Typography>
-          <Box sx={{width:"100%"}}>
+          <Box sx={{ width: "100%" }}>
             {comments.length < 2 ? (
               <Typography>No comments yet</Typography>
-            ) :
-
-            comments.map((com) => {
-              return <Typography sx={{mb:2}}key={com}>{com}</Typography>;
-            })}
+            ) : (
+              comments.map((com) => {
+                return (
+                  <Typography sx={{ mb: 2 }} key={com}>
+                    {com}
+                  </Typography>
+                );
+              })
+            )}
           </Box>
         </Grid>
       </Grid>
