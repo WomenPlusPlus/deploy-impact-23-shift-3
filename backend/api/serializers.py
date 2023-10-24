@@ -168,13 +168,20 @@ class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
             {
                 "id": candidate.candidate_id,
                 "name": candidate.preferred_name,
-                "soft_skills_match": match_percentages[candidate.candidate_id][
+                "full_match_score": match_percentages[candidate.candidate_id][
+                    "full_match"
+                ],
+                "preferred_name": candidate.preferred_name,
+                "about_me": candidate.about_me,
+                "hard_skills": candidate.hard_skills,
+                "soft_skills": candidate.soft_skills,
+                "notice_period": candidate.notice_period_months,
+                "soft_skills_match_score": match_percentages[candidate.candidate_id][
                     "soft_skills"
                 ],
-                "hard_skills_match": match_percentages[candidate.candidate_id][
+                "hard_skills_match_score": match_percentages[candidate.candidate_id][
                     "hard_skills"
                 ],
-                "full_match": match_percentages[candidate.candidate_id]["full_match"],
             }
             for candidate in instance
         ]
