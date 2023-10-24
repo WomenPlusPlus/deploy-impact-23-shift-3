@@ -1,8 +1,11 @@
-from typing import Iterator
-from django.db import models
-from api.auth_models import AuthUsers
 import os
+from typing import Iterator
 from urllib import parse as parse_url
+
+from django.db import models
+from django.db.models import Q
+
+from api.auth_models import AuthUsers
 
 DEFAULT_MAX_LENGTH = 255
 
@@ -138,6 +141,20 @@ class Candidates(models.Model):
 
     soft_skill_test_matching = models.ManyToManyField(SoftSkills)
     hard_skill_test_matching = models.ManyToManyField(Skills)
+
+    @property
+    def matches(self):
+        soft_skills_criterion = Q(
+            soft_skill_test_matching__in=self.soft_skill_test_matching.iterator()
+        )
+        hard_skills_criterion = Q(
+            hard_skill_test_matching__in=self.hard_skill_test_matching.iterator()
+        )
+
+        matched_candidates = Jobs.objects.filter(
+            hard_skills_criterion
+        ) | Candidates.objects.filter(hard_skills_criterion)
+        return matched_candidates
 
     def get_match_percentage(
         self, list_skills_id: Iterator, soft_or_hard_skill: str
@@ -309,10 +326,17 @@ class Jobs(models.Model):
 
     @property
     def matches(self):
-        matched_soft_candidates = Candidates.objects.filter(
+        soft_skills_criterion = Q(
             soft_skill_test_matching__in=self.soft_skill_test_matching.iterator()
         )
-        return matched_soft_candidates
+        hard_skills_criterion = Q(
+            hard_skill_test_matching__in=self.hard_skill_test_matching.iterator()
+        )
+
+        matched_candidates = Candidates.objects.filter(
+            hard_skills_criterion
+        ) | Candidates.objects.filter(hard_skills_criterion)
+        return matched_candidates
 
     class Meta:
         db_table = "jobs"

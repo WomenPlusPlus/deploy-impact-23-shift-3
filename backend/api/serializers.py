@@ -42,6 +42,10 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many=True, source="soft_skill_test_matching"
     )
 
+    # matches = serializers.SerializerMethodField(
+    #     "get_matches", read_only=True, source="matches"
+    # )
+
     class Meta:
         model = Candidates
         exclude = (
@@ -139,7 +143,7 @@ class JobsSerializer(serializers.ModelSerializer):
     )
 
     matches = serializers.SerializerMethodField(
-        "get_rep", read_only=True, source="matches"
+        "get_matches", read_only=True, source="matches"
     )
 
     class Meta:
@@ -150,7 +154,7 @@ class JobsSerializer(serializers.ModelSerializer):
         )
         many = True
 
-    def get_rep(self, instance):
+    def get_matches(self, instance):
         HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
         SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
         FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
@@ -188,8 +192,12 @@ class JobsSerializer(serializers.ModelSerializer):
                 ],
                 "preferred_name": candidate.preferred_name,
                 "about_me": candidate.about_me,
-                "hard_skills": candidate.hard_skills,
-                "soft_skills": candidate.soft_skills,
+                "hard_skills": candidate.hard_skill_test_matching.values_list(
+                    "skill_name", flat=True
+                ),
+                "soft_skills": candidate.soft_skill_test_matching.values_list(
+                    "soft_skill_name", flat=True
+                ),
                 "notice_period": candidate.notice_period_months,
                 "soft_skills_match_score": match_percentages[candidate.candidate_id][
                     "soft_skills"
