@@ -20,7 +20,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   maxWidth: "1100px",
-  maxHeight: "95vh",
+  height: "95vh",
   overflow: "auto",
   width: "100%",
   bgcolor: "background.paper",
@@ -33,15 +33,19 @@ interface ViewCvProps {
   openCv: boolean;
   handleOpen: React.MouseEventHandler<HTMLButtonElement>;
   handleClose: React.MouseEventHandler<HTMLButtonElement>;
+  candidateId: number;
 }
 
-const ViewCv: React.FC<ViewCvProps> = ({ openCv, handleOpen, handleClose }) => {
-  const [message, setMessage] = useState("");
+const ViewCv: React.FC<ViewCvProps> = ({
+  openCv,
+  handleOpen,
+  handleClose,
+  candidateId = 1,
+}) => {
 
-  //   function handleChange(element: any) {
-  //     const value = element.target.value;
-  //     setMessage(value);
-  //   }
+  //TODO: call to api with candidate id to get link to cv
+ const testCv = "http://africau.edu/images/default/sample.pdf";
+
   return (
     <div>
       <Modal
@@ -50,8 +54,16 @@ const ViewCv: React.FC<ViewCvProps> = ({ openCv, handleOpen, handleClose }) => {
         aria-labelledby="Contact candidate"
         aria-describedby="Form to contact a candidate"
       >
-        <Box>
-            dfdfdf
+        <Box sx={style}>
+          <object
+            data={testCv}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+          >
+            <p>unable to view the pdf</p>
+
+          </object>
         </Box>
       </Modal>
     </div>

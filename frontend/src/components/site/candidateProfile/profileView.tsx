@@ -27,6 +27,7 @@ import {
 } from "./hiddenFields";
 import { Location, WorkPermit, StartOn } from "./visibleFields";
 import ContactForm from "../candidateContactForm/contactForm";
+import ViewCv from "./viewCv";
 
 // MUI imports
 import Container from "@mui/material/Container";
@@ -60,6 +61,10 @@ interface ContactFormsProps {
   matchPercent:number
 }
 
+interface ViewCvProps {
+  candidateId: number;
+}
+
 export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   const obj: CandidateDetailsInterface = {};
   const [candidateDetails, setCandidateDetails] = useState(obj);
@@ -67,6 +72,20 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   const [openFeedbackRequest, setOpenFeedbackRequest] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
+
+    //contact form
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+      setOpen(false);
+      setSnackOpen(true);
+    };
+
+  // view cv
+  const [openCv, setOpenCv] = useState(false);
+  const handleOpenCv = () => setOpenCv(true);
+  const handleCloseCv = () => setOpenCv(false);
+   
 
   //const userId = 108; // need to use until user.id is returned
   // context version
@@ -82,14 +101,6 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   }else{
      candidate_id = +userId;
   }
-
-  //contact form
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setSnackOpen(true);
-  };
 
   //snack
   const handleCloseSnack = (
@@ -116,6 +127,11 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   function handleContactCandidate() {
     // open contact modal
     setOpen(true);
+  }
+
+  function handleViewCv() {
+    // open view cv  modal
+    setOpenCv(true);
   }
 
   // -- CHIPS -- //
@@ -219,6 +235,12 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
 
   return (
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
+               <ViewCv 
+          openCv = {openCv} 
+          handleOpen={handleOpenCv}
+          handleClose={handleCloseCv}
+          candidateId={candidateId}
+          />
       {!isCandidate ? (
         <>
           <Snackbar
@@ -239,6 +261,7 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
             handleOpen={handleOpen}
             handleClose={handleClose}
           />
+ 
           <Grid container sx={{ mb: 2 }}>
             <Grid item md={4}>
               <Typography sx={{ display: "inline-block" }}>
@@ -426,6 +449,7 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
               component="label"
               variant="outlined"
               sx={{ textTransform: "none" }}
+              onClick={handleViewCv}
             >
               Preview CV
             </Button>
