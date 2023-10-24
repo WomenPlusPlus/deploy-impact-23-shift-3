@@ -7,8 +7,8 @@ import { Grid, Stack } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import TextField from "@mui/material/TextField";
 interface NotesProps {
-  candidate_id?: string;
-  company_id?: string;
+  candidate_id?: number;
+  company_id?: number;
 }
 
 const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {

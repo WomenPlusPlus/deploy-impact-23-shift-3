@@ -1,3 +1,5 @@
+"use client";
+import React from "react";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -49,7 +51,7 @@ const ContactForm: React.FC<ContactFormsProps> = ({
     event.preventDefault();
     //TODO: send to api
     // confirmation alert
-    console.log("click sent");
+    //console.log("click sent");
 
     setMessage("");
   }
@@ -126,7 +128,7 @@ const ContactForm: React.FC<ContactFormsProps> = ({
               If you're interested in learning more about the position and our
               company, please schedule a time to chat with me by clicking the
               link below:
-            </Typography>{" "}
+            </Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>
               <strong>[Calendar Link]</strong>
             </Typography>
@@ -145,16 +147,15 @@ const ContactForm: React.FC<ContactFormsProps> = ({
               Start contact
             </Button>
             <Button
-              sx={{ float: "right", my: 0, textTransform: "none", mr: 2 }}
+              sx={{ float:"right", my: 0, textTransform:"none", mr: 2 }}
               variant="outlined"
-              onClick={handleClose}
-            >
+              onClick={handleClose}>
               Go back
             </Button>
           </Box>
         </Box>
       </Modal>
     </div>
-  );
+  )
 };
 export default ContactForm;

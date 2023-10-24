@@ -55,14 +55,33 @@ import { set } from "cypress/types/lodash";
 
 //TODO: get percent from job match
 const matchPercent = 90;
+interface ContactFormsProps {
+  candidateId: number;
+  matchPercent:number
+}
 
-export default function ProfilePreview() {
+export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   const obj: CandidateDetailsInterface = {};
   const [candidateDetails, setCandidateDetails] = useState(obj);
   const [viewHidden, setViewHidden] = useState(false);
   const [openFeedbackRequest, setOpenFeedbackRequest] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
+
+  //const userId = 108; // need to use until user.id is returned
+  // context version
+  const signInContext = useContext(SignInProviderContext);
+  const userId = signInContext.auth?.user?.id || 1;
+  // const fn = signInContext.auth?.user?.first_name || "no name";
+  // console.log("fn",fn);
+
+  // if viewed by company need to get candidateId
+  let candidate_id = -1;
+  if(candidateId > 0){
+    candidate_id = candidateId;
+  }else{
+     candidate_id = +userId;
+  }
 
   //contact form
   const [open, setOpen] = useState(false);
@@ -83,12 +102,6 @@ export default function ProfilePreview() {
     setSnackOpen(false);
   };
 
-  //const userId = 108; // need to use until user.id is returned
-  // context version
-  const signInContext = useContext(SignInProviderContext);
-  const userId = signInContext.auth?.user?.id || 1;
-  // const fn = signInContext.auth?.user?.first_name || "no name";
-  // console.log("fn",fn);
 
   // check if candidate or company view
   const pathName = usePathname();
@@ -169,8 +182,8 @@ export default function ProfilePreview() {
 
   // Queries
   const queryCandidate = useQuery({
-    queryKey: ["candidateDetails", userId],
-    queryFn: () => getCandidateDetails(userId),
+    queryKey: ["candidateDetails", candidate_id],
+    queryFn: () => getCandidateDetails(candidate_id),
     staleTime: Infinity,
   });
 

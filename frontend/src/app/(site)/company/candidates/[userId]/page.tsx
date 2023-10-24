@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import { Suspense } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Typography from "@mui/material/Typography";
+import { useContext } from "react";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 import ProfilePreview from "@/components/site/candidateProfile/profileView";
 import Notes from "@/components/site/companyNotes/Notes";
@@ -19,7 +21,9 @@ type Params = {
 
 export default function UserProfilePage({params:{userId}}:Params) {
 
- //Todo: use userId to get the user/candidate details
+  const signInContext = useContext(SignInProviderContext);
+  const companyId = signInContext.auth?.user?.id || 1;
+
   
   return (
     <>
@@ -38,8 +42,8 @@ export default function UserProfilePage({params:{userId}}:Params) {
         </Grid>
       </Grid>
 
-      <ProfilePreview />
-      <Notes company_id={"1"} candidate_id={"1"} />
+      <ProfilePreview candidateId={+userId} matchPercent={90} />
+      <Notes company_id={+companyId} candidate_id={+userId} />
     </>
   );
 }
