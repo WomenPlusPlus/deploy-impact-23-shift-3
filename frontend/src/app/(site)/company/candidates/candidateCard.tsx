@@ -9,20 +9,27 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
+import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
 import { useRouter } from "next/navigation";
 
 interface CandidateProps {
-  candidate: CandidateForJobListSingleMatch;
+  candidate: CandidateForJobList;
 }
+
+const capitalizeWords = (str: string) => {
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
 }: CandidateProps) => {
   const router = useRouter();
   const handleViewProfileClick = (candidate_id: string) => {
-    router.replace(`/company/candidates/${candidate_id}`)
-   // router.replace("/company/profile?candidate_id=" + candidate_id);
+    router.replace(`/company/candidates/${candidate_id}`);
+    // router.replace("/company/profile?candidate_id=" + candidate_id);
   };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -59,21 +66,21 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               letterSpacing: "0.15px",
             }}
           >
-            {candidate.job_title}
+            {capitalizeWords(candidate.job_title)}
           </Typography>
           <div
             style={{
               borderRadius: "8px",
               padding: "10px 10px",
               display: "inline-block",
-              backgroundColor: getMatchingColor(candidate.matching_score),
+              backgroundColor: getMatchingColor(candidate.full_match_score),
               fontSize: "14px",
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
             }}
           >
-            {candidate.matching_score}% match
+            {candidate.full_match_score}% match
           </div>
         </CardContent>
         <CardContent
@@ -102,7 +109,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               lineHeight: "20px",
             }}
           >
-            {candidate.current_position}
+            Current position
           </Typography>
         </CardContent>
         <CardContent
@@ -181,8 +188,8 @@ export const CandidateCard: React.FC<CandidateProps> = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                {candidate.hard_skills.join(", ")},
-                {candidate.soft_skills.join(", ")}
+                {candidate.hard_skills}
+                {candidate.soft_skills}
               </Typography>
             </Stack>
             <Divider orientation={"vertical"} flexItem />
@@ -213,7 +220,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
                   letterSpacing: "0.048px",
                 }}
               >
-                {new Date(candidate.start_on).toLocaleDateString()}
+                {new Date(candidate.notice_period).toLocaleDateString()}
               </Typography>
             </Stack>
           </Stack>
@@ -237,7 +244,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
           </div>
           <Button
             type="submit"
-            onClick={() => handleViewProfileClick(candidate.candidate_id)}
+            onClick={() => handleViewProfileClick(candidate.id)}
             variant="contained"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
