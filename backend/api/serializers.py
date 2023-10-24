@@ -140,7 +140,6 @@ class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
             job_id = int(job_id)
         except Exception:
             return "Match only available when calling with Job ID"
-
         job = Jobs.objects.get(pk=job_id)
         job_soft_skills = list(
             job.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
