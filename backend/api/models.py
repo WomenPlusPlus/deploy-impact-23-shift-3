@@ -117,7 +117,7 @@ class Candidates(models.Model):
     # status = models.ForeignKey(
     #     "Status",
     #     models.DO_NOTHING,
-    #     blank=True,
+    #     blank=True,class j
     #     null=True,
     #     db_comment="looking for a job, open to oferings, etc",
     # )

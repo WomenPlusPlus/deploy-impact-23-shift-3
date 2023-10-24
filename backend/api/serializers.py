@@ -127,39 +127,35 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
-    """
-    Serializes the given instance into a Python dictionary.
+class JobsSerializer(serializers.ModelSerializer):
+    hard_skills = serializers.StringRelatedField(
+        many=True,
+        source="hard_skill_test_matching",
+    )
 
-    Args:
-        instance (QuerySet): A queryset containing the instances to be serialized.
+    soft_skills = serializers.StringRelatedField(
+        many=True,
+        source="soft_skill_test_matching",
+    )
 
-    Returns:
-        list: A list of dictionaries, each representing an instance.
-            Each dictionary contains the following keys:
-                - id (int): The ID of the candidate.
-                - name (str): The name of the candidate.
-                - full_match_score (float): The full match score of the candidate.
-                - preferred_name (str): The preferred name of the candidate.
-                - about_me (str): The about me section of the candidate.
-                - hard_skills (list): A list of hard skills of the candidate.
-                - soft_skills (list): A list of soft skills of the candidate.
-    """
+    matches = serializers.SerializerMethodField(
+        "get_rep", read_only=True, source="matches"
+    )
 
-    def to_representation(self, instance):
+    class Meta:
+        model = Jobs
+        exclude = (
+            "soft_skill_test_matching",
+            "hard_skill_test_matching",
+        )
+        many = True
+
+    def get_rep(self, instance):
         HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
         SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
         FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
 
-        # I don't know how to get the parent's serializer so I did this, it's very ugly code
-        req = self.context.get("request")
-        job_id = req.path.split("/")[-2]
-        try:
-            job_id = int(job_id)
-        except Exception:
-            return "Match only available when calling with Job ID"
-
-        job = Jobs.objects.get(pk=job_id)
+        job = instance
         job_soft_skills = list(
             job.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
         )
@@ -169,7 +165,8 @@ class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
 
         match_percentages = {}
 
-        for candidate in instance:
+        candidates = instance.matches
+        for candidate in candidates:
             soft_skills_match = candidate.get_match_percentage(job_soft_skills, "soft")
             hard_skills_match = candidate.get_match_percentage(job_hard_skills, "hard")
 
@@ -201,38 +198,8 @@ class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
                     "hard_skills"
                 ],
             }
-            for candidate in instance
+            for candidate in candidates
         ]
-
-    class Meta:
-        model = Candidates
-        fields = ["candidate_id"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-
-class JobsSerializer(serializers.ModelSerializer):
-    hard_skills = serializers.StringRelatedField(
-        many=True,
-        source="hard_skill_test_matching",
-    )
-
-    soft_skills = serializers.StringRelatedField(
-        read_only=True,
-        many=True,
-        source="soft_skill_test_matching",
-    )
-
-    matches = CandidateMatchPercentageSerializer()
-
-    class Meta:
-        model = Jobs
-        exclude = (
-            "soft_skill_test_matching",
-            "hard_skill_test_matching",
-        )
-        many = True
 
 
 class CompaniesSerializer(serializers.HyperlinkedModelSerializer):
