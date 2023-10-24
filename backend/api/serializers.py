@@ -128,9 +128,12 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class CandidateMatchPercentageSerializer(serializers.BaseSerializer):
+class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
-        job = Jobs.objects.get(pk=210)
+        req = self.context.get("request")
+        job_id = int(req.path.split("/")[-2])
+
+        job = Jobs.objects.get(pk=job_id)
         job_soft_skills = list(
             job.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
         )
@@ -152,22 +155,25 @@ class CandidateMatchPercentageSerializer(serializers.BaseSerializer):
                     "skill_id", flat=True
                 ),
                 "hard_skills_match_percentage": candidate.get_match_percentage(
-                    job_soft_skills, "hard"
+                    job_hard_skills, "hard"
                 ),
             }
             for candidate in instance
         ]
 
+    class Meta:
+        model = Candidates
+        fields = ["candidate_id"]
+
     def __init__(self, *args, **kwargs):
-        self.soft_skills = kwargs["context"].get("soft_skills")
         super().__init__(*args, **kwargs)
 
 
 class JobsSerializer(serializers.ModelSerializer):
-    # hard_skills = serializers.StringRelatedField(
-    #     many=True,
-    #     source="hard_skill_test_matching",
-    # )
+    hard_skills = serializers.StringRelatedField(
+        many=True,
+        source="hard_skill_test_matching",
+    )
 
     soft_skills = serializers.PrimaryKeyRelatedField(
         read_only=True,
@@ -179,11 +185,10 @@ class JobsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Jobs
-        fields = ["matches", "soft_skills"]
-        # exclude = (
-        #     "soft_skill_test_matching",
-        #     "hard_skill_test_matching",
-        # )
+        exclude = (
+            "soft_skill_test_matching",
+            "hard_skill_test_matching",
+        )
         many = True
 
 
