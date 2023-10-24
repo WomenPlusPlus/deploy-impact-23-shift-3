@@ -10,13 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from os import getenv, path, mkdir
+from os import getenv, path, mkdir, environ
 from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
 
 ENV_FILE = find_dotenv(raise_error_if_not_found=True)
 load_dotenv(ENV_FILE)
+
+environ["DOC_EXPANSION"] = "none"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -158,6 +160,10 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "0.12",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX": r"/api/*",
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "docExpansion ": ["full"],
+    },
 }
 
 

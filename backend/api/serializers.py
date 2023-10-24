@@ -128,6 +128,24 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CandidateMatchPercentageSerializer(serializers.ModelSerializer):
+    """
+    Serializes the given instance into a Python dictionary.
+
+    Args:
+        instance (QuerySet): A queryset containing the instances to be serialized.
+
+    Returns:
+        list: A list of dictionaries, each representing an instance.
+            Each dictionary contains the following keys:
+                - id (int): The ID of the candidate.
+                - name (str): The name of the candidate.
+                - full_match_score (float): The full match score of the candidate.
+                - preferred_name (str): The preferred name of the candidate.
+                - about_me (str): The about me section of the candidate.
+                - hard_skills (list): A list of hard skills of the candidate.
+                - soft_skills (list): A list of soft skills of the candidate.
+    """
+
     def to_representation(self, instance):
         HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
         SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])

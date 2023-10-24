@@ -35,6 +35,11 @@ singleViews = [
         "view": SignupView.as_view(),
         "name": "invite",
     },
+    {
+        "route": "api/company_jobs/<int:company_id>",
+        "view": CompanyJobsViewSet.as_view({"get": "list"}),
+        "name": "companyJobs",
+    },
 ]
 
 # Normal router setup, including list and registering ViewSets

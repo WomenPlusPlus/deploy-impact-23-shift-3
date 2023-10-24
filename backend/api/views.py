@@ -2,6 +2,11 @@ import os
 from django.db import models
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import mixins
+from drf_spectacular.utils import (
+    extend_schema_view,
+    extend_schema,
+)
 
 import json
 from api import serializers as model_serializers
@@ -97,6 +102,41 @@ class WorkPermitsViewSet(viewsets.ModelViewSet):
     serializer_class = model_serializers.WorkPermitsSerializer
 
 
+@extend_schema_view(
+    post=extend_schema(
+        summary="User login after signup",
+        description="Use this endpoint to login your user, password or refresh token need to be sent as authentification method, if both are sent, password will be considered the valid one.",
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "email": {"type": "string", "required": True},
+                    "password": {"type": "string"},
+                    "refresh_token": {"type": "string"},
+                },
+            },
+        },
+        responses={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "access_token": {"type": "string"},
+                    "token_type": {"type": "string"},
+                    "expires_in": {"type": "integer"},
+                    "expires_at": {"type": "integer"},
+                    "role": {"type": "string"},
+                    "last_sign_in_at": {"type": "string"},
+                    "id": {"type": "integer"},
+                    "refresh_token": {"type": "string"},
+                    "first_name": {"type": "string"},
+                    "last_name": {"type": "string"},
+                    "preferred_name": {"type": "string"},
+                },
+            },
+        },
+        # description="Provide the company id in the url parameter and this will retrieve all the jobs associated with the company",
+    ),
+)
 class LoginView(APIView):
     def post(self, request):
         payload, status_code = gotrue_auth_request(request)
@@ -268,6 +308,27 @@ class JobsViewSet(viewsets.ModelViewSet):
 class CompaniesViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Companies.objects.all()
     serializer_class = model_serializers.CompaniesSerializer
+
+
+@extend_schema_view(
+    list=extend_schema(
+        summary="Retrieve all jobs for a company",
+        description="Provide the company id in the url parameter and this will retrieve all the jobs associated with the company",
+    ),
+)
+class CompanyJobsViewSet(
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    serializer_class = model_serializers.JobsSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs["company_id"]
+        return model_serializers.Jobs.objects.filter(company_id=username)
 
 
 # Testing file upload
