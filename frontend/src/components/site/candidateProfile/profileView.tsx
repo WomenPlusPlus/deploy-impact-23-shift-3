@@ -51,8 +51,6 @@ import Snackbar from "@mui/material/Snackbar";
 import { usePathname } from "next/navigation";
 import { set } from "cypress/types/lodash";
 
-const userId = 108; // need to use until user.id is returned
-
 // TODO: getUser data based on user id
 
 //TODO: get percent from job match
@@ -69,7 +67,10 @@ export default function ProfilePreview() {
   //contact form
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {setOpen(false); setSnackOpen(true); console.log("hdhdhddhdh")};
+  const handleClose = () => {
+    setOpen(false);
+    setSnackOpen(true);
+  };
 
   //snack
   const handleCloseSnack = (
@@ -82,17 +83,16 @@ export default function ProfilePreview() {
     setSnackOpen(false);
   };
 
+  //const userId = 108; // need to use until user.id is returned
   // context version
   const signInContext = useContext(SignInProviderContext);
-  // console.log("context", signInContext.auth);
+  const userId = signInContext.auth?.user?.id || 1;
+  // const fn = signInContext.auth?.user?.first_name || "no name";
+  // console.log("fn",fn);
 
   // check if candidate or company view
   const pathName = usePathname();
   const pathNameStart = pathName.split("/")[1];
-
-  // if(pathNameStart==="candidate"){
-  //   setIsCandidate(true);
-  // }
 
   function handelShowHidden() {
     setViewHidden((prevState) => !prevState);
@@ -208,19 +208,19 @@ export default function ProfilePreview() {
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
       {!isCandidate ? (
         <>
-              <Snackbar
-        open={snackOpen}
-        autoHideDuration={3000}
-        onClose={handleCloseSnack}
-      >
-        <Alert
-          onClose={handleCloseSnack}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          The message has been successfully sent!
-        </Alert>
-      </Snackbar>
+          <Snackbar
+            open={snackOpen}
+            autoHideDuration={3000}
+            onClose={handleCloseSnack}
+          >
+            <Alert
+              onClose={handleCloseSnack}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              The message has been successfully sent!
+            </Alert>
+          </Snackbar>
           <ContactForm
             open={open}
             handleOpen={handleOpen}
@@ -480,15 +480,6 @@ export default function ProfilePreview() {
       </Grid>
 
       <Grid container sx={{ borderTop: "2px solid lightGrey" }}>
-        <Grid item md={6} sx={{ pt: 2 }}>
-          {/* <Button
-            variant="outlined"
-            sx={{ textTransform: "none" }}
-            //onClick={() => setViewHidden((prevState) => !prevState)}
-          >
-            Add Notes
-          </Button> */}
-        </Grid>
         {!isCandidate ? (
           <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
             <ButtonGroup size="small" aria-label="small button group">

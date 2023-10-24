@@ -11,7 +11,7 @@ import { CircularProgress, Stack } from "@mui/material";
 export type Authentication = {
   authenticated: boolean;
   access_token: string;
-  user: null | { id: string };
+  user: null | { id: string, first_name:string };
   role: string;
 };
 

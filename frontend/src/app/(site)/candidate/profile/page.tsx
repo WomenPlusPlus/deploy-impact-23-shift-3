@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CandidateDetailsInterface } from "@/components/site/candidateProfile/candidateInterface";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -47,8 +48,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-// TODO: getUser data based on user id
-const userId = 1;
+
 
 // import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
 
@@ -57,7 +57,12 @@ export default function ProfilePage() {
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 
-  console.log("state", state);
+ // console.log("state", state);
+ // TODO: getUser data based on user id
+//const userId = 1;
+   // context version
+   const signInContext = useContext(SignInProviderContext);
+   const userId = signInContext.auth?.user?.id || 1;
 
   //modal
   // const [open, setOpen] = useState(false);
