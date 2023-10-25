@@ -32,14 +32,34 @@ class CountriesSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class CandidatesSerializer(serializers.ModelSerializer):
-    hard_skills = serializers.StringRelatedField(
-        many=True,
-        source="hard_skill_test_matching",
-    )
+class HardSkillsNamesSerializer(serializers.PrimaryKeyRelatedField):
+    queryset = Skills.objects.all()
 
-    soft_skills = serializers.StringRelatedField(
-        many=True, source="soft_skill_test_matching"
+    class Meta:
+        model = Skills
+        fields = "__all__"
+
+    def to_representation(self, value):
+        return value.skill_name
+
+
+class SoftSkillsNamesSerializer(serializers.PrimaryKeyRelatedField):
+    queryset = SoftSkills.objects.all()
+
+    class Meta:
+        model = SoftSkills
+        fields = "__all__"
+
+    def to_representation(self, value):
+        return value.soft_skill_name
+
+
+class CandidatesSerializer(serializers.ModelSerializer):
+    hard_skills = HardSkillsNamesSerializer(
+        source="hard_skill_test_matching", many=True
+    )
+    soft_skills = SoftSkillsNamesSerializer(
+        source="soft_skill_test_matching", many=True
     )
 
     matches = serializers.SerializerMethodField(
@@ -51,8 +71,14 @@ class CandidatesSerializer(serializers.ModelSerializer):
         exclude = (
             "hard_skill_test_matching",
             "soft_skill_test_matching",
+            "aboutme_embedded",
+            "experience_abedded",
         )
         many = True
+
+    def validate(self, data):
+        print(data["soft_skill_test_matching"][0].soft_skill_name)
+        return data
 
     def get_matches(self, instance):
         HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
