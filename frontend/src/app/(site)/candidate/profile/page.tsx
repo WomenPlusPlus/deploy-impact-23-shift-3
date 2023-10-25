@@ -211,7 +211,6 @@ export default function ProfilePage() {
             <Box sx={{ mb: 2 }}>
               <TextField
                 required
-                id="first_name"
                 name="first_name"
                 autoComplete="false"
                 size="small"
@@ -226,7 +225,6 @@ export default function ProfilePage() {
                 required
                 autoComplete="false"
                 name="last_name"
-                id="last_name"
                 size="small"
                 value={state.last_name || ""}
                 label="Last Name"
@@ -254,7 +252,6 @@ export default function ProfilePage() {
                 size="small"
                   labelId="pronoun-label"
                   fullWidth
-                  id="gender"
                   name="gender"
                   value={"test val"}
                   label="Pronoun"
@@ -270,7 +267,6 @@ export default function ProfilePage() {
                   required
                   autoComplete="false"
                   name="preferred_name"
-                  id="preferred_name"
                   size="small"
                   value={state.preferred_name || ""}
                   label="Preferred Name"
@@ -292,7 +288,6 @@ export default function ProfilePage() {
               type="date"
               autoComplete="false"
               name="birth_date"
-              id="birth_date"
               size="small"
               value={state.birth_date || ""}
               label="Date of Birth"
@@ -408,7 +403,6 @@ export default function ProfilePage() {
           <Grid item sm={3} xs={12}>
             <TextField
               required
-              id="phone_number_region"
               name="phone_number_region"
               autoComplete="false"
               size="small"
@@ -426,7 +420,6 @@ export default function ProfilePage() {
               type="tel"
               autoComplete="false"
               name="phone_number"
-              id="phone_number"
               size="small"
               value={state.phone_number || ""}
               label="Phone Number"
@@ -439,8 +432,7 @@ export default function ProfilePage() {
               required
               type="email"
               autoComplete="false"
-              name="email_adress"
-              id="email_adress"
+              name="email"
               size="small"
               value={state.email || ""}
               label="Email address"
@@ -453,7 +445,6 @@ export default function ProfilePage() {
               required
               autoComplete="false"
               name="street_address"
-              id="street_address"
               size="small"
               value={state.street_address || ""}
               label="Street"
@@ -479,8 +470,7 @@ export default function ProfilePage() {
             <TextField
               required
               autoComplete="false"
-              name="city"
-              id="city"
+              name="location_city"
               size="small"
               value={state.location_city || ""}
               label="City"
@@ -494,7 +484,6 @@ export default function ProfilePage() {
               type="number"
               autoComplete="false"
               name="postal_code"
-              id="postal_code"
               size="small"
               value={state.postal_code || ""}
               label="Postal code"

@@ -518,7 +518,7 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
 
       <Grid container sx={{ borderTop: "2px solid lightGrey" }}>
         {!isCandidate ? (
-          <Grid item md={6} sx={{ pt: 2, textAlign: "right" }}>
+          <Grid item md={12} sx={{ pt: 2, textAlign: "right" }}>
             <ButtonGroup size="small" aria-label="small button group">
               {proceedButtons}
             </ButtonGroup>

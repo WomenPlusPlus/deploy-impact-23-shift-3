@@ -13,13 +13,13 @@ import Notes from "@/components/site/companyNotes/Notes";
 
 type Params = {
   params: {
-    userId: string;
+    candidateId: string;
   };
 };
 
 //TODO: move api call or pass userId down to component
 
-export default function UserProfilePage({params:{userId}}:Params) {
+export default function UserProfilePage({params:{candidateId}}:Params) {
 
   const signInContext = useContext(SignInProviderContext);
   const companyId = signInContext.auth?.user?.id || 1;
@@ -28,7 +28,7 @@ export default function UserProfilePage({params:{userId}}:Params) {
   return (
     <>
       <Grid container sx={{ mb: 4 }}>
-        <Grid item md={6}>for testing: {userId}</Grid>
+        <Grid item md={6}>for testing: {candidateId}</Grid>
         <Grid item md={6} sx={{ textAlign: "right" }}>
           <Link href="/company/candidates/">
             <Button
@@ -42,8 +42,8 @@ export default function UserProfilePage({params:{userId}}:Params) {
         </Grid>
       </Grid>
 
-      <ProfilePreview candidateId={+userId} matchPercent={90} />
-      <Notes company_id={+companyId} candidate_id={+userId} />
+      <ProfilePreview candidateId={+candidateId} matchPercent={90} />
+      <Notes company_id={+companyId} candidate_id={+candidateId} />
     </>
   );
 }

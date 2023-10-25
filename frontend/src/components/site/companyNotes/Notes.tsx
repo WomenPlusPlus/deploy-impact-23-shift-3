@@ -87,9 +87,9 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
             {comments.length < 2 ? (
               <Typography>No comments yet</Typography>
             ) : (
-              comments.map((com) => {
+              comments.map((com, i) => {
                 return (
-                  <Typography sx={{ mb: 2 }} key={com}>
+                  <Typography sx={{ mb: 2 }} key={i}>
                     {com}
                   </Typography>
                 );

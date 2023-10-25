@@ -9,9 +9,10 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import { CandidateForJobListSingleMatch } from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 interface CandidateProps {
   candidate: CandidateForJobListSingleMatch;
@@ -19,11 +20,11 @@ interface CandidateProps {
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
 }: CandidateProps) => {
-  const router = useRouter();
-  const handleViewProfileClick = (candidate_id: string) => {
-    router.replace(`/company/candidates/${candidate_id}`)
-   // router.replace("/company/profile?candidate_id=" + candidate_id);
-  };
+  // const router = useRouter();
+  // const handleViewProfileClick = (candidate_id: string) => {
+  //   router.replace(`/company/candidates/${candidate_id}`);
+  //   // router.replace("/company/profile?candidate_id=" + candidate_id);
+  // };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -235,15 +236,16 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               <FavoriteIcon />
             </IconButton>
           </div>
-          <Button
-            type="submit"
-            onClick={() => handleViewProfileClick(candidate.candidate_id)}
-            variant="contained"
-            size="large"
-            sx={{ textTransform: "none", borderRadius: "100px" }}
-          >
-            View profile
-          </Button>
+          <Link href={`./candidates/${candidate.candidate_id}`}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{ textTransform: "none", borderRadius: "100px" }}
+            >
+              View profile
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </Grid>
