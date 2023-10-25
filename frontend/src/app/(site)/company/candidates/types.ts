@@ -18,8 +18,8 @@ export interface MatchedCandidate {
   full_match_score: number;
   preferred_name: string;
   about_me: string;
-  hard_skills: string[];
-  soft_skills: string[];
+  hard_skills: string;
+  soft_skills: string;
   notice_period: number;
   soft_skills_match_score: number;
   hard_skills_match_score: number;

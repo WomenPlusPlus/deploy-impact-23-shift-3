@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { SearchBar } from "@/app/(site)/company/searchBar";
 import { CandidateList } from "@/app/(site)/company/candidates/candidateList";
 import Fuse from "fuse.js";
-import { getMatchedCandidates } from "@/app/(site)/company/candidates/getMatchedCandidates";
+import { useMatchedCandidates } from "@/app/(site)/company/candidates/useMatchedCandidates";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import IFuseOptions = Fuse.IFuseOptions;
 
@@ -20,7 +20,7 @@ const options: IFuseOptions<CandidateForJobList> = {
 
 export default function CandidatesPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const listOfCandidates = getMatchedCandidates("210");
+  const listOfCandidates = useMatchedCandidates("181");
 
   const filteredCandidates = useMemo(() => {
     const fuse = new Fuse(listOfCandidates, options);

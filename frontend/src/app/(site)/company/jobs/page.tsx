@@ -1,18 +1,19 @@
 "use client";
 import * as React from "react";
+import { useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { SearchBar } from "@/app/(site)/company/searchBar";
-import { useState } from "react";
 import { JobList } from "@/app/(site)/company/jobs/jobList";
-import { JobPost } from "@/app/(site)/company/jobs/types";
+import { JobPost, JobPostNew } from "@/app/(site)/company/jobs/types";
 import getJobPosts from "@/app/(site)/company/jobs/fetchJobPosts";
 import Button from "@mui/material/Button";
-import { Stack } from "@mui/material";
+import { usePostedJobs } from "@/app/(site)/company/jobs/usePostedJobs";
 
 export default function CandidatesPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const jobPostsList: JobPost[] = getJobPosts();
+  const jobPostsListNew: JobPostNew[] = usePostedJobs("1");
 
   return (
     <Container>
