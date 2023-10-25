@@ -1,5 +1,5 @@
-import { JobPost } from "@/app/(site)/company/jobs/types";
-import React from "react";
+import { JobPostNew } from "@/app/(site)/company/jobs/types";
+import React, { FormEvent } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,11 +9,18 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
 
 interface JobPostProps {
-  job: JobPost;
+  job: JobPostNew;
 }
 export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
+  const numberOfMatches = job.matches.length;
+  const router = useRouter();
+  const handleSubmit = (event: FormEvent<HTMLButtonElement>, jobId: string) => {
+    event.preventDefault();
+    router.replace(`/company/candidates/?jobid=${jobId}`);
+  };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -62,9 +69,10 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
+              whiteSpace: "nowrap",
             }}
           >
-            {job.matched_candidates} matches
+            {numberOfMatches} matches
           </div>
         </CardContent>
         <CardContent
@@ -133,7 +141,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
                   whiteSpace: "nowrap",
                 }}
               >
-                {job.job_type}
+                {job.job_type ? job.job_type : "Internship"}
               </Typography>
             </Stack>
             <Divider orientation={"vertical"} flexItem />
@@ -167,7 +175,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
                   whiteSpace: "nowrap",
                 }}
               >
-                {job.work_model}
+                {job.work_model ? job.work_model : "Hybrid"}
               </Typography>
             </Stack>
             <Divider orientation={"vertical"} flexItem />
@@ -198,7 +206,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
                   letterSpacing: "0.048px",
                 }}
               >
-                {new Date(job.starts_at).toLocaleDateString()}
+                {new Date(job.last_day_to_apply).toLocaleDateString()}
               </Typography>
             </Stack>
           </Stack>
@@ -219,6 +227,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
           </div>
           <Button
             type="submit"
+            onClick={(event) => handleSubmit(event, job.job_id)}
             variant="outlined"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
@@ -231,7 +240,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
           >
-            Open
+            {job.open ? "Open" : "Not"}
           </Button>
         </CardContent>
       </Card>

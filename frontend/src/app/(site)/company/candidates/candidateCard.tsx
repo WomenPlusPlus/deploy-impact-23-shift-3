@@ -29,7 +29,6 @@ export const CandidateCard: React.FC<CandidateProps> = ({
   const router = useRouter();
   const handleViewProfileClick = (candidate_id: string) => {
     router.replace(`/company/candidates/${candidate_id}`);
-    // router.replace("/company/profile?candidate_id=" + candidate_id);
   };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -71,16 +70,17 @@ export const CandidateCard: React.FC<CandidateProps> = ({
           <div
             style={{
               borderRadius: "8px",
-              padding: "10px 10px",
+              padding: "10px 10px 10px 16px",
               display: "inline-block",
               backgroundColor: getMatchingColor(candidate.full_match_score),
               fontSize: "14px",
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
+              whiteSpace: "nowrap",
             }}
           >
-            {candidate.full_match_score}% match
+            {candidate.full_match_score.toFixed(2)}% match
           </div>
         </CardContent>
         <CardContent

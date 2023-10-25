@@ -27,8 +27,8 @@ export interface JobPostNew {
   open: boolean;
   description_embedded: string;
   last_day_to_apply: string;
-  closed_at: string;
-  created_at: string;
+  closed_at: number;
+  created_at: number;
   job_type?: string;
   work_model?: string;
   matched_candidates?: number;

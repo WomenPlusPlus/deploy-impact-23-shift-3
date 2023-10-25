@@ -1,19 +1,21 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { SearchBar } from "@/app/(site)/company/searchBar";
 import { JobList } from "@/app/(site)/company/jobs/jobList";
-import { JobPost, JobPostNew } from "@/app/(site)/company/jobs/types";
-import getJobPosts from "@/app/(site)/company/jobs/fetchJobPosts";
 import Button from "@mui/material/Button";
 import { usePostedJobs } from "@/app/(site)/company/jobs/usePostedJobs";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
+import { CircularProgress } from "@mui/material";
 
-export default function CandidatesPage() {
+export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const jobPostsList: JobPost[] = getJobPosts();
-  const jobPostsListNew: JobPostNew[] = usePostedJobs("1");
+  const signInContext = useContext(SignInProviderContext);
+  const { data: jobPostsList = [], isLoading } = usePostedJobs(
+    signInContext.auth?.user?.id as string,
+  );
 
   return (
     <Container>
@@ -52,7 +54,7 @@ export default function CandidatesPage() {
             + Create new job
           </Button>
         </Box>
-        <JobList jobPosts={jobPostsList} />
+        {isLoading ? <CircularProgress /> : <JobList jobPosts={jobPostsList} />}
       </Box>
     </Container>
   );
