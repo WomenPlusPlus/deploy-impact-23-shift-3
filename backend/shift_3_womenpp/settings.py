@@ -157,7 +157,7 @@ STORAGES = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "Shift Enter API",
     "DESCRIPTION": "Welcome to shift enter!",
-    "VERSION": "0.12",
+    "VERSION": "0.13",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX": r"/api/*",
     "SWAGGER_UI_SETTINGS": {

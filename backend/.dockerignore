@@ -5,7 +5,6 @@ code .egg# Include any files or directories that you don't want to be copied to 
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
 
 static/
-requirements.txt
 logs/
 logs/*
 
