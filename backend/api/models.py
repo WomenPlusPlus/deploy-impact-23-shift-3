@@ -157,7 +157,7 @@ class Candidates(models.Model):
         return matched_candidates
 
     def get_match_percentage(
-        self, list_skills_id: Iterator, soft_or_hard_skill: str
+        self, jobs_skills: Iterator, soft_or_hard_skill: str
     ) -> int:
         """
         Calculate the percentage of matching skills between the input list of skills and the skills in the database.
@@ -170,19 +170,19 @@ class Candidates(models.Model):
                 int: The percentage of matching skills between the input list of skills and the skills in the database.
         """
         if soft_or_hard_skill == "soft":
-            skills = self.soft_skill_test_matching.values_list(
+            candidate_skills = self.soft_skill_test_matching.values_list(
                 "soft_skill_id", flat=True
             )
         elif soft_or_hard_skill == "hard":
-            skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
+            candidate_skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
         else:
             raise ValueError
 
-        skills = list(skills)
+        candidate_skills = list(candidate_skills)
 
         return (
-            len(set(list_skills_id).intersection(set(skills))) / len(list_skills_id)
-            if len(list_skills_id) > 0
+            len(set(jobs_skills).intersection(set(candidate_skills))) / len(jobs_skills)
+            if len(jobs_skills) > 0
             else 0
         ) * 100
 
@@ -339,7 +339,7 @@ class Jobs(models.Model):
         return matched_candidates
 
     def get_match_percentage(
-        self, list_skills_id: Iterator, soft_or_hard_skill: str
+        self, candidate_skills: Iterator, soft_or_hard_skill: str
     ) -> int:
         """
         Calculate the percentage of matching skills between the input list of skills and the skills in the database.
@@ -352,19 +352,19 @@ class Jobs(models.Model):
                 int: The percentage of matching skills between the input list of skills and the skills in the database.
         """
         if soft_or_hard_skill == "soft":
-            skills = self.soft_skill_test_matching.values_list(
+            jobs_skills = self.soft_skill_test_matching.values_list(
                 "soft_skill_id", flat=True
             )
         elif soft_or_hard_skill == "hard":
-            skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
+            jobs_skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
         else:
             raise ValueError
 
-        skills = list(skills)
+        jobs_skills = list(jobs_skills)
 
         return (
-            len(set(list_skills_id).intersection(set(skills))) / len(list_skills_id)
-            if len(list_skills_id) > 0
+            len(set(candidate_skills).intersection(set(jobs_skills))) / len(jobs_skills)
+            if len(jobs_skills) > 0
             else 0
         ) * 100
 
