@@ -25,11 +25,13 @@ class CantonsSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class CountriesSerializer(serializers.HyperlinkedModelSerializer):
+class CountriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Countries
         fields = ["country_name_in_english"]
-        many = True
+
+    def to_representation(self, instance):
+        return instance.country_name_in_english
 
 
 class HardSkillsNamesSerializer(serializers.PrimaryKeyRelatedField):
@@ -82,7 +84,6 @@ class CandidatesSerializer(serializers.ModelSerializer):
 
     def get_matches(self, instance):
         headers = self.context["request"].headers
-        print(headers)
         if "Hide-Matches" in headers:
             if headers["Hide-Matches"] == "true":
                 return "Hide-Matches set to true"
@@ -235,6 +236,8 @@ class JobsSerializer(serializers.ModelSerializer):
         "get_matches", read_only=True, source="matches"
     )
 
+    location_country = CountriesSerializer()
+
     class Meta:
         model = Jobs
         exclude = (
@@ -245,7 +248,6 @@ class JobsSerializer(serializers.ModelSerializer):
 
     def get_matches(self, instance):
         headers = self.context["request"].headers
-        print(headers)
         if "Hide-Matches" in headers:
             if headers["Hide-Matches"] == "true":
                 return "Hide-Matches set to true"
