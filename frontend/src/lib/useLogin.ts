@@ -70,7 +70,7 @@ export const useLogin = (): [
       } else if (response.role === "association_user") {
         router.push("/association/profile");
       } else if (response.role === "company_user") {
-        router.push("/company/candidates");
+        router.push("/company/jobs");
       }
     },
   });

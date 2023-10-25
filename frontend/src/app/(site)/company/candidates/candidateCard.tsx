@@ -3,10 +3,8 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-//import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-//import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
@@ -68,18 +66,17 @@ export const CandidateCard: React.FC<CandidateProps> = ({
           <div
             style={{
               borderRadius: "8px",
-              padding: "10px 10px",
+              padding: "10px 10px 10px 16px",
               display: "inline-block",
               backgroundColor: getMatchingColor(candidate.full_match_score),
               fontSize: "14px",
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
-              minWidth:"90px"
-
+              whiteSpace: "nowrap",
             }}
           >
-            {Math.round(candidate.full_match_score)}% match
+            {candidate.full_match_score.toFixed(2)}% match
           </div>
         </CardContent>
         <CardContent
@@ -244,7 +241,6 @@ export const CandidateCard: React.FC<CandidateProps> = ({
           <Link href={`/company/candidates/${candidate.id}/`}>
             <Button
               type="submit"
-              //onClick={() => handleViewProfileClick(candidate.id)}
               variant="contained"
               size="large"
               sx={{ textTransform: "none", borderRadius: "100px" }}

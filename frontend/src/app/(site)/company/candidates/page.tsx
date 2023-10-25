@@ -6,8 +6,9 @@ import Box from "@mui/material/Box";
 import { SearchBar } from "@/app/(site)/company/searchBar";
 import { CandidateList } from "@/app/(site)/company/candidates/candidateList";
 import Fuse from "fuse.js";
-import { getMatchedCandidates } from "@/app/(site)/company/candidates/getMatchedCandidates";
+import { useMatchedCandidates } from "@/app/(site)/company/candidates/useMatchedCandidates";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
+import { CircularProgress } from "@mui/material";
 import IFuseOptions = Fuse.IFuseOptions;
 
 const options: IFuseOptions<CandidateForJobList> = {
@@ -18,9 +19,11 @@ const options: IFuseOptions<CandidateForJobList> = {
   keys: ["job_title", "full_match_score", "soft_skills", "hard_skills", "name"],
 };
 
-export default function CandidatesPage() {
+export default function CandidatesPage(ctx: any) {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const listOfCandidates = getMatchedCandidates("210");
+  const jobId = ctx.searchParams.jobid || "210";
+  const { data: listOfCandidates = [], isLoading } =
+    useMatchedCandidates(jobId);
 
   const filteredCandidates = useMemo(() => {
     const fuse = new Fuse(listOfCandidates, options);
@@ -46,13 +49,17 @@ export default function CandidatesPage() {
             placeholder={"Search for candidates"}
           />
         )}
-        <CandidateList
-          candidates={
-            searchTerm
-              ? filteredCandidates.map((fuse) => fuse.item)
-              : listOfCandidates
-          }
-        />
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <CandidateList
+            candidates={
+              searchTerm
+                ? filteredCandidates.map((fuse) => fuse.item)
+                : listOfCandidates
+            }
+          />
+        )}
       </Box>
     </Container>
   );
