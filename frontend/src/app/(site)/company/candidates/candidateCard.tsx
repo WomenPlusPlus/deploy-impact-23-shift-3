@@ -3,15 +3,17 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+//import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+//import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
-import { useRouter } from "next/navigation";
 
 interface CandidateProps {
   candidate: CandidateForJobList;
@@ -26,11 +28,6 @@ const capitalizeWords = (str: string) => {
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
 }: CandidateProps) => {
-  const router = useRouter();
-  const handleViewProfileClick = (candidate_id: string) => {
-    router.replace(`/company/candidates/${candidate_id}`);
-    // router.replace("/company/profile?candidate_id=" + candidate_id);
-  };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -78,9 +75,11 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
+              minWidth:"90px"
+
             }}
           >
-            {candidate.full_match_score}% match
+            {Math.round(candidate.full_match_score)}% match
           </div>
         </CardContent>
         <CardContent
@@ -236,21 +235,23 @@ export const CandidateCard: React.FC<CandidateProps> = ({
         >
           <div>
             <IconButton aria-label="Chat">
-              <ChatBubbleIcon />
+              <ChatBubbleOutlineIcon />
             </IconButton>
             <IconButton aria-label="Favorite">
-              <FavoriteIcon />
+              <FavoriteBorderIcon />
             </IconButton>
           </div>
-          <Button
-            type="submit"
-            onClick={() => handleViewProfileClick(candidate.id)}
-            variant="contained"
-            size="large"
-            sx={{ textTransform: "none", borderRadius: "100px" }}
-          >
-            View profile
-          </Button>
+          <Link href={`/company/candidates/${candidate.id}/`}>
+            <Button
+              type="submit"
+              //onClick={() => handleViewProfileClick(candidate.id)}
+              variant="contained"
+              size="large"
+              sx={{ textTransform: "none", borderRadius: "100px" }}
+            >
+              View profile
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </Grid>

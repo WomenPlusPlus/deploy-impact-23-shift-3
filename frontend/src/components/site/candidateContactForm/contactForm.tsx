@@ -33,12 +33,14 @@ interface ContactFormsProps {
   open: boolean;
   handleOpen: React.MouseEventHandler<HTMLButtonElement>;
   handleClose: React.MouseEventHandler<HTMLButtonElement>;
+  handleSend: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const ContactForm: React.FC<ContactFormsProps> = ({
   open,
   handleOpen,
   handleClose,
+  handleSend
 }) => {
   const [message, setMessage] = useState("");
 
@@ -142,13 +144,14 @@ const ContactForm: React.FC<ContactFormsProps> = ({
               sx={{ float: "right", my: 0, textTransform: "none" }}
               type="submit"
               variant="contained"
-              onClick={handleClose}
+              onClick={handleSend}
             >
               Start contact
             </Button>
             <Button
               sx={{ float:"right", my: 0, textTransform:"none", mr: 2 }}
               variant="outlined"
+              name="back"
               onClick={handleClose}>
               Go back
             </Button>
