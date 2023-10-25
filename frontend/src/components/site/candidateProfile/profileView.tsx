@@ -13,7 +13,7 @@ import {
   shadow,
   HtmlTooltip,
   proceedButtons,
-  GetInitials,
+  ProfileAvatar,
 } from "./candidateHelpers";
 import {
   FullName,
@@ -358,23 +358,11 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
         {/* end header */}
         {/* Basic info & contact */}
         <Grid item xs={12} sm={12} md={2}>
-          <Avatar
-            sx={{
-              bgcolor: "#63E5C5",
-              width: "142px",
-              height: "142px",
-              fontSize: "60px",
-              color: "#14366F",
-            }}
-            // alt="Candidate image"
-            // src={`${missingDetails.candidate_img}`}
-          >
-            <GetInitials
-              first_name={candidateDetails.first_name}
-              last_name={candidateDetails.last_name}
-              preferred_name={candidateDetails.preferred_name}
-            />
-          </Avatar>
+          <ProfileAvatar
+            first_name={candidateDetails.first_name}
+            last_name={candidateDetails.last_name}
+            preferred_name={candidateDetails.preferred_name}
+          />
         </Grid>
         <Grid item md={10} sm={12}>
           <Typography

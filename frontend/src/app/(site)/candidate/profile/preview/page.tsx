@@ -1,8 +1,11 @@
 "use client";
 import Link from "next/link";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 
 import ProfilePreview from "@/components/site/candidateProfile/profileView";
 
@@ -21,22 +24,12 @@ export default function PreviewPage() {
         <Grid item md={6} sx={{ textAlign: "right" }}>
           <Link href="/candidate/profile">
             <Button
-    
+              startIcon={<ArrowBackIcon />}
               variant="outlined"
-              // onClick={handleOpen}
-              sx={{ textTransform: "none", mr:2 }}
-            >
-              Edit profile
-            </Button>
-          </Link>
-          <Link href="/candidate/jobs">
-            <Button
-    
-              variant="contained"
               // onClick={handleOpen}
               sx={{ textTransform: "none" }}
             >
-              Find jobs
+              Go back
             </Button>
           </Link>
         </Grid>

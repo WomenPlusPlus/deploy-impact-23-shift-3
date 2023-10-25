@@ -24,9 +24,12 @@ import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import Link from "next/link";
 
-// GUi component!!
+import { ProfileAvatar } from "@/components/site/candidateProfile/candidateHelpers";
+
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 import { UpdateCandidateDetails } from "@/lib/updateCandidateDetails";
+import { missingDetails } from "@/components/site/candidateProfile/missingDetails";
+
 // GUi component!!
 // import Asynchronous from "@/components/MuiAutocomplete_example";
 
@@ -48,26 +51,13 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-
-
-// import ProfilePreview from "@/components/site/candidateProfilePreview/profilePreview";
-
 export default function ProfilePage() {
   const obj: CandidateDetailsInterface = {};
   const [state, setState] = useState(obj);
   const [editBlock, setEditBlock] = useState("");
 
- // console.log("state", state);
- // TODO: getUser data based on user id
-//const userId = 1;
-   // context version
-   const signInContext = useContext(SignInProviderContext);
-   const userId = signInContext.auth?.user?.id || 1;
-
-  //modal
-  // const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const signInContext = useContext(SignInProviderContext);
+  const userId = signInContext.auth?.user?.id || 1;
 
   function handleChange(element: any) {
     const value = element.target.value;
@@ -89,7 +79,6 @@ export default function ProfilePage() {
 
   function handleEdit(e: any) {
     const block = e.currentTarget.getAttribute("data-which");
-    // console.log("edit", e.currentTarget);
     setEditBlock(block);
   }
 
@@ -99,13 +88,10 @@ export default function ProfilePage() {
     const data = new FormData(event.currentTarget);
     const values = Object.fromEntries(data.entries());
     setEditBlock("");
+    const toSend = [values, userId];
 
-    updateCandidate.mutate(values);
+    updateCandidate.mutate(toSend);
   }
-
-  // test to get context -- move
-  //const signInContext = useContext(SignInProviderContext);
-  // console.log("context", signInContext);
 
   // Access the client
   const queryClient = useQueryClient();
@@ -127,7 +113,6 @@ export default function ProfilePage() {
   // to setState
   useEffect(() => {
     if (queryCandidate.status === "success") {
-      // console.log("data", queryCandidate.data);
       setState(queryCandidate.data);
     }
   }, [queryCandidate.status, queryCandidate.data]);
@@ -164,7 +149,7 @@ export default function ProfilePage() {
     block1 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }}
-        elevation={0}
+        elevation={1}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -203,12 +188,25 @@ export default function ProfilePage() {
         </Grid>
 
         <Grid container my={3} spacing={2}>
-          <Grid item sm={2}>
-            image upload here
+          <Grid item md={2} sm={3} xs={12}>
+            <ProfileAvatar
+              first_name={state.first_name}
+              last_name={state.last_name}
+              preferred_name={state.preferred_name}
+            />
+            <Button
+              sx={{ mt: 2, textTransform:"none" }}
+              component="label"
+              variant="outlined"
+              startIcon={<UploadIcon />}
+            >
+              Upload image
+              <VisuallyHiddenInput type="file" />
+            </Button>
           </Grid>
 
-          <Grid item sm={10} xs={12}>
-            <Box sx={{ mb: 2 }}>
+          <Grid item md={10} sm={9} xs={12}>
+            <Box sx={{ mb: 4 }}>
               <TextField
                 required
                 name="first_name"
@@ -220,7 +218,7 @@ export default function ProfilePage() {
                 onChange={handleChange}
               />
             </Box>
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 4 }}>
               <TextField
                 required
                 autoComplete="false"
@@ -234,33 +232,21 @@ export default function ProfilePage() {
             </Box>
 
             <Grid container spacing={2}>
-              <Grid item sm={6}>
-                {/* <TextField
-              required
-              autoComplete="false"
-              name="pronoun"
-              id="pronoun"
-              size="small"
-              value={state.pronoun || ""}
-              label="pronoun"
-              fullWidth
-              helperText="Tell us how would you like to be presented in your candidate profile."
-              onChange={handleChange}
-            /> */}
-                <InputLabel id="pronoun-label">Pronoun</InputLabel>
-                <Select
-                size="small"
-                  labelId="pronoun-label"
+              <Grid item sm={6} >
+                <TextField
+                  select
+                  required
+                  size="small"
                   fullWidth
                   name="gender"
-                  value={"test val"}
+                  value={state.gender}
                   label="Pronoun"
                   onChange={handleChange}
                 >
-                  <MenuItem value={10}>She/Her</MenuItem>
-                  <MenuItem value={20}>They/Them</MenuItem>
-                  <MenuItem value={30}>He/Him</MenuItem>
-                </Select>
+                  <MenuItem value="She/Her">She/Her</MenuItem>
+                  <MenuItem value="They/Them<">They/Them</MenuItem>
+                  <MenuItem value="He/Him">He/Him</MenuItem>
+                </TextField>
               </Grid>
               <Grid item sm={6}>
                 <TextField
@@ -283,7 +269,7 @@ export default function ProfilePage() {
           {/* <Grid item sm={4} xs={12}> */}
 
           {/* </Grid> */}
-          <Grid item sm={12} sx={{ paddingLeft: "10px" }}>
+          <Grid item sm={6} sx={{ paddingLeft: "10px" }}>
             <TextField
               type="date"
               autoComplete="false"
@@ -295,14 +281,31 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item></Grid>
+          <Grid item sm={6}>
+            {" "}
+            <TextField
+              select
+              // required
+              size="small"
+              fullWidth
+              name="gender"
+              // value={state.gender} database needs updating
+              value={""}
+              label="Gender"
+              // onChange={handleChange}
+            >
+              <MenuItem value="Female">Female</MenuItem>
+              <MenuItem value="Male">Male</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </TextField>
+          </Grid>
         </Grid>
       </Paper>
     );
   } else {
     // Display fields
     block1 = (
-      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
+      <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={1}>
         <Grid container>
           <Grid item xs={6}>
             <Box>
@@ -319,31 +322,49 @@ export default function ProfilePage() {
         </Grid>
 
         <Grid container my={1} spacing={2}>
-          <Grid item sm={4} xs={12}>
-            <Typography>
-              <strong>First Name</strong>
-            </Typography>
-            <Typography>{state.first_name || ""}</Typography>
+          <Grid item sm={2} xs={12}>
+            <ProfileAvatar
+              first_name={state.first_name}
+              last_name={state.last_name}
+              preferred_name={state.preferred_name}
+            />
           </Grid>
-
-          <Grid item sm={4} xs={12}>
+          <Grid item sm={10} xs={12}>
+            <Grid container>
+            <Grid item sm={6} xs={12}>
             <Typography>
-              <strong>Last Name</strong>
+              <strong>Full Name</strong>
             </Typography>
-            <Typography>{state.last_name || ""}</Typography>
+            <Typography>{state.first_name || ""}  {state.last_name || ""}</Typography>
           </Grid>
-          <Grid item sm={4} xs={12}>
+          <Grid item sm={6} xs={12} sx={{pb:3}}>
             <Typography>
               <strong>Preferred Name</strong>
             </Typography>
             <Typography>{state.preferred_name || ""}</Typography>
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={6}>
             <Typography>
               <strong>Date of Birth</strong>
             </Typography>
             <Typography>{state.birth_date || ""}</Typography>
           </Grid>
+          <Grid item sm={6}>
+            <Typography>
+              <strong>Pronoun</strong>
+            </Typography>
+            <Typography>{state.gender || ""}</Typography>
+          </Grid>
+
+            </Grid>
+
+          </Grid>
+
+
+
+
+
+
         </Grid>
       </Paper>
     );
@@ -354,7 +375,7 @@ export default function ProfilePage() {
     block2 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={0}
+        elevation={1}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -514,7 +535,7 @@ export default function ProfilePage() {
     block2 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={0}
+        elevation={1}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -572,7 +593,7 @@ export default function ProfilePage() {
     block3 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={0}
+        elevation={1}
         onSubmit={handleSubmit}
         component="form"
       >
@@ -765,7 +786,7 @@ export default function ProfilePage() {
     block3 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
-        elevation={0}
+        elevation={1}
         onSubmit={handleSubmit}
         component="form"
       >

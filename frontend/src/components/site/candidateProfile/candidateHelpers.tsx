@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
+import Avatar from "@mui/material/Avatar";
 
 // drop shadow on chips
 export const shadow =
@@ -48,6 +49,11 @@ interface GetInitialsProps {
   first_name?: string;
   last_name?: string;
 }
+interface ProfileAvatarProps {
+  preferred_name?: string;
+  first_name?: string;
+  last_name?: string;
+}
 
 export const GetInitials: React.FC<GetInitialsProps> = ({
   preferred_name,
@@ -73,4 +79,30 @@ export const GetInitials: React.FC<GetInitialsProps> = ({
   } else if (first_name && last_name) {
     return first_name[0].toUpperCase() + last_name[0].toUpperCase();
   }
+};
+
+export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
+  preferred_name,
+  first_name,
+  last_name,
+}) => {
+  return (
+    <Avatar
+      sx={{
+        bgcolor: "#63E5C5",
+        width: "142px",
+        height: "142px",
+        fontSize: "60px",
+        color: "#14366F",
+      }}
+      // alt="Candidate image"
+      // src={`${missingDetails.candidate_img}`}
+    >
+      <GetInitials
+        first_name={first_name}
+        last_name={last_name}
+        preferred_name={preferred_name}
+      />
+    </Avatar>
+  );
 };
