@@ -3,10 +3,7 @@ from django.db import models
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import mixins
-from drf_spectacular.utils import (
-    extend_schema_view,
-    extend_schema,
-)
+from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 
 import json
 from api import serializers as model_serializers
@@ -290,6 +287,21 @@ class InviteView(APIView):
         return Response(response_payload, status=status_code)
 
 
+@extend_schema_view(
+    retrieve=extend_schema(
+        summary="Retrieve information for a candidate",
+        description="""
+        Provide the candidate id in the url parameter and this will retrieve all the information associated with the candidate.
+        
+        Optional:
+          Send-Matches: bool
+          Retrieves the job matches associated with this cadidate
+        """,
+        parameters=[
+            OpenApiParameter("Send-Matches", bool, OpenApiParameter.HEADER),
+        ],
+    ),
+)
 class CandidatesViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Candidates.objects.all()
     serializer_class = model_serializers.CandidatesSerializer
@@ -300,6 +312,22 @@ class AvailableCompanyDomainsViewSet(viewsets.ModelViewSet):
     serializer_class = model_serializers.AvailableCompanyDomainsSerializer
 
 
+@extend_schema_view(
+    retrieve=extend_schema(
+        summary="Retrieve information for a job",
+        description="""
+        Provide the job id in the url parameter and this will retrieve all the information associated with the job.
+        
+        Optional:
+          Send-Matches: bool
+          Retrieves the job matches associated with this cadidate
+        """,
+        parameters=[
+            OpenApiParameter("job_id", int, OpenApiParameter.PATH, required=True),
+            OpenApiParameter("Send-Matches", bool, OpenApiParameter.HEADER),
+        ],
+    ),
+)
 class JobsViewSet(viewsets.ModelViewSet):
     queryset = model_serializers.Jobs.objects.all()
     serializer_class = model_serializers.JobsSerializer
