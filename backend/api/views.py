@@ -294,11 +294,11 @@ class InviteView(APIView):
         Provide the candidate id in the url parameter and this will retrieve all the information associated with the candidate.
         
         Optional:
-          Send-Matches: bool
+          Hide-Matches: bool
           Retrieves the job matches associated with this cadidate
         """,
         parameters=[
-            OpenApiParameter("Send-Matches", bool, OpenApiParameter.HEADER),
+            OpenApiParameter("Hide-Matches", bool, OpenApiParameter.HEADER),
         ],
     ),
 )
@@ -319,12 +319,12 @@ class AvailableCompanyDomainsViewSet(viewsets.ModelViewSet):
         Provide the job id in the url parameter and this will retrieve all the information associated with the job.
         
         Optional:
-          Send-Matches: bool
+          Hide-Matchess: bool
           Retrieves the job matches associated with this cadidate
         """,
         parameters=[
             OpenApiParameter("job_id", int, OpenApiParameter.PATH, required=True),
-            OpenApiParameter("Send-Matches", bool, OpenApiParameter.HEADER),
+            OpenApiParameter("Hide-Matches", bool, OpenApiParameter.HEADER),
         ],
     ),
 )
