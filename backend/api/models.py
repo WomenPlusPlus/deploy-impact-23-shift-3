@@ -176,7 +176,9 @@ class Candidates(models.Model):
                 "soft_skill_id", flat=True
             )
         elif soft_or_hard_skill == "hard":
-            candidate_skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
+            candidate_skills = self.hard_skill_test_matching.values_list(
+                "skill_id", flat=True
+            )
         else:
             raise ValueError
 
@@ -359,7 +361,9 @@ class Jobs(models.Model):
                 "soft_skill_id", flat=True
             )
         elif soft_or_hard_skill == "hard":
-            jobs_skills = self.hard_skill_test_matching.values_list("skill_id", flat=True)
+            jobs_skills = self.hard_skill_test_matching.values_list(
+                "skill_id", flat=True
+            )
         else:
             raise ValueError
 

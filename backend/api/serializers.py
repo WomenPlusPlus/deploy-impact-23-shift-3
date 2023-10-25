@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from api.models import *
 from rest_framework import serializers
 import os
+from api.matching_algorithm import get_free_text_match
 
 
 # Serializers define the API representation.
@@ -99,27 +100,33 @@ class CandidatesSerializer(serializers.ModelSerializer):
         except Exception:
             return "Match only available when calling with Candidate ID"
 
-        job = instance
-        job_soft_skills = list(
-            job.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
+        candidate = instance
+        candidate_soft_skills = list(
+            candidate.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
         )
-        job_hard_skills = list(
-            job.hard_skill_test_matching.values_list("skill_id", flat=True)
+        xcandidate_hard_skills = list(
+            candidate.hard_skill_test_matching.values_list("skill_id", flat=True)
         )
+        candidate_embeddings = candidate.aboutme_embedded
 
         match_percentages = {}
 
-        candidates = instance.matches
-        for candidate in candidates:
-            soft_skills_match = candidate.get_match_percentage(job_soft_skills, "soft")
-            hard_skills_match = candidate.get_match_percentage(job_hard_skills, "hard")
+        jobs = instance.matches
+        for job in jobs:
+            soft_skills_match = job.get_match_percentage(candidate_soft_skills, "soft")
+            hard_skills_match = job.get_match_percentage(xcandidate_hard_skills, "hard")
+            free_text_match = get_free_text_match(
+                job_embeddings=job.description_embedded,
+                candidate_embeddings=candidate_embeddings,
+            )
 
-            match_percentages[candidate.job_id] = {
+            match_percentages[job.job_id] = {
                 "soft_skills": soft_skills_match,
                 "hard_skills": hard_skills_match,
                 "full_match": (
                     soft_skills_match * SOFT_SKILL_PERCENTAGE
                     + hard_skills_match * HARD_SKILL_PERCENTAGE
+                    + free_text_match * FREE_TEXT_PERCENTAGE
                 ),
             }
 
@@ -141,7 +148,7 @@ class CandidatesSerializer(serializers.ModelSerializer):
                     "hard_skills"
                 ],
             }
-            for candidate in candidates
+            for candidate in jobs
         ]
 
 
@@ -270,6 +277,10 @@ class JobsSerializer(serializers.ModelSerializer):
         for candidate in candidates:
             soft_skills_match = candidate.get_match_percentage(job_soft_skills, "soft")
             hard_skills_match = candidate.get_match_percentage(job_hard_skills, "hard")
+            free_text_match = get_free_text_match(
+                job_embeddings=job.description_embedded,
+                candidate_embeddings=candidate.aboutme_embedded,
+            )
 
             match_percentages[candidate.candidate_id] = {
                 "soft_skills": soft_skills_match,
@@ -277,6 +288,7 @@ class JobsSerializer(serializers.ModelSerializer):
                 "full_match": (
                     soft_skills_match * SOFT_SKILL_PERCENTAGE
                     + hard_skills_match * HARD_SKILL_PERCENTAGE
+                    + free_text_match * FREE_TEXT_PERCENTAGE
                 ),
             }
 
