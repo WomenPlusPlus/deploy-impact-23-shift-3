@@ -77,7 +77,12 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        print(data["soft_skill_test_matching"][0].soft_skill_name)
+        print(
+            [
+                data["soft_skill_test_matching"][i].soft_skill_name
+                for i in data["soft_skill_test_matching"]
+            ]
+        )
         return data
 
     def get_matches(self, instance):
