@@ -77,15 +77,16 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        print(
-            [
-                data["soft_skill_test_matching"][i].soft_skill_name
-                for i in data["soft_skill_test_matching"]
-            ]
-        )
+        print(data["about_me"])
         return data
 
     def get_matches(self, instance):
+        headers = self.context["request"].headers
+        print(headers)
+        if "Hide-Matches" in headers:
+            if headers["Hide-Matches"] == "true":
+                return "Hide-Matches set to true"
+
         HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
         SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
         FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
@@ -243,6 +244,12 @@ class JobsSerializer(serializers.ModelSerializer):
         many = True
 
     def get_matches(self, instance):
+        headers = self.context["request"].headers
+        print(headers)
+        if "Hide-Matches" in headers:
+            if headers["Hide-Matches"] == "true":
+                return "Hide-Matches set to true"
+
         HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
         SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
         FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
