@@ -102,6 +102,8 @@ class Candidates(models.Model):
     soft_skills = models.TextField()
     gender = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     ethnicity = models.IntegerField(blank=True, null=True)
+    aboutme_embedded = models.TextField(blank=True, null=True)
+    experience_abedded = models.TextField(blank=True, null=True)
 
     # desired_job = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     # personality_description = models.TextField(blank=True, null=True)
@@ -319,6 +321,7 @@ class Jobs(models.Model):
 
     soft_skill_test_matching = models.ManyToManyField(SoftSkills)
     hard_skill_test_matching = models.ManyToManyField(Skills)
+    description_embedded = models.TextField(blank=True, null=True)
 
     last_day_to_apply = models.DateField(blank=True, null=True)
     closed_at = models.DateTimeField(blank=True, null=True)
