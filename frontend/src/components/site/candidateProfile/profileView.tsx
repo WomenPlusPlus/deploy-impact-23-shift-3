@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import { useContext, useState, useEffect } from "react";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
@@ -48,6 +47,7 @@ import StarsIcon from "@mui/icons-material/Stars";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
 import Snackbar from "@mui/material/Snackbar";
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { usePathname } from "next/navigation";
 import { set } from "cypress/types/lodash";
@@ -215,17 +215,17 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
 
   if (queryCandidate.isLoading) {
     return (
-      <Container sx={{ mt: 3 }}>
+      <Container sx={{ my:2 }}>
         <Typography variant="h5" component="h1">
-          Profile Preview
+          Profile Loading  <CircularProgress />
         </Typography>
 
-        <Skeleton
+        {/* <Skeleton
           animation="wave"
           variant="rounded"
           sx={{ bgcolor: "white", width: "100%", marginTop: "20px" }}
           height={20}
-        />
+        /> */}
       </Container>
     );
   }

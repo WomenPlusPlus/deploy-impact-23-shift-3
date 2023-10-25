@@ -26,7 +26,6 @@ const capitalizeWords = (str: string) => {
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
 }: CandidateProps) => {
-
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -239,15 +238,15 @@ export const CandidateCard: React.FC<CandidateProps> = ({
             </IconButton>
           </div>
           <Link href={`/company/candidates/${candidate.id}`}>
-          <Button
-            type="submit"
-            //onClick={() => handleViewProfileClick(candidate.id)}
-            variant="contained"
-            size="large"
-            sx={{ textTransform: "none", borderRadius: "100px" }}
-          >
-            View profile
-          </Button>
+            <Button
+              type="submit"
+              //onClick={() => handleViewProfileClick(candidate.id)}
+              variant="contained"
+              size="large"
+              sx={{ textTransform: "none", borderRadius: "100px" }}
+            >
+              View profile
+            </Button>
           </Link>
         </CardContent>
       </Card>

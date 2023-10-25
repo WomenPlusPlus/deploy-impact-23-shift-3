@@ -22,7 +22,7 @@ export default function CompanyLayout({
   return (
     <>
       <SubHeader sections={sections} />
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
+      <Container component="main" sx={{ mt: 6, mb: 2 }} maxWidth="lg">
         {children}
       </Container>
     </>

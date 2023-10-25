@@ -60,7 +60,6 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
               minRows={6}
               autoComplete="false"
               name="comment"
-              id="comment"
               size="small"
               value={comment || ""}
               label="Comment"
@@ -70,7 +69,6 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
 
             <Button
               sx={{ float: "right", my: 3, textTransform: "none" }}
-              // disabled={updateCandidate.isLoading}
               type="submit"
               variant="outlined"
               size="small"

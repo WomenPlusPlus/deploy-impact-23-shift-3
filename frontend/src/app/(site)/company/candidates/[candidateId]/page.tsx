@@ -19,17 +19,15 @@ type Params = {
 
 //TODO: move api call or pass userId down to component
 
-export default function UserProfilePage({params:{candidateId}}:Params) {
-
+export default function UserProfilePage({ params: { candidateId } }: Params) {
   const signInContext = useContext(SignInProviderContext);
   const companyId = signInContext.auth?.user?.id || 1;
 
-  
   return (
     <>
-      <Grid container sx={{ mb: 4 }}>
-        <Grid item md={6}>for testing: {candidateId}</Grid>
-        <Grid item md={6} sx={{ textAlign: "right" }}>
+      <Grid container sx={{ mb: 4, mt:0 }}>
+        <Grid item md={6}>
+          {" "}
           <Link href="/company/candidates/">
             <Button
               startIcon={<ArrowBackIcon />}
@@ -40,6 +38,7 @@ export default function UserProfilePage({params:{candidateId}}:Params) {
             </Button>
           </Link>
         </Grid>
+        <Grid item md={6} sx={{ textAlign: "right" }}></Grid>
       </Grid>
 
       <ProfilePreview candidateId={+candidateId} matchPercent={90} />
