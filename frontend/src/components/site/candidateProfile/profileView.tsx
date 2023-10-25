@@ -47,7 +47,7 @@ import StarsIcon from "@mui/icons-material/Stars";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
 import Snackbar from "@mui/material/Snackbar";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { usePathname } from "next/navigation";
 import { set } from "cypress/types/lodash";
@@ -58,14 +58,14 @@ import { set } from "cypress/types/lodash";
 const matchPercent = 90;
 interface ContactFormsProps {
   candidateId: number;
-  matchPercent:number
+  matchPercent: number;
 }
 
 interface ViewCvProps {
   candidateId: number;
 }
 
-export default function ProfilePreview({candidateId=0, matchPercent=90}) {
+export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
   const obj: CandidateDetailsInterface = {};
   const [candidateDetails, setCandidateDetails] = useState(obj);
   const [viewHidden, setViewHidden] = useState(false);
@@ -73,33 +73,32 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
   const [isCandidate, setIsCandidate] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
 
-    //contact form
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-      setOpen(false);
-      setSnackOpen(true);
-    };
+  //contact form
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSend = () => {
+    setOpen(false);
+    setSnackOpen(true);
+  };
 
   // view cv
   const [openCv, setOpenCv] = useState(false);
   const handleOpenCv = () => setOpenCv(true);
   const handleCloseCv = () => setOpenCv(false);
-   
 
-  //const userId = 108; // need to use until user.id is returned
-  // context version
   const signInContext = useContext(SignInProviderContext);
   const userId = signInContext.auth?.user?.id || 1;
-  // const fn = signInContext.auth?.user?.first_name || "no name";
-  // console.log("fn",fn);
 
   // if viewed by company need to get candidateId
   let candidate_id = -1;
-  if(candidateId > 0){
+  if (candidateId > 0) {
     candidate_id = candidateId;
-  }else{
-     candidate_id = +userId;
+  } else {
+    candidate_id = +userId;
   }
 
   //snack
@@ -112,7 +111,6 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
     }
     setSnackOpen(false);
   };
-
 
   // check if candidate or company view
   const pathName = usePathname();
@@ -210,14 +208,15 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
     }
     if (queryCandidate.status === "success") {
       setCandidateDetails(queryCandidate.data);
+      console.log("cd", queryCandidate.data);
     }
   }, [queryCandidate.status, queryCandidate.data, pathNameStart]);
 
   if (queryCandidate.isLoading) {
     return (
-      <Container sx={{ my:2 }}>
+      <Container sx={{ my: 2 }}>
         <Typography variant="h5" component="h1">
-          Profile Loading  <CircularProgress />
+          Profile Loading <CircularProgress />
         </Typography>
 
         {/* <Skeleton
@@ -235,12 +234,12 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
 
   return (
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
-               <ViewCv 
-          openCv = {openCv} 
-          handleOpen={handleOpenCv}
-          handleClose={handleCloseCv}
-          candidateId={candidateId}
-          />
+      <ViewCv
+        openCv={openCv}
+        handleOpen={handleOpenCv}
+        handleClose={handleCloseCv}
+        candidateId={candidateId}
+      />
       {!isCandidate ? (
         <>
           <Snackbar
@@ -260,15 +259,16 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
             open={open}
             handleOpen={handleOpen}
             handleClose={handleClose}
+            handleSend={handleSend}
           />
- 
+
           <Grid container sx={{ mb: 2 }}>
-            <Grid item md={4}>
+            <Grid item lg={6} md={5} sm={4}>
               <Typography sx={{ display: "inline-block" }}>
                 Candidate profile
               </Typography>
             </Grid>
-            <Grid item md={4} sx={{ textAlign: "right" }}>
+            <Grid item lg={3} md={3} sm={4} sx={{ textAlign: "right" }}>
               <Collapse in={openFeedbackRequest}>
                 <Alert
                   icon={false}
@@ -296,28 +296,43 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
                 </Alert>
               </Collapse>
             </Grid>
-            <Grid item md={4} sx={{ textAlign: "right" }}>
-              <HtmlTooltip
-                title={
-                  <>
-                    <Typography color="inherit">
-                      <strong>Why you can’t see it all?</strong>
-                    </Typography>
-                    <Typography color="inherit">
-                      Personal information such as name or contact details can
-                      lead to a bias towards the origin of the person. This
-                      information is not relevant to assessing skills and work
-                      experience. We encourage you to participate in the
-                      process. However, if you would like to know more, you can
-                      click the button. This action will be shared with the
-                      platform.
-                    </Typography>
-                  </>
-                }
-              >
+            <Grid item lg={3} md={4} sm={4} sx={{ textAlign: "right" }}>
+              {!viewHidden ? (
+                <HtmlTooltip
+                  title={
+                    <>
+                      <Typography color="inherit">
+                        <strong>Why you can’t see it all?</strong>
+                      </Typography>
+                      <Typography color="inherit">
+                        Personal information such as name or contact details can
+                        lead to a bias towards the origin of the person. This
+                        information is not relevant to assessing skills and work
+                        experience. We encourage you to participate in the
+                        process. However, if you would like to know more, you
+                        can click the button. This action will be shared with
+                        the platform.
+                      </Typography>
+                    </>
+                  }
+                >
+                  <Button
+                    variant="outlined"
+                    onClick={handelShowHidden}
+                    disabled={viewHidden}
+                    sx={{
+                      textTransform: "none",
+                      marginBottom: { xs: "10px", md: "0" },
+                    }}
+                  >
+                    Show all
+                  </Button>
+                </HtmlTooltip>
+              ) : (
                 <Button
                   variant="outlined"
                   onClick={handelShowHidden}
+                  disabled={viewHidden}
                   sx={{
                     textTransform: "none",
                     marginBottom: { xs: "10px", md: "0" },
@@ -325,7 +340,8 @@ export default function ProfilePreview({candidateId=0, matchPercent=90}) {
                 >
                   Show all
                 </Button>
-              </HtmlTooltip>
+              )}
+
               <Button
                 onClick={handleContactCandidate}
                 variant="contained"

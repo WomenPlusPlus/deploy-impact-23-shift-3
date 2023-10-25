@@ -61,7 +61,7 @@ const ViewCv: React.FC<ViewCvProps> = ({
             width="100%"
             height="100%"
           >
-            <p>unable to view the pdf</p>
+            <p>We were not able to display the selected file.</p>
 
           </object>
         </Box>

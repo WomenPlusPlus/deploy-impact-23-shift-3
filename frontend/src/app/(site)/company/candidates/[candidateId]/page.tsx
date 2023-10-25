@@ -2,7 +2,6 @@
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { Suspense } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Typography from "@mui/material/Typography";
 import { useContext } from "react";
@@ -22,6 +21,7 @@ type Params = {
 export default function UserProfilePage({ params: { candidateId } }: Params) {
   const signInContext = useContext(SignInProviderContext);
   const companyId = signInContext.auth?.user?.id || 1;
+  
 
   return (
     <>

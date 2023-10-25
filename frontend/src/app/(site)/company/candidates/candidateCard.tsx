@@ -3,8 +3,10 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+//import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+//import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import React from "react";
@@ -73,9 +75,11 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               fontWeight: "500",
               lineHeight: "20px",
               letterSpacing: "0.1",
+              minWidth:"90px"
+
             }}
           >
-            {candidate.full_match_score}% match
+            {Math.round(candidate.full_match_score)}% match
           </div>
         </CardContent>
         <CardContent
@@ -231,13 +235,13 @@ export const CandidateCard: React.FC<CandidateProps> = ({
         >
           <div>
             <IconButton aria-label="Chat">
-              <ChatBubbleIcon />
+              <ChatBubbleOutlineIcon />
             </IconButton>
             <IconButton aria-label="Favorite">
-              <FavoriteIcon />
+              <FavoriteBorderIcon />
             </IconButton>
           </div>
-          <Link href={`/company/candidates/${candidate.id}`}>
+          <Link href={`/company/candidates/${candidate.id}/`}>
             <Button
               type="submit"
               //onClick={() => handleViewProfileClick(candidate.id)}

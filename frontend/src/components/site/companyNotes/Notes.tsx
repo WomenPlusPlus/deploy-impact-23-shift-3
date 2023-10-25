@@ -31,7 +31,7 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
   return (
     <Paper sx={{ px: 3, py: 3, borderRadius: "16px", mb: 3 }} elevation={0}>
       <Grid container>
-        <Grid item md={10}>
+        <Grid item md={10} sm={12}>
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             Notes and comments
           </Typography>
@@ -41,8 +41,8 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
             by the candidate.
           </Typography>
         </Grid>
-        <Grid item md={2}>
-          <Stack direction="row" spacing={1} sx={{float:"right"}}>
+        <Grid item md={2} sm={12}>
+          <Stack direction="row" spacing={1} sx={{float:{md:"right", sm:"none"}}}>
             <ChatBubbleOutlineIcon />{" "}
             <Typography
               sx={{ display: "inline-block", verticalAlign: "bottom" }}
@@ -51,8 +51,8 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item md={12} sx={{ borderBottom: "1px solid lightgrey", mb: 2 }}>
-          <Box sx={{ my: 2 }} onSubmit={handleSubmit} component="form">
+        <Grid item xs={12} sx={{ borderBottom: "1px solid lightgrey", mb: 2 }}>
+          <Box sx={{ my: 2}} onSubmit={handleSubmit} component="form">
             <TextField
               required
               multiline
@@ -68,7 +68,7 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
             />
 
             <Button
-              sx={{ float: "right", my: 3, textTransform: "none" }}
+              sx={{ float:{md:"right",sm:"none"} , my: 3, textTransform: "none" }}
               type="submit"
               variant="outlined"
               size="small"
@@ -77,7 +77,7 @@ const Notes: React.FC<NotesProps> = ({ candidate_id, company_id }) => {
             </Button>
           </Box>
         </Grid>
-        <Grid item>
+        <Grid item sm={12}>
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             All comments
           </Typography>
