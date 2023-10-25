@@ -12,7 +12,6 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
-import { useRouter } from "next/navigation";
 
 interface CandidateProps {
   candidate: CandidateForJobList;
@@ -27,10 +26,6 @@ const capitalizeWords = (str: string) => {
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
 }: CandidateProps) => {
-  const router = useRouter();
-  const handleViewProfileClick = (candidate_id: string) => {
-    router.replace(`/company/candidates/${candidate_id}`);
-  };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
