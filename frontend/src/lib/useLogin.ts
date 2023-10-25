@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
 import { useRouter } from "next/navigation";
+import API_BASE_URL from "@/config";
 
 interface Credentials {
   email: string;
@@ -13,6 +14,9 @@ interface LoginResponse {
   expires_at: string;
   expires_in: string;
   id: string;
+  first_name?: string;
+  last_name?: string;
+  preferred_name?: string;
   last_sign_in_a: string;
   role: string;
   token_type: string;
@@ -25,16 +29,13 @@ export const useLogin = (): [
   const router = useRouter();
   const mutation = useMutation({
     mutationFn: async (credentials: Credentials) => {
-      const response = await fetch(
-        "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
+      const response = await fetch(`${API_BASE_URL}/api/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(credentials),
+      });
       if (response.status === 500) {
         throw new Error("Login failed")!;
       }
@@ -55,7 +56,12 @@ export const useLogin = (): [
       signInContext.setAuth({
         authenticated: true,
         access_token: response.access_token,
-        user: { id: response.id },
+        user: {
+          id: response.id,
+          first_name: response.first_name,
+          preferred_name: response.preferred_name,
+          last_name: response.last_name,
+        },
         role: response.role,
       });
 
@@ -64,7 +70,7 @@ export const useLogin = (): [
       } else if (response.role === "association_user") {
         router.push("/association/profile");
       } else if (response.role === "company_user") {
-        router.push("/company/profile");
+        router.push("/company/candidates");
       }
     },
   });
