@@ -22,9 +22,15 @@ interface HeaderProps {
 }
 
 export default function SubHeader(props: HeaderProps) {
-  const pathName = usePathname();
-  console.log('pathname', pathName);
-  
+  let pathName = "";
+  const fullPath = usePathname();
+  const pathArray = fullPath.split("/");
+
+  if (pathArray.length >3){
+     pathName = `/${pathArray[1]}/${pathArray[2]}`;
+  }else{
+    pathName = fullPath
+  }
 
   const { sections } = props;
 
