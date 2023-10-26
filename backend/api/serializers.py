@@ -6,6 +6,11 @@ from api.matching_algorithm import get_free_text_match
 from api.tokenization import tokenize_data
 
 
+HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
+SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
+FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
+
+
 # Serializers define the API representation.
 class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -91,10 +96,6 @@ class CandidatesSerializer(serializers.ModelSerializer):
             if headers["Hide-Matches"] == "true":
                 return "Hide-Matches set to true"
 
-        HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
-        SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
-        FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
-
         req = self.context.get("request")
         job_id = req.path.split("/")[-2]
         try:
@@ -106,7 +107,7 @@ class CandidatesSerializer(serializers.ModelSerializer):
         candidate_soft_skills = list(
             candidate.soft_skill_test_matching.values_list("soft_skill_id", flat=True)
         )
-        xcandidate_hard_skills = list(
+        candidate_hard_skills = list(
             candidate.hard_skill_test_matching.values_list("skill_id", flat=True)
         )
         candidate_embeddings = candidate.aboutme_embedded
@@ -116,7 +117,7 @@ class CandidatesSerializer(serializers.ModelSerializer):
         jobs = instance.matches
         for job in jobs:
             soft_skills_match = job.get_match_percentage(candidate_soft_skills, "soft")
-            hard_skills_match = job.get_match_percentage(xcandidate_hard_skills, "hard")
+            hard_skills_match = job.get_match_percentage(candidate_hard_skills, "hard")
             free_text_match = get_free_text_match(
                 job_embeddings=job.description_embedded,
                 candidate_embeddings=candidate_embeddings,
@@ -265,10 +266,6 @@ class JobsSerializer(serializers.ModelSerializer):
         if "Hide-Matches" in headers:
             if headers["Hide-Matches"] == "true":
                 return "Hide-Matches set to true"
-
-        HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
-        SOFT_SKILL_PERCENTAGE = float(os.environ["SOFT_SKILL_PERCENTAGE"])
-        FREE_TEXT_PERCENTAGE = float(os.environ["FREE_TEXT_PERCENTAGE"])
 
         job = instance
         job_soft_skills = list(
