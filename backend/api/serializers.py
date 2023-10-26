@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from api.models import *
 from rest_framework import serializers
 import os
-from api.matching_algorithm import get_free_text_match
-from api.tokenization import tokenize_data
+from backend.api.matching_algorithm import get_free_text_match 
+from backend.api.tokenization_n_embedding import generate_embeddings
 
 
 # Serializers define the API representation.
@@ -81,7 +81,7 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        data["aboutme_embedded"] = tokenize_data(data["about_me"])
+        data["aboutme_embedded"] = generate_embeddings(data["about_me"])
 
         return data
 
@@ -256,7 +256,7 @@ class JobsSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        data["description_embedded"] = tokenize_data(data["raw_description"])
+        data["description_embedded"] = generate_embeddings(data["raw_description"])
 
         return data
 
