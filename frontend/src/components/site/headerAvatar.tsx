@@ -12,15 +12,15 @@ interface HeaderAvatarProps {
   last_name: string;
   preferred_name: string;
   display_name: string;
+  onLogout: () => void;
 }
-
-const settings = ["Logout"]; //add more options if needed
 
 export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   first_name,
   last_name,
   preferred_name,
   display_name,
+  onLogout,
 }) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -29,11 +29,15 @@ export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   const router = useRouter();
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    router.push('/login')
   };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    onLogout();
+    router.push("/login");
   };
 
   return (
@@ -75,11 +79,9 @@ export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
+        <MenuItem onClick={handleLogout}>
+          <Typography textAlign="center">logout</Typography>
+        </MenuItem>
       </Menu>
     </Stack>
   );
