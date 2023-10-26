@@ -2,8 +2,9 @@ from django.contrib.auth.models import User
 from api.models import *
 from rest_framework import serializers
 import os
-from api.matching_algorithm import get_free_text_match
-from api.tokenization import tokenize_data
+from api.matching_algorithm import get_free_text_match 
+from api.tokenization_n_embedding import generate_embeddings
+from api.skill_extractor import extract_skills
 
 
 HARD_SKILL_PERCENTAGE = float(os.environ["HARD_SKILL_PERCENTAGE"])
@@ -80,13 +81,14 @@ class CandidatesSerializer(serializers.ModelSerializer):
         exclude = (
             "hard_skill_test_matching",
             "soft_skill_test_matching",
-            "aboutme_embedded",
-            "experience_abedded",
+            "aboutme_experinece_embedded",
+            #"experience_abedded",
         )
         many = True
 
     def validate(self, data):
-        data["aboutme_embedded"] = tokenize_data(data["about_me"])
+        data["soft_skills"], data ["hard_skills"] = extract_skills(data["about_me"]+'\n'+data["experience"])
+        data["aboutme_experinece_embedded"] = generate_embeddings(data["about_me"]+'\n'+data["experience"])
 
         return data
 
@@ -110,7 +112,7 @@ class CandidatesSerializer(serializers.ModelSerializer):
         candidate_hard_skills = list(
             candidate.hard_skill_test_matching.values_list("skill_id", flat=True)
         )
-        candidate_embeddings = candidate.aboutme_embedded
+        candidate_embeddings = candidate.aboutme_experinece_embedded
 
         match_percentages = {}
 
@@ -257,7 +259,8 @@ class JobsSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        data["description_embedded"] = tokenize_data(data["raw_description"])
+        data["soft_skills"], data ["hard_skills"] = extract_skills(data["raw_description"])
+        data["description_embedded"] = generate_embeddings(data["raw_description"])
 
         return data
 
