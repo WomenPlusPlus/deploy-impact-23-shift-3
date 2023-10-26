@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from api.models import *
 from rest_framework import serializers
 import os
-from api.matching_algorithm import get_free_text_match 
+from api.matching_algorithm import get_free_text_match
 from api.tokenization_n_embedding import generate_embeddings
 from api.skill_extractor import extract_skills
 
@@ -82,13 +82,17 @@ class CandidatesSerializer(serializers.ModelSerializer):
             "hard_skill_test_matching",
             "soft_skill_test_matching",
             "aboutme_experinece_embedded",
-            #"experience_abedded",
+            # "experience_abedded",
         )
         many = True
 
     def validate(self, data):
-        data["soft_skills"], data ["hard_skills"] = extract_skills(data["about_me"]+'\n'+data["experience"])
-        data["aboutme_experinece_embedded"] = generate_embeddings(data["about_me"]+'\n'+data["experience"])
+        data["soft_skills"], data["hard_skills"] = extract_skills(
+            data["about_me"] + "\n" + data["experience"]
+        )
+        data["aboutme_experinece_embedded"] = generate_embeddings(
+            data["about_me"] + "\n" + data["experience"]
+        )
 
         return data
 
@@ -259,7 +263,9 @@ class JobsSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        data["soft_skills"], data ["hard_skills"] = extract_skills(data["raw_description"])
+        data["soft_skills"], data["hard_skills"] = extract_skills(
+            data["raw_description"]
+        )
         data["description_embedded"] = generate_embeddings(data["raw_description"])
 
         return data
@@ -286,7 +292,7 @@ class JobsSerializer(serializers.ModelSerializer):
             hard_skills_match = candidate.get_match_percentage(job_hard_skills, "hard")
             free_text_match = get_free_text_match(
                 job_embeddings=job.description_embedded,
-                candidate_embeddings=candidate.aboutme_embedded,
+                candidate_embeddings=candidate.aboutme_experinece_embedded,
             )
 
             match_percentages[candidate.candidate_id] = {
