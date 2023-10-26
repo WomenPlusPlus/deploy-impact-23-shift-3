@@ -87,11 +87,19 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        data["soft_skills"], data["hard_skills"] = extract_skills(
-            data["about_me"] + "\n" + data["experience"]
-        )
+        (
+            data["soft_skill_test_matching"],
+            data["hard_skill_test_matching"],
+        ) = extract_skills(data["about_me"] + "\n" + data["experience"])
         data["aboutme_experinece_embedded"] = generate_embeddings(
             data["about_me"] + "\n" + data["experience"]
+        )
+
+        data["soft_skill_test_matching"] = SoftSkills.objects.filter(
+            soft_skill_name__in=data["soft_skill_test_matching"]
+        )
+        data["hard_skill_test_matching"] = Skills.objects.filter(
+            skill_name__in=data["hard_skill_test_matching"]
         )
 
         return data
@@ -192,14 +200,14 @@ class PersonalitiesSerializer(serializers.HyperlinkedModelSerializer):
         many = True
 
 
-class SkillsSerializer(serializers.HyperlinkedModelSerializer):
+class SkillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skills
         fields = "__all__"
         many = True
 
 
-class SoftSkillsSerializer(serializers.HyperlinkedModelSerializer):
+class SoftSkillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SoftSkills
         fields = "__all__"
@@ -242,14 +250,11 @@ class AvailableCompanyDomainsSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class JobsSerializer(serializers.ModelSerializer):
-    hard_skills = serializers.StringRelatedField(
-        many=True,
-        source="hard_skill_test_matching",
+    hard_skills = HardSkillsNamesSerializer(
+        source="hard_skill_test_matching", many=True
     )
-
-    soft_skills = serializers.StringRelatedField(
-        many=True,
-        source="soft_skill_test_matching",
+    soft_skills = SoftSkillsNamesSerializer(
+        source="soft_skill_test_matching", many=True
     )
 
     matches = serializers.SerializerMethodField(
@@ -268,10 +273,19 @@ class JobsSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        data["soft_skills"], data["hard_skills"] = extract_skills(
-            data["raw_description"]
-        )
+        (
+            data["soft_skill_test_matching"],
+            data["hard_skill_test_matching"],
+        ) = extract_skills(data["raw_description"])
+
         data["description_embedded"] = generate_embeddings(data["raw_description"])
+
+        data["soft_skill_test_matching"] = SoftSkills.objects.filter(
+            soft_skill_name__in=data["soft_skill_test_matching"]
+        )
+        data["hard_skill_test_matching"] = Skills.objects.filter(
+            skill_name__in=data["hard_skill_test_matching"]
+        )
 
         return data
 
@@ -280,6 +294,16 @@ class JobsSerializer(serializers.ModelSerializer):
         if "Hide-Matches" in headers:
             if headers["Hide-Matches"] == "true":
                 return "Hide-Matches set to true"
+
+        print(self.context.get("request"))
+        req = self.context.get("request")
+        job_id = req.path.split("/")
+        job_id = job_id[-2] if job_id[-1] == "" else job_id[-1]
+
+        try:
+            job_id = int(job_id)
+        except Exception:
+            return "Match only available when calling with Job or Company ID"
 
         job = instance
         job_soft_skills = list(

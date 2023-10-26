@@ -22,4 +22,8 @@ def get_free_text_match(
     """
     if (candidate_embeddings) == None or (job_embeddings) == None:
         return 0
+
+    if type(candidate_embeddings) == str or type(job_embeddings) == str:
+        return 0
+
     return cosine_similarity(candidate_embeddings, job_embeddings)[0][0]
