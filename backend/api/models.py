@@ -102,8 +102,8 @@ class Candidates(models.Model):
     soft_skills = models.TextField()
     gender = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     ethnicity = models.IntegerField(blank=True, null=True)
-    aboutme_embedded = models.TextField(blank=True, null=True)
-    experience_abedded = models.TextField(blank=True, null=True)
+    aboutme_experinece_embedded = models.TextField(blank=True, null=True)
+    #experience_abedded = models.TextField(blank=True, null=True)
 
     # desired_job = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     # personality_description = models.TextField(blank=True, null=True)

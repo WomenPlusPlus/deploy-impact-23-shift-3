@@ -37,7 +37,7 @@ def generate_embeddings(text: str, model_name: str=MODEL_NAME) -> List[List]:
     
     Returns
     -------------
-    A tensor list with text embedding in accordance to the chosen model.
+    A tensor list with text embedding in accordance to the chosen model
     '''
     model = AutoModel.from_pretrained(model_name)
     text_tokens = tokenize_text(text)
