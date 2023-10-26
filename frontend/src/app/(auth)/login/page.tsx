@@ -11,12 +11,12 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-
 import { FormEvent, MouseEvent, useState } from "react";
 import Link from "@mui/material/Link";
 import LinksSection from "@/app/(auth)/privacyLinks";
 import Button from "@mui/material/Button";
 import { useLogin } from "@/lib/useLogin";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +34,13 @@ export default function Login() {
       password: password,
     };
     login(data);
+  };
+  const router = useRouter();
+  const handleForgotPasswordClick = () => {
+    router.replace("/forgot");
+  };
+  const handleCanNotLogInClick = () => {
+    router.replace("/signup");
   };
 
   return (
@@ -81,12 +88,13 @@ export default function Login() {
       </Box>
       <Box sx={{ paddingBottom: 1.5, fontSize: "16px" }}>
         <Link
-          href="/forgot"
+          onClick={handleForgotPasswordClick}
           sx={{
             textDecoration: "underline",
             color: "#14366F",
             paddingTop: "12px",
             paddingBottom: "12px",
+            cursor: "pointer",
           }}
         >
           Forgot password?
@@ -100,7 +108,10 @@ export default function Login() {
           colour: "#14366F",
         }}
       >
-        <Link href={"/signup"} sx={{ fontSize: "16px", marginRight: 4 }}>
+        <Link
+          onClick={handleCanNotLogInClick}
+          sx={{ fontSize: "16px", marginRight: 4, cursor: "pointer" }}
+        >
           Can't Log in?
         </Link>
         <Button

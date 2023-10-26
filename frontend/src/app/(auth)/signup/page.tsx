@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -27,13 +28,19 @@ export default function Signup() {
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
       email: email,
       password: password,
     };
+  };
+  const router = useRouter();
+  const handleLoginClick = () => {
+    router.replace("/login");
+  };
+  const handleCanNotSignInClick = () => {
+    router.replace("/information");
   };
   return (
     <Box
@@ -118,13 +125,21 @@ export default function Signup() {
       <Box sx={{ paddingTop: 3, display: "flex", alignItems: "center" }}>
         <Typography sx={{ fontSize: "16px" }}>Already on SHIFT?</Typography>
         <Link
-          href={"/login"}
-          sx={{ fontSize: "16px", color: "#14366F", marginLeft: 2 }}
+          onClick={handleLoginClick}
+          sx={{
+            fontSize: "16px",
+            color: "#14366F",
+            marginLeft: 2,
+            cursor: "pointer",
+          }}
         >
           Log in
         </Link>
         <Box sx={{ marginLeft: "auto" }}>
-          <Link href={"/information"} sx={{ fontSize: "16px" }}>
+          <Link
+            onClick={handleCanNotSignInClick}
+            sx={{ fontSize: "16px", cursor: "pointer" }}
+          >
             Can't Sign in?
           </Link>
         </Box>

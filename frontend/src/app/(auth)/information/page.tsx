@@ -17,7 +17,13 @@ export default function Information() {
     >
       <Box sx={{ paddingBottom: 1.5 }}>
         <Typography sx={{ fontSize: "20px" }}>
-          <h4>What steps should I follow if I want to use the platform?</h4>
+          <Typography>
+            Our platform is exclusively for invited users. To gain access,
+            you'll need to be invited by our association. Once you receive an
+            invitation email, simply follow the link to the signup page, where
+            you can create your password and start enjoying the benefits of our
+            platform.
+          </Typography>
         </Typography>
       </Box>
     </Box>

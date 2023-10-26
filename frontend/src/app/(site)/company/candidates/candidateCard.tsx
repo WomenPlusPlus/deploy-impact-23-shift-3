@@ -141,9 +141,10 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
+              minHeight: "40px",
             }}
           >
-            {candidate.about_me}
+            {candidate.about_me ? candidate.about_me : <>&nbsp;</>}
           </Typography>
         </CardContent>
         <CardContent>
@@ -155,11 +156,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
             flexDirection={"row"}
             gap={"4px"}
           >
-            <Stack
-              maxWidth={"48%"}
-              justifyContent={"center"}
-              textAlign={"center"}
-            >
+            <Stack width={"50%"} justifyContent={"center"} textAlign={"center"}>
               <Typography
                 sx={{
                   fontSize: "12px",
@@ -184,8 +181,8 @@ export const CandidateCard: React.FC<CandidateProps> = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                {candidate.hard_skills}
-                {candidate.soft_skills}
+                {candidate.hard_skills ? candidate.hard_skills.join(", ") : " "}
+                {candidate.soft_skills ? candidate.soft_skills.join(", ") : " "}
               </Typography>
             </Stack>
             <Divider orientation={"vertical"} flexItem />
