@@ -28,6 +28,11 @@ export default function Header(props: HeaderProps) {
   const last_name = loggedInUser?.last_name || "last";
   const preferred_name = loggedInUser?.preferred_name || "preferred name";
   const display_name = (preferred_name) || (first_name+" "+last_name )||""; 
+  const logout = signInContext.signOut;
+
+  // console.log("trytofindlogin",logout);
+  
+  //signOut
 
   
   return (
@@ -55,7 +60,7 @@ export default function Header(props: HeaderProps) {
           <Grid item xs={6} sx={{ textAlign: "right" }}>
             <Box sx={{ mr: { md: 8, xs: 1 }, display: "inline-block" }}>
       
-              <HeaderAvatar first_name={first_name} last_name={last_name} preferred_name = {preferred_name} display_name={display_name} />
+              <HeaderAvatar first_name={first_name} last_name={last_name} preferred_name = {preferred_name} display_name={display_name} onLogout={logout} />
   
             </Box>
           </Grid>
