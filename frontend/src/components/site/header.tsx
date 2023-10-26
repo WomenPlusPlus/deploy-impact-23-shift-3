@@ -8,6 +8,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 import logo from "../../../public/images/logo.png";
+import { HeaderAvatar } from "./headerAvatar";
+//import { Suspense } from "react";
+import { useContext, useState } from "react";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 interface HeaderProps {
   initials: string;
@@ -17,6 +21,15 @@ export default function Header(props: HeaderProps) {
   //TODO: get first letter of first name, last name save to variable
   const { initials } = props;
 
+  const signInContext = useContext(SignInProviderContext);
+  const loggedInUser = signInContext.auth?.user;
+  const userId = loggedInUser?.id || 1;
+  const first_name = loggedInUser?.first_name || "first";
+  const last_name = loggedInUser?.last_name || "last";
+  const preferred_name = loggedInUser?.preferred_name || "preferred name";
+  const display_name = (preferred_name) || (first_name+" "+last_name )||""; 
+
+  
   return (
     <Paper
       elevation={3}
@@ -27,7 +40,6 @@ export default function Header(props: HeaderProps) {
         zIndex: 200,
       }}
     >
-      {/* <Paper elevation={3} sx={{ backgroundColor: "#FFFCFA"}}> */}
       <Toolbar
         sx={{
           borderColor: "divider",
@@ -42,26 +54,9 @@ export default function Header(props: HeaderProps) {
 
           <Grid item xs={6} sx={{ textAlign: "right" }}>
             <Box sx={{ mr: { md: 8, xs: 1 }, display: "inline-block" }}>
-              <Box
-                sx={{
-                  mr: 1,
-                  display: "inline-block",
-                  borderRadius: "50%",
-                  background: "#14366F",
-                  height: "32px",
-                  width: "32px",
-                  color: "white",
-                  textAlign: "center",
-                  lineHeight: "32px",
-                }}
-              >
-                <Typography sx={{ lineHeight: "32px" }}>
-                  {initials}
-                </Typography>
-              </Box>{" "}
-              <Link underline="none" color="primary" href="/login" sx={{}}>
-                Sign out
-              </Link>
+      
+              <HeaderAvatar first_name={first_name} last_name={last_name} preferred_name = {preferred_name} display_name={display_name} />
+  
             </Box>
           </Grid>
         </Grid>
