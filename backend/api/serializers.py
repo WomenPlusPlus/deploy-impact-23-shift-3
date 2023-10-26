@@ -130,9 +130,10 @@ class CandidatesSerializer(serializers.ModelSerializer):
             )
 
             match_percentages[job.job_id] = {
-                "soft_skills": soft_skills_match,
-                "hard_skills": hard_skills_match,
-                "full_match": (
+                "soft_skills_match_score": soft_skills_match,
+                "hard_skills_match_score": hard_skills_match,
+                "free_text_match_score": free_text_match,
+                "full_match_score": (
                     soft_skills_match * SOFT_SKILL_PERCENTAGE
                     + hard_skills_match * HARD_SKILL_PERCENTAGE
                     + free_text_match * FREE_TEXT_PERCENTAGE
@@ -141,23 +142,26 @@ class CandidatesSerializer(serializers.ModelSerializer):
 
         return [
             {
-                "id": candidate.job_id,
-                "name": candidate.job_title,
-                "full_match_score": match_percentages[candidate.job_id]["full_match"],
-                "hard_skills": candidate.hard_skill_test_matching.values_list(
+                "id": job.job_id,
+                "name": job.job_title,
+                "full_match_score": match_percentages[job.job_id]["full_match_score"],
+                "hard_skills": job.hard_skill_test_matching.values_list(
                     "skill_name", flat=True
                 ),
-                "soft_skills": candidate.soft_skill_test_matching.values_list(
+                "soft_skills": job.soft_skill_test_matching.values_list(
                     "soft_skill_name", flat=True
                 ),
-                "soft_skills_match_score": match_percentages[candidate.job_id][
-                    "soft_skills"
+                "soft_skills_match_score": match_percentages[job.job_id][
+                    "soft_skills_match_score"
                 ],
-                "hard_skills_match_score": match_percentages[candidate.job_id][
-                    "hard_skills"
+                "free_text_match_score": match_percentages[job.job_id][
+                    "free_text_match_score"
+                ],
+                "hard_skills_match_score": match_percentages[job.job_id][
+                    "hard_skills_match_score"
                 ],
             }
-            for candidate in jobs
+            for job in jobs
         ]
 
 
@@ -259,6 +263,7 @@ class JobsSerializer(serializers.ModelSerializer):
         exclude = (
             "soft_skill_test_matching",
             "hard_skill_test_matching",
+            "description_embedded",
         )
         many = True
 
@@ -296,9 +301,10 @@ class JobsSerializer(serializers.ModelSerializer):
             )
 
             match_percentages[candidate.candidate_id] = {
-                "soft_skills": soft_skills_match,
-                "hard_skills": hard_skills_match,
-                "full_match": (
+                "soft_skills_match_score": soft_skills_match,
+                "hard_skills_match_score": hard_skills_match,
+                "free_text_match_score": free_text_match,
+                "full_match_score": (
                     soft_skills_match * SOFT_SKILL_PERCENTAGE
                     + hard_skills_match * HARD_SKILL_PERCENTAGE
                     + free_text_match * FREE_TEXT_PERCENTAGE
@@ -310,22 +316,22 @@ class JobsSerializer(serializers.ModelSerializer):
                 "id": candidate.candidate_id,
                 "name": candidate.preferred_name,
                 "full_match_score": match_percentages[candidate.candidate_id][
-                    "full_match"
+                    "full_match_score"
                 ],
                 "preferred_name": candidate.preferred_name,
                 "about_me": candidate.about_me,
                 "hard_skills": candidate.hard_skill_test_matching.values_list(
                     "skill_name", flat=True
                 ),
-                "soft_skills": candidate.soft_skill_test_matching.values_list(
-                    "soft_skill_name", flat=True
-                ),
+                "free_text_match_score": match_percentages[candidate.candidate_id][
+                    "free_text_match_score"
+                ],
                 "notice_period": candidate.notice_period_months,
                 "soft_skills_match_score": match_percentages[candidate.candidate_id][
-                    "soft_skills"
+                    "soft_skills_match_score"
                 ],
                 "hard_skills_match_score": match_percentages[candidate.candidate_id][
-                    "hard_skills"
+                    "hard_skills_match_score"
                 ],
             }
             for candidate in candidates
