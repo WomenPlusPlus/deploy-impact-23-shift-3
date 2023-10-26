@@ -3,6 +3,7 @@ from api.models import *
 from rest_framework import serializers
 import os
 from api.matching_algorithm import get_free_text_match
+from api.tokenization import tokenize_data
 
 
 # Serializers define the API representation.
@@ -80,7 +81,8 @@ class CandidatesSerializer(serializers.ModelSerializer):
         many = True
 
     def validate(self, data):
-        print(data["about_me"])
+        data["aboutme_embedded"] = tokenize_data(data["about_me"])
+
         return data
 
     def get_matches(self, instance):
@@ -252,6 +254,11 @@ class JobsSerializer(serializers.ModelSerializer):
             "hard_skill_test_matching",
         )
         many = True
+
+    def validate(self, data):
+        data["description_embedded"] = tokenize_data(data["raw_description"])
+
+        return data
 
     def get_matches(self, instance):
         headers = self.context["request"].headers

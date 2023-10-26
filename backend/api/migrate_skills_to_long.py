@@ -56,10 +56,6 @@ def migrate_candidates_hard_skills_to_long():
     dict_soft_skills = {ss.skill_name: ss.skill_id for ss in soft_skills.iterator()}
 
     for cand, cand_skills in dict_candidates_soft_skills.items():
-        # for i in cand_skills:
-        #     if i in dict_soft_skills:
-        #         print(dict_soft_skills[i])
-
         dict_candidates_soft_skills[cand] = [
             dict_soft_skills[i] for i in cand_skills if i in dict_soft_skills
         ]
