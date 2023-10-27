@@ -1,5 +1,5 @@
 TABLE_PATH: ""
-LANGUAGE_PATH: ""
+LANGUAGE_PATH: "languages.csv"
 
 SWISS_LOCATION:
     - 'CH'
