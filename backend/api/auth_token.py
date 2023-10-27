@@ -33,9 +33,10 @@ def authenticate_access_token(token: str) -> json:
         )
     except jwt.exceptions.ExpiredSignatureError as err:
         # If jwt.decode reaches ExpiredSignatureError means the signature is valid but has expired
-        return refresh_expired_token(token)
+        # return refresh_expired_token(token)
+        return None
     except Exception as error:
-        return error
+        raise "Invalid JWT signature"
 
     return decoded_token
 
@@ -108,7 +109,6 @@ def format_token(token: json) -> json:
         case "admin":
             raise Exception("Admin not yet implemented")
 
-    print("user ## ", user)
     if user:
         id = user.user_id
         user_profile = user_profile.objects.get(pk=id).__dict__

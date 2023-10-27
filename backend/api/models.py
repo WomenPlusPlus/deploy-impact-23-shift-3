@@ -5,6 +5,7 @@ from urllib import parse as parse_url
 from django.db import models
 from django.db.models import Q
 
+
 DEFAULT_MAX_LENGTH = 255
 
 
@@ -89,7 +90,7 @@ class Candidates(models.Model):
     )
     github = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     linkedin = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
-    last_country = models.ForeignKey("Countries", on_delete=models.DO_NOTHING)
+    last_country = models.ForeignKey("Countries", on_delete=models.DO_NOTHING, blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
     education = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     location_city = models.CharField(
@@ -97,7 +98,7 @@ class Candidates(models.Model):
     )
     hard_skills = models.TextField(blank=True, null=True)
     languages = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
-    soft_skills = models.TextField()
+    soft_skills = models.TextField(blank=True, null=True)
     gender = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     ethnicity = models.IntegerField(blank=True, null=True)
     aboutme_experinece_embedded = models.TextField(blank=True, null=True)
@@ -114,7 +115,7 @@ class Candidates(models.Model):
     # country = models.ForeignKey("Countries", models.DO_NOTHING, blank=True, null=True)
     # phone_number_region = models.IntegerField(blank=True, null=True)
     # phone_number = models.IntegerField(blank=True, null=True)
-    email = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    email = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     notice_period_months = models.IntegerField(blank=True, null=True)
     # status = models.ForeignKey(
