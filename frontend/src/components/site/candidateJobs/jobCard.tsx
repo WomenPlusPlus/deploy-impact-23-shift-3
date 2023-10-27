@@ -35,7 +35,10 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
     const randomNumber = Math.floor(Math.random() * 3);
     return bgColors[randomNumber];
   }
-
+  const bg = getRandomBgColor();
+  //console.log("bg", bg);
+  const searchTerm = "search term coming soon"
+  
   return (
     <Card
       variant="outlined"
@@ -48,9 +51,11 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
             width: "100%",
             height: "188px",
             textAlign: "center",
+           // backgroundColor:`${bg || "white"}`
+            // backgroundColor:{bg}
             backgroundColor: `${
               !job_data.logo_src ? getRandomBgColor() : "white"
-            }`,
+            }`
           }}
         >
           {job_data.logo_src && (

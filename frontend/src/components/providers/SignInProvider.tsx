@@ -63,7 +63,7 @@ export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
     <SignInProviderContext.Provider
       value={{ auth, setAuth: handleAuth, signOut: handleSignOut }}
     >
-      {auth ? (
+      {isInitialized ? (
         children
       ) : (
         <Stack
