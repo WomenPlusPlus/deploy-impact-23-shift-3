@@ -2,7 +2,7 @@
 
 This folder contains the code that was used for parsing the datasets with job descriptions and candidates' profiles.
 
-On can download the dataset for candidates from [here](https://www.kaggle.com/datasets/heet9022/linkedin-dataset) and the dataset with jobs from [here](https://www.kaggle.com/datasets/andresionek/data-jobs-listings-glassdoor) and add the path to the datasets to the respective .yml files.
+One can download the dataset for candidates from [here](https://www.kaggle.com/datasets/heet9022/linkedin-dataset) and the dataset with jobs from [here](https://www.kaggle.com/datasets/andresionek/data-jobs-listings-glassdoor) and add the path to the datasets to the respective .yml files.
 
 The following logical steps are used to clean the datasets:
 * filter tech-related, Swiss-based, entry-level items
