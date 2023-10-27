@@ -66,11 +66,11 @@ export const useLogin = (): [
       });
 
       if (response.role === "candidate") {
-        router.push("/candidate/profile");
+        router.replace("/candidate/profile");
       } else if (response.role === "association_user") {
-        router.push("/association/profile");
+        router.replace("/association/profile");
       } else if (response.role === "company_user") {
-        router.push("/company/jobs");
+        router.replace("/company/jobs");
       }
     },
   });

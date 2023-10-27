@@ -2,15 +2,13 @@
 import Toolbar from "@mui/material/Toolbar";
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
-
 import HomeIcon from "@mui/icons-material/Home";
 import WorkIcon from "@mui/icons-material/Work";
 import BusinessIcon from "@mui/icons-material/Business";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export type SubHeaderSection = {
   title: string;
@@ -26,14 +24,17 @@ export default function SubHeader(props: HeaderProps) {
   const fullPath = usePathname();
   const pathArray = fullPath.split("/");
 
-  if (pathArray.length >3){
-     pathName = `/${pathArray[1]}/${pathArray[2]}`;
-  }else{
-    pathName = fullPath
+  if (pathArray.length > 3) {
+    pathName = `/${pathArray[1]}/${pathArray[2]}`;
+  } else {
+    pathName = fullPath;
   }
 
   const { sections } = props;
-
+  const router = useRouter();
+  const handleClick = (section: SubHeaderSection) => {
+    router.replace(section.url);
+  };
   return (
     <Container>
       <Toolbar
@@ -51,7 +52,7 @@ export default function SubHeader(props: HeaderProps) {
             key={section.title}
             variant="body2"
             underline="none"
-            href={section.url}
+            onClick={() => handleClick(section)}
             sx={
               section.url === pathName
                 ? {
@@ -61,6 +62,7 @@ export default function SubHeader(props: HeaderProps) {
                     borderBottom: "3px solid navy",
                     pb: 1,
                     color: "14366F",
+                    cursor: "pointer",
                   }
                 : {
                     mx: { md: 3, sm: 2, xs: 0 },
@@ -68,6 +70,7 @@ export default function SubHeader(props: HeaderProps) {
                     textAlign: "center",
                     pb: 1,
                     color: "#49454F",
+                    cursor: "pointer",
                   }
             }
           >

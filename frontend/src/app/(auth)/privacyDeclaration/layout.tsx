@@ -1,6 +1,7 @@
 export const metadata = {
-  title: "SHIFT - Association Profile",
-  description: "Shift_Enter App - Association's Profile.",
+  title: "SHIFT - User agreement, Privacy policy and Cookie Policy",
+  description:
+    "Shift_Enter App - User agreement, Privacy policy and Cookie Policy",
 };
 
 export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({
