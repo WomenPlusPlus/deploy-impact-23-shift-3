@@ -191,7 +191,7 @@ class SignupView(APIView):
         # make the request
         response_payload, status_code = gotrue_auth_request(request)
 
-        # If signup is sucessufl
+        # If signup is Sucessful
         if "user" in response_payload.keys():
             create_user_in_respective_table(request_payload, response_payload)
             apply_supabase_id_to_users_tables_and_apply_metadata(response_payload)

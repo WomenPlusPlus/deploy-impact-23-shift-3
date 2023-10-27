@@ -3,6 +3,7 @@ FROM python:3.11.6-slim as base
 WORKDIR /app
 
 ARG UID=10001
+
 RUN adduser \
     --disabled-password \
     --gecos "" \
@@ -23,9 +24,10 @@ COPY . .
 
 # Collect Django static files
 RUN python manage.py collectstatic --noinput
+RUN chmod -R 777 /app
 
 # Switch to the non-privileged user to run the application.
-# USER appuser
+USER appuser
 
 # Expose the port that the application listens on.
 EXPOSE 8000

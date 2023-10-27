@@ -12,9 +12,6 @@ from api import authentication_services
 from api.models import SupabaseIdToUserIds
 
 from api.models import (
-    Candidates,
-    AssociationUsers,
-    CompanyUsers,
     AvailableCompanyDomains,
 )
 
