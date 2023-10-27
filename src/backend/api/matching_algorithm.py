@@ -1,4 +1,5 @@
 from typing import List
+import torch
 from sklearn.metrics.pairwise import cosine_similarity
 
 
@@ -27,3 +28,9 @@ def get_free_text_match(
         return 0
 
     return cosine_similarity(candidate_embeddings, job_embeddings)[0][0]
+
+if __name__=="__main__":
+    print(int(get_free_text_match(
+    torch.tensor([[1,0,0]]),
+    torch.tensor([[-1,0,0]]),
+))==-1)

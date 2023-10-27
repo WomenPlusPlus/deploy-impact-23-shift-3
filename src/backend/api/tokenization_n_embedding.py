@@ -1,7 +1,6 @@
 import torch
 from typing import List
 from transformers import AutoTokenizer, AutoModel
-from sklearn.metrics.pairwise import cosine_similarity
 
 
 MODEL_NAME = "bert-base-uncased"
@@ -46,3 +45,6 @@ def generate_embeddings(text: str, model_name: str=MODEL_NAME) -> List[List]:
     text_embeddings = text_outputs.last_hidden_state.mean(dim=1)
     return text_embeddings
 
+if __name__=="__main__":
+    s = ""
+    print(generate_embeddings(s)[0][0].item()==-0.00922924280166626)
