@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from rest_framework import permissions
 from os import getenv, path, mkdir, environ
 from pathlib import Path
 
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # Internal apps
     "api",
+    # Admin overhaul
 ]
 
 MIDDLEWARE = [
@@ -87,11 +89,15 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "shift_3_womenpp.wsgi.application"
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "api.authentication_services.CustomTokenAuthentication",
+    ),
 }
 
 

@@ -7,6 +7,7 @@ from django.http import Http404
 
 from api import auth_token
 from rest_framework import status
+from api import authentication_services
 
 from api.models import SupabaseIdToUserIds
 
@@ -16,6 +17,8 @@ from api.models import (
     CompanyUsers,
     AvailableCompanyDomains,
 )
+
+from api.auth_models import AuthUsers
 
 
 logging.basicConfig(
@@ -138,7 +141,7 @@ def authorize_invite(jwt: json) -> bool:
     """
 
     decoded_token = auth_token.authenticate_access_token(jwt)
-    permitted_users = ["association", "admin", "service_role"]
+    permitted_users = ["association", "admin", "service_role", "association_user"]
     if "user" in decoded_token.keys():
         if decoded_token["user"]["role"] in permitted_users:
             return True
@@ -150,7 +153,7 @@ def authorize_invite(jwt: json) -> bool:
     return False
 
 
-def apply_supabase_id_to_users_tables(payload: json) -> None:
+def apply_supabase_id_to_users_tables_and_apply_metadata(payload: json) -> None:
     """Apply the id from the schema auth.auth_users to the tables public
 
     Args:
@@ -160,15 +163,10 @@ def apply_supabase_id_to_users_tables(payload: json) -> None:
     None
     """
 
-    match payload["user"]["role"]:
-        case "candidate":
-            user_model = Candidates
-        case "company_user":
-            user_model = CompanyUsers
-        case "association_user":
-            user_model = AssociationUsers
-
     role = payload["user"]["role"]
+
+    user_model = authentication_services.get_user_type(role)
+
     supabase_user_id = payload["user"]["id"]
 
     user_id = user_model.objects.filter(
@@ -179,21 +177,22 @@ def apply_supabase_id_to_users_tables(payload: json) -> None:
         supabase_authenticaiton_uuid=supabase_user_id, role=role, user_id=user_id
     ).save()
 
+    auth_user = AuthUsers.objects.get(pk=supabase_user_id)
+    metadata = auth_user.raw_user_meta_data
+    metadata["id"] = user_id
+    metadata["role"] = role
+    auth_user.save(update_fields=["raw_user_meta_data"])
+
 
 def create_user_in_respective_table(request_payload, response_payload) -> json:
-    match response_payload["user"]["role"]:
-        case "candidate":
-            user_model = Candidates
-        case "company_user":
-            user_model = CompanyUsers
-        case "association_user":
-            user_model = AssociationUsers
+    user_model = authentication_services.get_user_type(response_payload["user"]["role"])
 
     user_model.objects.create(
         first_name=request_payload["first_name"],
         last_name=request_payload["last_name"],
-        email_adress=request_payload["email"],
+        email=request_payload["email"],
         supabase_authenticaiton_uuid=response_payload["user"]["id"],
+        last_country_id=227,
     )
 
 

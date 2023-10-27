@@ -2,17 +2,19 @@ import os
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import mixins
+from rest_framework.settings import api_settings
 from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 from api import models
+from api.authentication_services import IsAssociationUser, IsCandidateUser
 import api.views_schemas as views_schemas
 
 import json
 from api import serializers as models_serializers
 from api.auth_models import AuthUsers
 from api import auth_token
-from api.models import CandidatesDocuments
+from api.models import Associations, CandidatesDocuments
 from api.services import (
-    apply_supabase_id_to_users_tables,
+    apply_supabase_id_to_users_tables_and_apply_metadata,
     authorize_invite,
     gotrue_auth_request,
     update_user_password,
@@ -21,7 +23,7 @@ from api.services import (
     is_valid_company_domain,
 )
 
-from rest_framework import serializers, viewsets, status
+from rest_framework import viewsets, status
 
 POSSIBLE_ROLES = json.loads(os.environ["POSSIBLE_ROLES"])
 SUPABASE_SERVICE_ROLE_APIKEY = os.environ["SUPABASE_SERVICE_ROLE_APIKEY"]
@@ -53,6 +55,16 @@ class AssociationsViewSet(viewsets.ModelViewSet):
 class LanguagesViewSet(viewsets.ModelViewSet):
     queryset = models.Languages.objects.all()
     serializer_class = models_serializers.LanguagesSerializer
+
+    def list(self, request, *args, **kwargs):
+        content = {
+            "user": str(request.user),
+            "auth": str(request.auth),
+        }
+        print("user", request.user, "/end")
+        print("auth", request.auth, "/end")
+
+        return super().list(request, *args, **kwargs)
 
 
 class LanguagesProficiencyViewSet(viewsets.ModelViewSet):
@@ -182,7 +194,7 @@ class SignupView(APIView):
         # If signup is sucessufl
         if "user" in response_payload.keys():
             create_user_in_respective_table(request_payload, response_payload)
-            apply_supabase_id_to_users_tables(response_payload)
+            apply_supabase_id_to_users_tables_and_apply_metadata(response_payload)
             # reformat token for FE
             response_payload = auth_token.format_token(response_payload)
 
@@ -274,6 +286,17 @@ class InviteView(APIView):
 class CandidatesViewSet(viewsets.ModelViewSet):
     queryset = models.Candidates.objects.all()
     serializer_class = models_serializers.CandidatesSerializer
+    permission_classes = [IsAssociationUser | IsCandidateUser]
+
+    def get_queryset(self):
+        user = self.request.user
+        print(user)
+        queryset = models.Candidates.objects.all()
+        if type(user) == models.Associations:
+            return queryset
+        elif type(user) == models.Candidates:
+            return queryset.filter(pk=user.pk)
+        raise "Not Allowed"
 
 
 class AvailableCompanyDomainsViewSet(viewsets.ModelViewSet):
