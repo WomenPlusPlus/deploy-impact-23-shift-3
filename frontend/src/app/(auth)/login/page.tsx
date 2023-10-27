@@ -26,7 +26,7 @@ export default function Login() {
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, loginError] = useLogin();
+  const [login, loginError, isLoading] = useLogin();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
@@ -115,6 +115,7 @@ export default function Login() {
           Can't Log in?
         </Link>
         <Button
+          disabled={isLoading}
           type="submit"
           variant="contained"
           size="large"

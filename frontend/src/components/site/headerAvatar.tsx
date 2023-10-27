@@ -4,15 +4,15 @@ import { Stack, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 interface HeaderAvatarProps {
   first_name: string;
   last_name: string;
   preferred_name: string;
   display_name: string;
-  onLogout: () => void;
 }
 
 export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
@@ -20,8 +20,8 @@ export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   last_name,
   preferred_name,
   display_name,
-  onLogout,
 }) => {
+  const { signOut } = useContext(SignInProviderContext);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -36,8 +36,8 @@ export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   };
 
   const handleLogout = () => {
-    onLogout();
-    router.push("/login");
+    signOut();
+    router.replace("/login");
   };
 
   return (
@@ -80,7 +80,7 @@ export const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
         onClose={handleCloseUserMenu}
       >
         <MenuItem onClick={handleLogout}>
-          <Typography textAlign="center">logout</Typography>
+          <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>
     </Stack>

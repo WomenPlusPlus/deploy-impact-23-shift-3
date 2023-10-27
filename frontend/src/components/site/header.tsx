@@ -1,16 +1,14 @@
 "use client";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 import logo from "../../../public/images/logo.png";
 import { HeaderAvatar } from "./headerAvatar";
-//import { Suspense } from "react";
-import { useContext, useState } from "react";
+
+import { useContext } from "react";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 interface HeaderProps {
@@ -18,23 +16,13 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  //TODO: get first letter of first name, last name save to variable
-  const { initials } = props;
-
-  const signInContext = useContext(SignInProviderContext);
-  const loggedInUser = signInContext.auth?.user;
-  const userId = loggedInUser?.id || 1;
+  const { auth } = useContext(SignInProviderContext);
+  const loggedInUser = auth?.user;
   const first_name = loggedInUser?.first_name || "first";
   const last_name = loggedInUser?.last_name || "last";
   const preferred_name = loggedInUser?.preferred_name || "preferred name";
-  const display_name = (preferred_name) || (first_name+" "+last_name )||""; 
-  const logout = signInContext.signOut;
+  const display_name = preferred_name || first_name + " " + last_name || "";
 
-  // console.log("trytofindlogin",logout);
-  
-  //signOut
-
-  
   return (
     <Paper
       elevation={3}
@@ -59,9 +47,12 @@ export default function Header(props: HeaderProps) {
 
           <Grid item xs={6} sx={{ textAlign: "right" }}>
             <Box sx={{ mr: { md: 8, xs: 1 }, display: "inline-block" }}>
-      
-              <HeaderAvatar first_name={first_name} last_name={last_name} preferred_name = {preferred_name} display_name={display_name} onLogout={logout} />
-  
+              <HeaderAvatar
+                first_name={first_name}
+                last_name={last_name}
+                preferred_name={preferred_name}
+                display_name={display_name}
+              />
             </Box>
           </Grid>
         </Grid>
