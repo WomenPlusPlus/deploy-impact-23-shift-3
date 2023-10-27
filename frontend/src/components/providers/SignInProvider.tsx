@@ -4,6 +4,7 @@ import {
   FC,
   PropsWithChildren,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { CircularProgress, Stack } from "@mui/material";
@@ -30,7 +31,7 @@ export type Authentication = {
 };
 
 type Context = {
-  auth: Authentication;
+  auth?: Authentication;
   setAuth: (auth: Authentication) => void;
   signOut: () => void;
   isLoggedIn: () => boolean;
@@ -40,21 +41,27 @@ export const SignInProviderContext = createContext<Context>(
   {} as unknown as Context,
 );
 const LOCAL_STORAGE_KEY = "womenPlusPlusAuth";
+const getStorage = (): Storage => {
+  return localStorage;
+};
 export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
-  const localStorageAuth = localStorage.getItem(LOCAL_STORAGE_KEY);
-  const initialValue = localStorageAuth
-    ? JSON.parse(localStorageAuth)
-    : {
-        authenticated: false,
-        access_token: "",
-        user: null,
-        role: undefined,
-      };
-
-  const [auth, setAuth] = useState<Authentication>(initialValue);
-
+  const [auth, setAuth] = useState<Authentication>();
+  useEffect(() => {
+    if (!auth) {
+      const localStorageAuth = getStorage().getItem(LOCAL_STORAGE_KEY);
+      const initialValue = localStorageAuth
+        ? JSON.parse(localStorageAuth)
+        : {
+            authenticated: false,
+            access_token: "",
+            user: null,
+            role: undefined,
+          };
+      setAuth(initialValue);
+    }
+  }, [auth]);
   const handleAuth = (auth: Authentication) => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(auth));
+    getStorage().setItem(LOCAL_STORAGE_KEY, JSON.stringify(auth));
     setAuth(auth);
   };
 
@@ -65,14 +72,14 @@ export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
       user: null,
       role: undefined,
     });
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    getStorage().removeItem(LOCAL_STORAGE_KEY);
   };
 
   const isLoggedIn = () => {
     if (!auth?.authenticated) {
       return false;
     }
-    //@TODO check token expiration time, ATM the token is not correct so cant test
+    //@TODO check token expiration time
     return true;
   };
 
@@ -100,7 +107,7 @@ export const Guard = ({
   role,
 }: PropsWithChildren & { role: Role }) => {
   const context = useContext(SignInProviderContext);
-  if (!context.isLoggedIn || context.auth.role !== role) {
+  if (!context.isLoggedIn || context.auth?.role !== role) {
     return (
       <Stack
         width={"100%"}
@@ -118,7 +125,7 @@ export const Guard = ({
               You are not authorized to access this page!
             </Typography>
             <Typography>Role needed: {role}.</Typography>
-            <Typography>Current role: {context.auth.role}</Typography>
+            <Typography>Current role: {context.auth?.role}</Typography>
           </CardContent>
         </Card>
       </Stack>

@@ -2,6 +2,9 @@ describe("Login page", () => {
   it("should have a form", () => {
     cy.visit("http://localhost:3000/login");
     cy.get("form").should("exist");
+    cy.get('input[id="email"]').should("exist");
+    cy.get('input[id="password"]').should("exist");
+    cy.get('button[type="submit"]').should("exist");
   });
 
   it("should fill in login form and submit, redirect to the Candidate profile", () => {
@@ -22,9 +25,19 @@ describe("Login page", () => {
     ).as("login");
     cy.intercept("");
     cy.visit("http://localhost:3000/login");
-    cy.get("#email").type(" koyoxo2385@dixiser.com");
-    cy.get("#password").type("123123");
+    cy.get("#email").type("candidate@candidate.com");
+    cy.get("#password").type("Candidate123.123");
     cy.get("form").submit();
     cy.url().should("include", "/candidate/profile");
+  });
+
+  it("should display an error message for invalid credentials", () => {
+    cy.visit("http://localhost:3000/login");
+    cy.get("#email").type("invalid@example.com");
+    cy.get("#password").type("invalidpassword");
+    cy.get("form").submit();
+    cy.get(".MuiAlert-message")
+      .should("be.visible")
+      .contains("Invalid login credentials");
   });
 });
