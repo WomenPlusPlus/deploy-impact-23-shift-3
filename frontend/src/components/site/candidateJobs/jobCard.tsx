@@ -13,36 +13,28 @@ import Chip from "@mui/material/Chip";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 
-const data = {
-  job_title: "software developer",
-  match_percent: "95",
-  job_summary:
-    "Lorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidLorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidLorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidLorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidLorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidunt orci  mauris aliquet eget gravida. Tempus vel bibendum eget felis parturient varius eget.",
-  job_type: "Internship",
-  work_model: "Remote",
-  start_on: "08/01/2024",
-  logo_src:"/images/jobs/job-1.png"
-};
+const bgColors = ["#00A8E8", "#63E5C5", "#F28808"];
 
-const data2 = {
-    job_title: "software developer",
-    match_percent: "95",
-    job_summary:
-      "Lorem ipsum dolorncidLorem ipsum dolor Aius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidLorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidLorem ipsum dolor sit amet consectetur. Venenatis varius pharetra tortor mattis purus morbi convallis feugiat sed. A tincidunt orci  mauris aliquet eget gravida. Tempus vel bibendum eget felis parturient varius eget.",
-    job_type: "Internship",
-    work_model: "Remote",
-    start_on: "08/01/2024",
-    logo_src:""
-  };
+interface JobPostTypes {
+  job_id?: number;
+  logo_src?: string;
+  job_title?: string;
+  job_type?: string;
+  match_percent?: string;
+  job_summary?: string;
+  work_model?: string;
+  start_on?: string;
+}
 
-  const bgColors = ["#00A8E8", "#63E5C5", "#F28808"];
+interface JobCardProps {
+  job_data: JobPostTypes;
+}
 
-export default function Job() {
-    function getRandomBgColor(){
-        const randomNumber = Math.floor(Math.random()*3); 
-        return bgColors[randomNumber];
-    }
-    // let bg = getRandomBgColor;
+export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
+  function getRandomBgColor() {
+    const randomNumber = Math.floor(Math.random() * 3);
+    return bgColors[randomNumber];
+  }
 
   return (
     <Card
@@ -50,26 +42,28 @@ export default function Job() {
       sx={{ borderRadius: "16px", maxWidth: "354px", height: "510px" }}
     >
       <CardMedia sx={{ height: 188, maxWidth: "360px" }}>
-        <div
-          style={{
+        <Box
+          sx={{
             position: "relative",
             width: "100%",
             height: "188px",
             textAlign: "center",
-            backgroundColor: `${!data2.logo_src?getRandomBgColor():"white"}`,
+            backgroundColor: `${
+              !job_data.logo_src ? getRandomBgColor() : "white"
+            }`,
           }}
         >
-            {data2.logo_src &&
-          (<Image
-            alt="company logo"
-            src={data2.logo_src}
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%" }} // optional
-          />)
-        }
-        </div>
+          {job_data.logo_src && (
+            <Image
+              alt="company logo"
+              src={job_data.logo_src}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%" }} // optional
+            />
+          )}
+        </Box>
       </CardMedia>
 
       <CardContent sx={{ px: { sm: 2, xs: 1 } }}>
@@ -80,11 +74,11 @@ export default function Job() {
               sx={{
                 fontWeight: "medium",
                 height: "50px",
-                overflow: "hidden !important",
-                textOverflow: "ellipsis",
+                overflow: "hidden",
+               
               }}
             >
-              {data.job_title.toUpperCase()}
+              {job_data.job_title?.toUpperCase()}
             </Typography>
           </Grid>
           <Grid item xs={4} sx={{ textAlign: "right" }}>
@@ -93,19 +87,18 @@ export default function Job() {
                 borderRadius: "10px",
                 backgroundColor: "#F6F7FB",
               }}
-              label={`${data.match_percent}% match`}
+              label={`${job_data.match_percent}% match`}
             />
           </Grid>
           <Grid item sm={12} sx={{}}>
             <Typography
               variant="body2"
               sx={{
-                maxHeight: "100px",
-                textOverflow: "ellipsis",
-                overflow: "hidden !important",
+                height: "100px",
+                overflow: "hidden",
               }}
             >
-              {data.job_summary}
+              {job_data.job_summary}
             </Typography>
           </Grid>
         </Grid>
@@ -119,7 +112,7 @@ export default function Job() {
               <strong>JOB TYPE</strong>
             </Typography>
             <Typography variant="body2" color="grey">
-              {data.job_type}
+              {job_data.job_type}
             </Typography>
           </Grid>
           <Grid
@@ -131,7 +124,7 @@ export default function Job() {
               <strong>WORK MODEL</strong>
             </Typography>
             <Typography variant="body2" color="grey">
-              {data.work_model}
+              {job_data.work_model}
             </Typography>
           </Grid>
           <Grid item xs={4} sx={{ textAlign: "center" }}>
@@ -139,7 +132,7 @@ export default function Job() {
               <strong>START ON</strong>
             </Typography>
             <Typography variant="body2" color="grey">
-              {data.start_on}
+              {job_data.start_on}
             </Typography>
           </Grid>
         </Grid>
@@ -161,4 +154,5 @@ export default function Job() {
       </CardActions>
     </Card>
   );
-}
+};
+export default JobCard;
