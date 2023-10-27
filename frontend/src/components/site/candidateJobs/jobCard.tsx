@@ -14,13 +14,13 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 
 const bgColors = ["#00A8E8", "#63E5C5", "#F28808"];
-
+const percentColors = ["#CBF6EB", "#B1F2E2", "#7DE9CE", "#63E5C5"];
 interface JobPostTypes {
   job_id?: number;
   logo_src?: string;
   job_title?: string;
   job_type?: string;
-  match_percent?: string;
+  match_percent: string;
   job_summary?: string;
   work_model?: string;
   start_on?: string;
@@ -31,14 +31,11 @@ interface JobCardProps {
 }
 
 export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
-  function getRandomBgColor() {
-    const randomNumber = Math.floor(Math.random() * 3);
-    return bgColors[randomNumber];
-  }
-  const bg = getRandomBgColor();
-  //console.log("bg", bg);
-  const searchTerm = "search term coming soon"
-  
+  const noImgBg = bgColors[Math.floor(Math.random() * 3)];
+  const chipBg =
+    percentColors[Math.ceil(Math.round(+job_data.match_percent) * 0.04) - 1];
+  const searchTerm = "search term coming soon";
+
   return (
     <Card
       variant="outlined"
@@ -51,11 +48,9 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
             width: "100%",
             height: "188px",
             textAlign: "center",
-           // backgroundColor:`${bg || "white"}`
-            // backgroundColor:{bg}
-            backgroundColor: `${
-              !job_data.logo_src ? getRandomBgColor() : "white"
-            }`
+            // backgroundColor:`${noImgBg || "white"}`
+            // backgroundColor:{noImgBg}
+            backgroundColor: `${!job_data.logo_src ? noImgBg : "white"}`,
           }}
         >
           {job_data.logo_src && (
@@ -80,7 +75,6 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
                 fontWeight: "medium",
                 height: "50px",
                 overflow: "hidden",
-               
               }}
             >
               {job_data.job_title?.toUpperCase()}
@@ -90,7 +84,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
             <Chip
               sx={{
                 borderRadius: "10px",
-                backgroundColor: "#F6F7FB",
+                backgroundColor: `${chipBg}`,
               }}
               label={`${job_data.match_percent}% match`}
             />
