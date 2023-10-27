@@ -8,7 +8,7 @@ const DATA_SOURCE_URL =
 
 export async function UpdateCandidateDetails(data: any) {
   try {
-    console.log("in patch", data);
+    console.log("in patch", data[0]);
 
     const response = await axios.patch(`${DATA_SOURCE_URL}candidates/${data[1]}/`, data[0]);
 

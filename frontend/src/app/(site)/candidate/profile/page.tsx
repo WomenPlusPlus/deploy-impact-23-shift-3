@@ -244,7 +244,7 @@ export default function ProfilePage() {
                   onChange={handleChange}
                 >
                   <MenuItem value="She/Her">She/Her</MenuItem>
-                  <MenuItem value="They/Them<">They/Them</MenuItem>
+                  <MenuItem value="They/Them">They/Them</MenuItem>
                   <MenuItem value="He/Him">He/Him</MenuItem>
                 </TextField>
               </Grid>

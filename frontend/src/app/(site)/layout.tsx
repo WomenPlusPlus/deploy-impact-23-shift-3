@@ -14,13 +14,12 @@ export const metadata = {
 const bgImg = "/images/site-background-1.png ";
 const bgImg2 = "/images/site-background-2.png ";
 
-console.log("image here", bgImg);
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <Box
       sx={{
