@@ -66,20 +66,21 @@ def generate_match_percentaged(instance: Candidates | Jobs) -> dict:
 
 
 def generate_match_output(match_percentages: dict, instance: Candidates | Jobs) -> dict:
-    return [
-        {
+    is_job = True if type(instance) == Jobs else False
+    matches_output = []
+
+    for match in instance.matches:
+        curr_match = {}
+
+        curr_match = {
             "id": match.pk,
-            "name": match.preferred_name,
             "full_match_score": match_percentages[match.pk]["full_match_score"],
-            "preferred_name": match.preferred_name,
-            "about_me": match.about_me,
             "hard_skills": match.hard_skill_test_matching.values_list(
                 "skill_name", flat=True
             ),
             "free_text_match_score": match_percentages[match.pk][
                 "free_text_match_score"
             ],
-            "notice_period": match.notice_period_months,
             "soft_skills_match_score": match_percentages[match.pk][
                 "soft_skills_match_score"
             ],
@@ -87,8 +88,17 @@ def generate_match_output(match_percentages: dict, instance: Candidates | Jobs) 
                 "hard_skills_match_score"
             ],
         }
-        for match in instance.matches
-    ]
+
+        if not is_job:
+            curr_match["job_title"] = match.job_title
+        else:
+            curr_match["preferred_name"] = match.preferred_name
+            curr_match["about_me"] = match.about_me
+            curr_match["notice_period"] = match.notice_period_months
+
+        matches_output.append(curr_match)
+
+    return matches_output
 
 
 def is_calling_just_one_job_or_candidate(req: request):

@@ -90,7 +90,9 @@ class Candidates(models.Model):
     )
     github = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     linkedin = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
-    last_country = models.ForeignKey("Countries", on_delete=models.DO_NOTHING, blank=True, null=True)
+    last_country = models.ForeignKey(
+        "Countries", on_delete=models.DO_NOTHING, blank=True, null=True
+    )
     birth_date = models.DateField(blank=True, null=True)
     education = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     location_city = models.CharField(
@@ -190,7 +192,7 @@ class Candidates(models.Model):
         ) * 100
 
     def __str__(self):
-        return f"{self.candidate_id} - {self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name}"
 
     class Meta:
         db_table = "candidates"
@@ -373,6 +375,9 @@ class Jobs(models.Model):
             if len(jobs_skills) > 0
             else 0
         ) * 100
+
+    def __str__(self):
+        return self.job_title
 
     class Meta:
         db_table = "jobs"
