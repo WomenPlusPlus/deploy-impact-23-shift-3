@@ -283,17 +283,17 @@ class InviteView(APIView):
 class CandidatesViewSet(viewsets.ModelViewSet):
     queryset = models.Candidates.objects.all()
     serializer_class = models_serializers.CandidatesSerializer
-    permission_classes = [IsAssociationUser | IsCandidateUser]
+    # permission_classes = [IsAssociationUser | IsCandidateUser]
 
-    def get_queryset(self):
-        user = self.request.user
-        print(user)
-        queryset = models.Candidates.objects.all()
-        if type(user) == models.Associations:
-            return queryset
-        elif type(user) == models.Candidates:
-            return queryset.filter(pk=user.pk)
-        raise "Not Allowed"
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     print(user)
+    #     queryset = models.Candidates.objects.all()
+    #     if type(user) == models.Associations:
+    #         return queryset
+    #     elif type(user) == models.Candidates:
+    #         return queryset.filter(pk=user.pk)
+    #     raise "Not Allowed"
 
 
 class AvailableCompanyDomainsViewSet(viewsets.ModelViewSet):
