@@ -1,10 +1,10 @@
 import { JobPostNew } from "@/app/(site)/company/jobs/types";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Stack } from "@mui/material";
+import { Popover, Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -14,12 +14,20 @@ import { useRouter } from "next/navigation";
 interface JobPostProps {
   job: JobPostNew;
 }
+
 export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
   const numberOfMatches = job.matches.length;
   const router = useRouter();
   const handleSubmit = (event: FormEvent<HTMLButtonElement>, jobId: string) => {
     event.preventDefault();
     router.replace(`/company/candidates/?jobid=${jobId}`);
+  };
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
   };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -94,7 +102,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "-webkit-box",
-              WebkitLineClamp: 2,
+              WebkitLineClamp: 4,
               WebkitBoxOrient: "vertical",
             }}
           >
@@ -224,7 +232,21 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
             <IconButton aria-label="Chat">
               <MoreVertIcon />
             </IconButton>
+            <Popover
+              open={Boolean(anchorEl)}
+              anchorEl={anchorEl}
+              onClose={handlePopoverClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            />
           </div>
+
           <Button
             type="submit"
             onClick={(event) => handleSubmit(event, job.job_id)}

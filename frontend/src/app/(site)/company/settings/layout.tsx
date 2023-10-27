@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "SHIFT - Company profile",
-  description: "Shift_Enter App - Company's Profile",
+  title: "SHIFT - Candidate - settings",
+  description: "Shift_Enter App - Company settings",
 };
 
 export default function ProfileLayout({
