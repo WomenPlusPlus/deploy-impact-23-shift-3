@@ -3,25 +3,35 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Job from "@/components/site/candidateJobs/job";
+import { SearchBar } from "@/app/(site)/company/searchBar";
+
 
 export default function MyJobsPage() {
   return (
-    <Container>
+    <Container sx={{px:{xs:0}}}>
+      <SearchBar />
+
       <Box
         sx={{
+          mt:5,
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          flexWrap:"wrap",
+          gap:"20px"
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate Jobs page
-        </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          this should show all jobs shortlisted by the candidate
-        </Typography>
-        <Typography variant="body1">Coming soon...</Typography>
+
+  <Job />
+  <Job />
+  <Job />
+  <Job />
+  <Job />
+  <Job />
+  <Job />
+  <Job />
       </Box>
     </Container>
   );
