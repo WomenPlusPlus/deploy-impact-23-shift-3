@@ -331,11 +331,11 @@ class CompanyJobsViewSet(
 
     def get_queryset(self):
         """
-        This view should return a list of all the purchases for
-        the user as determined by the username portion of the URL.
+        This view should return a list of all the jobs for
+        the company as determined by the username portion of the URL.
         """
         username = self.kwargs["company_id"]
-        return models_serializers.Jobs.objects.filter(company_id=username)
+        return models.Jobs.objects.filter(company_id=username)
 
 
 # Testing file upload
