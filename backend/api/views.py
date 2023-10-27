@@ -1,13 +1,14 @@
 import os
-from django.db import models
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import mixins
 from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
+from api import models
+import api.views_schemas as views_schemas
 
 import json
-from api import serializers as model_serializers
-from api.auth_models import AuthUsers, RefreshTokens
+from api import serializers as models_serializers
+from api.auth_models import AuthUsers
 from api import auth_token
 from api.models import CandidatesDocuments
 from api.services import (
@@ -29,110 +30,78 @@ SUPABASE_SERVICE_ROLE_APIKEY = os.environ["SUPABASE_SERVICE_ROLE_APIKEY"]
 class AuthUserViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
 
-    model_serializers.AuthUsers.objects.using("auth")
-    queryset = model_serializers.AuthUsers.objects.all()
-    serializer_class = model_serializers.AuthUserSerializer
+    AuthUsers.objects.using("auth")
+    queryset = AuthUsers.objects.all()
+    serializer_class = models_serializers.AuthUserSerializer
 
 
 class CantonsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Cantons.objects.all()
-    serializer_class = model_serializers.CantonsSerializer
+    queryset = models.Cantons.objects.all()
+    serializer_class = models_serializers.CantonsSerializer
 
 
 class CountriesViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Countries.objects.all()
-    serializer_class = model_serializers.CountriesSerializer
+    queryset = models.Countries.objects.all()
+    serializer_class = models_serializers.CountriesSerializer
 
 
 class AssociationsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Associations.objects.all()
-    serializer_class = model_serializers.AssociationsSerializer
+    queryset = models.Associations.objects.all()
+    serializer_class = models_serializers.AssociationsSerializer
 
 
 class LanguagesViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Languages.objects.all()
-    serializer_class = model_serializers.LanguagesSerializer
+    queryset = models.Languages.objects.all()
+    serializer_class = models_serializers.LanguagesSerializer
 
 
 class LanguagesProficiencyViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.LanguagesProficiency.objects.all()
-    serializer_class = model_serializers.LanguagesProficiencySerializer
+    queryset = models.LanguagesProficiency.objects.all()
+    serializer_class = models_serializers.LanguagesProficiencySerializer
 
 
 class InvitationsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Invitation.objects.all()
-    serializer_class = model_serializers.InvitationSerializer
+    queryset = models.Invitation.objects.all()
+    serializer_class = models_serializers.InvitationSerializer
 
 
 class PersonalitiesViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Personalities.objects.all()
-    serializer_class = model_serializers.PersonalitiesSerializer
+    queryset = models.Personalities.objects.all()
+    serializer_class = models_serializers.PersonalitiesSerializer
 
 
 class SkillsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Skills.objects.all()
-    serializer_class = model_serializers.SkillsSerializer
+    queryset = models.Skills.objects.all()
+    serializer_class = models_serializers.SkillsSerializer
 
 
 class SoftSkillsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.SoftSkills.objects.all()
-    serializer_class = model_serializers.SoftSkillsSerializer
+    queryset = models.SoftSkills.objects.all()
+    serializer_class = models_serializers.SoftSkillsSerializer
 
 
 class StatusViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Status.objects.all()
-    serializer_class = model_serializers.StatusSerializer
+    queryset = models.Status.objects.all()
+    serializer_class = models_serializers.StatusSerializer
 
 
 class ListValuesViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.ListValues.objects.all()
-    serializer_class = model_serializers.ListValuesSerializer
+    queryset = models.ListValues.objects.all()
+    serializer_class = models_serializers.ListValuesSerializer
 
 
 class WorkModelsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.WorkModels.objects.all()
-    serializer_class = model_serializers.WorkModelsSerializer
+    queryset = models.WorkModels.objects.all()
+    serializer_class = models_serializers.WorkModelsSerializer
 
 
 class WorkPermitsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.WorkPermits.objects.all()
-    serializer_class = model_serializers.WorkPermitsSerializer
+    queryset = models.WorkPermits.objects.all()
+    serializer_class = models_serializers.WorkPermitsSerializer
 
 
 @extend_schema_view(
-    post=extend_schema(
-        summary="User login after signup",
-        description="Use this endpoint to login your user, password or refresh token need to be sent as authentification method, if both are sent, password will be considered the valid one.",
-        request={
-            "application/json": {
-                "type": "object",
-                "properties": {
-                    "email": {"type": "string", "required": True},
-                    "password": {"type": "string"},
-                    "refresh_token": {"type": "string"},
-                },
-            },
-        },
-        responses={
-            "application/json": {
-                "type": "object",
-                "properties": {
-                    "access_token": {"type": "string"},
-                    "token_type": {"type": "string"},
-                    "expires_in": {"type": "integer"},
-                    "expires_at": {"type": "integer"},
-                    "role": {"type": "string"},
-                    "last_sign_in_at": {"type": "string"},
-                    "id": {"type": "integer"},
-                    "refresh_token": {"type": "string"},
-                    "first_name": {"type": "string"},
-                    "last_name": {"type": "string"},
-                    "preferred_name": {"type": "string"},
-                },
-            },
-        },
-        # description="Provide the company id in the url parameter and this will retrieve all the jobs associated with the company",
-    ),
+    post=extend_schema(**views_schemas.login_view_post),
 )
 class LoginView(APIView):
     def post(self, request):
@@ -303,39 +272,26 @@ class InviteView(APIView):
     ),
 )
 class CandidatesViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Candidates.objects.all()
-    serializer_class = model_serializers.CandidatesSerializer
+    queryset = models.Candidates.objects.all()
+    serializer_class = models_serializers.CandidatesSerializer
 
 
 class AvailableCompanyDomainsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.AvailableCompanyDomains.objects.all()
-    serializer_class = model_serializers.AvailableCompanyDomainsSerializer
+    queryset = models.AvailableCompanyDomains.objects.all()
+    serializer_class = models_serializers.AvailableCompanyDomainsSerializer
 
 
 @extend_schema_view(
-    retrieve=extend_schema(
-        summary="Retrieve information for a job",
-        description="""
-        Provide the job id in the url parameter and this will retrieve all the information associated with the job.
-        
-        Optional:
-          Hide-Matches: bool
-          If true, will not return the matches for faster loading
-        """,
-        parameters=[
-            OpenApiParameter("job_id", int, OpenApiParameter.PATH, required=True),
-            OpenApiParameter("Hide-Matches", bool, OpenApiParameter.HEADER),
-        ],
-    ),
+    retrieve=extend_schema(**views_schemas.jobs_views_retrieve),
 )
 class JobsViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Jobs.objects.all()
-    serializer_class = model_serializers.JobsSerializer
+    queryset = models.Jobs.objects.all()
+    serializer_class = models_serializers.JobsSerializer
 
 
 class CompaniesViewSet(viewsets.ModelViewSet):
-    queryset = model_serializers.Companies.objects.all()
-    serializer_class = model_serializers.CompaniesSerializer
+    queryset = models.Companies.objects.all()
+    serializer_class = models_serializers.CompaniesSerializer
 
 
 @extend_schema_view(
@@ -348,7 +304,7 @@ class CompanyJobsViewSet(
     mixins.ListModelMixin,
     viewsets.GenericViewSet,
 ):
-    serializer_class = model_serializers.JobsSerializer
+    serializer_class = models_serializers.JobsSerializer
 
     def get_queryset(self):
         """
@@ -356,40 +312,17 @@ class CompanyJobsViewSet(
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs["company_id"]
-        return model_serializers.Jobs.objects.filter(company_id=username)
+        return models_serializers.Jobs.objects.filter(company_id=username)
 
 
 # Testing file upload
 
 
-class Photo(models.Model):
-    id = models.AutoField(primary_key=True)
-    file = models.ImageField(upload_to="avatars")
-
-
-class PhotoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Photo
-        fields = "__all__"
-
-
 class PhotoViewSet(viewsets.ModelViewSet):
-    queryset = Photo.objects.all()
-    serializer_class = PhotoSerializer
-
-
-class FileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CandidatesDocuments
-        fields = ["file_name", "file", "description", "candidate", "created_at"]
-
-
-class RefreshTokenSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RefreshTokens
-        fields = "__all__"
+    queryset = models.Photo.objects.all()
+    serializer_class = models_serializers.PhotoSerializer
 
 
 class FileViewSet(viewsets.ModelViewSet):
     queryset = CandidatesDocuments.objects.all()
-    serializer_class = FileSerializer
+    serializer_class = models_serializers.FileSerializer
