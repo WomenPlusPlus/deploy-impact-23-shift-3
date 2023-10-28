@@ -3,21 +3,23 @@ on:
   # Triggers the workflow on push to all the branches and on pull request to the "master" or the "dev" branch
   push:
   pull_request:
-    branches: [ "master", "dev"]
+    branches: [ "master", "dev", "backend"]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  lint:
+  test-n-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
+          python-version: '3.x'
           ref: ${{ github.head_ref }}
 
       - name: Install dependencies
         run: |
           python -m pip install -r requirements_git_actions.txt
+          python -m pip install pytest
 
       - name: apply_black
         run:
@@ -29,3 +31,8 @@ jobs:
           src: "."
           jupyter: true
           version: "~= 22.0"
+
+      - name: Test with pytest
+        run: |
+          pytest
+            
