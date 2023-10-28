@@ -13,7 +13,7 @@ export async function getCandidateDetails(userId:any) {
   
   try {
     const response = await axios.get(`${DATA_SOURCE_URL}candidates/${userId}/`);
-    //console.log("candidate_data", response.data);
+    console.log("candidate_data", response.data);
 
     return response.data;
   } catch (error: any) {
