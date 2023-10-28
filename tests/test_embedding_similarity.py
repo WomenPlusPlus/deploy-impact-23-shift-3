@@ -15,7 +15,6 @@ def test_generate_embeddings():
     assert len(generate_embeddings("any text")) == 1
     assert len(generate_embeddings("any text")[0]) == 768
     assert generate_embeddings("").dtype == torch.float32
-    #assert generate_embeddings("")[0][0].item()==-0.00922924280166626
 
 def test_get_free_text_match_text():
     assert get_free_text_match(
