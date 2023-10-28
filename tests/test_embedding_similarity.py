@@ -1,10 +1,6 @@
 import torch
 import sys
 import os
-'''current = os.path.dirname(os.path.realpath('tokenization_n_embedding.py'))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-print(sys.path)'''
 from src.backend.api.tokenization_n_embedding import tokenize_text, generate_embeddings
 from src.backend.api.matching_algorithm import get_free_text_match
 
