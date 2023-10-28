@@ -1,8 +1,10 @@
+import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
+
 export interface JobPostNew {
   job_id: string;
   hard_skills: string[];
   soft_skills: string[];
-  matches: string;
+  matches: CandidateForJobList[];
   job_title: string;
   location: string;
   industry: string;
