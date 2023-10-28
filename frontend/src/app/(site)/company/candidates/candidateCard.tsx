@@ -59,6 +59,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               fontWeight: "500",
               lineHeight: "24px",
               letterSpacing: "0.15px",
+              paddingRight: "16px",
             }}
           >
             {capitalizeWords(candidate.job_title)}
