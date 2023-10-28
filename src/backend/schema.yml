@@ -1,0 +1,1389 @@
+openapi: 3.0.3
+info:
+  title: Shift Enter API
+  version: '0.12'
+  description: Welcome to shift enter!
+paths:
+  /api/associations/:
+    get:
+      operationId: api_associations_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Associations'
+          description: ''
+    post:
+      operationId: api_associations_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Associations'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Associations'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Associations'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Associations'
+          description: ''
+  /api/associations/{association_id}/:
+    get:
+      operationId: api_associations_retrieve
+      parameters:
+      - in: path
+        name: association_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this associations.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Associations'
+          description: ''
+    put:
+      operationId: api_associations_update
+      parameters:
+      - in: path
+        name: association_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this associations.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Associations'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Associations'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Associations'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Associations'
+          description: ''
+    patch:
+      operationId: api_associations_partial_update
+      parameters:
+      - in: path
+        name: association_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this associations.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAssociations'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAssociations'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAssociations'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Associations'
+          description: ''
+    delete:
+      operationId: api_associations_destroy
+      parameters:
+      - in: path
+        name: association_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this associations.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/auth_users/:
+    get:
+      operationId: api_auth_users_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthUser'
+          description: ''
+    post:
+      operationId: api_auth_users_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUser'
+          description: ''
+  /api/auth_users/{id}/:
+    get:
+      operationId: api_auth_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this auth users.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUser'
+          description: ''
+    put:
+      operationId: api_auth_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this auth users.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUser'
+          description: ''
+    patch:
+      operationId: api_auth_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this auth users.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAuthUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAuthUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAuthUser'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUser'
+          description: ''
+    delete:
+      operationId: api_auth_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this auth users.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/candidates/:
+    get:
+      operationId: api_candidates_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candidates'
+          description: ''
+    post:
+      operationId: api_candidates_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidates'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Candidates'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Candidates'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
+  /api/candidates/{candidate_id}/:
+    get:
+      operationId: api_candidates_retrieve
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
+    put:
+      operationId: api_candidates_update
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidates'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Candidates'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Candidates'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
+    patch:
+      operationId: api_candidates_partial_update
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCandidates'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCandidates'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCandidates'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
+    delete:
+      operationId: api_candidates_destroy
+      parameters:
+      - in: path
+        name: candidate_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/files/:
+    get:
+      operationId: api_files_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+          description: ''
+    post:
+      operationId: api_files_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/File'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/File'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/File'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+          description: ''
+  /api/files/{file_id}/:
+    get:
+      operationId: api_files_retrieve
+      parameters:
+      - in: path
+        name: file_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates documents.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+          description: ''
+    put:
+      operationId: api_files_update
+      parameters:
+      - in: path
+        name: file_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates documents.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/File'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/File'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/File'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+          description: ''
+    patch:
+      operationId: api_files_partial_update
+      parameters:
+      - in: path
+        name: file_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates documents.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFile'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+          description: ''
+    delete:
+      operationId: api_files_destroy
+      parameters:
+      - in: path
+        name: file_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this candidates documents.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/invitations/:
+    get:
+      operationId: api_invitations_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invitation'
+          description: ''
+    post:
+      operationId: api_invitations_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+  /api/invitations/{invitation_id}/:
+    get:
+      operationId: api_invitations_retrieve
+      parameters:
+      - in: path
+        name: invitation_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+    put:
+      operationId: api_invitations_update
+      parameters:
+      - in: path
+        name: invitation_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+    patch:
+      operationId: api_invitations_partial_update
+      parameters:
+      - in: path
+        name: invitation_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedInvitation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedInvitation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedInvitation'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+    delete:
+      operationId: api_invitations_destroy
+      parameters:
+      - in: path
+        name: invitation_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/invite/:
+    post:
+      operationId: api_invite_create
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/login/:
+    post:
+      operationId: api_login_create
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/logout/:
+    post:
+      operationId: api_logout_create
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/recover/:
+    post:
+      operationId: api_recover_create
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/signup/:
+    post:
+      operationId: api_signup_create
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/skills/:
+    get:
+      operationId: api_skills_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skills'
+          description: ''
+    post:
+      operationId: api_skills_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skills'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skills'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skills'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skills'
+          description: ''
+  /api/skills/{skill_id}/:
+    get:
+      operationId: api_skills_retrieve
+      parameters:
+      - in: path
+        name: skill_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skills.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skills'
+          description: ''
+    put:
+      operationId: api_skills_update
+      parameters:
+      - in: path
+        name: skill_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skills.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skills'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skills'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skills'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skills'
+          description: ''
+    patch:
+      operationId: api_skills_partial_update
+      parameters:
+      - in: path
+        name: skill_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skills.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSkills'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSkills'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSkills'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skills'
+          description: ''
+    delete:
+      operationId: api_skills_destroy
+      parameters:
+      - in: path
+        name: skill_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this skills.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Associations:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        main_focus:
+          type: string
+          nullable: true
+        association_id:
+          type: integer
+          readOnly: true
+      required:
+      - association_id
+      - name
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - id
+    Candidates:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        supabase_authenticaiton_uuid:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        preferred_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        values_text:
+          type: string
+          nullable: true
+        related_experience:
+          type: string
+          nullable: true
+        desired_job:
+          type: string
+          nullable: true
+          maxLength: 255
+        personality_description:
+          type: string
+          nullable: true
+        street_address:
+          type: string
+          nullable: true
+          maxLength: 255
+        house_number:
+          type: string
+          nullable: true
+          maxLength: 20
+        postal_code:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        city:
+          type: string
+          nullable: true
+          maxLength: 255
+        phone_number_region:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        phone_number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        email_adress:
+          type: string
+          maxLength: 255
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        notice_period_months:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        file_cv:
+          type: string
+          format: uri
+          nullable: true
+        preferred_work_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        accepted_privacy:
+          type: boolean
+        skip_tutorial:
+          type: boolean
+        last_update:
+          type: string
+          format: date-time
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        preferred_work_model:
+          type: string
+          format: uri
+          nullable: true
+        country:
+          type: string
+          format: uri
+          nullable: true
+        work_permit:
+          type: string
+          format: uri
+          nullable: true
+        status:
+          type: string
+          format: uri
+          nullable: true
+        invited_by:
+          type: string
+          format: uri
+      required:
+      - accepted_privacy
+      - created_at
+      - email_adress
+      - first_name
+      - invited_by
+      - last_name
+      - last_update
+      - supabase_authenticaiton_uuid
+      - url
+    File:
+      type: object
+      properties:
+        file_name:
+          type: string
+          readOnly: true
+        file:
+          type: string
+          format: uri
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        candidate:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - file
+      - file_name
+    Invitation:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        association:
+          $ref: '#/components/schemas/Associations'
+        validation_string:
+          type: string
+        company_invite:
+          type: boolean
+          nullable: true
+        invitation_created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - association
+      - invitation_created_at
+      - url
+      - validation_string
+    PatchedAssociations:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        main_focus:
+          type: string
+          nullable: true
+        association_id:
+          type: integer
+          readOnly: true
+    PatchedAuthUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          nullable: true
+          maxLength: 255
+    PatchedCandidates:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        supabase_authenticaiton_uuid:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        preferred_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        values_text:
+          type: string
+          nullable: true
+        related_experience:
+          type: string
+          nullable: true
+        desired_job:
+          type: string
+          nullable: true
+          maxLength: 255
+        personality_description:
+          type: string
+          nullable: true
+        street_address:
+          type: string
+          nullable: true
+          maxLength: 255
+        house_number:
+          type: string
+          nullable: true
+          maxLength: 20
+        postal_code:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        city:
+          type: string
+          nullable: true
+          maxLength: 255
+        phone_number_region:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        phone_number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        email_adress:
+          type: string
+          maxLength: 255
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        notice_period_months:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        file_cv:
+          type: string
+          format: uri
+          nullable: true
+        preferred_work_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        accepted_privacy:
+          type: boolean
+        skip_tutorial:
+          type: boolean
+        last_update:
+          type: string
+          format: date-time
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        preferred_work_model:
+          type: string
+          format: uri
+          nullable: true
+        country:
+          type: string
+          format: uri
+          nullable: true
+        work_permit:
+          type: string
+          format: uri
+          nullable: true
+        status:
+          type: string
+          format: uri
+          nullable: true
+        invited_by:
+          type: string
+          format: uri
+    PatchedFile:
+      type: object
+      properties:
+        file_name:
+          type: string
+          readOnly: true
+        file:
+          type: string
+          format: uri
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        candidate:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedInvitation:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        association:
+          $ref: '#/components/schemas/Associations'
+        validation_string:
+          type: string
+        company_invite:
+          type: boolean
+          nullable: true
+        invitation_created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedSkills:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        skill_name:
+          type: string
+          maxLength: 255
+    Skills:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        skill_name:
+          type: string
+          maxLength: 255
+      required:
+      - skill_name
+      - url
+  securitySchemes:
+    basicAuth:
+      type: https
+      scheme: basic
+    cookieAuth:
+      type: Authorization
+      in: cookie
+      name: sessionid
