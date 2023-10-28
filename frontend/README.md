@@ -80,10 +80,10 @@ After installation, follow these steps to build and deploy the app:
 
 2. Build the app:
 ```bash
-gcloud builds submit --tag gcr.io/enter-400508/nextjsapp --project enter-400508 .
+npm run gcbuild 
 ```
 
 3. Deploy the app:
 ```bash
-gcloud run deploy nextjsapp --image gcr.io/enter-400508/nextjsapp  --project enter-400508
+npm run gcdeploy
 ```

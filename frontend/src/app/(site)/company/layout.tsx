@@ -1,10 +1,7 @@
+"use client";
 import SubHeader, { SubHeaderSection } from "@/components/site/subHeader";
 import Container from "@mui/material/Container";
-
-export const metadata = {
-  title: "SHIFT - Company - profile",
-  description: "Shift_Enter App - Company - Dashboard",
-};
+import { Guard } from "@/components/providers/SignInProvider";
 
 export default function CompanyLayout({
   children,
@@ -20,11 +17,11 @@ export default function CompanyLayout({
   ];
 
   return (
-    <>
+    <Guard role={"company_user"}>
       <SubHeader sections={sections} />
       <Container component="main" sx={{ mt: 6, mb: 2 }} maxWidth="lg">
         {children}
       </Container>
-    </>
+    </Guard>
   );
 }
