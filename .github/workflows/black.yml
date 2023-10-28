@@ -13,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          python-version: '3.x'
           ref: ${{ github.head_ref }}
 
       - name: Install dependencies
