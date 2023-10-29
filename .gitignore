@@ -1,3 +1,5 @@
+.DS_Store
+/.idea
 .ngnix_def.conf
 api/insert_embededs.py
 docker-compose.yml
