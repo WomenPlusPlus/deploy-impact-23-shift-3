@@ -15,13 +15,9 @@ export default function SettingsPage() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate - Settings page
+        <Typography variant="h5" component="h1" gutterBottom sx={{ mt: 1 }}>
+          Settings
         </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          this is where the candidate can update there settings
-        </Typography>
-        <Typography variant="body1">not sure what settings?</Typography>
       </Box>
     </Container>
   );

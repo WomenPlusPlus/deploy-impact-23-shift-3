@@ -27,6 +27,7 @@ import {
 import { Location, StartOn, WorkPermit } from "./visibleFields";
 import ContactForm from "../candidateContactForm/contactForm";
 import ViewCv from "./viewCv";
+import { SkillsChips } from "./chips";
 
 // MUI imports
 import Container from "@mui/material/Container";
@@ -48,8 +49,6 @@ import Snackbar from "@mui/material/Snackbar";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { usePathname } from "next/navigation";
-
-// TODO: getUser data based on user id
 
 //TODO: get percent from job match
 const matchPercent = 90;
@@ -129,7 +128,7 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
     setOpenCv(true);
   }
 
-  // -- CHIPS -- //
+  // -- CHIPS -- TODO: move all chips to chips component //
 
   const strengthsChips = missingDetails.strengths.map((i) => (
     <Chip
@@ -156,20 +155,6 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
       }}
       key={i.name}
       label={i.name + ":" + i.level}
-    />
-  ));
-
-  const skillsChips = missingDetails.skills.map((i) => (
-    <Chip
-      sx={{
-        mr: 1,
-        mb: 2,
-        borderRadius: "10px",
-        backgroundColor: "#F6F7FB",
-        boxShadow: shadow,
-      }}
-      key={i}
-      label={i}
     />
   ));
 
@@ -439,7 +424,7 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
             <Typography variant="h6" sx={{ pb: 1 }}>
               SKILLS
             </Typography>
-            <Box sx={{ mb: 1 }}>{skillsChips}</Box>
+            <Box sx={{ mb: 1 }}><SkillsChips skills={missingDetails.skills} /></Box>
           </Box>
           <Box sx={{ py: 0, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>

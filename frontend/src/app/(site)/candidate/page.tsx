@@ -18,14 +18,9 @@ export default function CandidatePage() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate Homepage
+        <Typography variant="h5" component="h1" gutterBottom sx={{ mt: 1 }}>
+          Candidate Home
         </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          Home page info goes here
-        </Typography>
-        <Typography variant="body1">Coming soon...</Typography>
-        {/* <pre>{JSON.stringify(signInContext.auth.user, null, 2)}</pre> */}
       </Box>
     </Container>
   );
