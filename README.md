@@ -180,7 +180,7 @@ For testing purposes, you can use the following user accounts with different rol
 - Role: `association user`
 
 ### Company User Flow
-This is the primary flow implemented within our application, providing company users with a seamless experience to navigate and interact with various features. Below, we outline the steps involved in the Company User Flow. You can also view a video demonstration of this flow, created from our Figma mockups, at [link to video].
+This is the primary flow implemented within our application, providing company users with a seamless experience to navigate and interact with various features. Below, we outline the steps involved in the Company User Flow. You can also view a video demonstration of this flow, created from our Figma mockups. You can watch a video [here](https://drive.google.com/drive/folders/1DOGbKKDYtFtxAk5BsUkXlfEgj-e9XOmZ).
 
 **Note:** All data in this flow is downloaded from the testing database where the testing datasets have been prepared.
 
@@ -227,7 +227,7 @@ It allows company users to efficiently manage their posted jobs and interact wit
 ### Candidate User Flow
 
 This flow outlines the user journey for candidates within our application. Candidates have specific actions and interactions designed to enhance their experience.
-For a visual demonstration of this flow based on our Figma mockups, you can watch a video [here](link to video).
+For a visual demonstration of this flow based on our Figma mockups, you can watch a video [here](https://drive.google.com/drive/folders/1DOGbKKDYtFtxAk5BsUkXlfEgj-e9XOmZ).
 
 ### Flow Steps
 
