@@ -6,37 +6,37 @@ from api.views import *
 # Define list - replace my_api_view with any view class that subclasses DRF's APIView (including Login, Logout views e.g. django-rest-knox)
 singleViews = [
     {
-        "route": "login/",
+        "route": "api/login/",
         "view": LoginView.as_view(),
         "name": "login",
     },
     {
-        "route": "signup/",
+        "route": "api/signup/",
         "view": SignupView.as_view(),
         "name": "signup",
     },
     {
-        "route": "recover/",
+        "route": "api/recover/",
         "view": RecoverView.as_view(),
         "name": "recover",
     },
     {
-        "route": "logout/",
+        "route": "api/logout/",
         "view": LogoutView.as_view(),
         "name": "logout",
     },
     {
-        "route": "invite/",
+        "route": "api/invite/",
         "view": InviteView.as_view(),
         "name": "invite",
     },
     {
-        "route": "verify/",
+        "route": "api/verify/",
         "view": SignupView.as_view(),
         "name": "invite",
     },
     {
-        "route": "company_jobs/<int:company_id>",
+        "route": "api/company_jobs/<int:company_id>",
         "view": CompanyJobsViewSet.as_view({"get": "list"}),
         "name": "companyJobs",
     },
