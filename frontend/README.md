@@ -7,10 +7,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-nex
 To learn more:[Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
 
-## Project Description
-
-[Include a brief description of your project here.]
-
 ## How to Use
 
 Before you begin, make sure you have Node.js installed. You can download it from [Node.js server](https://nodejs.org/en)
@@ -45,6 +41,25 @@ For more information: [Cypress doc](https://docs.cypress.io/guides/core-concepts
 
 Note: The app has not undergone comprehensive testing due to time constraints and our limited experience. However, we intend to follow Test-Driven Development (TDD) principles in future app development.
 
+## Deployment - technical information
+For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
+
+To deploy the app, you need to have the Google Cloud Console installed.
+
+After installation, follow these steps to build and deploy the app:
+
+1. Navigate to the required directory.
+
+2. Build the app:
+```bash
+npm run gcbuild 
+```
+
+3. Deploy the app:
+```bash
+npm run gcdeploy
+```
+
 ## Deployment
 
 The app has been successfully deployed and can be accessed at the following URL: [Shift+Enter](https://nextjsapp-iwghenktca-ew.a.run.app/)
@@ -69,21 +84,48 @@ For testing purposes, you can use the following user accounts with different rol
 - Password: `Association123.123`
 - Role: `association`
 
-## Deployment - technical information
-For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
+## Implemented flows
 
-To deploy the app, you need to have the Google Cloud Console installed.
+### Company User Flow
+This is the primary flow implemented within our application, providing company users with a seamless experience to navigate and interact with various features. Below, we outline the steps involved in the Company User Flow. You can also view a video demonstration of this flow, created from our Figma mockups, at [link to video].
 
-After installation, follow these steps to build and deploy the app:
+**Note:** All data in this flow is downloaded from the testing database where the testing datasets have been prepared.
 
-1. Navigate to the required directory.
+### Flow Steps
 
-2. Build the app:
-```bash
-npm run gcbuild 
-```
+### 1. User Log In
+Company users log in to their accounts, providing authentication.
 
-3. Deploy the app:
-```bash
-npm run gcdeploy
-```
+### 2. List of Posted Jobs
+Upon successful login, users are redirected to the list of jobs posted by the company.
+
+### 3. Preview One Job
+From the list of posted jobs, users have the option to preview details of a specific job.
+
+### 4. List of Matched Candidates
+Users can also access a list of candidates matched to the selected job.
+
+### 5. Filter Candidates
+Within the list of matched candidates, users have the ability to apply filters to refine the displayed candidates.
+
+### 6. List of All Candidates Matched
+Users can access a comprehensive list of all candidates matched to all posted jobs by the company.
+
+### 7. Preview Candidate Profile
+Within the list of candidates, users can preview the profile of a specific candidate.
+
+### 8. Un-blur Hidden Data
+Users have the option to un-blur hidden data within the candidate profiles.
+
+### 9. Preview CV
+Users can view the candidate's curriculum vitae (CV) directly from the profile.
+
+### 10. Add Comment
+Users can add comments related to a candidate's profile or qualifications.
+
+### 11. Contact the Candidate
+While the email functionality is not active, users have the option to initiate contact with a candidate.
+
+Please note that this documentation outlines the sequential steps and capabilities within the Company User Flow. 
+It allows company users to efficiently manage their posted jobs and interact with matched candidates in a user-friendly manner.
+

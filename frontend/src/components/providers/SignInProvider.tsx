@@ -8,9 +8,8 @@ import {
   useState,
 } from "react";
 import { CircularProgress, Stack } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 
 export type Role =
   | "association_user"
@@ -114,20 +113,40 @@ export const Guard = ({
         height={"100vh"}
         alignItems={"center"}
         justifyContent={"center"}
+        textAlign={"center"}
       >
-        <Card>
-          <CardContent>
+        <Stack
+          display={"flex"}
+          flexDirection={"column"}
+          sx={{ textAlign: "center" }}
+        >
+          <Stack
+            sx={{ display: "flex", justifyContent: "center", margin: "0 auto" }}
+          >
+            <Image
+              src="/images/Interdit.png"
+              alt="Image for Interdit page"
+              width={440}
+              height={375}
+            />
+          </Stack>
+          <Stack sx={{ padding: "24px" }}>
             <Typography
-              sx={{ fontSize: 14 }}
+              sx={{ fontSize: "24px", fontWeight: "400", lineHeight: "32px" }}
               color="text.secondary"
               gutterBottom
             >
-              You are not authorized to access this page!
+              Ups! It seems you are not authorized to access this page!
             </Typography>
-            <Typography>Role needed: {role}.</Typography>
-            <Typography>Current role: {context.auth?.role}</Typography>
-          </CardContent>
-        </Card>
+            <Typography
+              sx={{ fontSize: "16px", fontWeight: "400", lineHeight: "24px" }}
+            >
+              Please check your login role, you are registered as &nbsp;
+              {context.auth?.role}. Make sure you are logging into the account
+              with the correct email.
+            </Typography>
+          </Stack>
+        </Stack>
       </Stack>
     );
   }

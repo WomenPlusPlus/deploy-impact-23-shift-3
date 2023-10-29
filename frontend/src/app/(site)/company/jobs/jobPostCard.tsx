@@ -4,12 +4,17 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Popover, Stack } from "@mui/material";
+import { ListItemIcon, ListItemText, Popover, Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 interface JobPostProps {
   job: JobPostNew;
@@ -23,10 +28,10 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
     router.replace(`/company/candidates/?jobid=${jobId}`);
   };
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handlePopoverClose = () => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
   return (
@@ -229,13 +234,18 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
           }}
         >
           <div>
-            <IconButton aria-label="Chat">
+            <IconButton
+              aria-label="Chat"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
               <MoreVertIcon />
             </IconButton>
             <Popover
               open={Boolean(anchorEl)}
               anchorEl={anchorEl}
-              onClose={handlePopoverClose}
+              onClose={handleClose}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
@@ -244,7 +254,30 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
                 vertical: "top",
                 horizontal: "left",
               }}
-            />
+            >
+              <List sx={{ textAlign: "left", minWidth: "200px" }}>
+                <ListItem sx={{ "&:hover": { backgroundColor: "#C4C7D0" } }}>
+                  <ListItemIcon sx={{ minWidth: "30px", paddingRight: "8px" }}>
+                    <ModeEditOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Edit post" />
+                </ListItem>
+                <ListItem sx={{ "&:hover": { backgroundColor: "#C4C7D0" } }}>
+                  <ListItemIcon sx={{ minWidth: "30px", paddingRight: "8px" }}>
+                    <PauseOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Pause post" />
+                </ListItem>
+                <ListItem sx={{ "&:hover": { backgroundColor: "#C4C7D0" } }}>
+                  <ListItemIcon
+                    sx={{ minWidth: "30px", paddingRight: "8px", color: "red" }}
+                  >
+                    <DeleteOutlineOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText sx={{ color: "red" }} primary="Delete post" />
+                </ListItem>
+              </List>
+            </Popover>
           </div>
 
           <Button
@@ -262,7 +295,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
           >
-            {job.open ? "Open" : "Not"}
+            {"View post"}
           </Button>
         </CardContent>
       </Card>

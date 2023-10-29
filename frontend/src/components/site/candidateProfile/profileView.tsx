@@ -1,30 +1,30 @@
 "use client";
 import * as React from "react";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
 // query imports
-import { useQuery, useQueryClient, hashQueryKey } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCandidateDetails } from "@/lib/getCandidateDetails";
 
 // my imports
 import { CandidateDetailsInterface } from "./candidateInterface";
 import { missingDetails } from "./missingDetails";
 import {
-  shadow,
   HtmlTooltip,
   proceedButtons,
   ProfileAvatar,
+  shadow,
 } from "./candidateHelpers";
 import {
-  FullName,
-  Pronoun,
-  PhoneNumber,
-  Email,
-  Linkedin,
-  WebsiteUrl,
   Education,
+  Email,
+  FullName,
+  Linkedin,
+  PhoneNumber,
+  Pronoun,
+  WebsiteUrl,
 } from "./hiddenFields";
-import { Location, WorkPermit, StartOn } from "./visibleFields";
+import { Location, StartOn, WorkPermit } from "./visibleFields";
 import ContactForm from "../candidateContactForm/contactForm";
 import ViewCv from "./viewCv";
 
@@ -35,9 +35,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Skeleton from "@mui/material/Skeleton";
 import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
@@ -50,7 +48,6 @@ import Snackbar from "@mui/material/Snackbar";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { usePathname } from "next/navigation";
-import { set } from "cypress/types/lodash";
 
 // TODO: getUser data based on user id
 
@@ -208,7 +205,6 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
     }
     if (queryCandidate.status === "success") {
       setCandidateDetails(queryCandidate.data);
-      console.log("cd", queryCandidate.data);
     }
   }, [queryCandidate.status, queryCandidate.data, pathNameStart]);
 

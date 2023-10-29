@@ -8,7 +8,6 @@ import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 export default function CandidatePage() {
   const signInContext = useContext(SignInProviderContext);
-  console.log("con", signInContext);
   return (
     <Container>
       <Box

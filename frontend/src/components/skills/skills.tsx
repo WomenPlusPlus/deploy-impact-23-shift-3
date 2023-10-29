@@ -12,9 +12,6 @@ export async function getSkills() {
   try {
     // const response = await axios.get(`${DATA_SOURCE_URL}/${apiEndpoint}`)
     const response = await axios.get(`${DATA_SOURCE_URL}skills/`);
-
-    console.log("got here", response.data);
-
     return response.data;
   } catch (error: any) {
     console.log("error Catch in sills api call", error);
