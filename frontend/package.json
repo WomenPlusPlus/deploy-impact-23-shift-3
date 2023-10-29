@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "format": "npx prettier . --write",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "gcbuild": "gcloud builds submit --tag gcr.io/enter-400508/nextjsapp --project enter-400508 .",
+    "gcdeploy": "gcloud run deploy nextjsapp --image gcr.io/enter-400508/nextjsapp  --project enter-400508"
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -15,16 +18,24 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "^4.36.1",
+    "axios": "^1.5.1",
+    "fuse.js": "^6.6.2",
+    "jwt-decode": "^4.0.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@types/jwt-decode": "^3.1.0",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "cypress": "^13.3.2",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "prettier": "3.0.3",
     "typescript": "latest"
   }
 }
