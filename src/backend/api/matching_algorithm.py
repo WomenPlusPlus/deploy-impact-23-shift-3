@@ -1,3 +1,4 @@
+import json
 from typing import List
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
@@ -22,11 +23,16 @@ def get_free_text_match(
     float: a number from -1 to 1 indicating cosine similarity
 
     """
+    
+
     if (candidate_embeddings) == None or (job_embeddings) == None:
         return 0
 
-    if type(candidate_embeddings) == str or type(job_embeddings) == str:
+    if candidate_embeddings == "" or type(job_embeddings) == "":
         return 0
+    
+    candidate_embeddings = json.loads(candidate_embeddings)
+    job_embeddings = json.loads(job_embeddings)
 
     return cosine_similarity(candidate_embeddings, job_embeddings)[0][0]
 
