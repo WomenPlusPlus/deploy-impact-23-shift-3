@@ -11,6 +11,8 @@ logs/*
 **/.DS_Store
 **/__pycache__
 **/.venv
+**/*venv
+**/**venv
 **/.classpath
 **/.dockerignore
 **/.git

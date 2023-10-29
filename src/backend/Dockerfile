@@ -16,15 +16,15 @@ RUN adduser \
 RUN apt-get update && apt-get install
 RUN apt-get -y install libpq-dev gcc
 
-COPY requirements.txt requirements.txt
+COPY backend/src/backend/requirements.txt requirements.txt
 RUN  --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 
 # Copy the source code into the container.
-COPY . .
+COPY ./backend/src/backend/. .
 
-# Collect Django static files
+# # Collect Django static files
 RUN python manage.py collectstatic --noinput
-RUN chmod -R 777 /app
+RUN chmod -R 755 /app
 
 # Switch to the non-privileged user to run the application.
 USER appuser
@@ -32,4 +32,4 @@ USER appuser
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "shift_3_womenpp.wsgi:application"]
+CMD ["gunicorn", "-c", "gunicorn/gunicorn.conf.py", "shift_3_womenpp.wsgi:application"]

@@ -11,6 +11,24 @@ from api.serializer_services import (
 )
 
 
+
+class LanguagesProficiencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.LanguagesProficiency
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        return instance.language_proficiency_name
+
+
+class LanguagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Languages
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        return instance.language_name
+
 class AuthUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AuthUsers
@@ -61,6 +79,19 @@ class SoftSkillsNamesSerializer(serializers.PrimaryKeyRelatedField):
     def to_representation(self, value):
         return value.soft_skill_name
 
+class LanguagesWithProficiencyNamesSerializer(serializers.PrimaryKeyRelatedField):
+    queryset = models.LanguagesWithProficiency.objects.all()
+    name = LanguagesSerializer()
+    proficiency = LanguagesProficiencySerializer()
+
+    class Meta:
+        model = models.LanguagesWithProficiency
+        fields = "__all__"
+
+    def to_representation(self, value):
+        print(value)
+        return {"name": value.name.__str__(), "proficieny": value.proficiency.__str__()}
+
 
 class CandidatesSerializer(serializers.ModelSerializer):
     hard_skills = HardSkillsNamesSerializer(
@@ -72,6 +103,12 @@ class CandidatesSerializer(serializers.ModelSerializer):
 
     matches = serializers.SerializerMethodField(
         "get_matches", read_only=True, source="matches"
+    )
+
+    Initiatives = serializers.StringRelatedField(many=True, read_only=True)
+    preferred_work_model = serializers.StringRelatedField(read_only=True)
+    languages = LanguagesWithProficiencyNamesSerializer(
+        source="languages_linked", many=True
     )
 
     class Meta:
@@ -114,16 +151,7 @@ class CandidatesSerializer(serializers.ModelSerializer):
         return generate_match_output(match_percentages, instance)
 
 
-class LanguagesSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.Languages
-        fields = "__all__"
 
-
-class LanguagesProficiencySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.LanguagesProficiency
-        fields = "__all__"
 
 
 class InvitationSerializer(serializers.HyperlinkedModelSerializer):

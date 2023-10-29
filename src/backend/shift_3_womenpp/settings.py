@@ -17,12 +17,14 @@ from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
 ENV_FILE = find_dotenv(raise_error_if_not_found=True)
+
 load_dotenv(ENV_FILE)
 
 environ["DOC_EXPANSION"] = "none"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_ROOT = path.join(BASE_DIR, "static/")
 
 # Build folder for logging
 if not path.exists("logs"):
@@ -57,7 +59,6 @@ INSTALLED_APPS = [
     "corsheaders",
     # Internal apps
     "api",
-    # Admin overhaul
 ]
 
 MIDDLEWARE = [
@@ -98,6 +99,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "api.authentication_services.CustomTokenAuthentication",
     ),
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
 
 
@@ -125,6 +127,17 @@ DATABASES = {
         "HOST": getenv("POSTGRES_HOST"),
         "PORT": getenv("POSTGRES_PORT"),
         "OPTIONS": {"connect_timeout": 5, "options": "-c search_path=auth"},
+    },
+    "test": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": getenv("POSTGRES_DB_NAME"),
+        "USER": getenv("POSTGRES_USER_NAME"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": getenv("POSTGRES_HOST"),
+        "PORT": getenv("POSTGRES_PORT"),
+        "OPTIONS": {
+            "connect_timeout": 5,
+        },
     },
 }
 
@@ -198,6 +211,7 @@ CORS_ORIGIN_WHITELIST = (
     "http://localhost:8000",  # for localhost (Developlemt)
     "http://192.168.0.50:8000",  # for network (Development)
     "https://nextjsapp-iwghenktca-ew.a.run.app",  # Deployed app
+    # "https://localhost:80",
 )
 
 CSRF_TRUSTED_ORIGINS = [
@@ -206,6 +220,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",  # for localhost (Developlemt)
     "http://192.168.0.50:8000",  # for network (Development)
     "https://nextjsapp-iwghenktca-ew.a.run.app",  # Deployed app
+    # "https://localhost:80",
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -224,7 +239,5 @@ CORS_ALLOW_HEADERS = [
 # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Project parameters
-
-STATIC_ROOT = path.join(BASE_DIR, "static/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

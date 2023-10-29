@@ -1,6 +1,7 @@
 from typing import List
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
+from api.models import Jobs, Candidates
 
 
 def get_free_text_match(
@@ -34,3 +35,5 @@ if __name__=="__main__":
     torch.tensor([[1,0,0]]),
     torch.tensor([[-1,0,0]]),
 ))==-1)
+    
+

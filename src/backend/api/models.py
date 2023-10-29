@@ -9,6 +9,88 @@ from django.db.models import Q
 DEFAULT_MAX_LENGTH = 255
 
 
+
+class LanguagesProficiency(models.Model):
+    language_proficiency_id = models.AutoField(primary_key=True)
+    language_proficiency_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    class Meta:
+        db_table = "languages_proficiency"
+
+    def __str__(self):
+        return self.language_proficiency_name
+
+
+class Languages(models.Model):
+    language_id = models.AutoField(primary_key=True)
+    language_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    class Meta:
+        db_table = "languages"
+
+    def __str__(self):
+        return self.language_name
+
+class LanguagesWithProficiency(models.Model):
+    name = models.ForeignKey(Languages, on_delete=models.CASCADE)
+    proficiency = models.ForeignKey(LanguagesProficiency, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name.__str__() + " - " + self.proficiency.__str__()
+
+class WorkModels(models.Model):
+    preferred_work_model_id = models.AutoField(primary_key=True)
+    preferred_work_model_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    class Meta:
+        db_table = "work_models"
+
+    def __str__(self):
+        return self.preferred_work_model_name
+
+
+class Associations(models.Model):
+    association_id = models.AutoField(primary_key=True)
+    supabase_authenticaiton_uuid = models.UUIDField()
+    name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    url_homepage = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    main_focus = models.TextField(blank=True, null=True)
+    logo_url = models.CharField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    first_name = models.CharField(blank=True, null=True)
+    last_name = models.CharField(blank=True, null=True)
+    preferred_name = models.CharField(blank=True, null=True)
+
+    class Meta:
+        db_table = "associations"
+
+class Initiatives(models.Model):
+    initiative_id = models.AutoField(primary_key=True)
+    association = models.ForeignKey(Associations, models.DO_NOTHING)
+    name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    description = models.TextField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    initiative_url = models.CharField(blank=True, null=True)
+
+    class Meta:
+        db_table = "initiatives"
+
+    def __str__(self):
+        return self.name
+
+
+# class CanditatesInitiatives(models.Model):
+#     canditates_initiatives_id = models.AutoField(primary_key=True)
+#     candidate = models.ForeignKey(Candidates, models.DO_NOTHING)
+#     initiative = models.ForeignKey("Initiatives", models.DO_NOTHING)
+#     approved = models.BooleanField(blank=True, null=True)
+#     requested = models.BooleanField(blank=True, null=True)
+
+#     class Meta:
+#         db_table = "canditates_initiatives"
+
+
 class Skills(models.Model):
     skill_id = models.AutoField(primary_key=True)
     skill_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
@@ -53,22 +135,6 @@ class AssociationUsers(models.Model):
         db_table = "association_users"
 
 
-class Associations(models.Model):
-    association_id = models.AutoField(primary_key=True)
-    supabase_authenticaiton_uuid = models.UUIDField()
-    name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    url_homepage = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    main_focus = models.TextField(blank=True, null=True)
-    logo_url = models.CharField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    first_name = models.CharField(blank=True, null=True)
-    last_name = models.CharField(blank=True, null=True)
-    preferred_name = models.CharField(blank=True, null=True)
-
-    class Meta:
-        db_table = "associations"
-
 
 class Candidates(models.Model):
     candidate_id = models.AutoField(primary_key=True)
@@ -81,9 +147,10 @@ class Candidates(models.Model):
     about_me = models.TextField(blank=True, null=True)
     industry = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     experience = models.TextField(blank=True, null=True)
-    # preferred_work_model = models.ForeignKey(
-    #     "WorkModels", models.DO_NOTHING, blank=True, null=True
-    # )
+    Initiatives = models.ManyToManyField(Initiatives)
+    preferred_work_model = models.ForeignKey(
+        "WorkModels", models.DO_NOTHING, blank=True, null=True
+    )
 
     work_permission_CH = models.ForeignKey(
         "WorkPermits", models.DO_NOTHING, blank=True, null=True
@@ -100,10 +167,13 @@ class Candidates(models.Model):
     )
     hard_skills = models.TextField(blank=True, null=True)
     languages = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    languages_linked = models.ManyToManyField(LanguagesWithProficiency)
     soft_skills = models.TextField(blank=True, null=True)
     gender = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     ethnicity = models.IntegerField(blank=True, null=True)
     aboutme_experinece_embedded = models.TextField(blank=True, null=True)
+    phone_number = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    wanted_job_title = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
     # experience_abedded = models.TextField(blank=True, null=True)
 
     # desired_job = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
@@ -128,7 +198,6 @@ class Candidates(models.Model):
     #     db_comment="looking for a job, open to oferings, etc",
     # )
     # file_cv = models.FileField(upload_to="cvs/", blank=True, null=True)
-    # preferred_work_id = models.IntegerField(blank=True, null=True)
     invited_by = models.ForeignKey(
         Associations,
         models.DO_NOTHING,
@@ -208,16 +277,6 @@ class CandidatesAssociations(models.Model):
         db_table = "candidates_associations"
 
 
-class CanditatesInitiatives(models.Model):
-    canditates_initiatives_id = models.AutoField(primary_key=True)
-    candidate = models.ForeignKey(Candidates, models.DO_NOTHING)
-    initiative = models.ForeignKey("Initiatives", models.DO_NOTHING)
-    approved = models.BooleanField(blank=True, null=True)
-    requested = models.BooleanField(blank=True, null=True)
-
-    class Meta:
-        db_table = "canditates_initiatives"
-
 
 class Invitation(models.Model):
     invitation_id = models.AutoField(primary_key=True)
@@ -238,16 +297,6 @@ class Invitation(models.Model):
         db_table = "invitation"
 
 
-class Initiatives(models.Model):
-    initiative_id = models.AutoField(primary_key=True)
-    association = models.ForeignKey(Associations, models.DO_NOTHING)
-    name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    description = models.TextField(blank=True, null=True)
-    date = models.DateField(blank=True, null=True)
-    initiative_url = models.CharField(blank=True, null=True)
-
-    class Meta:
-        db_table = "initiatives"
 
 
 class Companies(models.Model):
@@ -303,7 +352,7 @@ class CompanyUsers(models.Model):
     class Meta:
         db_table = "company_users"
 
-
+ 
 class Jobs(models.Model):
     job_id = models.AutoField(primary_key=True)
     company = models.ForeignKey("Companies", models.CASCADE, blank=True, null=True)
@@ -321,6 +370,9 @@ class Jobs(models.Model):
     hard_skills = models.TextField(blank=True, null=True)
     languages = models.TextField(blank=True, null=True)
     open = models.BooleanField(default=True, blank=True, null=True)
+    work_model = models.ForeignKey(WorkModels, on_delete=models.CASCADE)
+
+
 
     soft_skill_test_matching = models.ManyToManyField(SoftSkills)
     hard_skill_test_matching = models.ManyToManyField(Skills)
@@ -328,6 +380,9 @@ class Jobs(models.Model):
 
     last_day_to_apply = models.DateField(blank=True, null=True)
     closed_at = models.DateTimeField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    job_type = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     @property
@@ -499,20 +554,7 @@ class DesiredWorkLocationCandidate(models.Model):
         db_table = "desired_work_location_candidate"
 
 
-class Languages(models.Model):
-    language_id = models.AutoField(primary_key=True)
-    language_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
 
-    class Meta:
-        db_table = "languages"
-
-
-class LanguagesProficiency(models.Model):
-    language_proficiency_id = models.AutoField(primary_key=True)
-    language_proficiency_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-
-    class Meta:
-        db_table = "languages_proficiency"
 
 
 class ListValues(models.Model):
@@ -569,13 +611,6 @@ class ValuesCandidates(models.Model):
     class Meta:
         db_table = "values_candidates"
 
-
-class WorkModels(models.Model):
-    preferred_work_model_id = models.AutoField(primary_key=True)
-    preferred_work_model_name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-
-    class Meta:
-        db_table = "work_models"
 
 
 class WorkPermits(models.Model):
