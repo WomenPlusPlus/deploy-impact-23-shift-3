@@ -16,7 +16,7 @@ import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import WorkIcon from "@mui/icons-material/Work";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
 
 interface JobPreviewInterface {
   jobPost: JobPost;
@@ -104,20 +104,21 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
           >
             Find match
           </Button>
-
-          <Button
-            type="submit"
-            variant="outlined"
-            size="large"
-            sx={{
-              textTransform: "none",
-              borderRadius: "100px",
-              color: "#74787E",
-              cursor: "pointer",
-            }}
-          >
-            Find balanced match
-          </Button>
+          <Tooltip title="When you choose a balanced match, you'll still receive the same matching score, but we'll prioritize presenting suggested candidates in a balanced way to support underrepresented groups. It's all about creating a fair and diverse hiring experience">
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              sx={{
+                textTransform: "none",
+                borderRadius: "100px",
+                color: "#74787E",
+                cursor: "pointer",
+              }}
+            >
+              Find balanced match
+            </Button>
+          </Tooltip>
         </ButtonGroup>
       </Stack>
       <Card
@@ -266,7 +267,6 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
           </Stack>
         </Stack>
       </Card>
-      <Divider sx={{ width: "100%", paddingY: "20px" }} />
     </>
   );
 };
