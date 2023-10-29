@@ -2,11 +2,11 @@ import Grid from "@mui/material/Grid";
 import React from "react";
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { JobPostNew } from "@/app/(site)/company/jobs/types";
+import { JobPost } from "@/app/(site)/company/jobs/types";
 import { JobPostCard } from "@/app/(site)/company/jobs/jobPostCard";
 
 interface JobListProps {
-  jobPosts: JobPostNew[];
+  jobPosts: JobPost[];
 }
 export const JobList: React.FC<JobListProps> = ({ jobPosts }) => {
   return (
