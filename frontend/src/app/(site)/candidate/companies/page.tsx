@@ -15,13 +15,9 @@ export default function CompaniesPage() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 5 }}>
-          Candidate - Companies Page
+        <Typography variant="h5" component="h1" gutterBottom sx={{ mt: 1 }}>
+          Companies 
         </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          this should show all companies shortlisted by the candidate
-        </Typography>
-        <Typography variant="body1">Coming soon...</Typography>
       </Box>
     </Container>
   );

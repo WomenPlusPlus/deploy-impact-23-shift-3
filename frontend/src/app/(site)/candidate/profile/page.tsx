@@ -195,7 +195,7 @@ export default function ProfilePage() {
               preferred_name={state.preferred_name}
             />
             <Button
-              sx={{ mt: 2, textTransform:"none" }}
+              sx={{ mt: 2, textTransform: "none" }}
               component="label"
               variant="outlined"
               startIcon={<UploadIcon />}
@@ -232,7 +232,7 @@ export default function ProfilePage() {
             </Box>
 
             <Grid container spacing={2}>
-              <Grid item sm={6} >
+              <Grid item sm={6}>
                 <TextField
                   select
                   required
@@ -331,40 +331,34 @@ export default function ProfilePage() {
           </Grid>
           <Grid item sm={10} xs={12}>
             <Grid container>
-            <Grid item sm={6} xs={12}>
-            <Typography>
-              <strong>Full Name</strong>
-            </Typography>
-            <Typography>{state.first_name || ""}  {state.last_name || ""}</Typography>
-          </Grid>
-          <Grid item sm={6} xs={12} sx={{pb:3}}>
-            <Typography>
-              <strong>Preferred Name</strong>
-            </Typography>
-            <Typography>{state.preferred_name || ""}</Typography>
-          </Grid>
-          <Grid item sm={6}>
-            <Typography>
-              <strong>Date of Birth</strong>
-            </Typography>
-            <Typography>{state.birth_date || ""}</Typography>
-          </Grid>
-          <Grid item sm={6}>
-            <Typography>
-              <strong>Pronoun</strong>
-            </Typography>
-            <Typography>{state.gender || ""}</Typography>
-          </Grid>
-
+              <Grid item sm={6} xs={12}>
+                <Typography>
+                  <strong>Full Name</strong>
+                </Typography>
+                <Typography>
+                  {state.first_name || ""} {state.last_name || ""}
+                </Typography>
+              </Grid>
+              <Grid item sm={6} xs={12} sx={{ pb: 3 }}>
+                <Typography>
+                  <strong>Preferred Name</strong>
+                </Typography>
+                <Typography>{state.preferred_name || ""}</Typography>
+              </Grid>
+              <Grid item sm={6}>
+                <Typography>
+                  <strong>Date of Birth</strong>
+                </Typography>
+                <Typography>{state.birth_date || ""}</Typography>
+              </Grid>
+              <Grid item sm={6}>
+                <Typography>
+                  <strong>Pronoun</strong>
+                </Typography>
+                <Typography>{state.gender || ""}</Typography>
+              </Grid>
             </Grid>
-
           </Grid>
-
-
-
-
-
-
         </Grid>
       </Paper>
     );
@@ -531,7 +525,7 @@ export default function ProfilePage() {
     );
   } else {
     // Display fields
-    /* Section Contact info */
+    /* Section Contact info -- most of the fields were removed from the database so will not work */
     block2 = (
       <Paper
         sx={{ px: 3, py: 3, borderRadius: "16px", marginBottom: "3px" }}
@@ -668,7 +662,6 @@ export default function ProfilePage() {
               maxRows={7}
               minRows={7}
               name="related_experience"
-              id="related_experience"
               size="small"
               value={state.experience || ""}
               label=" related_experience"
@@ -715,7 +708,6 @@ export default function ProfilePage() {
               required
               autoComplete="false"
               name="notice_period_months"
-              id="notice_period_months"
               size="small"
               value={state.notice_period_months || ""}
               label="Notice period months"
@@ -728,7 +720,6 @@ export default function ProfilePage() {
               required
               autoComplete="false"
               name="invited_by"
-              id="invited_by"
               size="small"
               value={state.invited_by || ""}
               label="Invited by"
@@ -741,7 +732,6 @@ export default function ProfilePage() {
               required
               autoComplete="false"
               name="invited_by"
-              id="invited_by"
               size="small"
               value={""}
               label="initiative badge"

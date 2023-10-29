@@ -5,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import logo from "../../../public/images/logo.png";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -41,6 +40,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
       variant="outlined"
       sx={{ borderRadius: "16px", maxWidth: "354px", height: "510px" }}
     >
+      {/*backgroundColor as a variable causing an error  */}
       <CardMedia sx={{ height: 188, maxWidth: "360px" }}>
         <Box
           sx={{
