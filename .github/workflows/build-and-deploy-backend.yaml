@@ -38,7 +38,7 @@ jobs:
       - name: Create .env
         env:
           ENV_FILE_BACKEND: ${{ secrets.ENV_FILE_BACKEND }}
-        run: echo $ENV_FILE_BACKEND | base64 --decode > ./sre/backend/.env
+        run: echo $ENV_FILE_BACKEND | base64 --decode > ./src/backend/.env
 
       - id: docker-push-tagged
         name: Tag Docker image and push to Google Artifact Registry
