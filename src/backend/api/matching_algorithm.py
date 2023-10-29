@@ -23,22 +23,25 @@ def get_free_text_match(
     float: a number from -1 to 1 indicating cosine similarity
 
     """
-
     if (candidate_embeddings) == None or (job_embeddings) == None:
         return 0
 
     if candidate_embeddings == "" or type(job_embeddings) == "":
         return 0
-    
+
     candidate_embeddings = json.loads(candidate_embeddings)
     job_embeddings = json.loads(job_embeddings)
 
     return cosine_similarity(candidate_embeddings, job_embeddings)[0][0] * 100
 
-if __name__=="__main__":
-    print(int(get_free_text_match(
-    torch.tensor([[1,0,0]]),
-    torch.tensor([[-1,0,0]]),
-))==-1)
-    
 
+if __name__ == "__main__":
+    print(
+        int(
+            get_free_text_match(
+                torch.tensor([[1, 0, 0]]),
+                torch.tensor([[-1, 0, 0]]),
+            )
+        )
+        == -1
+    )
