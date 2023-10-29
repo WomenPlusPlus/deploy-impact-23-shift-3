@@ -3,6 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
+  redirects: async () => [
+    {
+      source: "/",
+      destination: "/login",
+      permanent: true,
+    },
+  ],
   modularizeImports: {
     "@mui/icons-material": {
       transform: "@mui/icons-material/{{member}}",
