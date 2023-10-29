@@ -40,6 +40,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
       variant="outlined"
       sx={{ borderRadius: "16px", maxWidth: "354px", height: "510px" }}
     >
+      {/*backgroundColor as a variable causing an error  */}
       <CardMedia sx={{ height: 188, maxWidth: "360px" }}>
         <Box
           sx={{

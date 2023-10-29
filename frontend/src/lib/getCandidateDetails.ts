@@ -2,22 +2,25 @@
 
 // to get the details of a candidate by id
 import axios from "axios";
+import API_BASE_URL from "@/config";
 
-const DATA_SOURCE_URL =
-  "https://django-backend-shift-enter-u53fbnjraa-oe.a.run.app/api/";
-
-// TODO:api calls need to be /skills/update etc.. so can use same call with params
-// export async function getSkills(apiEndpoint: any) {
 export async function getCandidateDetails(userId:any) {
   console.log("test params", userId);
   
   try {
-    const response = await axios.get(`${DATA_SOURCE_URL}candidates/${userId}/`);
+    const response = await axios.get(`${API_BASE_URL}/api/candidates/${userId}/`);
+
+    //TODO:cors needs to be enabled in django to alow the header    
+    // const response = await axios.get(`${API_BASE_URL}/api/candidates/${userId}/`,{
+    //   headers:{
+    //     'Hide-Matches': true,
+    //   }
+    // });
     console.log("candidate_data", response.data);
 
     return response.data;
   } catch (error: any) {
     console.log("error Catch in get candidate details api call", error);
-    throw new Error("Error fetching data:", error);
+    throw new Error("Error fetching data:"+ error.message);
   }
 }

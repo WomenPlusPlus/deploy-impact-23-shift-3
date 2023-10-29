@@ -8,11 +8,6 @@ import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
-import Snackbar from "@mui/material/Snackbar";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Alert from "@mui/material/Alert";
-import { SyntheticEvent } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -40,7 +35,7 @@ const ContactForm: React.FC<ContactFormsProps> = ({
   open,
   handleOpen,
   handleClose,
-  handleSend
+  handleSend,
 }) => {
   const [message, setMessage] = useState("");
 
@@ -149,16 +144,17 @@ const ContactForm: React.FC<ContactFormsProps> = ({
               Start contact
             </Button>
             <Button
-              sx={{ float:"right", my: 0, textTransform:"none", mr: 2 }}
+              sx={{ float: "right", my: 0, textTransform: "none", mr: 2 }}
               variant="outlined"
               name="back"
-              onClick={handleClose}>
+              onClick={handleClose}
+            >
               Go back
             </Button>
           </Box>
         </Box>
       </Modal>
     </div>
-  )
+  );
 };
 export default ContactForm;
