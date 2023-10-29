@@ -369,10 +369,8 @@ class Jobs(models.Model):
     soft_skills = models.TextField(blank=True, null=True)
     hard_skills = models.TextField(blank=True, null=True)
     languages = models.TextField(blank=True, null=True)
+    languages_linked = models.ManyToManyField(Languages)
     open = models.BooleanField(default=True, blank=True, null=True)
-    work_model = models.ForeignKey(WorkModels, on_delete=models.CASCADE)
-
-
 
     soft_skill_test_matching = models.ManyToManyField(SoftSkills)
     hard_skill_test_matching = models.ManyToManyField(Skills)
@@ -380,6 +378,8 @@ class Jobs(models.Model):
 
     last_day_to_apply = models.DateField(blank=True, null=True)
     closed_at = models.DateTimeField(blank=True, null=True)
+
+    work_model = models.ForeignKey(WorkModels, on_delete=models.CASCADE)
     start_date = models.DateField(blank=True, null=True)
     job_type = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
 
@@ -619,6 +619,9 @@ class WorkPermits(models.Model):
 
     class Meta:
         db_table = "work_permits"
+
+    def __str__(self) -> str:
+        return self.type_work_permit
 
 
 class SupabaseIdToUserIds(models.Model):

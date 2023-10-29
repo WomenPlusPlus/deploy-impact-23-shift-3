@@ -111,12 +111,20 @@ class CandidatesSerializer(serializers.ModelSerializer):
         source="languages_linked", many=True
     )
 
+    work_permission_CH = serializers.StringRelatedField(read_only=True)
+
+    country = CountriesSerializer(source="last_country")
+
+    work_model = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = models.Candidates
         exclude = (
             "hard_skill_test_matching",
             "soft_skill_test_matching",
             "aboutme_experinece_embedded",
+            "languages_linked",
+            "last_country"
             # "experience_abedded",
         )
         many = True
@@ -230,7 +238,13 @@ class JobsSerializer(serializers.ModelSerializer):
         "get_matches", read_only=True, source="matches"
     )
 
+    languages = LanguagesSerializer(
+        source="languages_linked", many=True
+    )
+
     location_country = CountriesSerializer()
+
+    work_model = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = models.Jobs
@@ -238,6 +252,7 @@ class JobsSerializer(serializers.ModelSerializer):
             "soft_skill_test_matching",
             "hard_skill_test_matching",
             "description_embedded",
+            "languages_linked"
         )
         many = True
 
