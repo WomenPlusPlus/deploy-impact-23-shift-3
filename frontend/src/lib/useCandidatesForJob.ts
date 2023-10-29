@@ -25,8 +25,8 @@ const getCandidatesForJob = async (jobId: string) => {
 };
 
 export const useCandidatesForJob = (jobId: string, companyId?: string) => {
-  if (jobId === "all") {
-    return useQuery(["useCandidatesForJob", companyId], () => {
+  return useQuery(["useCandidatesForJob", jobId, companyId], () => {
+    if (jobId === "all") {
       return getPostedJobsByCompany(companyId).then((jobs) => {
         const allCandidates: CandidateForJobList[] = jobs.reduce(
           (candidates, job) => {
@@ -41,9 +41,7 @@ export const useCandidatesForJob = (jobId: string, companyId?: string) => {
 
         return allCandidates;
       });
-    });
-  }
-  return useQuery(["useCandidatesForJob", jobId], () =>
-    getCandidatesForJob(jobId),
-  );
+    }
+    return getCandidatesForJob(jobId);
+  });
 };
