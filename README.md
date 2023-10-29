@@ -178,29 +178,35 @@ gcloud builds submit --tag gcr.io/enter-400508/nextjsapp --project enter-400508 
 ```bash
 gcloud run deploy nextjsapp --image gcr.io/enter-400508/nextjsapp  --project enter-400508
 ```
-## UI/UX
+# UI/UX
 
-### Overview
+## Overview
 This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
 
 ### How to Use
-1. **Access the Prototype**: 
+1. **Access the Prototype**:
+   
 You can interact with the prototype at the following link: [Figma](https://www.figma.com/proto/qzRo0T1FIRIp2FkBZtXKey/SHIFT-UI?page-id=0%3A1&type=design&node-id=65-514&viewport=817%2C-4082%2C0.16&t=vVdNABqel4mhStHB-1&scaling=min-zoom&starting-point-node-id=65%3A514&show-proto-sidebar=1&mode=design)
    
-2. **Navigate Through the Prototype**: 
+3. **Navigate Through the Prototype**:
+   
 You have a left bar and a top bar. 
-1.	The left bar will help you to move through each designed flow. They are organized by:
+The left bar will help you to move through each designed flow. They are organized by:
 - A. Login
 - B. Company
 - C. Candidate
 - D. Association
-2.	The top bar gives you the option of how to preview the screen. Please go to Options > Fit width.
-3.	To go to the next flow, select the next title in the left bar.
-4.	If you want to go back again and restart the whole flow, press “R”.
 
-3. **Feedback and Comments**: 
-- You must be logged into Figma to comment. 
-- By typing or pressing “C” you can comment anything you want to highlight or give us feedback. 
+2.1 The top bar gives you the option of how to preview the screen. Please go to Options > Fit width.
+
+2.2 To go to the next flow, select the next title in the left bar.
+
+2.3 If you want to go back again and restart the whole flow, press “R”.
+
+3. **Feedback and Comments**:
+   
+- You must be logged in to Figma to comment. 
+- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback. 
 - The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
 
 
@@ -227,8 +233,6 @@ You can see here in the following link the recorded videos with each flow design
 Diana Campos
 dianaalkampos@gmail.com
 
-### Licensing
-There is no restriction to interact with the prototype, all tho this is an excuse example for the Deploy(impact) 2023 program.
 
 # Backend API 
 
