@@ -47,7 +47,7 @@ jobs:
           push: true
           tags: |
              ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          context: ./backend
+          context: ./src/backend
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
