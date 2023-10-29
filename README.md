@@ -251,12 +251,6 @@ In case a candidate attempts to access a part of the app that is not permitted f
 
 This flow ensures that candidates can manage their profiles, explore job opportunities, and adhere to role-based restrictions for a secure and efficient user experience.
 
-
-3. Deploy the app:
-```bash
-gcloud run deploy nextjsapp --image gcr.io/enter-400508/nextjsapp  --project enter-400508
-```
-
 # UI/UX
 
 ## Overview
