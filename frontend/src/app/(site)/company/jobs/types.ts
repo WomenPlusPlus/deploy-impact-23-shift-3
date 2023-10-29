@@ -1,6 +1,6 @@
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 
-export interface JobPostNew {
+export interface JobPost {
   job_id: string;
   hard_skills: string[];
   soft_skills: string[];

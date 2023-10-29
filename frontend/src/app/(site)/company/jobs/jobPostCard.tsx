@@ -1,4 +1,3 @@
-import { JobPostNew } from "@/app/(site)/company/jobs/types";
 import React, { FormEvent, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -15,17 +14,29 @@ import ListItem from "@mui/material/ListItem";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { JobPost } from "@/app/(site)/company/jobs/types";
 
 interface JobPostProps {
-  job: JobPostNew;
+  job: JobPost;
 }
 
 export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
   const numberOfMatches = job.matches.length;
   const router = useRouter();
-  const handleSubmit = (event: FormEvent<HTMLButtonElement>, jobId: string) => {
+  const handleShowMatchesSubmit = (
+    event: FormEvent<HTMLButtonElement>,
+    jobId: string,
+  ) => {
     event.preventDefault();
-    router.replace(`/company/candidates/?jobid=${jobId}`);
+    router.replace(`/company/candidates/?jobId=${jobId}`);
+  };
+
+  const handleViewPostSubmit = (
+    event: FormEvent<HTMLButtonElement>,
+    jobId: string,
+  ) => {
+    event.preventDefault();
+    router.replace(`/company/jobs/${jobId}`);
   };
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -282,7 +293,7 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
 
           <Button
             type="submit"
-            onClick={(event) => handleSubmit(event, job.job_id)}
+            onClick={(event) => handleShowMatchesSubmit(event, job.job_id)}
             variant="outlined"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
@@ -291,11 +302,12 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
           </Button>
           <Button
             type="submit"
+            onClick={(event) => handleViewPostSubmit(event, job.job_id)}
             variant="contained"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
           >
-            {"View post"}
+            View post
           </Button>
         </CardContent>
       </Card>
