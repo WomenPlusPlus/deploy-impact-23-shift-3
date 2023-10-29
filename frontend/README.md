@@ -42,6 +42,8 @@ For more information: [Cypress doc](https://docs.cypress.io/guides/core-concepts
 Note: The app has not undergone comprehensive testing due to time constraints and our limited experience. However, we intend to follow Test-Driven Development (TDD) principles in future app development.
 
 ## Deployment - technical information
+The app has been successfully deployed and can be accessed at the following URL: [Shift+Enter](https://nextjsapp-iwghenktca-ew.a.run.app/)
+
 For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
 
 To deploy the app, you need to have the Google Cloud Console installed.
@@ -60,9 +62,7 @@ npm run gcbuild
 npm run gcdeploy
 ```
 
-## Deployment
-
-The app has been successfully deployed and can be accessed at the following URL: [Shift+Enter](https://nextjsapp-iwghenktca-ew.a.run.app/)
+## Implemented flows
 
 For testing purposes, you can use the following user accounts with different roles:
 
@@ -83,8 +83,6 @@ For testing purposes, you can use the following user accounts with different rol
 - Email: `association@association.com`
 - Password: `Association123.123`
 - Role: `association user`
-
-## Implemented flows
 
 ### Company User Flow
 This is the primary flow implemented within our application, providing company users with a seamless experience to navigate and interact with various features. Below, we outline the steps involved in the Company User Flow. You can also view a video demonstration of this flow, created from our Figma mockups, at [link to video].
@@ -133,4 +131,31 @@ While the email functionality is not active, users have the option to initiate c
 
 Please note that this documentation outlines the sequential steps and capabilities within the Company User Flow. 
 It allows company users to efficiently manage their posted jobs and interact with matched candidates in a user-friendly manner.
+
+### Candidate User Flow
+
+This flow outlines the user journey for candidates within our application. Candidates have specific actions and interactions designed to enhance their experience.
+For a visual demonstration of this flow based on our Figma mockups, you can watch a video [here](link to video).
+
+### Flow Steps
+
+### 1. Candidate Log In
+Candidates start by logging into the application, providing their authentication details.
+
+### 2. Profile Page
+Upon successful login, candidates are directed to their profile page. Here, they have several options:
+
+- Edit Profile:
+Candidates can edit and update their profile information to keep it current.
+
+- Preview Profile:
+Candidates can view their own profile as it appears to others.
+
+### 3. Job Listings
+   Candidates can navigate to the "Jobs" section, where they can view job listings posted by various companies. Please note that this feature showcases dummy data for preview purposes and does not reflect real job listings from the database.
+
+### 4. Role-Based Redirection
+   In case a candidate attempts to access a part of the app that is not permitted for their role (e.g., company or association functionalities), the system will automatically redirect them to a warning page, notifying them of their unauthorized access.
+
+This flow ensures that candidates can manage their profiles, explore job opportunities, and adhere to role-based restrictions for a secure and efficient user experience.
 
