@@ -89,7 +89,6 @@ class LanguagesWithProficiencyNamesSerializer(serializers.PrimaryKeyRelatedField
         fields = "__all__"
 
     def to_representation(self, value):
-        print(value)
         return {"name": value.name.__str__(), "proficieny": value.proficiency.__str__()}
 
 
