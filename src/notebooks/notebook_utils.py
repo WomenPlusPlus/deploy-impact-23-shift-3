@@ -71,3 +71,35 @@ def extract_skills (s: str, language_list: List) -> tuple:
         if skill_type == 'Soft Skill' and not skill_name.count('Language'):
             soft_skills.add(skill_name)
     return (', '.join(list(soft_skills)), ', '.join(list(hard_skills)), ', '.join(extract_languages(s, language_list)))
+
+# Function to randomly select n sentences and append them to the existing content with word replacements
+def select_and_append_sentences(existing_text, sentences, n):
+    selected_sentences = random.sample(sentences, n)
+    appended_text = existing_text + " ".join(selected_sentences)
+
+    # Separate sentences with ". " only if it doesn't already exist
+    if not appended_text.endswith("."):
+        appended_text += ". "
+     
+    # Remove sentences starting with "We offer you"
+    appended_text = re.sub(r'(?:^|\.)[^.]*\b(?:We offer).*?(?=\.)', '', appended_text)
+    
+    # Replace "You are" with "I am" and "You have" with "I have"
+    appended_text = re.sub(r'\bYou are\b', 'I am', appended_text)
+    appended_text = re.sub(r'\bYou have\b', 'I have', appended_text)
+    appended_text = re.sub(r'\bWe are looking for\b', 'I am', appended_text)
+    appended_text = re.sub(r'\bOur requirement is for a\b', 'I am', appended_text)
+    appended_text = re.sub(r'\bIn this role\b', '', appended_text)
+    appended_text = re.sub(r'\bResponsibilities:\b', '', appended_text)
+    #appended_text = re.sub(r'\bWhat we offer:\b', '', appended_text)
+    #appended_text = re.sub(r'\bWhat we offer\b', '', appended_text)
+    appended_text = re.sub(r'\bis a must\b', '', appended_text)
+    appended_text = re.sub(r'\bYou will\b', 'I am able to', appended_text)
+    appended_text = re.sub(r'\bYou will be\b', 'I am', appended_text)
+    appended_text = re.sub(r'\bMust have built\b', 'Experience in', appended_text)
+    appended_text = re.sub(r'\Your role:\b', 'I', appended_text)
+    appended_text = re.sub(r'\Your responsibilities:\b', 'My experience:', appended_text)
+
+   
+    
+    return appended_text
