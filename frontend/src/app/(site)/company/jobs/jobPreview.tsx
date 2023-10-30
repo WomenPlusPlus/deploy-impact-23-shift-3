@@ -260,7 +260,8 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
                     marginLeft: 1,
                   }}
                 >
-                  Start date: 08/01/2024
+                  Start date:{" "}
+                  {new Date(jobPost.last_day_to_apply).toLocaleDateString()}
                 </Typography>
               </Box>
             </CardContent>

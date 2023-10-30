@@ -7,25 +7,33 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import React from "react";
+import React, { FormEvent } from "react";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { getMatchingColor } from "@/components/site/getMatchingColor";
+import { useRouter } from "next/navigation";
 
 interface CandidateProps {
   candidate: CandidateForJobList;
 }
 
-const capitalizeWords = (str: string) => {
-  return str
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-};
 export const CandidateCard: React.FC<CandidateProps> = ({
   candidate,
 }: CandidateProps) => {
+  const router = useRouter();
+  const handleViewCandidateProfile = (
+    event: FormEvent<HTMLButtonElement>,
+    candidateId: string,
+  ) => {
+    event.preventDefault();
+    router.replace(`/company/candidates/${candidateId}/`);
+  };
+  const capitalizeWords = (str: string) => {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -106,7 +114,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               lineHeight: "20px",
             }}
           >
-            Current position
+            Desired position
           </Typography>
         </CardContent>
         <CardContent
@@ -236,16 +244,15 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               <FavoriteBorderIcon />
             </IconButton>
           </div>
-          <Link href={`/company/candidates/${candidate.id}/`}>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{ textTransform: "none", borderRadius: "100px" }}
-            >
-              View profile
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            onClick={(event) => handleViewCandidateProfile(event, candidate.id)}
+            variant="contained"
+            size="large"
+            sx={{ textTransform: "none", borderRadius: "100px" }}
+          >
+            View profile
+          </Button>
         </CardContent>
       </Card>
     </Grid>
