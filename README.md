@@ -7,16 +7,15 @@ SHIFT is a pioneering collaboration between women++ and Powercoders. It addresse
 Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
 
 ## Table of Contents
-
 - [SHIFT initative](#shift-initative)
   - [Table of Contents](#table-of-contents)
 - [Problem Statement](#problem-statement)
 - [Opportunity](#opportunity)
-- [Combat Biais](#combat-biais)
+- [What does SHIFT offer?](#what-does-SHIFT-offer?)
+- [Tech Stack](#tech-stack)
+- [Files Structure](#files-structure)
   - [Data Science Solution](#data-science-solution)
   - [Frontend Solution](#frontend-solution)
-- [Contributors](#contributors)
-- [Tech Stack](#tech-stack)
 - [Files Structure](#files-structure)
 - [Frontend](#frontend)
   - [How to Use](#how-to-use)
@@ -50,6 +49,7 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
 - [Roadmap](#roadmap)
 - [Cooperation](#cooperation)
 - [Resources](#resources)
+- [Contributors](#contributors)
 
 # Problem Statement
 
@@ -484,17 +484,6 @@ The following logical steps are used to clean the datasets:
 - Extract languages using [language ISO list](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 - Reorganize the columns (rename, drop ones not to be uploaded to the database, reset the index)
 
-# Cooperation
-At the outset of our project, we adopted JIRA as our task organization and project management tool and Confluence for sharing progress and alingment. 
-
-[JIRA Board](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1)
-
-[JIRA Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
-
-[Confluence Page](https://deployimpact2023-shift.atlassian.net/wiki/spaces/SD/overview?homepageId=131173)
-
-
-
 # Roadmap
 
 After finishing prioritized Use Cases, here are the future developments that we would like to implement :
@@ -513,6 +502,7 @@ Miro : [Team retrospective and brainstorming board](https://miro.com/app/board/u
 
 JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/reports/burnup)
 [Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
+[Confluence Page](https://deployimpact2023-shift.atlassian.net/wiki/spaces/SD/overview?homepageId=131173)
 
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/patw47/deploy-impact-23-shift-3/main/assets/shift%20enter.png" alt="Shift Enter"></div>
 
