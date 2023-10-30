@@ -97,7 +97,7 @@ def generate_match_output(match_percentages: dict, instance: Candidates | Jobs) 
         if not is_job:
             curr_match["job_title"] = match.job_title
             curr_match["job_type"] = match.job_type
-            curr_match["work_model"] = match.work_model
+            curr_match["work_model"] = match.work_model.__str__()
             curr_match["start_date"] = match.start_date
             curr_match["job_description"] = match.job_description
         else:
