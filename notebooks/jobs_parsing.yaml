@@ -1,0 +1,38 @@
+TABLE_PATH: ""
+LANGUAGE_PATH: "languages.csv"
+
+SWISS_LOCATION:
+    - 'CH'
+    - 'SWITZERLANDS'
+
+COLS: 
+    'header.jobTitle': 'job_title'
+    'header.employerName': 'employer_name'
+    'header.location': 'location_city'
+    'job.description': 'job_description'
+    'map.country': 'location_country'
+    'overview.industry': 'industry'
+    'overview.mission': 'values'
+    'overview.website': 'website'
+
+TECH_KEYWORDS: 
+    - 'computer'
+    - 'recognition'
+    - 'nlp'
+    - 'developer'
+    - 'data'
+    - 'information'
+    - 'software'
+    - 'database'
+    - 'programming'
+    - 'ai'
+    - 'ml'
+    - 'application'
+    - 'frontend'
+    - 'backend'
+
+SENIOR_KEYWORDS:
+    - 'senior'
+    - 'lead'
+    - 'head'
+    - 'partner'

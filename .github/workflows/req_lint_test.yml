@@ -35,6 +35,3 @@ jobs:
         working-directory: tests/
         run: |
           pytest
-        env:
-          DJANGO_SETTINGS_MODULE: shift_3_womenpp.settings
-          pythonpath: "../src/backend/"

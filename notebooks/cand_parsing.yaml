@@ -1,0 +1,34 @@
+TABLE_PATH: ""
+LANGUAGE_PATH: "languages.csv"
+
+SWISS_LOCATION:
+    - 'CH'
+    - 'SWITZERLANDS'
+
+COLS: 
+    'Name': 'name'
+    'Experience': 'experience'
+    'description': 'about_me'
+    'category': 'industry'
+
+TECH_KEYWORDS: 
+    - 'computer'
+    - 'recognition'
+    - 'nlp'
+    - 'developer'
+    - 'data'
+    - 'information'
+    - 'software'
+    - 'database'
+    - 'programming'
+    - 'ai'
+    - 'ml'
+    - 'application'
+    - 'frontend'
+    - 'backend'
+
+SENIOR_KEYWORDS:
+    - 'senior'
+    - 'lead'
+    - 'head'
+    - 'partner'

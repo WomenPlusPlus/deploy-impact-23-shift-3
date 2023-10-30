@@ -3,7 +3,6 @@ from typing import List
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
 
-
 def get_free_text_match(
     job_embeddings: List[List],
     candidate_embeddings: List[List],
