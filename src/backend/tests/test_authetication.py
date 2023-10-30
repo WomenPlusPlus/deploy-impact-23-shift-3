@@ -9,7 +9,7 @@ from api.views import (
     SoftSkillsViewSet,
 )
 from django.test import TestCase
-from time import sleep
+
 from shift_3_womenpp import settings
 
 settings.configure()

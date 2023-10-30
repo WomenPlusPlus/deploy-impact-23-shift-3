@@ -159,8 +159,6 @@ class CandidatesSerializer(serializers.ModelSerializer):
 
 
 
-
-
 class InvitationSerializer(serializers.HyperlinkedModelSerializer):
     association = AssociationsSerializer()
 
