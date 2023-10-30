@@ -3,6 +3,9 @@ import sys
 import os
 from src.backend.api.tokenization_n_embedding import tokenize_text, generate_embeddings
 from src.backend.api.matching_algorithm import get_free_text_match
+from src.backend.shift_3_womenpp import settings
+
+settings.configure()
 
 def test_tokenize_text():
     text_tokens_keys = set(['input_ids','token_type_ids','attention_mask'])
