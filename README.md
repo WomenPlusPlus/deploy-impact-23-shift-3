@@ -14,25 +14,16 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
 - [What does SHIFT offer?](#what-does-SHIFT-offer?)
 - [Tech Stack](#tech-stack)
 - [Files Structure](#files-structure)
-  - [Data Science Solution](#data-science-solution)
-  - [Frontend Solution](#frontend-solution)
-- [Files Structure](#files-structure)
 - [Frontend](#frontend)
-  - [How to Use](#how-to-use)
-  - [Testing](#testing)
-  - [Deployment](#deployment)
   - [Implemented flows](#implemented-flows)
     - [Company User Flow](#company-user-flow)
     - [Flow Steps](#flow-steps)
     - [Candidate User Flow](#candidate-user-flow)
     - [Flow Steps](#flow-steps-1)
-  - [UI/UX](#uiux)
-    - [Overview](#overview)
-    - [How to Use](#how-to-use-1)
-    - [Prototype Structure](#prototype-structure)
-    - [Key Features](#key-features)
-    - [Contact Information](#contact-information)
-    - [Licensing](#licensing)
+  - [Resources](#resources)
+  - [How to Use](#how-to-use)
+  - [Testing](#testing)
+  - [Deployment](#deployment)
 - [Backend API](#backend-api)
   - [Flowchart of the website](#flowchart-of-the-website)
   - [Tech stack](#tech-stack-1)
@@ -44,11 +35,18 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
   - [Setup the CI/CD](#setup-the-cicd)
   - [Files and notable features](#files-and-notable-features)
     - [Features](#features)
-  - [Data Science](#data-science)
-    - [Data Processing Notebooks](#data-processing-notebooks)
+- [UI/UX](#uiux)
+  - [Overview](#overview)
+  - [How to Use](#how-to-use-1)
+  - [Prototype Structure](#prototype-structure)
+  - [Key Features](#key-features)
+  - [Contact Information](#contact-information)
+  - [Licensing](#licensing)
+- [Data Science Solution](#data-science-solution)
+  - [Details of Data Science Solution Impelmentation](#details-of-data-science-solution-impelmentation)
+  - [Data Processing Notebooks](#data-processing-notebooks)
 - [Roadmap](#roadmap)
-- [Cooperation](#cooperation)
-- [Resources](#resources)
+- [Resources](#resources-1)
 - [Contributors](#contributors)
 
 # Problem Statement
@@ -367,9 +365,7 @@ Besides the aforementioned features, the following are all working at the time o
 - CI/CD - Github actions to Google Cloud Run
 - Production ready gateway - Gunicorn
 
-
 # UI/UX
-
 
 ### Overview
 
@@ -438,9 +434,7 @@ Diana Campos
 
 There is no restriction to interact with the prototype, all tho this is an excuse example for the Deploy(impact) 2023 program.
 
-
-
-## Data Science Solution
+# Data Science Solution
 
 Our matching algorithm is based on a careful evaluation of candidates, jobs and required skills. 
 
@@ -456,7 +450,7 @@ Secondly, in an effort to promote under-represented groups, we have chosen to of
 
 The results are displayed in descending order, from the most important match (displayed as a percentage) to the least important.
 
-### Details of Data Science Solution Impelmentation
+## Details of Data Science Solution Impelmentation
 
 Skills Extraction: We extract the "soft" and "hard" skills of candidates, as well as those required in job descriptions.
 To do this, we use the [Skillner](https://skillner.vercel.app/) NLP module.
