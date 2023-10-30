@@ -256,6 +256,7 @@ This flow ensures that candidates can manage their profiles, explore job opportu
 ## Overview
 This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
 
+
 ### How to Use
 1. **Access the Prototype**:
    
@@ -277,7 +278,6 @@ The left bar will help you to move through each designed flow. They are organize
 2.3 If you want to go back again and restart the whole flow, press “R”.
 
 3. **Feedback and Comments**:
-   
 - You must be logged in to Figma to comment. 
 - By typing or pressing “C” you can comment on anything you want to highlight or give us feedback. 
 - The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
@@ -300,7 +300,6 @@ As it is listed in the left pane. The prototype is organized by the following fl
 Not every button or interaction is prototyped. Therefore, we have added some videos in the file to have the full explanation. By clicking on the screen, you can see hints highlighted in blue of what is clickable.
 
 You can see here in the following link the recorded videos with each flow designed: [Videos](https://drive.google.com/drive/folders/1TGAIahEZZUoSioJJA6W8hqKnIHvJiBja?usp=drive_link)
-
 
 ### Contact Information
 Diana Campos
