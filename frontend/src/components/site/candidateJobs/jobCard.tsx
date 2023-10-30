@@ -109,7 +109,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container sx={{ mt: 3 }}>
+        <Grid container sx={{ mt: 3, maxHeight:{xs:"45px"}}}>
           <Grid
             item
             xs={4}
