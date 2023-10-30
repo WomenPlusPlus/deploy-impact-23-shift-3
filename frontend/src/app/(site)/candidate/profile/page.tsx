@@ -349,7 +349,8 @@ export default function ProfilePage() {
                 <Typography>
                   <strong>Date of Birth</strong>
                 </Typography>
-                <Typography>{state.birth_date || ""}</Typography>
+
+                <Typography>{state.birth_date ? new Date(state.birth_date).toLocaleDateString() : ""}</Typography>
               </Grid>
               <Grid item sm={6}>
                 <Typography>

@@ -3,7 +3,7 @@ import Chip from "@mui/material/Chip";
 import { shadow } from "./candidateHelpers";
 
 interface SkillsChipsProps {
-  skills: string[];
+  skills?: string[];
 }
 
 export const SkillsChips: React.FC<SkillsChipsProps> = ({ skills }) => {

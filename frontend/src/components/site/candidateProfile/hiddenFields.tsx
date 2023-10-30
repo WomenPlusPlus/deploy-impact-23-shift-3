@@ -27,7 +27,7 @@ interface PhoneNumberProps {
 
 interface EmailProps {
   viewHidden: boolean;
- email?: string;
+  email?: string;
 }
 
 interface LinkedinProps {
@@ -40,6 +40,10 @@ interface WebsiteUrlProps {
   website?: string;
 }
 
+interface EducationTempProps {
+  education: string;
+  viewHidden: boolean;
+}
 interface EducationProps {
   viewHidden: boolean;
   education?: {
@@ -103,7 +107,7 @@ export const PhoneNumber: React.FC<PhoneNumberProps> = ({
       />
       <Typography
         sx={{ display: "inline-block" }}
-      >{`${phone_number_region} ${phone_number}`}</Typography>
+      >{`${phone_number}`}</Typography>
     </Grid>
   ) : (
     <Grid item>
@@ -119,7 +123,7 @@ export const PhoneNumber: React.FC<PhoneNumberProps> = ({
   );
 };
 
-export const Email: React.FC<EmailProps> = ({email, viewHidden }) => {
+export const Email: React.FC<EmailProps> = ({ email, viewHidden }) => {
   return viewHidden ? (
     <Grid item>
       <AlternateEmailIcon
@@ -127,9 +131,7 @@ export const Email: React.FC<EmailProps> = ({email, viewHidden }) => {
         fontSize="small"
         sx={{ display: "inline-block", verticalAlign: "middle", mr: 1 }}
       />
-      <Typography
-        sx={{ display: "inline-block" }}
-      >{`${email}`}</Typography>
+      <Typography sx={{ display: "inline-block" }}>{`${email}`}</Typography>
     </Grid>
   ) : (
     <Grid item>
@@ -205,47 +207,80 @@ export const WebsiteUrl: React.FC<WebsiteUrlProps> = ({
   );
 };
 
-export const Education: React.FC<EducationProps> = ({
+//TODO: data needs to be formatted so can hide the pos bias info -- use other function when fixed
+export const Education: React.FC<EducationTempProps> = ({
   education,
   viewHidden,
 }) => {
   if (!education) return;
+  //make radom letters same length as word
+  let newString = "";
+  const randomLetters = (n: number | 0) => {
+    const letters = "abcdefghijklmnopqurstuvwxyz";
+    const randomLetter = () =>
+      letters[Math.floor(Math.random() * letters.length)];
+    let word = "";
 
-  const list = education;
+    for (let i = 0; i < n; i++) {
+      word += randomLetter();
+    }
+    return word;
+  };
 
-  let outputShow = list.map((inst) => (
-    <Grid container key={inst.institution}>
-      <Grid item md={10}>
-        <Typography>
-          <strong>{inst.institution}</strong>
-        </Typography>
-        <Typography sx={{ mb: 2 }}>{inst.subject}</Typography>
-      </Grid>
-      <Grid item key={inst.institution} md={2}>
-        <Typography>
-          <strong>{inst.date}</strong>
-        </Typography>
-        <Typography>{inst.location}</Typography>
-      </Grid>
-    </Grid>
-  ));
+  const textArray = education.split(" ");
+  textArray.forEach((word) => (newString += randomLetters(word.length) + " "));
 
-  let outputHide = list.map((inst) => (
-    <Grid container key={inst.institution}>
-      <Grid item md={10}>
-        <Typography sx={{ filter: `blur(${blurSize})` }}>
-          <strong>University of life</strong>
-        </Typography>
-        <Typography sx={{ mb: 2 }}>{inst.subject}</Typography>
-      </Grid>
-      <Grid item key={inst.institution} md={2}>
-        <Typography sx={{ filter: `blur(${blurSize})` }}>
-          <strong>01/02/2000</strong>
-        </Typography>
-        <Typography sx={{ filter: `blur(${blurSize})` }}>Moon</Typography>
-      </Grid>
-    </Grid>
-  ));
-
-  return !viewHidden ? outputHide : outputShow;
+  return viewHidden ? (
+    education
+  ) : (
+    <Typography sx={{ filter: `blur(${blurSize})`, display: "inline-block" }}>
+      {newString}
+    </Typography>
+  );
 };
+
+//TODO: implement the show hide
+// export const Education: React.FC<EducationProps> = ({
+//   education,
+//   viewHidden,
+// }) => {
+//   if (!education) return;
+
+//   const list = education;
+
+//   let outputShow = list.map((inst) => (
+//     <Grid container key={inst.institution}>
+//       <Grid item md={10}>
+//         <Typography>
+//           <strong>{inst.institution}</strong>
+//         </Typography>
+//         <Typography sx={{ mb: 2 }}>{inst.subject}</Typography>
+//       </Grid>
+//       <Grid item key={inst.institution} md={2}>
+//         <Typography>
+//           <strong>{inst.date}</strong>
+//         </Typography>
+//         <Typography>{inst.location}</Typography>
+//       </Grid>
+//     </Grid>
+//   ));
+
+//   let outputHide = list.map((inst) => (
+//     <Grid container key={inst.institution}>
+//       <Grid item md={10}>
+//         <Typography sx={{ filter: `blur(${blurSize})` }}>
+//           <strong>University of life</strong>
+//         </Typography>
+//         <Typography sx={{ mb: 2 }}>{inst.subject}</Typography>
+//       </Grid>
+//       <Grid item key={inst.institution} md={2}>
+//         <Typography sx={{ filter: `blur(${blurSize})` }}>
+//           <strong>01/02/2000</strong>
+//         </Typography>
+//         <Typography sx={{ filter: `blur(${blurSize})` }}>Moon</Typography>
+//       </Grid>
+//     </Grid>
+//   ));
+
+//   return !viewHidden ? outputHide : outputShow;
+// };

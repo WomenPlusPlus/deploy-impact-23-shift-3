@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -15,14 +16,16 @@ import IconButton from "@mui/material/IconButton";
 const bgColors = ["#00A8E8", "#63E5C5", "#F28808"];
 const percentColors = ["#CBF6EB", "#B1F2E2", "#7DE9CE", "#63E5C5"];
 interface JobPostTypes {
-  job_id?: number;
-  logo_src?: string;
-  job_title?: string;
+  id: number;
+  job_title: string;
+  full_match_score: number;
+  // to come i hope!
+  job_description?: string;
   job_type?: string;
-  match_percent: string;
-  job_summary?: string;
   work_model?: string;
-  start_on?: string;
+  start_on?: string; //or might be a date
+  // match_percent?:number // is full_match_score
+  logo_src?: string;
 }
 
 interface JobCardProps {
@@ -30,9 +33,12 @@ interface JobCardProps {
 }
 
 export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
-  const noImgBg = bgColors[Math.floor(Math.random() * 3)];
+  const [noImgBg, setNoImgBg] = useState(
+    bgColors[Math.floor(Math.random() * 3)],
+  );
   const chipBg =
-    percentColors[Math.ceil(Math.round(+job_data.match_percent) * 0.04) - 1];
+    percentColors[Math.ceil(Math.round(+job_data.full_match_score) * 0.04) - 1];
+
   const searchTerm = "search term coming soon";
 
   return (
@@ -41,7 +47,9 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
       sx={{ borderRadius: "16px", maxWidth: "354px", height: "510px" }}
     >
       {/*backgroundColor as a variable causing an error  */}
-      <CardMedia sx={{ height: 188, maxWidth: "360px" }}>
+      <CardMedia
+        sx={{ height: 188, maxWidth: "360px", width: { xs: "360px" } }}
+      >
         <Box
           sx={{
             position: "relative",
@@ -84,7 +92,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
                 borderRadius: "10px",
                 backgroundColor: `${chipBg}`,
               }}
-              label={`${job_data.match_percent}% match`}
+              label={`${Math.round(job_data.full_match_score)}% match`}
             />
           </Grid>
           <Grid item sm={12} sx={{}}>
@@ -95,11 +103,11 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
                 overflow: "hidden",
               }}
             >
-              {job_data.job_summary}
+              {job_data.job_description || ""}
             </Typography>
           </Grid>
         </Grid>
-        <Grid container sx={{ mt: 3 }}>
+        <Grid container sx={{ mt: 3, maxHeight:{xs:"45px"}}}>
           <Grid
             item
             xs={4}
