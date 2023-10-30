@@ -505,7 +505,8 @@ Datasets used for populating the Database : [Kaggle Resume Dataset](https://www.
 
 Miro : [Team retrospective and brainstorming board](https://miro.com/app/board/uXjVMkJzhAg=/)
 
-Pitch : Presentation Pitch
+JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/reports/burnup)
+[Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
 
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/patw47/deploy-impact-23-shift-3/main/assets/shift%20enter.png" alt="Shift Enter"></div>
 
