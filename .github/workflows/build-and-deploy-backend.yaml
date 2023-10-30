@@ -1,0 +1,67 @@
+name: Build Image and Deploy to Cloud Run
+on:
+  push: 
+    branches:
+      - backend
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+env:
+  REPOSITORY_REGION: europe-west10
+  PROJECT_ID: dockerruntest
+  REPO_NAME: quickstart-docker-repo
+  IMAGE_NAME: django-backend-shift-enter
+  PROJECT_USER: testaccount@dockerruntest.iam.gserviceaccount.com
+  
+jobs:
+  docker-release:
+    name: Tagged Docker release to Google Artifact Registry
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '-deploy')
+
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v4
+ 
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REPOSITORY_REGION }}-docker.pkg.dev
+          username: _json_key
+          password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GUIL }}
+
+      - name: Get tag
+        id: get-tag
+        run: echo "{short_ref}={GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      
+      - name: Create .env
+        env:
+          ENV_FILE_BACKEND: ${{ secrets.ENV_FILE_BACKEND }}
+        run: echo $ENV_FILE_BACKEND | base64 --decode > ./src/backend/.env
+
+      - id: docker-push-tagged
+        name: Tag Docker image and push to Google Artifact Registry
+        uses: docker/build-push-action@v5.0.0
+        with:
+          push: true
+          tags: |
+             ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          context: ./src/backend
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GUIL }}'
+
+      - id: 'deploy'
+        name: Deploy to GC RUN
+        uses: 'google-github-actions/deploy-cloudrun@v1'
+        with:
+          service: ${{ env.IMAGE_NAME }}
+          image: ${{ env.REPOSITORY_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          region: ${{ env.REPOSITORY_REGION }}
+
+      - name: 'Use output'
+        run: 'curl "${{ steps.deploy.outputs.url }}"' 
