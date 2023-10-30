@@ -114,10 +114,12 @@ For further development please contact XX
 
 # Frontend
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with Material UI installed.
+Our project's frontend has been developed using Next.js, a powerful and versatile framework for building web applications. Material UI has been integrated to enhance the user interface and provide a seamless and visually appealing experience.
 
-To learn more:[Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-[Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs):  Next.js features and its API to get a comprehensive understanding of the framework.
+- [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/): Various approaches for customizing Material UI to align it with your project's specific needs.
 
 ## How to Use
 
