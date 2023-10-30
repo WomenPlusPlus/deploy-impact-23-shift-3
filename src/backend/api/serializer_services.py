@@ -68,10 +68,14 @@ def generate_match_percentaged(instance: Candidates | Jobs) -> dict:
 def generate_match_output(match_percentages: dict, instance: Candidates | Jobs) -> dict:
     is_job = True if type(instance) == Jobs else False
     matches_output = []
+    sent_ids = []
 
     for match in instance.matches:
         curr_match = {}
+        if match.pk in sent_ids:
+            break
 
+        sent_ids.append(match.pk)
         curr_match = {
             "id": match.pk,
             "full_match_score": match_percentages[match.pk]["full_match_score"],
