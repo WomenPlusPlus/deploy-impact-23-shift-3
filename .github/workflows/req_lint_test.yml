@@ -32,8 +32,8 @@ jobs:
           version: "~= 22.0"
 
       - name: Test with pytest
+        working-directory: tests/
         run: |
-          cd ./tests/
           pytest
         env:
           DJANGO_SETTINGS_MODULE: shift_3_womenpp.settings
