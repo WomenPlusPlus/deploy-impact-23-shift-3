@@ -1,11 +1,8 @@
+"use client";
 import SubHeader, { SubHeaderSection } from "@/components/site/subHeader";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-
-export const metadata = {
-  title: "SHIFT - Candidate - Home",
-  description: "Shift_Enter App - Candidate - Dashboard",
-};
+import { Guard } from "@/components/providers/SignInProvider";
 
 export default function CandidateLayout({
   children,
@@ -20,12 +17,13 @@ export default function CandidateLayout({
     { title: "Settings", url: "/candidate/settings", icon: "settings" },
   ];
   return (
-    <Box>
-      {/* candidate header */}
-      <SubHeader sections={sections} />
-      <Container component="main" sx={{ mt: 3, mb: 2 }} maxWidth="lg">
-        {children}
-      </Container>
-    </Box>
+    <Guard role={"candidate"}>
+      <Box>
+        <SubHeader sections={sections} />
+        <Container component="main" sx={{ mt: 3, mb: 2 }} maxWidth="lg">
+          {children}
+        </Container>
+      </Box>
+    </Guard>
   );
 }

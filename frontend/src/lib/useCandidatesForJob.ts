@@ -2,7 +2,11 @@
 import API_BASE_URL from "@/config";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { JobWithMatchedCandidates } from "@/app/(site)/company/candidates/types";
+import {
+  CandidateForJobList,
+  JobWithMatchedCandidates,
+} from "@/app/(site)/company/candidates/types";
+import { getPostedJobsByCompany } from "@/lib/usePostedJobsForCompany";
 
 const getData = (data: JobWithMatchedCandidates | undefined) => {
   if (!data || !Array.isArray(data.matches)) return [];
@@ -20,8 +24,24 @@ const getCandidatesForJob = async (jobId: string) => {
   return getData(response.data);
 };
 
-export const useCandidatesForJob = (jobId: string) => {
-  return useQuery(["useCandidatesForJob", jobId], () =>
-    getCandidatesForJob(jobId),
-  );
+export const useCandidatesForJob = (jobId: string, companyId?: string) => {
+  return useQuery(["useCandidatesForJob", jobId, companyId], () => {
+    if (jobId === "all") {
+      return getPostedJobsByCompany(companyId).then((jobs) => {
+        const allCandidates: CandidateForJobList[] = jobs.reduce(
+          (candidates, job) => {
+            const candidatesWithJobTitle = job.matches.map((candidate) => ({
+              ...candidate,
+              job_title: job.job_title,
+            }));
+            return candidates.concat(candidatesWithJobTitle);
+          },
+          [] as CandidateForJobList[],
+        );
+
+        return allCandidates;
+      });
+    }
+    return getCandidatesForJob(jobId);
+  });
 };

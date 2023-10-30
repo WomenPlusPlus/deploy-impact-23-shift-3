@@ -4,10 +4,6 @@ export const metadata = {
     "Shift_Enter App - User agreement, Privacy policy and Cookie Policy",
 };
 
-export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

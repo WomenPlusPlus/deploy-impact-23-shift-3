@@ -1,7 +1,10 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
-import { SignInProviderContext } from "@/components/providers/SignInProvider";
+import {
+  Role,
+  SignInProviderContext,
+} from "@/components/providers/SignInProvider";
 import { useRouter } from "next/navigation";
 import API_BASE_URL from "@/config";
 
@@ -18,12 +21,13 @@ interface LoginResponse {
   last_name?: string;
   preferred_name?: string;
   last_sign_in_a: string;
-  role: string;
+  role: Role;
   token_type: string;
 }
 export const useLogin = (): [
   (props: { email: string; password: string }) => void,
   undefined | { message: string },
+  boolean,
 ] => {
   const signInContext = useContext(SignInProviderContext);
   const router = useRouter();
@@ -75,5 +79,9 @@ export const useLogin = (): [
     },
   });
 
-  return [mutation.mutate, mutation.error as undefined | { message: string }];
+  return [
+    mutation.mutate,
+    mutation.error as undefined | { message: string },
+    mutation.isLoading,
+  ];
 };

@@ -56,8 +56,6 @@ export const JobCard: React.FC<JobCardProps> = ({ job_data }) => {
             width: "100%",
             height: "188px",
             textAlign: "center",
-            // backgroundColor:`${noImgBg || "white"}`
-            // backgroundColor:{noImgBg}
             backgroundColor: `${!job_data.logo_src ? noImgBg : "white"}`,
           }}
         >

@@ -1,21 +1,10 @@
-export interface JobPost {
-  job_id: string;
-  job_title: string;
-  job_description: string;
-  created_at: number;
-  expires_at: number;
-  starts_at: number;
-  job_type: string;
-  work_model: string;
-  open: boolean;
-  matched_candidates: number;
-}
+import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 
-export interface JobPostNew {
+export interface JobPost {
   job_id: string;
   hard_skills: string[];
   soft_skills: string[];
-  matches: string;
+  matches: CandidateForJobList[];
   job_title: string;
   location: string;
   industry: string;

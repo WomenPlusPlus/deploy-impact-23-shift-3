@@ -6,7 +6,7 @@ import { Stack } from "@mui/material";
 
 export default function LinksSection() {
   const router = useRouter();
-  const handleClick = () => {
+  const handlePrivacyLinkClick = () => {
     router.replace("/privacyDeclaration");
   };
   return (
@@ -16,11 +16,11 @@ export default function LinksSection() {
       </Typography>
       <Stack flexDirection={"row"}>
         <Link
-          component="button"
-          onClick={handleClick}
+          onClick={handlePrivacyLinkClick}
           sx={{
             textDecoration: "underline",
             color: "#14366F",
+            cursor: "pointer",
           }}
         >
           User Agreement, Privacy Policy
@@ -35,11 +35,11 @@ export default function LinksSection() {
           and
         </Typography>
         <Link
-          component="button"
-          onClick={handleClick}
+          onClick={handlePrivacyLinkClick}
           sx={{
             textDecoration: "underline",
             color: "#14366F",
+            cursor: "pointer",
           }}
         >
           Cookie Policy

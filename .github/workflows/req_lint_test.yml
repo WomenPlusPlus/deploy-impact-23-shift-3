@@ -1,0 +1,37 @@
+name: requirements_lint_test
+on:
+  # Triggers the workflow on push to all the branches and on pull request to the "master" or the "dev" branch
+  push:
+  pull_request:
+    branches: [ "master", "dev", "backend", "pytest"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test-n-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r src/backend/requirements.txt
+          python -m pip install -r requirements_git_actions.txt
+
+      - name: apply_black
+        run:
+          black  --verbose .
+
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "."
+          jupyter: true
+          version: "~= 22.0"
+
+      - name: Test with pytest
+        run: |
+          pytest
+            

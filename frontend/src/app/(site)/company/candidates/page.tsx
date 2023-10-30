@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { SearchBar } from "@/app/(site)/company/searchBar";
@@ -9,6 +9,7 @@ import Fuse from "fuse.js";
 import { useMatchedCandidates } from "@/app/(site)/company/candidates/useMatchedCandidates";
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { CircularProgress } from "@mui/material";
+import { SignInProviderContext } from "@/components/providers/SignInProvider";
 import IFuseOptions = Fuse.IFuseOptions;
 
 const options: IFuseOptions<CandidateForJobList> = {
@@ -21,10 +22,12 @@ const options: IFuseOptions<CandidateForJobList> = {
 
 export default function CandidatesPage(ctx: any) {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const jobId = ctx.searchParams.jobid || "210";
-  const { data: listOfCandidates = [], isLoading } =
-    useMatchedCandidates(jobId);
-
+  const jobId = ctx.searchParams.jobid || "all";
+  const signInContext = useContext(SignInProviderContext);
+  const { data: listOfCandidates = [], isLoading } = useMatchedCandidates(
+    jobId,
+    signInContext.auth?.user?.id as string,
+  );
   const filteredCandidates = useMemo(() => {
     const fuse = new Fuse(listOfCandidates, options);
     return fuse.search(searchTerm, { limit: 20 });

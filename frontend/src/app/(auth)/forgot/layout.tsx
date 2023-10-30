@@ -4,10 +4,6 @@ export const metadata = {
     "Shift_Enter App - If a user forgets their password, they have the option to request a new one.",
 };
 
-export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

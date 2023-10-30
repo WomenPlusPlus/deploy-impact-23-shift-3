@@ -1,32 +1,48 @@
-import { JobPostNew } from "@/app/(site)/company/jobs/types";
 import React, { FormEvent, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Popover, Stack } from "@mui/material";
+import { ListItemIcon, ListItemText, Popover, Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { JobPost } from "@/app/(site)/company/jobs/types";
 
 interface JobPostProps {
-  job: JobPostNew;
+  job: JobPost;
 }
 
 export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
   const numberOfMatches = job.matches.length;
   const router = useRouter();
-  const handleSubmit = (event: FormEvent<HTMLButtonElement>, jobId: string) => {
+  const handleShowMatchesSubmit = (
+    event: FormEvent<HTMLButtonElement>,
+    jobId: string,
+  ) => {
     event.preventDefault();
-    router.replace(`/company/candidates/?jobid=${jobId}`);
+    router.replace(`/company/candidates/?jobId=${jobId}`);
+  };
+
+  const handleViewPostSubmit = (
+    event: FormEvent<HTMLButtonElement>,
+    jobId: string,
+  ) => {
+    event.preventDefault();
+    router.replace(`/company/jobs/${jobId}`);
   };
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handlePopoverClose = () => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
   return (
@@ -229,13 +245,18 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
           }}
         >
           <div>
-            <IconButton aria-label="Chat">
+            <IconButton
+              aria-label="Chat"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
               <MoreVertIcon />
             </IconButton>
             <Popover
               open={Boolean(anchorEl)}
               anchorEl={anchorEl}
-              onClose={handlePopoverClose}
+              onClose={handleClose}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
@@ -244,12 +265,35 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
                 vertical: "top",
                 horizontal: "left",
               }}
-            />
+            >
+              <List sx={{ textAlign: "left", minWidth: "200px" }}>
+                <ListItem sx={{ "&:hover": { backgroundColor: "#C4C7D0" } }}>
+                  <ListItemIcon sx={{ minWidth: "30px", paddingRight: "8px" }}>
+                    <ModeEditOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Edit post" />
+                </ListItem>
+                <ListItem sx={{ "&:hover": { backgroundColor: "#C4C7D0" } }}>
+                  <ListItemIcon sx={{ minWidth: "30px", paddingRight: "8px" }}>
+                    <PauseOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Pause post" />
+                </ListItem>
+                <ListItem sx={{ "&:hover": { backgroundColor: "#C4C7D0" } }}>
+                  <ListItemIcon
+                    sx={{ minWidth: "30px", paddingRight: "8px", color: "red" }}
+                  >
+                    <DeleteOutlineOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText sx={{ color: "red" }} primary="Delete post" />
+                </ListItem>
+              </List>
+            </Popover>
           </div>
 
           <Button
             type="submit"
-            onClick={(event) => handleSubmit(event, job.job_id)}
+            onClick={(event) => handleShowMatchesSubmit(event, job.job_id)}
             variant="outlined"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
@@ -258,11 +302,12 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
           </Button>
           <Button
             type="submit"
+            onClick={(event) => handleViewPostSubmit(event, job.job_id)}
             variant="contained"
             size="large"
             sx={{ textTransform: "none", borderRadius: "100px" }}
           >
-            {job.open ? "Open" : "Not"}
+            View post
           </Button>
         </CardContent>
       </Card>

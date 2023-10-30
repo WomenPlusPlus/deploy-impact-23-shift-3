@@ -4,10 +4,6 @@ export const metadata = {
     "Shift_Enter App - Any invited user can create a password and start to use the APP",
 };
 
-export default function LayoutToFixServerSideRenderingIssuesWithClientSidePages({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
