@@ -33,7 +33,8 @@ jobs:
 
       - name: Test with pytest
         run: |
+          cd ./tests/
           pytest
         env:
           DJANGO_SETTINGS_MODULE: shift_3_womenpp.settings
-          PYTHONPATH: /src/backend/.
+          pythonpath: "../src/backend/"
