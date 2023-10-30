@@ -1,5 +1,4 @@
 from rest_framework.test import APIRequestFactory
-from api.models import Companies, Candidates, Associations
 from api.authentication_services import get_user_type
 from api.views import (
     CandidatesViewSet,
@@ -9,10 +8,9 @@ from api.views import (
     SoftSkillsViewSet,
 )
 from django.test import TestCase
+import django
 
-from shift_3_womenpp import settings
-
-settings.configure()
+django.setup()
 
 class TestAuthentication(TestCase):
     def setUp(self):
