@@ -36,3 +36,4 @@ jobs:
           pytest
         env:
           DJANGO_SETTINGS_MODULE: shift_3_womenpp.settings
+          pythonpath: .
