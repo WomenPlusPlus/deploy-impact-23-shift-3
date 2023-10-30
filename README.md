@@ -254,7 +254,7 @@ This flow ensures that candidates can manage their profiles, explore job opportu
 ## UI/UX
 
 ### Overview
-This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
+This Figma Prototype is designed to showcase the flows that have been designed. You will see the high-fidelity mockups, the primary functions of the flow, and future flows for implementation.
 
 ### How to Use
 1. **Access the Prototype**: 
@@ -273,8 +273,8 @@ You have a left bar and a top bar.
 2.3 If you want to go back again and restart the whole flow, press “R”.
 
 3. **Feedback and Comments**: 
-- You must be logged into Figma to comment. 
-- By typing or pressing “C” you can comment anything you want to highlight or give us feedback. 
+- You must be logged in to Figma to comment. 
+- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback. 
 - The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
 
 
