@@ -101,12 +101,6 @@ Frontend and backend were developed and containerized independenlty, they contai
 
 # Frontend
 
-We have chosen to blur out information that could lead to bias, such as the profile photo or place of study, so that companies can appreciate the skills and values that are important to them when recruiting.
-
-However, we wanted to give companies the freedom to 'unblur' this information if they wished. In fact, we didn't want to block all access to sensitive information, because we assume that the platform has an educational role above all, and its role is simply to enable companies to become aware of any biases they might have, in a fun way.
-
-We have therefore designed informative tooltips for these functions to challenge users and make them think about their actions on the platform.
-
 Our project's frontend has been developed using Next.js, a powerful and versatile framework for building web applications. Material UI has been integrated to enhance the user interface and provide a seamless and visually appealing experience.
 
 ## Implemented flows
@@ -164,6 +158,9 @@ Users can access a comprehensive list of all candidates matched to all posted jo
 
 **8. Preview Candidate Profile:**
 Within the list of candidates, users can preview the profile of a specific candidate.
+We have chosen to blur out information that could lead to bias, such as the profile photo or place of study, so that companies can appreciate the skills and values that are important to them when recruiting.
+However, we wanted to give companies the freedom to 'unblur' this information if they wished. In fact, we didn't want to block all access to sensitive information, because we assume that the platform has an educational role above all, and its role is simply to enable companies to become aware of any biases they might have, in a fun way.
+We have therefore designed informative tooltips for these functions to challenge users and make them think about their actions on the platform.
 
 **9. Un-blur Hidden Data:**
 Users have the option to un-blur hidden data within the candidate profiles.
