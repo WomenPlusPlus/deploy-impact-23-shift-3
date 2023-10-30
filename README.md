@@ -489,6 +489,9 @@ The following logical steps are used to clean the datasets:
 - Extract languages using [language ISO list](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 - Reorganize the columns (rename, drop ones not to be uploaded to the database, reset the index)
 
+# Cooperation - software
+At the outset of our project, we adopted JIRA as our task organization and project management tool. While initially, some team members might have been unfamiliar with how to utilize it to its full potential, we steadily improved our understanding and usage of JIRA with each sprint. It wasn't until the last two sprints that we truly realized its power in helping us coordinate the work of all team members. JIRA played a pivotal role in enhancing our collaboration, efficiency, and overall project organization
+
 # Roadmap
 
 After finishing prioritized Use Cases, here are the future developments that we would like to implement :
