@@ -1,14 +1,13 @@
 "use client";
-import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Typography from "@mui/material/Typography";
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
 
 import ProfilePreview from "@/components/site/candidateProfile/profileView";
 import Notes from "@/components/site/companyNotes/Notes";
+import { useRouter } from "next/navigation";
 
 type Params = {
   params: {
@@ -21,22 +20,26 @@ type Params = {
 export default function UserProfilePage({ params: { candidateId } }: Params) {
   const signInContext = useContext(SignInProviderContext);
   const companyId = signInContext.auth?.user?.id || 1;
-  
+  const router = useRouter();
+
+  const handleGoBackClick = (event: FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    router.replace(`/company/candidates`);
+  };
 
   return (
     <>
-      <Grid container sx={{ mb: 4, mt:0 }}>
+      <Grid container sx={{ mb: 4, mt: 0 }}>
         <Grid item md={6}>
           {" "}
-          <Link href="/company/candidates/">
-            <Button
-              startIcon={<ArrowBackIcon />}
-              variant="outlined"
-              sx={{ textTransform: "none" }}
-            >
-              Go back
-            </Button>
-          </Link>
+          <Button
+            onClick={(event) => handleGoBackClick(event)}
+            startIcon={<ArrowBackIcon />}
+            variant="outlined"
+            sx={{ textTransform: "none" }}
+          >
+            Go back
+          </Button>
         </Grid>
         <Grid item md={6} sx={{ textAlign: "right" }}></Grid>
       </Grid>
