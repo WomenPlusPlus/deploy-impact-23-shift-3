@@ -14,7 +14,7 @@ interface WorkPermitProps {
   work_permit?: string;
 }
 interface StartOnProps {
-  start_date?: string;
+  start_date?: number;
 }
 
 export const Location: React.FC<LocationProps> = ({ city, country }) => {
@@ -27,7 +27,7 @@ export const Location: React.FC<LocationProps> = ({ city, country }) => {
       />
       <Typography
         sx={{ display: "inline-block" }}
-      >{`${city}, ${country}`}</Typography>
+      >{`${city}`}</Typography>
     </Grid>
   );
 };
@@ -57,7 +57,7 @@ export const StartOn: React.FC<StartOnProps> = ({ start_date }) => {
       />
       <Typography
         sx={{ display: "inline-block" }}
-      >{`Ready to start on: ${start_date}`}</Typography>
+      >{`Notice period: ${start_date || 0} months`}</Typography>
     </Grid>
   );
 };

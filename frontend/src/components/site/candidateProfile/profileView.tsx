@@ -147,34 +147,50 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
     />
   ));
 
-  const languagesChips = missingDetails.languages.map((i) => (
-    <Chip
-      sx={{
-        mr: 2,
-        mb: 2,
-        borderRadius: "10px",
-        backgroundColor: "#F6F7FB",
-        boxShadow: shadow,
-      }}
-      key={i.name}
-      label={i.name + ":" + i.level}
-    />
-  ));
+  // const languagesChips = candidateDetails.languages ?
+  //  candidateDetails.languages.map((i) => (
+  //   <Chip
+  //     sx={{
+  //       mr: 2,
+  //       mb: 2,
+  //       borderRadius: "10px",
+  //       backgroundColor: "#F6F7FB",
+  //       boxShadow: shadow,
+  //     }}
+  //     key={i.name}
+  //     label={i.name + ":" + i.proficieny}
+  //   />
+  // )):"-";
 
-  const initiativeChips = missingDetails.initiative_badges.map((i) => (
-    <Chip
-      sx={{
-        mr: 1,
-        mb: 2,
-        borderRadius: "10px",
-        backgroundColor: "#F6F7FB",
-        boxShadow: shadow,
-      }}
-      key={i}
-      label={i}
-      icon={<StarsIcon color="primary" fontSize="small" />}
-    />
-  ));
+  const languagesChips = candidateDetails.languages
+    ? candidateDetails.languages.map((i) => (
+        <Typography
+          sx={{
+            mb: 1,
+          }}
+          key={i.name}
+        >
+          <strong>{i.name}</strong> : {i.proficieny}
+        </Typography>
+      ))
+    : "-";
+
+  const initiativeChips = candidateDetails.Initiatives
+    ? candidateDetails.Initiatives.map((i) => (
+        <Chip
+          sx={{
+            mr: 1,
+            mb: 2,
+            borderRadius: "10px",
+            backgroundColor: "#F6F7FB",
+            boxShadow: shadow,
+          }}
+          key={i}
+          label={i}
+          icon={<StarsIcon color="primary" fontSize="small" />}
+        />
+      ))
+    : "-";
 
   // Access the client
   const queryClient = useQueryClient();
@@ -193,7 +209,7 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
     }
     if (queryCandidate.status === "success") {
       setCandidateDetails(queryCandidate.data);
-      console.log("cd", queryCandidate.data);
+     // console.log("cd", queryCandidate.data);
     }
   }, [queryCandidate.status, queryCandidate.data, pathNameStart]);
 
@@ -387,14 +403,14 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
               pronoun={candidateDetails.gender}
               viewHidden={viewHidden}
             />
-            <Typography>{missingDetails.current_position}</Typography>
+            <Typography>{candidateDetails.wanted_job_title}</Typography>
           </Stack>
 
           <Grid container spacing={2} sx={{ maxWidth: 600 }}>
             <PhoneNumber
               viewHidden={viewHidden}
               phone_number_region={missingDetails.phone_number_region}
-              phone_number={missingDetails.phone_number}
+              phone_number={candidateDetails.phone_number}
             />
             <Email viewHidden={viewHidden} email={candidateDetails.email} />
             <Linkedin
@@ -412,7 +428,7 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
             <WorkPermit
               work_permit={candidateDetails.work_permission_CH ? "yes" : "no"}
             />
-            <StartOn start_date={missingDetails.start_date} />
+            <StartOn start_date={candidateDetails.notice_period_months} />
           </Grid>
         </Grid>
       </Grid>
@@ -424,11 +440,21 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
             </Typography>
             {initiativeChips}
           </Box>
+          <Box sx={{ py: 0, px: 1, pb: 1 }}>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              HARD SKILLS
+            </Typography>
+            <Box sx={{ mb: 1 }}>
+              <SkillsChips skills={candidateDetails.hard_skills} />
+            </Box>
+          </Box>
           <Box sx={{ py: 0, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
-              SKILLS
+              SOFT SKILLS
             </Typography>
-            <Box sx={{ mb: 1 }}><SkillsChips skills={missingDetails.skills} /></Box>
+            <Box sx={{ mb: 1 }}>
+              <SkillsChips skills={candidateDetails.soft_skills} />
+            </Box>
           </Box>
           <Box sx={{ py: 0, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
@@ -485,17 +511,21 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
             </Typography>
             {/* <Typography>{candidateDetails.related_experience}</Typography> */}
 
-            <Education
+            {/* <Education
               viewHidden={viewHidden}
               education={missingDetails.education}
+            /> */}
+            <Education
+              education={candidateDetails.education || ""}
+              viewHidden={viewHidden}
             />
           </Box>
-          <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
+          {/* <Box sx={{ py: 3, px: 1, borderBottom: "2px solid lightGrey" }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
               STRENGTHS
             </Typography>
             <Box sx={{ mb: 1 }}>{strengthsChips}</Box>
-          </Box>
+          </Box> */}
           <Box sx={{ py: 3, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
               LANGUAGES

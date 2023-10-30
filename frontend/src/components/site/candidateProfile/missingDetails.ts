@@ -6,8 +6,8 @@ export const missingDetails = {
   file_cv: "link/to/cv",
   pronoun: "She/Her",
   gender: "female", //gender displays pronoun
-  phone_number_region: 123, 
-  phone_number: 12345, 
+  phone_number_region: 123,  
+  phone_number: 12345, // use only phone_number
   street_address: "sun street", 
   house_number: "56", 
   postal_code: "123", 

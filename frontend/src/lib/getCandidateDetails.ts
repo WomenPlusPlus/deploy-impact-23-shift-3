@@ -5,7 +5,7 @@ import axios from "axios";
 import API_BASE_URL from "@/config";
 
 export async function getCandidateDetails(userId:any) {
-  console.log("test params", userId);
+  //console.log("test params", userId);
   
   try {
     const response = await axios.get(`${API_BASE_URL}/api/candidates/${userId}/`);
@@ -16,7 +16,7 @@ export async function getCandidateDetails(userId:any) {
     //     'Hide-Matches': true,
     //   }
     // });
-    console.log("candidate_data", response.data);
+   //console.log("candidate_data", response.data);
 
     return response.data;
   } catch (error: any) {
