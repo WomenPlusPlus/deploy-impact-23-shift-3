@@ -2,39 +2,28 @@
 
 # SHIFT initative
 
-SHIFT is a pioneering initiative in collaboration between women++ and Powercoders. Recognizing the challenges that underrepresented groups face in the tech industry, this project aims to bridge the gap between these talented individuals and the companies eager to employ them.
+SHIFT is a pioneering collaboration between women++ and Powercoders. It addresses challenges faced by underrepresented groups in the tech industry. The project aims to connect these individuals with companies through a dedicated matching platform.
 
 Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
 
 ## Table of Contents
-
 - [SHIFT initative](#shift-initative)
   - [Table of Contents](#table-of-contents)
 - [Problem Statement](#problem-statement)
 - [Opportunity](#opportunity)
-- [Combat Biais](#combat-biais)
-  - [Data Science Solution](#data-science-solution)
-  - [Frontend Solution](#frontend-solution)
-- [Contributors](#contributors)
+- [What does SHIFT offer?](#what-does-SHIFT-offer?)
 - [Tech Stack](#tech-stack)
 - [Files Structure](#files-structure)
 - [Frontend](#frontend)
-  - [Resources](#resources)
-  - [How to Use](#how-to-use)
-  - [Testing](#testing)
-  - [Deployment](#deployment)
   - [Implemented flows](#implemented-flows)
     - [Company User Flow](#company-user-flow)
     - [Flow Steps](#flow-steps)
     - [Candidate User Flow](#candidate-user-flow)
     - [Flow Steps](#flow-steps-1)
-- [UI/UX](#uiux)
-  - [Overview](#overview)
-  - [How to Use](#how-to-use-1)
-  - [Prototype Structure](#prototype-structure)
-  - [Key Features](#key-features)
-  - [Contact Information](#contact-information)
-  - [Licensing](#licensing)
+  - [Resources](#resources)
+  - [How to Use](#how-to-use)
+  - [Testing](#testing)
+  - [Deployment](#deployment)
 - [Backend API](#backend-api)
   - [Flowchart of the website](#flowchart-of-the-website)
   - [Tech stack](#tech-stack-1)
@@ -46,11 +35,19 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
   - [Setup the CI/CD](#setup-the-cicd)
   - [Files and notable features](#files-and-notable-features)
     - [Features](#features)
-  - [Data Science](#data-science)
-    - [Data Processing Notebooks](#data-processing-notebooks)
-- [Cooperation](#cooperation)
+- [UI/UX](#uiux)
+  - [Overview](#overview)
+  - [How to Use](#how-to-use-1)
+  - [Prototype Structure](#prototype-structure)
+  - [Key Features](#key-features)
+  - [Contact Information](#contact-information)
+  - [Licensing](#licensing)
+- [Data Science Solution](#data-science-solution)
+  - [Details of Data Science Solution Impelmentation](#details-of-data-science-solution-impelmentation)
+  - [Data Processing Notebooks](#data-processing-notebooks)
 - [Roadmap](#roadmap)
 - [Resources](#resources-1)
+- [Contributors](#contributors)
 
 # Problem Statement
 
@@ -60,43 +57,14 @@ Despite the rising numbers of qualified individuals from underrepresented backgr
 
 By joining forces with non-profit organizations championing the cause of diversifying the tech talent pool, SHIFT offers an unique opportunity. It aims to streamline the recruitment process for both companies and prospective employees by creating an exclusive platform tailored for this niche.
 
-# Combat Biais
+# What does SHIFT offer?
 
-## Data Science Solution
-
-Our Matching algorithm combines different methods (Explained in details in the [backend](#backend-api) section).
-
-The concept is based on extracting the soft and hard skills entered by the candidate, which are then directly compared with the soft and hard skills requested in the job offer.
-We then perform a semantic comparison of the free text of the candidate's profile (Values, experience) with the text of the job advert.
-Finally, we average the scores obtained when comparing the texts with the following weightings:
-
-- 20% soft skills
-- 20% hard skills
-- 60% free text
-
-Secondly, in an effort to promote under-represented groups, we have chosen to offer the possibility to include in the top 10 results people who describe themselves as female or gender-neutral, as well as people of immigrant background. This is what we called "Balanced Matching".
-
-The results are displayed in descending order, from the most important match (displayed as a percentage) to the least important.
-
-## Frontend Solution
-
-We have chosen to blur out information that could lead to bias, such as the profile photo or place of study, so that companies can appreciate the skills and values that are important to them when recruiting.
-
-However, we wanted to give companies the freedom to 'unblur' this information if they wished. In fact, we didn't want to block all access to sensitive information, because we assume that the platform has an educational role above all, and its role is simply to enable companies to become aware of any biases they might have, in a fun way.
-
-We have therefore designed informative tooltips for these functions to challenge users and make them think about their actions on the platform.
-
-# Contributors
-
-- Martina Babinska, Frontend - [Github](https://github.com/Corrigan14) - [Linkedin](https://www.linkedin.com/in/martina-babinska-32369a140/)
-- Patricia Wintrebert, Data Science - [Github](https://github.com/patw47) - [Linkedin](https://www.linkedin.com/in/patriciawintrebert/)
-- Janice Shaw, Frontend - [Github](https://github.com/JaniceShaw) - [Linkedin](https://www.linkedin.com/in/janice-shaw/)  
-- Tanya Golubev, Data Science - [Github](https://github.com/golubevtanya) - [Linkedin](https://www.linkedin.com/in/golubevtanya/)
-- Diana Campos - UI/UX - [Linkedin](https://www.linkedin.com/in/dikmpos105/)
-- Guilherme Kruger, Backend - [Github](https://github.com/krugergui)
-- Paras Shah, Project Management [Linkedin](https://www.linkedin.com/in/pshah78/)
-
-For further development please contact XX
+* __exclusivity__: only companies seeking for improving diversity and inclusiont and only candidates that succsesfully complete one of hands-on initiatives are invited to join the platform. The invitation is handled by assosiatives from NGO organisations. 
+* __unbiased screening__: the first impression of candidates is focused solely on their skills and projects, the information that can cause unconsious bias is blurred and additional actiona is required to unblurr it.
+* __awareness__: small pop-up hints on bias prone actions while navigating through the platform.
+* __active balancing__: balance the list pf top matching candidates by senstetive attributes (gender, age, correspondence to a minority).
+* __support in improvement of candidates' profile__: suggestions on adding required skilss to improve matching score.
+* __a learning journey__: multiple placeholders to rate features and leave a feedback from all the users of the platform. Only by learning from each other we can find the way to move forward fair and inbaised talant acquisition. 
 
 # Tech Stack
 
@@ -113,80 +81,33 @@ For further development please contact XX
 
 # Files Structure
 
- To do
+    .
+    ├── .github/workflows       
+    ├── frontend                
+    ├── src
+    │   ├── __init__.py
+    │   ├── backend
+    │   └── notebooks                  
+    ├── test
+    │   ├── __init__.py
+    │   └── test_embedding_similarity.py                         
+    ├── tools                       
+    ├── LICENSE                      
+    ├── Shift_enter_.drawio.png      
+    ├── requirements_git_actions.txt
+    └── README.md
+
+Frontend and backend were developed and containerized independenlty, they contain internal folder tree with tjeir own tests. 
 
 # Frontend
 
+We have chosen to blur out information that could lead to bias, such as the profile photo or place of study, so that companies can appreciate the skills and values that are important to them when recruiting.
+
+However, we wanted to give companies the freedom to 'unblur' this information if they wished. In fact, we didn't want to block all access to sensitive information, because we assume that the platform has an educational role above all, and its role is simply to enable companies to become aware of any biases they might have, in a fun way.
+
+We have therefore designed informative tooltips for these functions to challenge users and make them think about their actions on the platform.
+
 Our project's frontend has been developed using Next.js, a powerful and versatile framework for building web applications. Material UI has been integrated to enhance the user interface and provide a seamless and visually appealing experience.
-
-## Resources
-
-- [Next.js Documentation](https://nextjs.org/docs):  Next.js features and its API to get a comprehensive understanding of the framework.
-- [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/): Various approaches for customizing Material UI to align it with your project's specific needs.
-
-## How to Use
-
-Before you begin, make sure you have Node.js installed. You can download it from [Node.js server](https://nodejs.org/en)
-
-Install the necessary project dependencies. You can do this by running the following command:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Testing
-
-For testing we use Cypress test runner.
-
-To run tests in a web browser:
-
-```bash
- npx cypress open
-```
-
-To run tests in the console for automated testing:
-
-```bash
-npx cypress run
-```
-
-To add test visit: frontend/cypress
-
-For more information: [Cypress doc](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress)
-
-Note: The app has not undergone comprehensive testing due to time constraints and our limited experience. However, we intend to follow Test-Driven Development (TDD) principles in future app development.
-
-## Deployment
-
-The app has been successfully deployed and can be accessed at the following URL: [Shift+Enter](https://nextjsapp-iwghenktca-ew.a.run.app/)
-
-For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
-
-To deploy the app, you need to have the Google Cloud Console installed.
-
-After installation, follow these steps to build and deploy the app:
-
-1. Navigate to the required directory.
-
-2. Build the app:
-
-```bash
-npm run gcbuild 
-```
-
-3. Deploy the app:
-
-```bash
-npm run gcdeploy
-```
 
 ## Implemented flows
 
@@ -283,74 +204,74 @@ In case a candidate attempts to access a part of the app that is not permitted f
 
 This flow ensures that candidates can manage their profiles, explore job opportunities, and adhere to role-based restrictions for a secure and efficient user experience.
 
-# UI/UX
+## Resources
 
-### Overview
+- [Next.js Documentation](https://nextjs.org/docs):  Next.js features and its API to get a comprehensive understanding of the framework.
+- [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/): Various approaches for customizing Material UI to align it with your project's specific needs.
 
-This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
+## How to Use
 
-### How to Use
+Before you begin, make sure you have Node.js installed. You can download it from [Node.js server](https://nodejs.org/en)
 
-1. **Access the Prototype**:
+Install the necessary project dependencies. You can do this by running the following command:
 
-You can interact with the prototype at the following link: [Figma](https://www.figma.com/proto/qzRo0T1FIRIp2FkBZtXKey/SHIFT-UI?page-id=0%3A1&type=design&node-id=65-514&viewport=817%2C-4082%2C0.16&t=vVdNABqel4mhStHB-1&scaling=min-zoom&starting-point-node-id=65%3A514&show-proto-sidebar=1&mode=design)
+```bash
+npm install
+```
 
-3. **Navigate Through the Prototype**:
+Start the development server:
 
-You have a left bar and a top bar.
-The left bar will help you to move through each designed flow. They are organized by:
+```bash
+npm run dev
+```
 
-- A. Login
-- B. Company
-- C. Candidate
-- D. Association
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-2.1 The top bar gives you the option of how to preview the screen. Please go to Options > Fit width.
+## Testing
 
-2.2 To go to the next flow, select the next title in the left bar.
+For testing we use Cypress test runner.
 
-2.3 If you want to go back again and restart the whole flow, press “R”.
+To run tests in a web browser:
 
-3. **Feedback and Comments**:
+```bash
+ npx cypress open
+```
 
-- You must be logged in to Figma to comment.
-- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback.
-- The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
+To run tests in the console for automated testing:
 
-3. **Feedback and Comments**:
+```bash
+npx cypress run
+```
 
-- You must be logged into Figma to comment.
-- By typing or pressing “C” you can comment anything you want to highlight or give us feedback.
-- The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
+To add test visit: frontend/cypress
 
-### Prototype Structure
+For more information: [Cypress doc](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress)
 
-As it is listed in the left pane. The prototype is organized by the following flows:
+Note: The app has not undergone comprehensive testing due to time constraints and our limited experience. However, we intend to follow Test-Driven Development (TDD) principles in future app development.
 
-- A. Login (general sign-in and log-in flow)
-- B. Company - Candidate list
-- B. Company - Setup Profile
-- B. Company - Job post
-- B. Company - Job list section
-- B. Company - Candidate list
-- C. Candidate - Setup profile
-- C. Candidate - Job list
-- D. Association - Invite candidates
+## Deployment
 
-### Key Features
+The app has been successfully deployed and can be accessed at the following URL: [Shift+Enter](https://nextjsapp-iwghenktca-ew.a.run.app/)
 
-Not every button or interaction is prototyped. Therefore, we have added some videos in the file to have the full explanation. By clicking on the screen, you can see hints highlighted in blue of what is clickable.
+For deployment we used [Google cloud platform](https://console.cloud.google.com/welcome?project=enter-400508)
 
-You can see here in the following link the recorded videos with each flow designed: [Videos](https://drive.google.com/drive/folders/1TGAIahEZZUoSioJJA6W8hqKnIHvJiBja?usp=drive_link)
+To deploy the app, you need to have the Google Cloud Console installed.
 
-### Contact Information
+After installation, follow these steps to build and deploy the app:
 
-Diana Campos
-<dianaalkampos@gmail.com>
+1. Navigate to the required directory.
 
-### Licensing
+2. Build the app:
 
-There is no restriction to interact with the prototype, all tho this is an excuse example for the Deploy(impact) 2023 program.
+```bash
+npm run gcbuild 
+```
+
+3. Deploy the app:
+
+```bash
+npm run gcdeploy
+```
 
 # Backend API
 
@@ -364,20 +285,6 @@ To see how the API can be commented see the following endpoints:
 ## Flowchart of the website
 
 ![Alt text](Shift_enter_.drawio.png#center)
-
-## Tech stack
-
-- [Python](https://www.python.org/)
-  - [Django Rest Framework](https://www.django-rest-framework.org/)
-  - [spaCy](https://spacy.io/)
-  - [SkillNer](https://skillner.vercel.app/)
-  - [Sklearn](https://scikit-learn.org/stable/)
-  - [pyTorch](https://pytorch.org/)
-  - [TensorFlow](https://www.tensorflow.org/)
-  - [Gunicorn](https://gunicorn.org/)
-- [PostgreSQL](https://www.postgresql.org/)
-  - [Supabase](https://supabase.com/)
-    - [GoTrue auth](https://github.com/netlify/gotrue)
 
 ## Getting Started
 
@@ -458,12 +365,95 @@ Besides the aforementioned features, the following are all working at the time o
 - CI/CD - Github actions to Google Cloud Run
 - Production ready gateway - Gunicorn
 
-## Data Science
+# UI/UX
 
-Our matching algorithm is based on a careful evaluation of candidates, jobs and required skills. Here's how it works:
+### Overview
+
+This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
+
+
+### How to Use
+
+1. **Access the Prototype**:
+   
+You can interact with the prototype at the following link: [Figma](https://www.figma.com/proto/qzRo0T1FIRIp2FkBZtXKey/SHIFT-UI?page-id=0%3A1&type=design&node-id=65-514&viewport=817%2C-4082%2C0.16&t=vVdNABqel4mhStHB-1&scaling=min-zoom&starting-point-node-id=65%3A514&show-proto-sidebar=1&mode=design)
+   
+3. **Navigate Through the Prototype**:
+   
+You have a left bar and a top bar. 
+The left bar will help you to move through each designed flow. They are organized by:
+
+- A. Login
+- B. Company
+- C. Candidate
+- D. Association
+
+2.1 The top bar gives you the option of how to preview the screen. Please go to Options > Fit width.
+
+2.2 To go to the next flow, select the next title in the left bar.
+
+2.3 If you want to go back again and restart the whole flow, press “R”.
+
+3. **Feedback and Comments**:
+- You must be logged in to Figma to comment. 
+- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback. 
+- The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
+
+3. **Feedback and Comments**:
+
+- You must be logged into Figma to comment.
+- By typing or pressing “C” you can comment anything you want to highlight or give us feedback.
+- The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
+
+### Prototype Structure
+
+As it is listed in the left pane. The prototype is organized by the following flows:
+
+- A. Login (general sign-in and log-in flow)
+- B. Company - Candidate list
+- B. Company - Setup Profile
+- B. Company - Job post
+- B. Company - Job list section
+- B. Company - Candidate list
+- C. Candidate - Setup profile
+- C. Candidate - Job list
+- D. Association - Invite candidates
+
+### Key Features
+
+Not every button or interaction is prototyped. Therefore, we have added some videos in the file to have the full explanation. By clicking on the screen, you can see hints highlighted in blue of what is clickable.
+
+You can see here in the following link the recorded videos with each flow designed: [Videos](https://drive.google.com/drive/folders/1TGAIahEZZUoSioJJA6W8hqKnIHvJiBja?usp=drive_link)
+
+### Contact Information
+
+Diana Campos
+<dianaalkampos@gmail.com>
+
+### Licensing
+
+There is no restriction to interact with the prototype, all tho this is an excuse example for the Deploy(impact) 2023 program.
+
+# Data Science Solution
+
+Our matching algorithm is based on a careful evaluation of candidates, jobs and required skills. 
+
+The concept is based on extracting the soft and hard skills entered by the candidate, which are then directly compared with the soft and hard skills requested in the job offer.
+We then perform a semantic comparison of the free text of the candidate's profile (Values, experience) with the text of the job advert.
+Finally, we average the scores obtained when comparing the texts with the following weightings:
+
+- 20% soft skills
+- 20% hard skills
+- 60% free text
+
+Secondly, in an effort to promote under-represented groups, we have chosen to offer the possibility to include in the top 10 results people who describe themselves as female or gender-neutral, as well as people of immigrant background. This is what we called "Balanced Matching".
+
+The results are displayed in descending order, from the most important match (displayed as a percentage) to the least important.
+
+## Details of Data Science Solution Impelmentation
 
 Skills Extraction: We extract the "soft" and "hard" skills of candidates, as well as those required in job descriptions.
-To do this, we use the [Skillner](https://skillner.vercel.app/) NLP module
+To do this, we use the [Skillner](https://skillner.vercel.app/) NLP module.
 
 Language Extractions : We use the [languages ISO list](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
@@ -471,15 +461,12 @@ Free text processing: The free text part of the applications is transformed usin
 
 Similarity measurement: We use a similarity indicator called Cosine Similarity to compare vectors of skills and job descriptions. It is a metric used to measure how similar two vectors are in a multidimensional space. It is often used in natural language processing, information retrieval, and machine learning for tasks such as document similarity, text clustering, and recommendation systems.
 
-Cosine similarity is particularly useful when dealing with high-dimensional data, like text documents, where the magnitude of the vectors can vary significantly. It measures the cosine of the angle between two vectors and ranges from -1 to 1:
+Cosine similarity is particularly useful when dealing with high-dimensional data, like text documents, where the magnitude of the vectors can vary significantly. It measures the cosine of the angle between two vectors and ranges from -1 to 1, where 1 is for fully identical entries and -1 for completely different ones.
 
-If the cosine similarity is 1, it means the two vectors are identical in direction, i.e., they point in the same direction in the vector space.
-If the cosine similarity is 0, it means the vectors are orthogonal (90 degrees apart), indicating no similarity.
-If the cosine similarity is -1, it means the two vectors are diametrically opposed, i.e., they point in opposite directions.
 
 ### Data Processing Notebooks
 
-This folder contains the code that was used for parsing the datasets with job descriptions and candidates' profiles.
+The folder contains the code that was used for parsing the datasets with job descriptions and candidates' profiles.
 
 One can download the dataset for candidates from [Kaggle](https://www.kaggle.com/datasets/heet9022/linkedin-dataset) and the dataset with jobs from [Kaggle](https://www.kaggle.com/datasets/andresionek/data-jobs-listings-glassdoor) and add the path to the datasets to the respective .yml files.
 
@@ -490,10 +477,6 @@ The following logical steps are used to clean the datasets:
 - Extract soft and hard skills using [SkillNer](https://skillner.vercel.app/)
 - Extract languages using [language ISO list](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 - Reorganize the columns (rename, drop ones not to be uploaded to the database, reset the index)
-
-# Cooperation
-
-At the outset of our project, we adopted JIRA as our task organization and project management tool. While initially, some team members might have been unfamiliar with how to utilize it to its full potential, we steadily improved our understanding and usage of JIRA with each sprint. It wasn't until the last two sprints that we truly realized its power in helping us coordinate the work of all team members. JIRA played a pivotal role in enhancing our collaboration, efficiency, and overall project organization
 
 # Roadmap
 
@@ -511,17 +494,20 @@ Datasets used for populating the Database : [Kaggle Resume Dataset](https://www.
 
 Miro : [Team retrospective and brainstorming board](https://miro.com/app/board/uXjVMkJzhAg=/)
 
-<style>
-img[src*='#center']
-{
-    display: block;
-    margin: auto;
-    width:500px;
-    height:400px;
-}
-</style>
-
 JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/reports/burnup)
 [Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
+[Confluence Page](https://deployimpact2023-shift.atlassian.net/wiki/spaces/SD/overview?homepageId=131173)
 
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/patw47/deploy-impact-23-shift-3/main/assets/shift%20enter.png" alt="Shift Enter"></div>
+
+# Contributors
+
+- Martina Babinska, Frontend - [Github](https://github.com/Corrigan14) - [Linkedin](https://www.linkedin.com/in/martina-babinska-32369a140/)
+- Patricia Wintrebert, Data Science - [Github](https://github.com/patw47) - [Linkedin](https://www.linkedin.com/in/patriciawintrebert/)
+- Janice Shaw, Frontend - [Github](https://github.com/JaniceShaw) - [Linkedin](https://www.linkedin.com/in/janice-shaw/)  
+- Tanya Golubev, Data Science - [Github](https://github.com/golubevtanya) - [Linkedin](https://www.linkedin.com/in/golubevtanya/)
+- Diana Campos - UI/UX - [Linkedin](https://www.linkedin.com/in/dikmpos105/)
+- Guilherme Kruger, Backend - [Github](https://github.com/krugergui)
+- Paras Shah, Project Management [Linkedin](https://www.linkedin.com/in/pshah78/)
+
+For further development please contact [Tanya Golubev](https://www.linkedin.com/in/golubevtanya)
