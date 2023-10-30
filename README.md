@@ -19,6 +19,7 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
 - [Tech Stack](#tech-stack)
 - [Files Structure](#files-structure)
 - [Frontend](#frontend)
+  - [Resources](#resources)
   - [How to Use](#how-to-use)
   - [Testing](#testing)
   - [Deployment](#deployment)
@@ -27,13 +28,13 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
     - [Flow Steps](#flow-steps)
     - [Candidate User Flow](#candidate-user-flow)
     - [Flow Steps](#flow-steps-1)
-  - [UI/UX](#uiux)
-    - [Overview](#overview)
-    - [How to Use](#how-to-use-1)
-    - [Prototype Structure](#prototype-structure)
-    - [Key Features](#key-features)
-    - [Contact Information](#contact-information)
-    - [Licensing](#licensing)
+- [UI/UX](#uiux)
+  - [Overview](#overview)
+  - [How to Use](#how-to-use-1)
+  - [Prototype Structure](#prototype-structure)
+  - [Key Features](#key-features)
+  - [Contact Information](#contact-information)
+  - [Licensing](#licensing)
 - [Backend API](#backend-api)
   - [Flowchart of the website](#flowchart-of-the-website)
   - [Tech stack](#tech-stack-1)
@@ -47,9 +48,9 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
     - [Features](#features)
   - [Data Science](#data-science)
     - [Data Processing Notebooks](#data-processing-notebooks)
-- [Roadmap](#roadmap)
 - [Cooperation](#cooperation)
-- [Resources](#resources)
+- [Roadmap](#roadmap)
+- [Resources](#resources-1)
 
 # Problem Statement
 
@@ -284,21 +285,19 @@ This flow ensures that candidates can manage their profiles, explore job opportu
 
 # UI/UX
 
-
 ### Overview
 
 This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
 
-
 ### How to Use
 
 1. **Access the Prototype**:
-   
+
 You can interact with the prototype at the following link: [Figma](https://www.figma.com/proto/qzRo0T1FIRIp2FkBZtXKey/SHIFT-UI?page-id=0%3A1&type=design&node-id=65-514&viewport=817%2C-4082%2C0.16&t=vVdNABqel4mhStHB-1&scaling=min-zoom&starting-point-node-id=65%3A514&show-proto-sidebar=1&mode=design)
-   
+
 3. **Navigate Through the Prototype**:
-   
-You have a left bar and a top bar. 
+
+You have a left bar and a top bar.
 The left bar will help you to move through each designed flow. They are organized by:
 
 - A. Login
@@ -313,8 +312,9 @@ The left bar will help you to move through each designed flow. They are organize
 2.3 If you want to go back again and restart the whole flow, press “R”.
 
 3. **Feedback and Comments**:
-- You must be logged in to Figma to comment. 
-- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback. 
+
+- You must be logged in to Figma to comment.
+- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback.
 - The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
 
 3. **Feedback and Comments**:
@@ -492,6 +492,7 @@ The following logical steps are used to clean the datasets:
 - Reorganize the columns (rename, drop ones not to be uploaded to the database, reset the index)
 
 # Cooperation
+
 At the outset of our project, we adopted JIRA as our task organization and project management tool. While initially, some team members might have been unfamiliar with how to utilize it to its full potential, we steadily improved our understanding and usage of JIRA with each sprint. It wasn't until the last two sprints that we truly realized its power in helping us coordinate the work of all team members. JIRA played a pivotal role in enhancing our collaboration, efficiency, and overall project organization
 
 # Roadmap
@@ -510,8 +511,17 @@ Datasets used for populating the Database : [Kaggle Resume Dataset](https://www.
 
 Miro : [Team retrospective and brainstorming board](https://miro.com/app/board/uXjVMkJzhAg=/)
 
+<style>
+img[src*='#center']
+{
+    display: block;
+    margin: auto;
+    width:500px;
+    height:400px;
+}
+</style>
+
 JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/reports/burnup)
 [Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
 
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/patw47/deploy-impact-23-shift-3/main/assets/shift%20enter.png" alt="Shift Enter"></div>
-
