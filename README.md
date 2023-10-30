@@ -267,9 +267,10 @@ You have a left bar and a top bar.
 - B. Company
 - C. Candidate
 - D. Association
-2.	The top bar gives you the option of how to preview the screen. Please go to Options > Fit width.
-3.	To go to the next flow, select the next title in the left bar.
-4.	If you want to go back again and restart the whole flow, press “R”.
+  
+2.1	The top bar gives you the option of how to preview the screen. Please go to Options > Fit width.
+2.2	To go to the next flow, select the next title in the left bar.
+2.3 If you want to go back again and restart the whole flow, press “R”.
 
 3. **Feedback and Comments**: 
 - You must be logged into Figma to comment. 
@@ -295,13 +296,10 @@ Not every button or interaction is prototyped. Therefore, we have added some vid
 
 You can see here in the following link the recorded videos with each flow designed: [Videos](https://drive.google.com/drive/folders/1TGAIahEZZUoSioJJA6W8hqKnIHvJiBja?usp=drive_link)
 
-
 ### Contact Information
 Diana Campos
 dianaalkampos@gmail.com
 
-### Licensing
-There is no restriction to interact with the prototype, all tho this is an excuse example for the Deploy(impact) 2023 program.
 
 # Backend API 
 
