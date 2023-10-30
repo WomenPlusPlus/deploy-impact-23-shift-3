@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -46,10 +45,6 @@ const ContactForm: React.FC<ContactFormsProps> = ({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    //TODO: send to api
-    // confirmation alert
-    //console.log("click sent");
-
     setMessage("");
   }
 
