@@ -1,6 +1,5 @@
 import axios from "axios";
 import API_BASE_URL from "@/config";
-import { JobPostNew } from "@/app/(site)/company/jobs/types";
 import { CandidateDetailsInterface } from "@/components/site/candidateProfile/candidateInterface";
 import { useQuery } from "@tanstack/react-query";
 
