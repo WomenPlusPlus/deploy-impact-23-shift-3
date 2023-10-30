@@ -195,17 +195,8 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
 
   if (queryCandidate.isLoading) {
     return (
-      <Container sx={{ my: 2 }}>
-        <Typography variant="h5" component="h1">
-          Profile Loading <CircularProgress />
-        </Typography>
-
-        {/* <Skeleton
-          animation="wave"
-          variant="rounded"
-          sx={{ bgcolor: "white", width: "100%", marginTop: "20px" }}
-          height={20}
-        /> */}
+      <Container sx={{ my: 2, textAlign: "center" }}>
+        <CircularProgress />
       </Container>
     );
   }
@@ -424,7 +415,9 @@ export default function ProfilePreview({ candidateId = 0, matchPercent = 90 }) {
             <Typography variant="h6" sx={{ pb: 1 }}>
               SKILLS
             </Typography>
-            <Box sx={{ mb: 1 }}><SkillsChips skills={missingDetails.skills} /></Box>
+            <Box sx={{ mb: 1 }}>
+              <SkillsChips skills={missingDetails.skills} />
+            </Box>
           </Box>
           <Box sx={{ py: 0, px: 1 }}>
             <Typography variant="h6" sx={{ pb: 1 }}>
