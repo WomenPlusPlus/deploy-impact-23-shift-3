@@ -38,7 +38,6 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
     event.preventDefault();
     router.replace(`/company/candidates/?jobId=${jobId}`);
   };
-  console.log(jobPost);
   return (
     <>
       <Stack
@@ -144,7 +143,6 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
                 width: 172,
                 height: 172,
                 borderRadius: "50%",
-                background: "red",
                 backgroundSize: "cover",
               }}
             />

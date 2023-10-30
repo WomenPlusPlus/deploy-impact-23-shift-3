@@ -114,10 +114,12 @@ For further development please contact XX
 
 # Frontend
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with Material UI installed.
+Our project's frontend has been developed using Next.js, a powerful and versatile framework for building web applications. Material UI has been integrated to enhance the user interface and provide a seamless and visually appealing experience.
 
-To learn more:[Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-[Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs):  Next.js features and its API to get a comprehensive understanding of the framework.
+- [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/): Various approaches for customizing Material UI to align it with your project's specific needs.
 
 ## How to Use
 
@@ -487,6 +489,9 @@ The following logical steps are used to clean the datasets:
 - Extract languages using [language ISO list](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 - Reorganize the columns (rename, drop ones not to be uploaded to the database, reset the index)
 
+# Cooperation - software
+At the outset of our project, we adopted JIRA as our task organization and project management tool. While initially, some team members might have been unfamiliar with how to utilize it to its full potential, we steadily improved our understanding and usage of JIRA with each sprint. It wasn't until the last two sprints that we truly realized its power in helping us coordinate the work of all team members. JIRA played a pivotal role in enhancing our collaboration, efficiency, and overall project organization
+
 # Roadmap
 
 After finishing prioritized Use Cases, here are the future developments that we would like to implement :
@@ -503,7 +508,8 @@ Datasets used for populating the Database : [Kaggle Resume Dataset](https://www.
 
 Miro : [Team retrospective and brainstorming board](https://miro.com/app/board/uXjVMkJzhAg=/)
 
-Pitch : Presentation Pitch
+JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/reports/burnup)
+[Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
 
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/patw47/deploy-impact-23-shift-3/main/assets/shift%20enter.png" alt="Shift Enter"></div>
 
