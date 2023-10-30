@@ -497,7 +497,8 @@ Pitch : Presentation Pitch
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/patw47/deploy-impact-23-shift-3/main/assets/shift%20enter.png" alt="Shift Enter"></div>
 
 <style>
-img[src*='#center'] {
+img[src*='#center']
+{
     display: block;
     margin: auto;
     width:500px;
