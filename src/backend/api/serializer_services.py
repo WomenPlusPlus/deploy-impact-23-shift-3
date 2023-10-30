@@ -76,6 +76,7 @@ def generate_match_output(match_percentages: dict, instance: Candidates | Jobs) 
             break
 
         sent_ids.append(match.pk)
+
         curr_match = {
             "id": match.pk,
             "full_match_score": match_percentages[match.pk]["full_match_score"],
@@ -95,6 +96,10 @@ def generate_match_output(match_percentages: dict, instance: Candidates | Jobs) 
 
         if not is_job:
             curr_match["job_title"] = match.job_title
+            curr_match["job_type"] = match.job_type
+            curr_match["work_model"] = match.job_title
+            curr_match["start_date"] = match.start_date
+            curr_match["job_description"] = match.job_description
         else:
             curr_match["preferred_name"] = match.preferred_name
             curr_match["about_me"] = match.about_me
