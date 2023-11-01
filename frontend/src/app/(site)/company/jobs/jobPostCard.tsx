@@ -25,10 +25,10 @@ export const JobPostCard: React.FC<JobPostProps> = ({ job }) => {
   const router = useRouter();
   const handleShowMatchesSubmit = (
     event: FormEvent<HTMLButtonElement>,
-    jobId: string,
+    jobid: string,
   ) => {
     event.preventDefault();
-    router.replace(`/company/candidates/?jobId=${jobId}`);
+    router.replace(`/company/candidates/?jobid=${jobid}`);
   };
 
   const handleViewPostSubmit = (

@@ -78,7 +78,6 @@ export const SignInProvider: FC<PropsWithChildren> = ({ children }) => {
     if (!auth?.authenticated) {
       return false;
     }
-    //@TODO check token expiration time
     return true;
   };
 

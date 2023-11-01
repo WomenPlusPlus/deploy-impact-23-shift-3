@@ -85,7 +85,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               whiteSpace: "nowrap",
             }}
           >
-            {candidate.full_match_score.toFixed(2)}% match
+            {candidate.full_match_score.toFixed(0)}% match
           </div>
         </CardContent>
         <CardContent
