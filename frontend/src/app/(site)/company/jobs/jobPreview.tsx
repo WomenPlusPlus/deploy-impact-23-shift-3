@@ -33,10 +33,10 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
 
   const handleFindMatchClick = (
     event: FormEvent<HTMLButtonElement>,
-    jobId: string,
+    jobid: string,
   ) => {
     event.preventDefault();
-    router.replace(`/company/candidates/?jobid=${jobId}`);
+    router.replace(`/company/candidates/?jobid=${jobid}`);
   };
   return (
     <>
