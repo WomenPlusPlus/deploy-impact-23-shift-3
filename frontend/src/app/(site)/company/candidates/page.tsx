@@ -10,6 +10,7 @@ import { useMatchedCandidates } from "@/app/(site)/company/candidates/useMatched
 import { CandidateForJobList } from "@/app/(site)/company/candidates/types";
 import { CircularProgress } from "@mui/material";
 import { SignInProviderContext } from "@/components/providers/SignInProvider";
+import { useSearchParams } from "next/navigation";
 import IFuseOptions = Fuse.IFuseOptions;
 
 const options: IFuseOptions<CandidateForJobList> = {
@@ -26,9 +27,10 @@ const options: IFuseOptions<CandidateForJobList> = {
   ],
 };
 
-export default function CandidatesPage(ctx: any) {
+export default function CandidatesPage() {
+  const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const jobId = ctx.searchParams.jobid || "all";
+  const jobId = searchParams.get("jobid") || "all";
   const signInContext = useContext(SignInProviderContext);
   const { data: listOfCandidates = [], isLoading } = useMatchedCandidates(
     jobId,
