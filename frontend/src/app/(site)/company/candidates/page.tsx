@@ -17,7 +17,13 @@ const options: IFuseOptions<CandidateForJobList> = {
   shouldSort: true,
   findAllMatches: true,
   threshold: 0,
-  keys: ["job_title", "full_match_score", "soft_skills", "hard_skills", "name"],
+  keys: [
+    "job_title",
+    "full_match_score",
+    "soft_skills",
+    "hard_skills",
+    "preferred_name",
+  ],
 };
 
 export default function CandidatesPage(ctx: any) {
@@ -31,7 +37,10 @@ export default function CandidatesPage(ctx: any) {
   const filteredCandidates = useMemo(() => {
     const fuse = new Fuse(listOfCandidates, options);
     return fuse.search(searchTerm, { limit: 20 });
-  }, [listOfCandidates, searchTerm]);
+  }, [
+    listOfCandidates.sort((a, b) => b.full_match_score - a.full_match_score),
+    searchTerm,
+  ]);
 
   return (
     <Container>

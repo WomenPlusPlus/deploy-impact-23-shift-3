@@ -16,7 +16,7 @@ import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import WorkIcon from "@mui/icons-material/Work";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import Box from "@mui/material/Box";
-import Tooltip from "@mui/material/Tooltip";
+import { HtmlTooltip } from "@/components/site/candidateProfile/candidateHelpers";
 
 interface JobPreviewInterface {
   jobPost: JobPost;
@@ -36,7 +36,7 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
     jobId: string,
   ) => {
     event.preventDefault();
-    router.replace(`/company/candidates/?jobId=${jobId}`);
+    router.replace(`/company/candidates/?jobid=${jobId}`);
   };
   return (
     <>
@@ -103,7 +103,22 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
           >
             Find match
           </Button>
-          <Tooltip title="When you choose a balanced match, you'll still receive the same matching score, but we'll prioritize presenting suggested candidates in a balanced way to support underrepresented groups. It's all about creating a fair and diverse hiring experience">
+          <HtmlTooltip
+            title={
+              <>
+                <Typography color="inherit">
+                  <strong>What is the Balanced Match?</strong>
+                </Typography>
+                <Typography color="inherit">
+                  When you choose a balanced match, you'll still receive the
+                  same matching score, but we'll prioritize presenting suggested
+                  candidates in a balanced way to support underrepresented
+                  groups. It's all about creating a fair and diverse hiring
+                  experience
+                </Typography>
+              </>
+            }
+          >
             <Button
               type="submit"
               variant="outlined"
@@ -117,7 +132,7 @@ export const JobPreview: React.FC<JobPreviewInterface> = ({
             >
               Find balanced match
             </Button>
-          </Tooltip>
+          </HtmlTooltip>
         </ButtonGroup>
       </Stack>
       <Card
