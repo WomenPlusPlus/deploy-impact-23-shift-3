@@ -34,6 +34,7 @@ export const CandidateCard: React.FC<CandidateProps> = ({
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
+  console.log(candidate);
   return (
     <Grid item xs={12} sm={6} md={4} lg={4}>
       <Card
@@ -114,7 +115,9 @@ export const CandidateCard: React.FC<CandidateProps> = ({
               lineHeight: "20px",
             }}
           >
-            Desired position
+            {candidate.current_position
+              ? candidate.current_position
+              : "Desired position"}
           </Typography>
         </CardContent>
         <CardContent

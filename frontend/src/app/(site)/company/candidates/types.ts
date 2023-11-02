@@ -10,6 +10,7 @@ export interface CandidateForJobList {
   notice_period: number;
   soft_skills_match_score: number;
   hard_skills_match_score: number;
+  current_position?: string;
 }
 
 export interface MatchedCandidate {
