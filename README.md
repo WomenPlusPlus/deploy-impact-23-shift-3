@@ -7,11 +7,12 @@ SHIFT is a pioneering collaboration between women++ and Powercoders. It addresse
 Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
 
 ## Table of Contents
+
 - [SHIFT initative](#shift-initative)
   - [Table of Contents](#table-of-contents)
 - [Problem Statement](#problem-statement)
 - [Opportunity](#opportunity)
-- [What does SHIFT offer?](#what-does-SHIFT-offer?)
+- [What does SHIFT offer?](#what-does-shift-offer)
 - [Tech Stack](#tech-stack)
 - [Files Structure](#files-structure)
 - [Frontend](#frontend)
@@ -26,7 +27,6 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
   - [Deployment](#deployment)
 - [Backend API](#backend-api)
   - [Flowchart of the website](#flowchart-of-the-website)
-  - [Tech stack](#tech-stack-1)
   - [Getting Started](#getting-started)
     - [To install dependencies](#to-install-dependencies)
     - [Environment variables](#environment-variables)
@@ -44,7 +44,7 @@ Access to the app : [Start](https://nextjsapp-iwghenktca-ew.a.run.app/login)
   - [Licensing](#licensing)
 - [Data Science Solution](#data-science-solution)
   - [Details of Data Science Solution Impelmentation](#details-of-data-science-solution-impelmentation)
-  - [Data Processing Notebooks](#data-processing-notebooks)
+    - [Data Processing Notebooks](#data-processing-notebooks)
 - [Roadmap](#roadmap)
 - [Resources](#resources-1)
 - [Contributors](#contributors)
@@ -59,12 +59,12 @@ By joining forces with non-profit organizations championing the cause of diversi
 
 # What does SHIFT offer?
 
-* __exclusivity__: only companies seeking for improving diversity and inclusiont and only candidates that succsesfully complete one of hands-on initiatives are invited to join the platform. The invitation is handled by assosiatives from NGO organisations. 
-* __unbiased screening__: the first impression of candidates is focused solely on their skills and projects, the information that can cause unconsious bias is blurred and additional actiona is required to unblurr it.
-* __awareness__: small pop-up hints on bias prone actions while navigating through the platform.
-* __active balancing__: balance the list pf top matching candidates by senstetive attributes (gender, age, correspondence to a minority).
-* __support in improvement of candidates' profile__: suggestions on adding required skilss to improve matching score.
-* __a learning journey__: multiple placeholders to rate features and leave a feedback from all the users of the platform. Only by learning from each other we can find the way to move forward fair and inbaised talant acquisition. 
+- __exclusivity__: only companies seeking for improving diversity and inclusiont and only candidates that succsesfully complete one of hands-on initiatives are invited to join the platform. The invitation is handled by assosiatives from NGO organisations.
+- __unbiased screening__: the first impression of candidates is focused solely on their skills and projects, the information that can cause unconsious bias is blurred and additional actiona is required to unblurr it.
+- __awareness__: small pop-up hints on bias prone actions while navigating through the platform.
+- __active balancing__: balance the list pf top matching candidates by senstetive attributes (gender, age, correspondence to a minority).
+- __support in improvement of candidates' profile__: suggestions on adding required skilss to improve matching score.
+- __a learning journey__: multiple placeholders to rate features and leave a feedback from all the users of the platform. Only by learning from each other we can find the way to move forward fair and inbaised talant acquisition.
 
 # Tech Stack
 
@@ -97,7 +97,7 @@ By joining forces with non-profit organizations championing the cause of diversi
     ├── requirements_git_actions.txt
     └── README.md
 
-Frontend and backend were developed and containerized independenlty, they contain internal folder tree with tjeir own tests. 
+Frontend and backend were developed and containerized independenlty, they contain internal folder tree with tjeir own tests.
 
 # Frontend
 
@@ -320,10 +320,10 @@ Download the JSON key of the user, open the file, remove the new lines (can caus
 
 After setting up your `.env` encode it in base64 for compatibility:
 
-> **On Windows run:**  
+> __On Windows run:__  
 > openssl base64 -A -in .env -out .env-base64.txt
 
-> **On Linux/MacOS run:**  
+> __On Linux/MacOS run:__  
 > base64 .env > .env-base64.txt
 
 Open the generated .env-base64.txt, copy its content and paste to a Github secret as `ENV_FILE_BACKEND`.
@@ -368,16 +368,15 @@ Besides the aforementioned features, the following are all working at the time o
 
 This Figma Prototype is designed to showcase the flows that have been designed. You will see the high fidelity mockups, the primary functions of the flow, and future flows for implementation.
 
-
 ### How to Use
 
-1. **Access the Prototype**:
-   
+1. __Access the Prototype__:
+
 You can interact with the prototype at the following link: [Figma](https://www.figma.com/proto/qzRo0T1FIRIp2FkBZtXKey/SHIFT-UI?page-id=0%3A1&type=design&node-id=65-514&viewport=817%2C-4082%2C0.16&t=vVdNABqel4mhStHB-1&scaling=min-zoom&starting-point-node-id=65%3A514&show-proto-sidebar=1&mode=design)
-   
-3. **Navigate Through the Prototype**:
-   
-You have a left bar and a top bar. 
+
+3. __Navigate Through the Prototype__:
+
+You have a left bar and a top bar.
 The left bar will help you to move through each designed flow. They are organized by:
 
 - A. Login
@@ -391,12 +390,13 @@ The left bar will help you to move through each designed flow. They are organize
 
 2.3 If you want to go back again and restart the whole flow, press “R”.
 
-3. **Feedback and Comments**:
-- You must be logged in to Figma to comment. 
-- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback. 
+3. __Feedback and Comments__:
+
+- You must be logged in to Figma to comment.
+- By typing or pressing “C” you can comment on anything you want to highlight or give us feedback.
 - The comments will remain in the file unless you click "Resolve" in the right bar that appears after you add a comment.
 
-3. **Feedback and Comments**:
+3. __Feedback and Comments__:
 
 - You must be logged into Figma to comment.
 - By typing or pressing “C” you can comment anything you want to highlight or give us feedback.
@@ -433,7 +433,7 @@ There is no restriction to interact with the prototype, all tho this is an excus
 
 # Data Science Solution
 
-Our matching algorithm is based on a careful evaluation of candidates, jobs and required skills. 
+Our matching algorithm is based on a careful evaluation of candidates, jobs and required skills.
 
 The concept is based on extracting the soft and hard skills entered by the candidate, which are then directly compared with the soft and hard skills requested in the job offer.
 We then perform a semantic comparison of the free text of the candidate's profile (Values, experience) with the text of the job advert.
@@ -459,7 +459,6 @@ Free text processing: The free text part of the applications is transformed usin
 Similarity measurement: We use a similarity indicator called Cosine Similarity to compare vectors of skills and job descriptions. It is a metric used to measure how similar two vectors are in a multidimensional space. It is often used in natural language processing, information retrieval, and machine learning for tasks such as document similarity, text clustering, and recommendation systems.
 
 Cosine similarity is particularly useful when dealing with high-dimensional data, like text documents, where the magnitude of the vectors can vary significantly. It measures the cosine of the angle between two vectors and ranges from -1 to 1, where 1 is for fully identical entries and -1 for completely different ones.
-
 
 ### Data Processing Notebooks
 
@@ -499,12 +498,22 @@ JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/softwar
 
 # Contributors
 
-- Martina Babinska, Frontend - [Github](https://github.com/Corrigan14) - [Linkedin](https://www.linkedin.com/in/martina-babinska-32369a140/)
-- Patricia Wintrebert, Data Science - [Github](https://github.com/patw47) - [Linkedin](https://www.linkedin.com/in/patriciawintrebert/)
-- Janice Shaw, Frontend - [Github](https://github.com/JaniceShaw) - [Linkedin](https://www.linkedin.com/in/janice-shaw/)  
-- Tanya Golubev, Data Science - [Github](https://github.com/golubevtanya) - [Linkedin](https://www.linkedin.com/in/golubevtanya/)
-- Diana Campos - UI/UX - [Linkedin](https://www.linkedin.com/in/dikmpos105/)
-- Guilherme Kruger, Backend - [Github](https://github.com/krugergui)
-- Paras Shah, Project Management [Linkedin](https://www.linkedin.com/in/pshah78/)
+| Member              | Position           | Github                                                                                       | LinkedIn                                                    | Photo                              |
+| :------------------ | :----------------- | :------------------------------------------------------------------------------------------- | :---------------------------------------------------------- | :--------------------------------- |
+| Martina Babinska    | Fontend            | [Github](https://github.com/Corrigan14)                                                      | [Linkedin](https://www.linkedin.com/in/)                    | ![](image-2.png#avatar)            |
+| Patricia Wintrebert | Data Science       | [Github](https://github.com/patw47)                                                          | [Linkedin](https://www.linkedin.com/in/patriciawintrebert/) | ![](image.png#avatar)              |
+| Janice Shaw         | Frontend           | [Github](https://github.com/JaniceShaw)                                                      | [Linkedin](https://www.linkedin.com/in/janice-shaw/)        | ![](image-3.png#avatar)            |
+| Tanya Golubev       | Data Science       | [Github](https://github.com/golubevtanya)                                                    | [Linkedin](https://www.linkedin.com/in/golubevtanya/)       | ![](image-1.png#avatar)            |
+| Diana Campos        | UI/UX              |                                                                                              | [Linkedin](https://www.linkedin.com/in/dikmpos105/)         | ![](image-4.png#avatar)            |
+| Guilherme Krüger    | Backend/DevOps     | [Github](https://github.com/krugergui) / [SO](https://stackoverflow.com/users/941639/kriggs) |                                                             | ![](1633990005682_crop.jpg#avatar) |
+| Paras Shah          | Project Management |                                                                                              | [Linkedin](https://www.linkedin.com/in/pshah78/)            | ![](image-5.png#avatar)            |
 
-For further development please contact [Tanya Golubev](https://www.linkedin.com/in/golubevtanya)
+For further development please contact: [Tanya Golubev](https://www.linkedin.com/in/golubevtanya)
+
+<style>
+  
+img[src*='#avatar'] {
+    width:128px;
+    width:128px;
+}
+</style>
