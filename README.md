@@ -490,6 +490,8 @@ Datasets used for populating the Database : [Kaggle Resume Dataset](https://www.
 
 Miro : [Team retrospective and brainstorming board](https://miro.com/app/board/uXjVMkJzhAg=/)
 
+Pitch: [Presentation](https://docs.google.com/presentation/d/1erbeG4Im0NP7D9EwUp089E_ymu9mpXqWyIT67kaaSAk/edit?usp=sharing)
+
 JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/reports/burnup)
 [Backlog](https://deployimpact2023-shift.atlassian.net/jira/software/projects/SHIFT/boards/1/backlog)
 [Confluence Page](https://deployimpact2023-shift.atlassian.net/wiki/spaces/SD/overview?homepageId=131173)
