@@ -498,22 +498,14 @@ JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/softwar
 
 # Contributors
 
-| Member              | Position           | Github                                                                                       | LinkedIn                                                    | Photo                              |
-| :------------------ | :----------------- | :------------------------------------------------------------------------------------------- | :---------------------------------------------------------- | :--------------------------------- |
-| Martina Babinska    | Fontend            | [Github](https://github.com/Corrigan14)                                                      | [Linkedin](https://www.linkedin.com/in/)                    | ![](image-2.png#avatar)            |
-| Patricia Wintrebert | Data Science       | [Github](https://github.com/patw47)                                                          | [Linkedin](https://www.linkedin.com/in/patriciawintrebert/) | ![](image.png#avatar)              |
-| Janice Shaw         | Frontend           | [Github](https://github.com/JaniceShaw)                                                      | [Linkedin](https://www.linkedin.com/in/janice-shaw/)        | ![](image-3.png#avatar)            |
-| Tanya Golubev       | Data Science       | [Github](https://github.com/golubevtanya)                                                    | [Linkedin](https://www.linkedin.com/in/golubevtanya/)       | ![](image-1.png#avatar)            |
-| Diana Campos        | UI/UX              |                                                                                              | [Linkedin](https://www.linkedin.com/in/dikmpos105/)         | ![](image-4.png#avatar)            |
-| Guilherme Krüger    | Backend/DevOps     | [Github](https://github.com/krugergui) / [SO](https://stackoverflow.com/users/941639/kriggs) |                                                             | ![](1633990005682_crop.jpg#avatar) |
-| Paras Shah          | Project Management |                                                                                              | [Linkedin](https://www.linkedin.com/in/pshah78/)            | ![](image-5.png#avatar)            |
+| Member              | Position           | Github/SO                                                                                    | LinkedIn                                                    | Photo                        |
+| :------------------ | :----------------- | :------------------------------------------------------------------------------------------- | :---------------------------------------------------------- | :--------------------------- |
+| Martina Babinska    | Fontend            | [Github](https://github.com/Corrigan14)                                                      | [Linkedin](https://www.linkedin.com/in/)                    | ![](Docs/images/image-2.png) |
+| Patricia Wintrebert | Data Science       | [Github](https://github.com/patw47)                                                          | [Linkedin](https://www.linkedin.com/in/patriciawintrebert/) | ![](Docs/images/image.png)   |
+| Janice Shaw         | Frontend           | [Github](https://github.com/JaniceShaw)                                                      | [Linkedin](https://www.linkedin.com/in/janice-shaw/)        | ![](Docs/images/image-3.png) |
+| Tanya Golubev       | Data Science       | [Github](https://github.com/golubevtanya)                                                    | [Linkedin](https://www.linkedin.com/in/golubevtanya/)       | ![](Docs/images/image-1.png) |
+| Diana Campos        | UI/UX              |                                                                                              | [Linkedin](https://www.linkedin.com/in/dikmpos105/)         | ![](Docs/images/image-4.png) |
+| Guilherme Krüger    | Backend/DevOps     | [Github](https://github.com/krugergui) / [SO](https://stackoverflow.com/users/941639/kriggs) |                                                             | ![](Docs/images/image-6.png) |
+| Paras Shah          | Project Management |                                                                                              | [Linkedin](https://www.linkedin.com/in/pshah78/)            | ![](Docs/images/image-5.png) |
 
 For further development please contact: [Tanya Golubev](https://www.linkedin.com/in/golubevtanya)
-
-<style>
-  
-img[src*='#avatar'] {
-    width:128px;
-    width:128px;
-}
-</style>
