@@ -505,7 +505,7 @@ JIRA: [Sprint reports](https://deployimpact2023-shift.atlassian.net/jira/softwar
 | Janice Shaw         | Frontend           | [Github](https://github.com/JaniceShaw)                                                      | [Linkedin](https://www.linkedin.com/in/janice-shaw/)        | ![](Docs/images/image-3.png) |
 | Tanya Golubev       | Data Science       | [Github](https://github.com/golubevtanya)                                                    | [Linkedin](https://www.linkedin.com/in/golubevtanya/)       | ![](Docs/images/image-1.png) |
 | Diana Campos        | UI/UX              |                                                                                              | [Linkedin](https://www.linkedin.com/in/dikmpos105/)         | ![](Docs/images/image-4.png) |
-| Guilherme Krüger    | Backend/DevOps     | [Github](https://github.com/krugergui) / [SO](https://stackoverflow.com/users/941639/kriggs) |                                                             | ![](Docs/images/image-6.png) |
+| Guilherme Krüger    | Backend/DevOps     | [Github](https://github.com/krugergui) / [SO](https://stackoverflow.com/users/941639/kriggs) | [Linkedin](https://www.linkedin.com/in/guikruger/)          | ![](Docs/images/image-6.png) |
 | Paras Shah          | Project Management |                                                                                              | [Linkedin](https://www.linkedin.com/in/pshah78/)            | ![](Docs/images/image-5.png) |
 
 For further development please contact: [Tanya Golubev](https://www.linkedin.com/in/golubevtanya)
